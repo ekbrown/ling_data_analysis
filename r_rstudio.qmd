@@ -1,0 +1,47 @@
+---
+title: "Lesson: R and RStudio"
+---
+
+Objective:
+
+-   Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)
+
+## The R programming language
+
+-   R ([here](https://www.r-project.org/)) is a programming language specifically designed for statistical analysis and visualization.
+
+-   As an open-source language, there are many third-party add-on packages ([here](https://cran.r-project.org/web/packages/index.html)) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN [here](https://cran.r-project.org/index.html)).
+
+-   So called "Task Views" ([here](https://cran.r-project.org/web/views/)) collect and briefly describe packages related to specific fields, including one for Natural Language Processing ([here](https://cran.r-project.org/view=NaturalLanguageProcessing)).
+
+## RStudio IDE
+
+-   Integrated Development Environments (IDEs) facilitate writing computer code.
+
+-   RStudio ([here](https://posit.co/downloads/)) from the company Posit ([here](https://posit.co/)) is the go-to IDE for R.
+
+    -   Has many useful keyboard shortcuts, cf. Help \> Keyboard Shortcuts Help
+
+        -   Earl's favorites are:
+
+            -   Assignment operator: ALT + -
+
+            -   Pipe operator in tidyverse: CTRL/CMD + SHIFT + m
+
+    -   Has many cheat sheets for various tools within R and RStudio, cf. Help \> Cheat Sheets
+
+## R projects
+
+-   R projects help keep things organized:
+
+    -   Data files, like CSV (.csv) and/or Excel (.xlsx) files
+
+    -   Source code files, like R scripts (.r or .R files)
+
+-   To create an R project:
+
+    -   File \> New Project...
+
+## Activity
+
+-   Students explore R and RStudio IDE, perhaps using the RStudio cheat sheet (Help \> Cheat Sheets \> RStudio IDE Cheat Sheet)

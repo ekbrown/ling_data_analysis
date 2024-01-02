@@ -1,0 +1,5 @@
+---
+title: "ling_data_analysis"
+---
+
+Website with Earl Kjar Brown's lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu.

@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "r_rstudio.html",
+    "href": "r_rstudio.html",
+    "title": "Lesson: R and RStudio",
+    "section": "",
+    "text": "Objective:"
+  },
+  {
+    "objectID": "r_rstudio.html#the-r-programming-language",
+    "href": "r_rstudio.html#the-r-programming-language",
+    "title": "Lesson: R and RStudio",
+    "section": "The R programming language",
+    "text": "The R programming language\n\nR (here) is a programming language specifically designed for statistical analysis and visualization.\nAs an open-source language, there are many third-party add-on packages (here) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN here).\nSo called “Task Views” (here) collect and briefly describe packages related to specific fields, including one for Natural Language Processing (here)."
+  },
+  {
+    "objectID": "r_rstudio.html#rstudio-ide",
+    "href": "r_rstudio.html#rstudio-ide",
+    "title": "Lesson: R and RStudio",
+    "section": "RStudio IDE",
+    "text": "RStudio IDE\n\nIntegrated Development Environments (IDEs) facilitate writing computer code.\nRStudio (here) from the company Posit (here) is the go-to IDE for R.\n\nHas many useful keyboard shortcuts, cf. Help &gt; Keyboard Shortcuts Help\n\nEarl’s favorites are:\n\nAssignment operator: ALT + -\nPipe operator in tidyverse: CTRL/CMD + SHIFT + m\n\n\nHas many cheat sheets for various tools within R and RStudio, cf. Help &gt; Cheat Sheets"
+  },
+  {
+    "objectID": "r_rstudio.html#r-projects",
+    "href": "r_rstudio.html#r-projects",
+    "title": "Lesson: R and RStudio",
+    "section": "R projects",
+    "text": "R projects\n\nR projects help keep things organized:\n\nData files, like CSV (.csv) and/or Excel (.xlsx) files\nSource code files, like R scripts (.r or .R files)\n\nTo create an R project:\n\nFile &gt; New Project…"
+  },
+  {
+    "objectID": "r_rstudio.html#activity",
+    "href": "r_rstudio.html#activity",
+    "title": "Lesson: R and RStudio",
+    "section": "Activity",
+    "text": "Activity\n\nStudents explore R and RStudio IDE, perhaps using the RStudio cheat sheet (Help &gt; Cheat Sheets &gt; RStudio IDE Cheat Sheet)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ling_data_analysis",
+    "section": "",
+    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  }
+]
