@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - Lesson: R and RStudio</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Programming basics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r_rstudio.html">Lesson: R and RStudio</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./programming_basics.html">Programming basics</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -107,13 +107,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r_rstudio.html" class="sidebar-item-text sidebar-link active">
+  <a href="./r_rstudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Lesson: R and RStudio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./programming_basics.html" class="sidebar-item-text sidebar-link">
+  <a href="./programming_basics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Programming basics</span></a>
   </div>
 </li>
@@ -123,24 +123,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
-  <li><a href="#the-r-programming-language" id="toc-the-r-programming-language" class="nav-link" data-scroll-target="#the-r-programming-language">The R programming language</a></li>
-  <li><a href="#rstudio-ide" id="toc-rstudio-ide" class="nav-link" data-scroll-target="#rstudio-ide">RStudio IDE</a></li>
-  <li><a href="#r-projects" id="toc-r-projects" class="nav-link" data-scroll-target="#r-projects">R projects</a></li>
-  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lesson: R and RStudio</h1>
+<h1 class="title">Programming basics</h1>
 </div>
 
 
@@ -155,60 +145,11 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="objective" class="level2">
-<h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<ul>
-<li>Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)</li>
-</ul>
-</section>
-<section id="the-r-programming-language" class="level2">
-<h2 class="anchored" data-anchor-id="the-r-programming-language">The R programming language</h2>
-<ul>
-<li><p>R (<a href="https://www.r-project.org/">here</a>) is a programming language specifically designed for statistical analysis and visualization.</p></li>
-<li><p>As an open-source language, there are many third-party add-on packages (<a href="https://cran.r-project.org/web/packages/index.html">here</a>) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN <a href="https://cran.r-project.org/index.html">here</a>).</p></li>
-<li><p>So called “Task Views” (<a href="https://cran.r-project.org/web/views/">here</a>) collect and briefly describe packages related to specific fields, including one for Natural Language Processing (<a href="https://cran.r-project.org/view=NaturalLanguageProcessing">here</a>).</p></li>
-</ul>
-</section>
-<section id="rstudio-ide" class="level2">
-<h2 class="anchored" data-anchor-id="rstudio-ide">RStudio IDE</h2>
-<ul>
-<li><p>Integrated Development Environments (IDEs) facilitate writing computer code.</p></li>
-<li><p>RStudio (<a href="https://posit.co/downloads/">here</a>) from the company Posit (<a href="https://posit.co/">here</a>) is the go-to IDE for R.</p>
-<ul>
-<li><p>Has many useful keyboard shortcuts, cf.&nbsp;<span style="font-family: 'Courier New'">Help &gt; Keyboard Shortcuts Help</span></p>
-<ul>
-<li><p>Earl’s favorites are:</p>
-<ul>
-<li><p>Assignment operator: <span style="font-family: 'Courier New'">ALT + -</span></p></li>
-<li><p>Pipe operator in tidyverse: <span style="font-family: 'Courier New'">CTRL/CMD + SHIFT + m</span></p></li>
-</ul></li>
-</ul></li>
-<li><p>Has many cheat sheets for various tools within R and RStudio, cf.&nbsp;<span style="font-family: 'Courier New'">Help &gt; Cheat Sheets</span></p></li>
-</ul></li>
-</ul>
-</section>
-<section id="r-projects" class="level2">
-<h2 class="anchored" data-anchor-id="r-projects">R projects</h2>
-<ul>
-<li><p>R projects help keep things organized:</p>
-<ul>
-<li><p>Data files, like CSV (.csv) and/or Excel (.xlsx) files</p></li>
-<li><p>Source code files, like R scripts (.r or .R files)</p></li>
-</ul></li>
-<li><p>To create an R project:</p>
-<ul>
-<li><span style="font-family: 'Courier New'">File &gt; New Project…</span></li>
-</ul></li>
-</ul>
-</section>
-<section id="activity" class="level2">
-<h2 class="anchored" data-anchor-id="activity">Activity</h2>
-<ul>
-<li>Students explore R and RStudio IDE, perhaps using the RStudio cheat sheet (Help &gt; Cheat Sheets &gt; RStudio IDE Cheat Sheet)</li>
-</ul>
+<p>R is a programming language.</p>
+<p>if else</p>
+<p>for loops</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

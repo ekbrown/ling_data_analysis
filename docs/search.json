@@ -1,5 +1,26 @@
 [
   {
+    "objectID": "programming_basics.html",
+    "href": "programming_basics.html",
+    "title": "Programming basics",
+    "section": "",
+    "text": "R is a programming language.\nif else\nfor loops"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ling_data_analysis",
+    "section": "",
+    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
+  },
+  {
     "objectID": "r_rstudio.html",
     "href": "r_rstudio.html",
     "title": "Lesson: R and RStudio",
@@ -40,19 +61,5 @@
     "title": "Lesson: R and RStudio",
     "section": "Activity",
     "text": "Activity\n\nStudents explore R and RStudio IDE, perhaps using the RStudio cheat sheet (Help &gt; Cheat Sheets &gt; RStudio IDE Cheat Sheet)"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ling_data_analysis",
-    "section": "",
-    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
   }
 ]
