@@ -53,7 +53,7 @@
     "href": "r_rstudio.html#r-projects",
     "title": "Lesson: R and RStudio",
     "section": "R projects",
-    "text": "R projects\n\nR projects help keep things organized:\n\nData files, like CSV (.csv) and/or Excel (.xlsx) files\nSource code files, like R scripts (.r or .R files)\n\nTo create an R project:\n\nFile &gt; New Project…"
+    "text": "R projects\n\nR projects help keep things organized:\n\nData files, like CSV (.csv) and/or Excel (.xlsx) files\nSource code files, like R scripts (.r or .R files)\n\nTo create an R project:\n\nFile &gt; New Project..."
   },
   {
     "objectID": "r_rstudio.html#activity",

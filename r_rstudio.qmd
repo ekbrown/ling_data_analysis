@@ -20,15 +20,15 @@ title: "Lesson: R and RStudio"
 
 -   RStudio ([here](https://posit.co/downloads/)) from the company Posit ([here](https://posit.co/)) is the go-to IDE for R.
 
-    -   Has many useful keyboard shortcuts, cf. [Help \> Keyboard Shortcuts Help]{style="font-family: 'Courier New'"}
+    -   Has many useful keyboard shortcuts, cf. `Help > Keyboard Shortcuts Help`
 
         -   Earl's favorites are:
 
-            -   Assignment operator: [ALT + -]{style="font-family: 'Courier New'"}
+            -   Assignment operator: `ALT + -`
 
-            -   Pipe operator in tidyverse: [CTRL/CMD + SHIFT + m]{style="font-family: 'Courier New'"}
+            -   Pipe operator in tidyverse: `CTRL/CMD + SHIFT + m`
 
-    -   Has many cheat sheets for various tools within R and RStudio, cf. [Help \> Cheat Sheets]{style="font-family: 'Courier New'"}
+    -   Has many cheat sheets for various tools within R and RStudio, cf. `Help > Cheat Sheets`
 
 ## R projects
 
@@ -40,8 +40,8 @@ title: "Lesson: R and RStudio"
 
 -   To create an R project:
 
-    -   [File \> New Project...]{style="font-family: 'Courier New'"}
+    -   `File > New Project...`
 
 ## Activity
 
--   Students explore R and RStudio IDE, perhaps using the RStudio cheat sheet (Help \> Cheat Sheets \> RStudio IDE Cheat Sheet)
+-   Students explore R and RStudio IDE, perhaps using the RStudio cheat sheet (`Help > Cheat Sheets > RStudio IDE Cheat Sheet`)
