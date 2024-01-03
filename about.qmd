@@ -7,3 +7,5 @@ About this site
 ```{r}
 1 + 1
 ```
+
+My name is Earl Kjar Brown and I'm a Dane.
