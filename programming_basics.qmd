@@ -1,5 +1,5 @@
 ---
-title: "Programming basics"
+title: "Lesson: Programming basics"
 ---
 
 R is a programming language.
