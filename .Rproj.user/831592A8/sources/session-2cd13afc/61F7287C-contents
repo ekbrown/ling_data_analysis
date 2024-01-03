@@ -4,7 +4,6 @@ project:
 
 website:
   title: "Lesson Plans for Linguistic Data Analysis with R"
-  favicon: EKB_2023_icon.png
   page-footer: 
     right: "Copyright: Earl Kjar Brown, PhD"
     border: false
