@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - Lesson: Programming basics</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Data structures in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,23 +23,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./EKB_2023_icon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../EKB_2023_icon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -62,7 +62,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -74,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./programming_basics.html">Lesson: Programming basics</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/data_structures.html">Data structures in R</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -89,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Lesson Plans for Linguistic Data Analysis with R</a> 
+      <a href="../">Lesson Plans for Linguistic Data Analysis with R</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -101,36 +101,61 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Basics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r_rstudio.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Lesson: R and RStudio</span></a>
+  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R and RStudio</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./programming_basics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Lesson: Programming basics</span></a>
+  <a href="../lessons/programming_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming basics</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/data_structures.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Data structures in R</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#common-data-structures-in-r" id="toc-common-data-structures-in-r" class="nav-link" data-scroll-target="#common-data-structures-in-r">Common data structures in R</a></li>
+  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lesson: Programming basics</h1>
+<h1 class="title">Data structures in R</h1>
 </div>
 
 
@@ -145,11 +170,38 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>R is a programming language.</p>
-<p>if else</p>
-<p>for loops</p>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">Objective</h2>
+<ul>
+<li>Students will become familiar with common data structures in R.</li>
+</ul>
+</section>
+<section id="common-data-structures-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="common-data-structures-in-r">Common data structures in R</h2>
+<ul>
+<li><code>vector</code>: A single dimension collection of values of the same data type (e.g., all numeric or all character). Kinda like a <code>list</code> in Python or an <code>array</code> in Julia.
+<ul>
+<li>Note: values of different data types are coerced to the more complex data type, for example, if a numeric (aka. float) and an integer are put into the same vector, both values will have a numeric (aka. float) data type.</li>
+<li>A vector (and list, see below) can be created with the <code>c()</code> function (doc <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/c">here</a>).</li>
+</ul></li>
+<li><code>data.frame</code>: A tabular data structure with columns and rows, much like a table in a spreadsheet like Excel or Google Sheets. See doc <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame">here</a>.</li>
+<li><code>tibble</code>: A slightly modified, and better, <code>data.frame</code> in the <code>tibble</code> (doc <a href="https://tibble.tidyverse.org/reference/tibble-package.html">here</a>) package within the <code>tidyverse</code> metapackage or ecosystem (doc <a href="https://www.tidyverse.org/">here</a>). See doc <a href="https://tibble.tidyverse.org/">here</a>.</li>
+<li><code>matrix</code>: Another tabular data structure. Less common than <code>data.frame</code> and <code>tibble</code>. See doc <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/matrix">here</a>.</li>
+<li><code>list</code>: A flexible data structure that can hold whatever, including other data structures. See doc <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/list">here</a> and tutorial <a href="https://www.r-tutor.com/r-introduction/list">here</a>.</li>
+</ul>
+</section>
+<section id="activity" class="level2">
+<h2 class="anchored" data-anchor-id="activity">Activity</h2>
+<ol type="1">
+<li><p>Students create a few vectors of the same length (i.e., the same number of elements).</p></li>
+<li><p>Students create a single data frame with the several vectors created above. The doc <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame">here</a> may be helpful.</p></li>
+<li><p>Students create several data frames and put them in a list.</p></li>
+<li><p>Student iterate over the list with a for loop and print each data frame to the console.</p></li>
+<li><p>Students iterate over the list and then iterate over the row of each data frame, and print each row.</p></li>
+</ol>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

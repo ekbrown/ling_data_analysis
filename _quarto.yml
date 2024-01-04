@@ -13,8 +13,11 @@ website:
     contents:
       - text: "Home"
         file: index.qmd
-      - r_rstudio.qmd
-      - programming_basics.qmd
+      - section: "Basics"
+        contents:
+          - lessons/r_rstudio.qmd
+          - lessons/programming_basics.qmd
+          - lessons/data_structures.qmd
     style: "docked"
     search: true
 

@@ -1,17 +1,73 @@
 [
   {
-    "objectID": "programming_basics.html",
-    "href": "programming_basics.html",
-    "title": "Lesson: Programming basics",
+    "objectID": "lessons/data_structures.html",
+    "href": "lessons/data_structures.html",
+    "title": "Data structures in R",
     "section": "",
-    "text": "R is a programming language.\nif else\nfor loops"
+    "text": "Students will become familiar with common data structures in R."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "lessons/data_structures.html#objective",
+    "href": "lessons/data_structures.html#objective",
+    "title": "Data structures in R",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
+    "text": "Students will become familiar with common data structures in R."
+  },
+  {
+    "objectID": "lessons/data_structures.html#common-data-structures-in-r",
+    "href": "lessons/data_structures.html#common-data-structures-in-r",
+    "title": "Data structures in R",
+    "section": "Common data structures in R",
+    "text": "Common data structures in R\n\nvector: A single dimension collection of values of the same data type (e.g., all numeric or all character). Kinda like a list in Python or an array in Julia.\n\nNote: values of different data types are coerced to the more complex data type, for example, if a numeric (aka. float) and an integer are put into the same vector, both values will have a numeric (aka. float) data type.\nA vector (and list, see below) can be created with the c() function (doc here).\n\ndata.frame: A tabular data structure with columns and rows, much like a table in a spreadsheet like Excel or Google Sheets. See doc here.\ntibble: A slightly modified, and better, data.frame in the tibble (doc here) package within the tidyverse metapackage or ecosystem (doc here). See doc here.\nmatrix: Another tabular data structure. Less common than data.frame and tibble. See doc here.\nlist: A flexible data structure that can hold whatever, including other data structures. See doc here and tutorial here."
+  },
+  {
+    "objectID": "lessons/data_structures.html#activity",
+    "href": "lessons/data_structures.html#activity",
+    "title": "Data structures in R",
+    "section": "Activity",
+    "text": "Activity\n\nStudents create a few vectors of the same length (i.e., the same number of elements).\nStudents create a single data frame with the several vectors created above. The doc here may be helpful.\nStudents create several data frames and put them in a list.\nStudent iterate over the list with a for loop and print each data frame to the console.\nStudents iterate over the list and then iterate over the row of each data frame, and print each row."
+  },
+  {
+    "objectID": "lessons/r_rstudio.html",
+    "href": "lessons/r_rstudio.html",
+    "title": "R and RStudio",
+    "section": "",
+    "text": "Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)"
+  },
+  {
+    "objectID": "lessons/r_rstudio.html#objective",
+    "href": "lessons/r_rstudio.html#objective",
+    "title": "R and RStudio",
+    "section": "",
+    "text": "Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)"
+  },
+  {
+    "objectID": "lessons/r_rstudio.html#the-r-programming-language",
+    "href": "lessons/r_rstudio.html#the-r-programming-language",
+    "title": "R and RStudio",
+    "section": "The R programming language",
+    "text": "The R programming language\n\nR (here) is a programming language specifically designed for statistical analysis and visualization.\nAs an open-source language, there are many third-party add-on packages (here) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN here).\nSo called “Task Views” (here) collect and briefly describe packages related to specific fields, including one for Natural Language Processing (here)."
+  },
+  {
+    "objectID": "lessons/r_rstudio.html#rstudio-ide",
+    "href": "lessons/r_rstudio.html#rstudio-ide",
+    "title": "R and RStudio",
+    "section": "RStudio IDE",
+    "text": "RStudio IDE\n\nIntegrated Development Environments (IDEs) facilitate writing computer code.\nRStudio (here) from the company Posit (here) is the go-to IDE for R.\n\nHas many useful keyboard shortcuts, cf. Help &gt; Keyboard Shortcuts Help\n\nEarl’s favorites are:\n\nAssignment operator: ALT + -\nPipe operator in tidyverse: CTRL/CMD + SHIFT + m\n\n\nHas many cheat sheets for various tools within R and RStudio, cf. Help &gt; Cheat Sheets"
+  },
+  {
+    "objectID": "lessons/r_rstudio.html#r-projects",
+    "href": "lessons/r_rstudio.html#r-projects",
+    "title": "R and RStudio",
+    "section": "R projects",
+    "text": "R projects\n\nR projects help keep things organized:\n\nData files, like CSV (.csv) and/or Excel (.xlsx) files\nSource code files, like R scripts (.r or .R files)\n\nTo create an R project:\n\nFile &gt; New Project..."
+  },
+  {
+    "objectID": "lessons/r_rstudio.html#activity",
+    "href": "lessons/r_rstudio.html#activity",
+    "title": "R and RStudio",
+    "section": "Activity",
+    "text": "Activity\n\nStudents explore R and RStudio IDE, perhaps using the RStudio cheat sheet (Help &gt; Cheat Sheets &gt; RStudio IDE Cheat Sheet)"
   },
   {
     "objectID": "index.html",
@@ -21,45 +77,59 @@
     "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
   },
   {
-    "objectID": "r_rstudio.html",
-    "href": "r_rstudio.html",
-    "title": "Lesson: R and RStudio",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)"
+    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
   },
   {
-    "objectID": "r_rstudio.html#objective",
-    "href": "r_rstudio.html#objective",
-    "title": "Lesson: R and RStudio",
+    "objectID": "lessons/programming_basics.html",
+    "href": "lessons/programming_basics.html",
+    "title": "Programming basics",
     "section": "",
-    "text": "Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)"
+    "text": "Students will learn to code the basic building blocks of programming in R."
   },
   {
-    "objectID": "r_rstudio.html#the-r-programming-language",
-    "href": "r_rstudio.html#the-r-programming-language",
-    "title": "Lesson: R and RStudio",
-    "section": "The R programming language",
-    "text": "The R programming language\n\nR (here) is a programming language specifically designed for statistical analysis and visualization.\nAs an open-source language, there are many third-party add-on packages (here) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN here).\nSo called “Task Views” (here) collect and briefly describe packages related to specific fields, including one for Natural Language Processing (here)."
+    "objectID": "lessons/programming_basics.html#objective",
+    "href": "lessons/programming_basics.html#objective",
+    "title": "Programming basics",
+    "section": "",
+    "text": "Students will learn to code the basic building blocks of programming in R."
   },
   {
-    "objectID": "r_rstudio.html#rstudio-ide",
-    "href": "r_rstudio.html#rstudio-ide",
-    "title": "Lesson: R and RStudio",
-    "section": "RStudio IDE",
-    "text": "RStudio IDE\n\nIntegrated Development Environments (IDEs) facilitate writing computer code.\nRStudio (here) from the company Posit (here) is the go-to IDE for R.\n\nHas many useful keyboard shortcuts, cf. Help &gt; Keyboard Shortcuts Help\n\nEarl’s favorites are:\n\nAssignment operator: ALT + -\nPipe operator in tidyverse: CTRL/CMD + SHIFT + m\n\n\nHas many cheat sheets for various tools within R and RStudio, cf. Help &gt; Cheat Sheets"
+    "objectID": "lessons/programming_basics.html#primitive-data-types-in-r",
+    "href": "lessons/programming_basics.html#primitive-data-types-in-r",
+    "title": "Programming basics",
+    "section": "Primitive data types in R",
+    "text": "Primitive data types in R\n\ninteger\n\nThis a whole number, i.e., there is no decimal component, for example “5”.\nTo specify an integer in R, type an uppercase “L” immiediately to the right of the number (i.e., no space between the number and the “L”).\n\nE.g., 5L\n\n\nnumeric\n\nThis is a number with a decimal component, for example, “3.14”.\nTo specific a numeric in R, just the type the good ol’ fashioned number.\n\nE.g., 3.14\n\nNote: Dr. Brown may refer to this data type as a “float” because of language transfer from Python and Julia.\n\ncharacter\n\nE.g., \"hello world\" and c(\"hello\", \"hola\", \"hej\")\n\nNote: Dr. Brown will likely refer to this data type as “string” because of language transfer from Python and Julia.\nYou can extract part of a string with the sub_str() function (doc here).\n\n\nlogical\n\nThis data type has one of two values, either TRUE or FALSE (or T or F for shorthand).\nDr. Brown may refer to this data type as a “Boolean” because of language transfer from Python and Julia.\n\nThe class() function returns the data type of a variable or value.\n\nEg. class(5L) returns integer, while class(\"hello world\") returns character.\n\n\nActivity\n\nStudents use the class() function to become familiar with the data type of the values that they type."
   },
   {
-    "objectID": "r_rstudio.html#r-projects",
-    "href": "r_rstudio.html#r-projects",
-    "title": "Lesson: R and RStudio",
-    "section": "R projects",
-    "text": "R projects\n\nR projects help keep things organized:\n\nData files, like CSV (.csv) and/or Excel (.xlsx) files\nSource code files, like R scripts (.r or .R files)\n\nTo create an R project:\n\nFile &gt; New Project..."
+    "objectID": "lessons/programming_basics.html#operators-in-r",
+    "href": "lessons/programming_basics.html#operators-in-r",
+    "title": "Programming basics",
+    "section": "Operators in R",
+    "text": "Operators in R\n\nAssignment operator: There are two assignment operators in R. The most common is &lt;- but = also works. For example:\n\nfruit &lt;- \"apple\"\nfruits &lt;- c(\"apple\", \"banana\", \"orange\", \"mango\")\npets = c(\"dog\", \"cat\", \"fish\", \"Madagascar hissing cockroach\")\nage = 46 (note: this creates a numeric rather than an integer; if an integer is wanted: age = 46L)\n\nInclusion operator: %in% tests for inclusion of a value in a collection of values (e.g., a vector), for example:\n\n\"apple\" %in% c(\"banana\", \"apple\", \"mango\") returns TRUE\n\"kiwi\" %in% c(\"banana\", \"apple\", \"mango\") returns FALSE\n\nEqual operator: == (i.e., two equal signs together with no space between them) tests whether the left-hand value and the right-hand value are identical, for example:\n\n\"mango\" == \"mango\" returns TRUE\n\"apple\" == \"manzana\" returns FALSE\n\"Hannah\" == \"HANNAH\" returns FALSE\n\nSuper important note: Computers treat lowercase and uppercase letters differently.\n\nThe equal operator can be used with a string on the left-hand side an a vector of strings on the right-hand side, for example:\n\n\"apple\" == c(\"banana\", \"apple\", \"mango\") returns FALSE TRUE FALSE\nQuick discussion: Speculate with a neighbor about the reason the above expression returns FALSE TRUE FALSE.\n\n\n\nActivity\n\nStudents use these three operators to create variables and vectors, and test for inclusion of a string in a vector of strings."
   },
   {
-    "objectID": "r_rstudio.html#activity",
-    "href": "r_rstudio.html#activity",
-    "title": "Lesson: R and RStudio",
-    "section": "Activity",
-    "text": "Activity\n\nStudents explore R and RStudio IDE, perhaps using the RStudio cheat sheet (Help &gt; Cheat Sheets &gt; RStudio IDE Cheat Sheet)"
+    "objectID": "lessons/programming_basics.html#if-else-in-r",
+    "href": "lessons/programming_basics.html#if-else-in-r",
+    "title": "Programming basics",
+    "section": "if else in R",
+    "text": "if else in R\n\nThe logic is simple: Ask a question, and if the answer is TRUE, then do this thing, but if the answer is FALSE, then do that thing.\n\n\n\nTwo approaches to if else in R:\n\nThe most common approach is to use a code block. See an example in the Stack Overflow answer here.\nA less common approach, but super useful for simple if else cases, is to use a function:\n\nbase R ifelse() function here;\ndpylr (part of the tidyverse ecosystem) if_else() function here.\n\n\n\nActivity\n\nStudents create a string with a single word, and then use if else (either a code block of a function) to print to the user whether the word begins with a vowel or a consonant.\n\nHint 1: The print() and cat() can be used to print to the console.\nHint 2: The sub_str() function can be used to extract a sub part of a string.\nHint 3: The %in% operator tests whether the left-hand value is within the right-hand collection."
+  },
+  {
+    "objectID": "lessons/programming_basics.html#loops-in-r",
+    "href": "lessons/programming_basics.html#loops-in-r",
+    "title": "Programming basics",
+    "section": "Loops in R",
+    "text": "Loops in R\n\nThe mighty and super useful for loop iterates over all elements of a collection (e.g., a vector), for example see below (and see another example here):\n\n\n# create a vector\nfruits &lt;- c(\"apple\", \"mango\", \"banana\", \"orange\")\n\n# loop over the elements of the vector\nfor (fruit in fruits) {\n  print(fruit) # print the current element to the console\n}\n\n[1] \"apple\"\n[1] \"mango\"\n[1] \"banana\"\n[1] \"orange\"\n\n\n\nThe less-common-but-still-useful while loop tests the conditional statement at the beginning of each iteration and runs the body of the loop if the statement evaluates to TRUE. See an example here.\nUseful keywords for both for loops and while loops:\n\nThe next keyword skips the rest of the current iteration and continues to the next iteration. This is very much like continue in Python and Julia.\nThe break keyword stops the loop completely, regardless of which iteration it was in, and no further iteration are executed.\n\n\nActivity\n\nStudents create a for loop to iterate from 1 to 10, skipping even numbers and printing out odd numbers.\n\nHint: The modulus operator %% will be helpful (see here)."
+  },
+  {
+    "objectID": "lessons/programming_basics.html#defining-functions-in-r",
+    "href": "lessons/programming_basics.html#defining-functions-in-r",
+    "title": "Programming basics",
+    "section": "Defining functions in R",
+    "text": "Defining functions in R\n\nMORE TO COME REAL SOON NOW!"
   }
 ]

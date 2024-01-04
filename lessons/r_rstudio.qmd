@@ -1,5 +1,5 @@
 ---
-title: "Lesson: R and RStudio"
+title: "R and RStudio"
 ---
 
 ## Objective

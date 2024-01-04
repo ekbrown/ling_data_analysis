@@ -1,0 +1,146 @@
+---
+title: "Programming basics"
+---
+
+## Objective
+
+-   Students will learn to code the basic building blocks of programming in R.
+
+## Primitive data types in R
+
+-   `integer`
+
+    -   This a whole number, i.e., there is **no** decimal component, for example "5".
+
+    -   To specify an integer in R, type an uppercase "L" immiediately to the right of the number (i.e., no space between the number and the "L").
+
+        -   E.g., `5L`
+
+-   `numeric`
+
+    -   This is a number with a decimal component, for example, "3.14".
+
+    -   To specific a numeric in R, just the type the good ol' fashioned number.
+
+        -   E.g., `3.14`
+
+    -   Note: Dr. Brown may refer to this data type as a "float" because of language transfer from Python and Julia.
+
+-   `character`
+
+    -   E.g., `"hello world"` and `c("hello", "hola", "hej")`
+
+        -   Note: Dr. Brown will likely refer to this data type as "string" because of language transfer from Python and Julia.
+
+        -   You can extract part of a string with the `sub_str()` function (doc [here](https://stringr.tidyverse.org/reference/str_sub.html)).
+
+-   `logical`
+
+    -   This data type has one of two values, either `TRUE` or `FALSE` (or `T` or `F` for shorthand).
+
+    -   Dr. Brown may refer to this data type as a "Boolean" because of language transfer from Python and Julia.
+
+-   The `class()` function returns the data type of a variable or value.
+
+    -   Eg. `class(5L)` returns `integer`, while `class("hello world")` returns `character`.
+
+**Activity**
+
+-   Students use the `class()` function to become familiar with the data type of the values that they type.
+
+## Operators in R
+
+-   Assignment operator: There are two assignment operators in R. The most common is `<-` but `=` also works. For example:
+
+    -   `fruit <- "apple"`
+
+    -   `fruits <- c("apple", "banana", "orange", "mango")`
+
+    -   `pets = c("dog", "cat", "fish", "Madagascar hissing cockroach")`
+
+    -   `age = 46` (note: this creates a numeric rather than an integer; if an integer is wanted: `age = 46L`)
+
+-   Inclusion operator: `%in%` tests for inclusion of a value in a collection of values (e.g., a vector), for example:
+
+    -   `"apple" %in% c("banana", "apple", "mango")` returns `TRUE`
+
+    -   `"kiwi" %in% c("banana", "apple", "mango")` returns `FALSE`
+
+-   Equal operator: `==` (i.e., two equal signs together with no space between them) tests whether the left-hand value and the right-hand value are identical, for example:
+
+    -   `"mango" == "mango"` returns `TRUE`
+
+    -   `"apple" == "manzana"` returns `FALSE`
+
+    -   `"Hannah" == "HANNAH"` returns `FALSE`
+
+        -   **Super important note**: Computers treat lowercase and uppercase letters differently.
+
+    -   The equal operator can be used with a string on the left-hand side an a vector of strings on the right-hand side, for example:
+
+        -   `"apple" == c("banana", "apple", "mango")` returns `FALSE TRUE FALSE`
+
+        -   **Quick discussion**: Speculate with a neighbor about the reason the above expression returns `FALSE TRUE FALSE.`
+
+**Activity**
+
+-   Students use these three operators to create variables and vectors, and test for inclusion of a string in a vector of strings.
+
+## `if else` in R
+
+-   The logic is simple: Ask a question, and if the answer is TRUE, then do *this* thing, but if the answer is FALSE, then do *that* thing.
+
+```{=html}
+<!-- -->
+```
+-   Two approaches to `if else` in R:
+
+    -   The most common approach is to use a code block. See an example in the Stack Overflow answer [here](https://stackoverflow.com/a/15393990/2884875).
+
+    -   A less common approach, but super useful for simple `if else` cases, is to use a function:
+
+        -   base R `ifelse()` function [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/ifelse);
+
+        -   `dpylr` (part of the `tidyverse` ecosystem) `if_else()` function [here](https://dplyr.tidyverse.org/reference/if_else.html).
+
+**Activity**
+
+-   Students create a string with a single word, and then use `if else` (either a code block of a function) to print to the user whether the word begins with a vowel or a consonant.
+
+    -   Hint 1: The [`print()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/print) and [`cat()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cat) can be used to print to the console.
+
+    -   Hint 2: The [`sub_str()`](https://stringr.tidyverse.org/reference/str_sub.html) function can be used to extract a sub part of a string.
+
+    -   Hint 3: The [`%in%`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/match) operator tests whether the left-hand value is within the right-hand collection.
+
+## Loops in R
+
+-   The mighty and super useful `for` loop iterates over all elements of a collection (e.g., a vector), for example see below (and see another example [here](https://www.datamentor.io/r-programming/for-loop)):
+
+```{r}
+# create a vector
+fruits <- c("apple", "mango", "banana", "orange")
+
+# loop over the elements of the vector
+for (fruit in fruits) {
+  print(fruit) # print the current element to the console
+}
+```
+
+-   The less-common-but-still-useful `while` loop tests the conditional statement at the beginning of each iteration and runs the body of the loop if the statement evaluates to `TRUE`. See an example [here](https://www.datamentor.io/r-programming/while-loop).
+
+-   Useful keywords for both `for` loops and `while` loops:
+
+    -   The `next` keyword skips the rest of the current iteration and continues to the next iteration. This is very much like `continue` in Python and Julia.
+
+    -   The `break` keyword stops the loop completely, regardless of which iteration it was in, and no further iteration are executed.
+
+**Activity**
+
+-   Students create a `for` loop to iterate from 1 to 10, skipping even numbers and printing out odd numbers.
+
+    -   Hint: The modulus operator `%%` will be helpful (see [here](https://www.geeksforgeeks.org/check-if-a-number-is-odd-or-even-in-r-programming/)).
+
+## Defining functions in R
+
+-   MORE TO COME REAL SOON NOW!

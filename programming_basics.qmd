@@ -1,9 +1,0 @@
----
-title: "Lesson: Programming basics"
----
-
-R is a programming language.
-
-if else
-
-for loops

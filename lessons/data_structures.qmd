@@ -1,0 +1,29 @@
+---
+title: "Data structures in R"
+---
+
+## Objective
+
+-   Students will become familiar with common data structures in R.
+
+## Common data structures in R
+
+-   `vector`: A single dimension collection of values of the same data type (e.g., all numeric or all character). Kinda like a `list` in Python or an `array` in Julia.
+    -   Note: values of different data types are coerced to the more complex data type, for example, if a numeric (aka. float) and an integer are put into the same vector, both values will have a numeric (aka. float) data type.
+    -   A vector (and list, see below) can be created with the `c()` function (doc [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/c)).
+-   `data.frame`: A tabular data structure with columns and rows, much like a table in a spreadsheet like Excel or Google Sheets. See doc [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame).
+-   `tibble`: A slightly modified, and better, `data.frame` in the `tibble` (doc [here](https://tibble.tidyverse.org/reference/tibble-package.html)) package within the `tidyverse` metapackage or ecosystem (doc [here](https://www.tidyverse.org/)). See doc [here](https://tibble.tidyverse.org/).
+-   `matrix`: Another tabular data structure. Less common than `data.frame` and `tibble`. See doc [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/matrix).
+-   `list`: A flexible data structure that can hold whatever, including other data structures. See doc [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/list) and tutorial [here](https://www.r-tutor.com/r-introduction/list).
+
+## Activity
+
+1.  Students create a few vectors of the same length (i.e., the same number of elements).
+
+2.  Students create a single data frame with the several vectors created above. The doc [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame) may be helpful.
+
+3.  Students create several data frames and put them in a list.
+
+4.  Student iterate over the list with a for loop and print each data frame to the console.
+
+5.  Students iterate over the list and then iterate over the row of each data frame, and print each row.
