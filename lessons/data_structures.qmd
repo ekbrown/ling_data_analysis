@@ -16,7 +16,7 @@ title: "Data structures in R"
 -   `matrix`: Another tabular data structure. Less common than `data.frame` and `tibble`. See doc [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/matrix).
 -   `list`: A flexible data structure that can hold whatever, including other data structures. See doc [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/list) and tutorial [here](https://www.r-tutor.com/r-introduction/list).
 
-## Activity
+**Activity**
 
 1.  Students create a few vectors of the same length (i.e., the same number of elements).
 

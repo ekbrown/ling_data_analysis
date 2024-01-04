@@ -262,7 +262,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Assignment operator: There are two assignment operators in R. The most common is <code>&lt;-</code> but <code>=</code> also works. For example:</p>
 <ul>
 <li><p><code>fruit &lt;- "apple"</code></p></li>
-<li><p><code>fruits &lt;- c("apple", "banana", "orange", "mango")</code></p></li>
+<li><p><code>fruits &lt;- c("apple", "banana", "orange", "mango")</code></p>
+<ul>
+<li>Keyboard shortcut in RStudio: <code>ALT/OPT + -</code></li>
+</ul></li>
 <li><p><code>pets = c("dog", "cat", "fish", "Madagascar hissing cockroach")</code></p></li>
 <li><p><code>age = 46</code> (note: this creates a numeric rather than an integer; if an integer is wanted: <code>age = 46L</code>)</p></li>
 </ul></li>
@@ -329,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># loop over the elements of the vector</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (fruit <span class="cf">in</span> fruits) {</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(fruit) <span class="co"># print the current element to the console</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(fruit)  <span class="co"># print the current element to the console</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "apple"
@@ -357,7 +360,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="defining-functions-in-r" class="level2">
 <h2 class="anchored" data-anchor-id="defining-functions-in-r">Defining functions in R</h2>
 <ul>
-<li>MORE TO COME REAL SOON NOW!</li>
+<li><p>A very useful ability in R (and all programming languages) is for a user to define their own custom function.</p></li>
+<li><p>The <code>function()</code> function does the trick.</p>
+<ul>
+<li>See a tutorial <a href="https://swcarpentry.github.io/r-novice-inflammation/02-func-R.html">here</a>.</li>
+</ul></li>
+</ul>
+<p><strong>Activity</strong></p>
+<ul>
+<li><p>Students define a function that takes as input a word and returns as output a logical value (aka. Boolean value) indicating whether the word begins with one of the five orthographic vowels (i.e., <em>a</em>, <em>e</em>, <em>i</em>, <em>o</em>, <em>u</em>).</p>
+<ul>
+<li>Hint: The <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html">%in%</a> keyword will be helpful here.</li>
+</ul></li>
+<li><p>Now for a little fun and to put these basic programming skills together: Students define a function (likely with smaller helper functions) that translates a sentence from English into Pig Latin. A little refresher on Pig Latin: If a word begins with a vowel, the word yay is added to the end of it; if a word begins with a consonant or consonant cluster (e.g., ch, gr), that consonant or consonant cluster is moved to the end of the word followed by ay.</p>
+<ul>
+<li><p>Hint: the <a href="https://stringr.tidyverse.org/">stringr</a> package (part of the <a href="https://www.tidyverse.org/">tidyverse</a>) will be useful here, especially the <a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a>, <a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub()</a>, <a href="https://stringr.tidyverse.org/reference/str_split.html">str_split()</a> (and <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/unlist">unlist()</a>) functions, as will the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html">letters</a> and <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html">LETTERS</a> built-in constants.</p></li>
+<li><p>Hint: For (many) more hints, see the script written by Dr.&nbsp;Brown in the LMS.</p></li>
+</ul></li>
 </ul>
 
 

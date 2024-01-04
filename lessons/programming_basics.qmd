@@ -56,6 +56,8 @@ title: "Programming basics"
 
     -   `fruits <- c("apple", "banana", "orange", "mango")`
 
+        -   Keyboard shortcut in RStudio: `ALT/OPT + -`
+
     -   `pets = c("dog", "cat", "fish", "Madagascar hissing cockroach")`
 
     -   `age = 46` (note: this creates a numeric rather than an integer; if an integer is wanted: `age = 46L`)
@@ -123,7 +125,7 @@ fruits <- c("apple", "mango", "banana", "orange")
 
 # loop over the elements of the vector
 for (fruit in fruits) {
-  print(fruit) # print the current element to the console
+  print(fruit)  # print the current element to the console
 }
 ```
 
@@ -143,4 +145,20 @@ for (fruit in fruits) {
 
 ## Defining functions in R
 
--   MORE TO COME REAL SOON NOW!
+-   A very useful ability in R (and all programming languages) is for a user to define their own custom function.
+
+-   The `function()` function does the trick.
+
+    -   See a tutorial [here](https://swcarpentry.github.io/r-novice-inflammation/02-func-R.html).
+
+**Activity**
+
+-   Students define a function that takes as input a word and returns as output a logical value (aka. Boolean value) indicating whether the word begins with one of the five orthographic vowels (i.e., *a*, *e*, *i*, *o*, *u*).
+
+    -   Hint: The [%in%](https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html) keyword will be helpful here.
+
+-   Now for a little fun and to put these basic programming skills together: Students define a function (likely with smaller helper functions) that translates a sentence from English into Pig Latin. A little refresher on Pig Latin: If a word begins with a vowel, the word yay is added to the end of it; if a word begins with a consonant or consonant cluster (e.g., ch, gr), that consonant or consonant cluster is moved to the end of the word followed by ay.
+
+    -   Hint: the [stringr](https://stringr.tidyverse.org/) package (part of the [tidyverse](https://www.tidyverse.org/)) will be useful here, especially the [str_c()](https://stringr.tidyverse.org/reference/str_c.html), [str_sub()](https://stringr.tidyverse.org/reference/str_sub.html), [str_split()](https://stringr.tidyverse.org/reference/str_split.html) (and [unlist()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/unlist)) functions, as will the [letters](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html) and [LETTERS](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html) built-in constants.
+
+    -   Hint: For (many) more hints, see the script written by Dr. Brown in the LMS.
