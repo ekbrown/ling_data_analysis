@@ -12,13 +12,13 @@ title: "Programming basics"
 
     -   This a whole number, i.e., there is **no** decimal component, for example "5".
 
-    -   To specify an integer in R, type an uppercase "L" immiediately to the right of the number (i.e., no space between the number and the "L").
+    -   To specify an integer in R, type an uppercase "L" immediately to the right of the number (i.e., no space between the number and the "L").
 
         -   E.g., `5L`
 
 -   `numeric`
 
-    -   This is a number with a decimal component, for example, "3.14".
+    -   This is a number with a decimal component, for example, "3.14". Note: Unless an "L" is placed to the right of a whole number, R treats it as a numeric.
 
     -   To specific a numeric in R, just the type the good ol' fashioned number.
 
@@ -88,13 +88,26 @@ title: "Programming basics"
 
 -   Students use these three operators to create variables and vectors, and test for inclusion of a string in a vector of strings.
 
+## Comments
+
+-   Comments within computer code helps the human readers, whether other humans or your later self, to quickly understand what the various parts of a computer script do.
+
+-   Comments in R are specified with a hashtag, for example:
+
+```{r}
+# assign a value to a variable
+dog <- "fido"
+
+# create a vector of multiple elements
+kids <- c("Bobby", "Luisa", "José")
+```
+
 ## `if else` in R
 
 -   The logic is simple: Ask a question, and if the answer is TRUE, then do *this* thing, but if the answer is FALSE, then do *that* thing.
 
-```{=html}
 <!-- -->
-```
+
 -   Two approaches to `if else` in R:
 
     -   The most common approach is to use a code block. See an example in the Stack Overflow answer [here](https://stackoverflow.com/a/15393990/2884875).
@@ -120,6 +133,7 @@ title: "Programming basics"
 -   The mighty and super useful `for` loop iterates over all elements of a collection (e.g., a vector), for example see below (and see another example [here](https://www.datamentor.io/r-programming/for-loop)):
 
 ```{r}
+#| output: false
 # create a vector
 fruits <- c("apple", "mango", "banana", "orange")
 
@@ -161,4 +175,52 @@ for (fruit in fruits) {
 
     -   Hint: the [stringr](https://stringr.tidyverse.org/) package (part of the [tidyverse](https://www.tidyverse.org/)) will be useful here, especially the [str_c()](https://stringr.tidyverse.org/reference/str_c.html), [str_sub()](https://stringr.tidyverse.org/reference/str_sub.html), [str_split()](https://stringr.tidyverse.org/reference/str_split.html) (and [unlist()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/unlist)) functions, as will the [letters](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html) and [LETTERS](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html) built-in constants.
 
-    -   Hint: For (many) more hints, see the script written by Dr. Brown in the LMS.
+    -   Hint: After a good-faith effort, if you need help, see the script written by Dr. Brown by clicking on "▶ Code" below.
+
+```{r}
+#| code-fold: true
+#| output: false
+
+suppressPackageStartupMessages(library("tidyverse"))
+
+# helper function 1, for vowel words
+trans_v <-  function(wd, vowels) {
+  return(str_c(wd, "yay"))
+}
+
+# helper function 2, for consonant words
+trans_c <- function(wd, vowels, first_let) {
+  second_let <- str_sub(wd, 2, 2)
+  if (!str_to_lower(second_let) %in% vowels) {
+    first_two <- str_sub(wd, 1, 2)
+    rest_wd <- str_sub(wd, 3, str_length(wd))
+    return(str_c(rest_wd, first_two, "ay"))
+  } else {
+    rest_wd <- str_sub(wd, 2, str_length(wd))
+    return(str_c(rest_wd, first_let, "ay"))
+  }
+}
+
+# the main function
+trans_pig <- function(sentence, vowels) {
+  wds <- unlist(str_split(sentence, "\\s+"))
+  trans_sent <- ""
+  for (wd in wds) {
+    first_let <- str_sub(wd, 1, 1)
+    if (str_to_lower(first_let) %in% vowels) {
+      # this is a vowel word
+      trans_sent <- str_c(trans_sent, trans_v(wd, vowels), " ")
+    } else {
+      # the current word is a consonant word
+      trans_sent <- str_c(trans_sent, trans_c(wd, vowels, first_let), " ")
+    }
+  }
+  return(str_trim(trans_sent))
+}
+
+### test the function
+sentence <- "I do not like green eggs and ham."
+vowels <- c("a", "e", "i", "o", "u")
+print(trans_pig(sentence, vowels))
+
+```

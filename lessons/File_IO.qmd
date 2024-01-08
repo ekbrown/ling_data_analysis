@@ -1,0 +1,61 @@
+---
+title: "File I/O in R"
+---
+
+## Objective
+
+-   Students will read data from files and writing data to files.
+
+## Text files (.txt)
+
+-   **Reading** in data (aka. input) from text files can be accomplished in two ways:
+
+    -   Way 1: Slurp all text in the file at once and hold it in the working memory of the computer:
+
+        -   `scan()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scan)) returns a vector (the default) or list.
+
+        -   `readLines()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/readLines)) in base R returns a vector with each line (i.e., hard return) in the input file as an element. This is a bare-bones version of `scan()`.
+
+        -   `read_lines()` ([here](https://readr.tidyverse.org/reference/read_lines.html)) in the [readr](https://readr.tidyverse.org/) package (part of [tidyverse](https://www.tidyverse.org/)) is a quicker version of `readLines()`.
+
+        -   `read_file()` ([here](https://readr.tidyverse.org/reference/read_file.html)) in the [readr](https://readr.tidyverse.org/) package slurps all text into a single string.
+
+    -   Way 2: Read data line-by-line:
+
+        -   This is useful when the text file is massive and would be difficult to hold in memory at once. This approach holds only one line at a time in memory.
+
+        -   Steps:
+
+            -   Create a connection to the file with the `file()` function ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/connections)).
+
+            -   Use the `readLines(n = 1)` function in a `while` loop.
+
+            -   See an example [here](https://stackoverflow.com/a/35761217/2884875).
+
+-   **Writing** out data (aka. output) to a text files can be accomplished with several functions:
+
+    -   `cat()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cat)) in base R can write out to a text file when the `file` argument gives a pathway to a file.
+
+    -   `writeLines()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/writeLines)) is the output version of `readLines()` mentioned above.
+
+    -   `write_lines()` ([here](https://readr.tidyverse.org/reference/read_lines.html)) function is the output version of `read_lines()` mentioned above.
+
+    -   `write_file()` ([here](https://readr.tidyverse.org/reference/read_file.html)) output-equivalent of `read_file()` above.
+
+## CSV files (.csv)
+
+-   **Reading** in tabular datasets from CSV files can be accomplished with several functions:
+
+    -   `read.table()` ([here](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table)) is a versatile function with many arguments, that returns a data frame.
+
+    -   `read_csv()` ([here](https://readr.tidyverse.org/reference/read_delim.html)) in the `readr` package (part of `tidyverse`) reads CSV files that have a **comma** as the separator between columns, and returns a `tibble`.
+
+    -   `read_tsv()` ([here](https://readr.tidyverse.org/reference/read_delim.html)) in the `readr` package reads TSV files that have a **tab** as the separator between columns, and returns a `tibble`.
+
+        -   Note: Some files with the extension .csv or .txt are actually .tsv files, that is, the column separator is a tab.
+
+-   **Writing** out a data frame to a CSV files is a cinch:
+
+    -   `write.table()` ([here](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/write.table)) in base R is the output equivalent of `read.table()` mentioned above.
+
+    -   `write_csv()` ([here](https://readr.tidyverse.org/reference/write_delim.html)) in the `readr` package is the output equivalent of the `read_csv()` mentioned above.

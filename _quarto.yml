@@ -10,6 +10,8 @@ website:
     border: false
     background: light
   sidebar: 
+    style: "docked"
+    search: true
     contents:
       - text: "Home"
         file: index.qmd
@@ -18,8 +20,7 @@ website:
           - lessons/r_rstudio.qmd
           - lessons/programming_basics.qmd
           - lessons/data_structures.qmd
-    style: "docked"
-    search: true
+          - lessons/File_IO.qmd
 
 format:
   html:

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - About</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - File I/O in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,60 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./EKB_2023_icon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../EKB_2023_icon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -96,7 +62,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -108,9 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-      Lesson Plans for Linguistic Data Analysis with R
-      </li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/File_IO.html">File I/O in R</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -125,7 +89,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Lesson Plans for Linguistic Data Analysis with R</a> 
+      <a href="../">Lesson Plans for Linguistic Data Analysis with R</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -137,7 +101,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -152,25 +116,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">R and RStudio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/programming_basics.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/programming_basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Programming basics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/data_structures.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/data_structures.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data structures in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/File_IO.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/File_IO.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">File I/O in R</span></a>
   </div>
 </li>
@@ -182,14 +146,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#text-files-.txt" id="toc-text-files-.txt" class="nav-link" data-scroll-target="#text-files-.txt">Text files (.txt)</a></li>
+  <li><a href="#csv-files-.csv" id="toc-csv-files-.csv" class="nav-link" data-scroll-target="#csv-files-.csv">CSV files (.csv)</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">File I/O in R</h1>
 </div>
 
 
@@ -204,16 +176,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>About this site</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
-<p>My name is Earl Kjar Brown and I’m a Dane.</p>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">Objective</h2>
+<ul>
+<li>Students will read data from files and writing data to files.</li>
+</ul>
+</section>
+<section id="text-files-.txt" class="level2">
+<h2 class="anchored" data-anchor-id="text-files-.txt">Text files (.txt)</h2>
+<ul>
+<li><p><strong>Reading</strong> in data (aka. input) from text files can be accomplished in two ways:</p>
+<ul>
+<li><p>Way 1: Slurp all text in the file at once and hold it in the working memory of the computer:</p>
+<ul>
+<li><p><code>scan()</code> (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scan">here</a>) returns a vector (the default) or list.</p></li>
+<li><p><code>readLines()</code> (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/readLines">here</a>) in base R returns a vector with each line (i.e., hard return) in the input file as an element. This is a bare-bones version of <code>scan()</code>.</p></li>
+<li><p><code>read_lines()</code> (<a href="https://readr.tidyverse.org/reference/read_lines.html">here</a>) in the <a href="https://readr.tidyverse.org/">readr</a> package (part of <a href="https://www.tidyverse.org/">tidyverse</a>) is a quicker version of <code>readLines()</code>.</p></li>
+<li><p><code>read_file()</code> (<a href="https://readr.tidyverse.org/reference/read_file.html">here</a>) in the <a href="https://readr.tidyverse.org/">readr</a> package slurps all text into a single string.</p></li>
+</ul></li>
+<li><p>Way 2: Read data line-by-line:</p>
+<ul>
+<li><p>This is useful when the text file is massive and would be difficult to hold in memory at once. This approach holds only one line at a time in memory.</p></li>
+<li><p>Steps:</p>
+<ul>
+<li><p>Create a connection to the file with the <code>file()</code> function (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/connections">here</a>).</p></li>
+<li><p>Use the <code>readLines(n = 1)</code> function in a <code>while</code> loop.</p></li>
+<li><p>See an example <a href="https://stackoverflow.com/a/35761217/2884875">here</a>.</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p><strong>Writing</strong> out data (aka. output) to a text files can be accomplished with several functions:</p>
+<ul>
+<li><p><code>cat()</code> (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cat">here</a>) in base R can write out to a text file when the <code>file</code> argument gives a pathway to a file.</p></li>
+<li><p><code>writeLines()</code> (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/writeLines">here</a>) is the output version of <code>readLines()</code> mentioned above.</p></li>
+<li><p><code>write_lines()</code> (<a href="https://readr.tidyverse.org/reference/read_lines.html">here</a>) function is the output version of <code>read_lines()</code> mentioned above.</p></li>
+<li><p><code>write_file()</code> (<a href="https://readr.tidyverse.org/reference/read_file.html">here</a>) output-equivalent of <code>read_file()</code> above.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="csv-files-.csv" class="level2">
+<h2 class="anchored" data-anchor-id="csv-files-.csv">CSV files (.csv)</h2>
+<ul>
+<li><p><strong>Reading</strong> in tabular datasets from CSV files can be accomplished with several functions:</p>
+<ul>
+<li><p><code>read.table()</code> (<a href="https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table">here</a>) is a versatile function with many arguments, that returns a data frame.</p></li>
+<li><p><code>read_csv()</code> (<a href="https://readr.tidyverse.org/reference/read_delim.html">here</a>) in the <code>readr</code> package (part of <code>tidyverse</code>) reads CSV files that have a <strong>comma</strong> as the separator between columns, and returns a <code>tibble</code>.</p></li>
+<li><p><code>read_tsv()</code> (<a href="https://readr.tidyverse.org/reference/read_delim.html">here</a>) in the <code>readr</code> package reads TSV files that have a <strong>tab</strong> as the separator between columns, and returns a <code>tibble</code>.</p>
+<ul>
+<li>Note: Some files with the extension .csv or .txt are actually .tsv files, that is, the column separator is a tab.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Writing</strong> out a data frame to a CSV files is a cinch:</p>
+<ul>
+<li><p><code>write.table()</code> (<a href="https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/write.table">here</a>) in base R is the output equivalent of <code>read.table()</code> mentioned above.</p></li>
+<li><p><code>write_csv()</code> (<a href="https://readr.tidyverse.org/reference/write_delim.html">here</a>) in the <code>readr</code> package is the output equivalent of the <code>read_csv()</code> mentioned above.</p></li>
+</ul></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

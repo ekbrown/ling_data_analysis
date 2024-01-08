@@ -132,6 +132,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Data structures in R</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/File_IO.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">File I/O in R</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -180,12 +186,13 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><code>vector</code>: A single dimension collection of values of the same data type (e.g., all numeric or all character). Kinda like a <code>list</code> in Python or an <code>array</code> in Julia.
 <ul>
-<li>Note: values of different data types are coerced to the more complex data type, for example, if a numeric (aka. float) and an integer are put into the same vector, both values will have a numeric (aka. float) data type.</li>
+<li>Note: Values of different data types are coerced to the more complex data type, for example, if a numeric (aka. float) and an integer are put into the same vector, both values will have a numeric (aka. float) data type.</li>
 <li>A vector (and list, see below) can be created with the <code>c()</code> function (doc <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/c">here</a>).</li>
 </ul></li>
 <li><code>data.frame</code>: A tabular data structure with columns and rows, much like a table in a spreadsheet like Excel or Google Sheets. See doc <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame">here</a>.</li>
 <li><code>tibble</code>: A slightly modified, and better, <code>data.frame</code> in the <code>tibble</code> (doc <a href="https://tibble.tidyverse.org/reference/tibble-package.html">here</a>) package within the <code>tidyverse</code> metapackage or ecosystem (doc <a href="https://www.tidyverse.org/">here</a>). See doc <a href="https://tibble.tidyverse.org/">here</a>.</li>
-<li><code>matrix</code>: Another tabular data structure. Less common than <code>data.frame</code> and <code>tibble</code>. See doc <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/matrix">here</a>.</li>
+<li><code>data.table</code>: Another tabular data structure, written in C under the hood (so it’s fast) from the <code>data.table</code> package <a href="https://cran.r-project.org/web/packages/data.table/">here</a>. See a tutorial <a href="https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html">here</a>.</li>
+<li><code>matrix</code>: Another tabular data structure in base R. Less common than <code>data.frame</code> and <code>tibble</code> and <code>data.table</code>. See doc <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/matrix">here</a>.</li>
 <li><code>list</code>: A flexible data structure that can hold whatever, including other data structures. See doc <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/list">here</a> and tutorial <a href="https://www.r-tutor.com/r-introduction/list">here</a>.</li>
 </ul>
 <p><strong>Activity</strong></p>

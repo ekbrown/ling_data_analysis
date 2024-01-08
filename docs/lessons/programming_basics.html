@@ -166,6 +166,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Data structures in R</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/File_IO.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">File I/O in R</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -181,6 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
   <li><a href="#primitive-data-types-in-r" id="toc-primitive-data-types-in-r" class="nav-link" data-scroll-target="#primitive-data-types-in-r">Primitive data types in R</a></li>
   <li><a href="#operators-in-r" id="toc-operators-in-r" class="nav-link" data-scroll-target="#operators-in-r">Operators in R</a></li>
+  <li><a href="#comments" id="toc-comments" class="nav-link" data-scroll-target="#comments">Comments</a></li>
   <li><a href="#if-else-in-r" id="toc-if-else-in-r" class="nav-link" data-scroll-target="#if-else-in-r"><code>if else</code> in R</a></li>
   <li><a href="#loops-in-r" id="toc-loops-in-r" class="nav-link" data-scroll-target="#loops-in-r">Loops in R</a></li>
   <li><a href="#defining-functions-in-r" id="toc-defining-functions-in-r" class="nav-link" data-scroll-target="#defining-functions-in-r">Defining functions in R</a></li>
@@ -219,14 +226,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><code>integer</code></p>
 <ul>
 <li><p>This a whole number, i.e., there is <strong>no</strong> decimal component, for example “5”.</p></li>
-<li><p>To specify an integer in R, type an uppercase “L” immiediately to the right of the number (i.e., no space between the number and the “L”).</p>
+<li><p>To specify an integer in R, type an uppercase “L” immediately to the right of the number (i.e., no space between the number and the “L”).</p>
 <ul>
 <li>E.g., <code>5L</code></li>
 </ul></li>
 </ul></li>
 <li><p><code>numeric</code></p>
 <ul>
-<li><p>This is a number with a decimal component, for example, “3.14”.</p></li>
+<li><p>This is a number with a decimal component, for example, “3.14”. Note: Unless an “L” is placed to the right of a whole number, R treats it as a numeric.</p></li>
 <li><p>To specific a numeric in R, just the type the good ol’ fashioned number.</p>
 <ul>
 <li>E.g., <code>3.14</code></li>
@@ -294,6 +301,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Students use these three operators to create variables and vectors, and test for inclusion of a string in a vector of strings.</li>
 </ul>
 </section>
+<section id="comments" class="level2">
+<h2 class="anchored" data-anchor-id="comments">Comments</h2>
+<ul>
+<li><p>Comments within computer code helps the human readers, whether other humans or your later self, to quickly understand what the various parts of a computer script do.</p></li>
+<li><p>Comments in R are specified with a hashtag, for example:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assign a value to a variable</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dog <span class="ot">&lt;-</span> <span class="st">"fido"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a vector of multiple elements</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>kids <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bobby"</span>, <span class="st">"Luisa"</span>, <span class="st">"José"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section id="if-else-in-r" class="level2">
 <h2 class="anchored" data-anchor-id="if-else-in-r"><code>if else</code> in R</h2>
 <ul>
@@ -327,19 +348,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>The mighty and super useful <code>for</code> loop iterates over all elements of a collection (e.g., a vector), for example see below (and see another example <a href="https://www.datamentor.io/r-programming/for-loop">here</a>):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a vector</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>fruits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"mango"</span>, <span class="st">"banana"</span>, <span class="st">"orange"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># loop over the elements of the vector</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (fruit <span class="cf">in</span> fruits) {</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(fruit)  <span class="co"># print the current element to the console</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "apple"
-[1] "mango"
-[1] "banana"
-[1] "orange"</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a vector</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fruits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"mango"</span>, <span class="st">"banana"</span>, <span class="st">"orange"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># loop over the elements of the vector</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (fruit <span class="cf">in</span> fruits) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(fruit)  <span class="co"># print the current element to the console</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p>The less-common-but-still-useful <code>while</code> loop tests the conditional statement at the beginning of each iteration and runs the body of the loop if the statement evaluates to <code>TRUE</code>. See an example <a href="https://www.datamentor.io/r-programming/while-loop">here</a>.</p></li>
@@ -375,9 +390,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Now for a little fun and to put these basic programming skills together: Students define a function (likely with smaller helper functions) that translates a sentence from English into Pig Latin. A little refresher on Pig Latin: If a word begins with a vowel, the word yay is added to the end of it; if a word begins with a consonant or consonant cluster (e.g., ch, gr), that consonant or consonant cluster is moved to the end of the word followed by ay.</p>
 <ul>
 <li><p>Hint: the <a href="https://stringr.tidyverse.org/">stringr</a> package (part of the <a href="https://www.tidyverse.org/">tidyverse</a>) will be useful here, especially the <a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a>, <a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub()</a>, <a href="https://stringr.tidyverse.org/reference/str_split.html">str_split()</a> (and <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/unlist">unlist()</a>) functions, as will the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html">letters</a> and <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html">LETTERS</a> built-in constants.</p></li>
-<li><p>Hint: For (many) more hints, see the script written by Dr.&nbsp;Brown in the LMS.</p></li>
+<li><p>Hint: After a good-faith effort, if you need help, see the script written by Dr.&nbsp;Brown by clicking on “▶ Code” below.</p></li>
 </ul></li>
 </ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(<span class="st">"tidyverse"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># helper function 1, for vowel words</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>trans_v <span class="ot">&lt;-</span>  <span class="cf">function</span>(wd, vowels) {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">str_c</span>(wd, <span class="st">"yay"</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># helper function 2, for consonant words</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>trans_c <span class="ot">&lt;-</span> <span class="cf">function</span>(wd, vowels, first_let) {</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  second_let <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(wd, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">str_to_lower</span>(second_let) <span class="sc">%in%</span> vowels) {</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    first_two <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(wd, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    rest_wd <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(wd, <span class="dv">3</span>, <span class="fu">str_length</span>(wd))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">str_c</span>(rest_wd, first_two, <span class="st">"ay"</span>))</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    rest_wd <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(wd, <span class="dv">2</span>, <span class="fu">str_length</span>(wd))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">str_c</span>(rest_wd, first_let, <span class="st">"ay"</span>))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># the main function</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>trans_pig <span class="ot">&lt;-</span> <span class="cf">function</span>(sentence, vowels) {</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  wds <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">str_split</span>(sentence, <span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>))</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  trans_sent <span class="ot">&lt;-</span> <span class="st">""</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (wd <span class="cf">in</span> wds) {</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    first_let <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(wd, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">str_to_lower</span>(first_let) <span class="sc">%in%</span> vowels) {</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>      <span class="co"># this is a vowel word</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>      trans_sent <span class="ot">&lt;-</span> <span class="fu">str_c</span>(trans_sent, <span class="fu">trans_v</span>(wd, vowels), <span class="st">" "</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>      <span class="co"># the current word is a consonant word</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>      trans_sent <span class="ot">&lt;-</span> <span class="fu">str_c</span>(trans_sent, <span class="fu">trans_c</span>(wd, vowels, first_let), <span class="st">" "</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">str_trim</span>(trans_sent))</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="do">### test the function</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>sentence <span class="ot">&lt;-</span> <span class="st">"I do not like green eggs and ham."</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>vowels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>, <span class="st">"i"</span>, <span class="st">"o"</span>, <span class="st">"u"</span>)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">trans_pig</span>(sentence, vowels))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 
 
 </section>
