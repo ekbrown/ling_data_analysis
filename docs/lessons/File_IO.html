@@ -138,6 +138,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">File I/O in R</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/regexes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regular expressions</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -151,8 +157,21 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#directory-operations" id="toc-directory-operations" class="nav-link" data-scroll-target="#directory-operations">Directory operations</a></li>
   <li><a href="#text-files-.txt" id="toc-text-files-.txt" class="nav-link" data-scroll-target="#text-files-.txt">Text files (.txt)</a></li>
-  <li><a href="#csv-files-.csv" id="toc-csv-files-.csv" class="nav-link" data-scroll-target="#csv-files-.csv">CSV files (.csv)</a></li>
+  <li><a href="#csv-files-.csv" id="toc-csv-files-.csv" class="nav-link" data-scroll-target="#csv-files-.csv">CSV files (.csv)</a>
+  <ul class="collapse">
+  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  </ul></li>
+  <li><a href="#excel-files" id="toc-excel-files" class="nav-link" data-scroll-target="#excel-files">Excel files</a>
+  <ul class="collapse">
+  <li><a href="#activity-1" id="toc-activity-1" class="nav-link" data-scroll-target="#activity-1">Activity</a></li>
+  </ul></li>
+  <li><a href="#spss-.sav-stata-.dta-and-sas-.sas-files" id="toc-spss-.sav-stata-.dta-and-sas-.sas-files" class="nav-link" data-scroll-target="#spss-.sav-stata-.dta-and-sas-.sas-files">SPSS (.sav), Stata (.dta), and SAS (.sas) files</a>
+  <ul class="collapse">
+  <li><a href="#activity-2" id="toc-activity-2" class="nav-link" data-scroll-target="#activity-2"><strong>Activity</strong></a></li>
+  </ul></li>
+  <li><a href="#feather-.feather-files" id="toc-feather-.feather-files" class="nav-link" data-scroll-target="#feather-.feather-files">Feather (.feather) files</a></li>
   </ul>
 </nav>
     </div>
@@ -182,6 +201,19 @@ ul.task-list li input[type="checkbox"] {
 <li>Students will read data from files and writing data to files.</li>
 </ul>
 </section>
+<section id="directory-operations" class="level2">
+<h2 class="anchored" data-anchor-id="directory-operations">Directory operations</h2>
+<ul>
+<li><p>Computers are structured in a hierarchal filesystem (e.g., “/Users/Fernando/Documents/my_novel.docx”).</p></li>
+<li><p>Often, R scripts need to move into specific directories (aka. folders) in order to access specific files.</p></li>
+<li><p>R has several functions to move around a filesystem. Here are a few of them:</p>
+<ul>
+<li><p><code>getwd()</code> (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd">here</a>) prints to the console the current working directory (i.e., the directory at the script currently has access to).</p></li>
+<li><p><code>setwd()</code> (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd">here</a>) sets a directory so that the script has access to it.</p></li>
+<li><p><code>dir()</code> (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/list.files">here</a>, an alias for <code>list.files()</code>) lists the contents of a directory, either only in the one directory or also in all sub-directories (with the <code>recursive</code> argument).</p></li>
+</ul></li>
+</ul>
+</section>
 <section id="text-files-.txt" class="level2">
 <h2 class="anchored" data-anchor-id="text-files-.txt">Text files (.txt)</h2>
 <ul>
@@ -189,7 +221,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><p>Way 1: Slurp all text in the file at once and hold it in the working memory of the computer:</p>
 <ul>
-<li><p><code>scan()</code> (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scan">here</a>) returns a vector (the default) or list.</p></li>
+<li><p><code>scan()</code> (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scan" target="_blank">here</a>) returns a vector (the default) or list.</p></li>
 <li><p><code>readLines()</code> (<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/readLines">here</a>) in base R returns a vector with each line (i.e., hard return) in the input file as an element. This is a bare-bones version of <code>scan()</code>.</p></li>
 <li><p><code>read_lines()</code> (<a href="https://readr.tidyverse.org/reference/read_lines.html">here</a>) in the <a href="https://readr.tidyverse.org/">readr</a> package (part of <a href="https://www.tidyverse.org/">tidyverse</a>) is a quicker version of <code>readLines()</code>.</p></li>
 <li><p><code>read_file()</code> (<a href="https://readr.tidyverse.org/reference/read_file.html">here</a>) in the <a href="https://readr.tidyverse.org/">readr</a> package slurps all text into a single string.</p></li>
@@ -232,6 +264,73 @@ ul.task-list li input[type="checkbox"] {
 <li><p><code>write_csv()</code> (<a href="https://readr.tidyverse.org/reference/write_delim.html">here</a>) in the <code>readr</code> package is the output equivalent of the <code>read_csv()</code> mentioned above.</p></li>
 </ul></li>
 </ul>
+<section id="activity" class="level3">
+<h3 class="anchored" data-anchor-id="activity">Activity</h3>
+<ol type="1">
+<li><p>Install the tidyverse suite of packages with the command <code>install.packages("tidyverse")</code> in the console.</p></li>
+<li><p>Download some TXT files of your choice (perhaps from <a href="https://www.gutenberg.org/">Project Gutenberg</a> or Saints.zip from the Canvas Module “Datasets”).</p></li>
+<li><p>Create a script that reads in all TXT files in a directory (and perhaps any subdirectories) and simply print the text to the console.</p>
+<ol type="1">
+<li>Include <code>library("tidyverse")</code> at the top of your script (i.e., .r file.)</li>
+</ol></li>
+<li><p>Ramp it up by breaking up the text into words and printing those to the console.</p></li>
+<li><p>Now for some fun, as a class let’s count the number of words in each text file, and print the name of the file and the number of words to the console.</p></li>
+<li><p>As a final step, let’s write out a CSV file with two columns: column A = the name of the file, column B = the number of words in that file.</p></li>
+</ol>
+</section>
+</section>
+<section id="excel-files" class="level2">
+<h2 class="anchored" data-anchor-id="excel-files">Excel files</h2>
+<ol type="1">
+<li><p>Reading in (input) an Excel is easy with <a href="https://readxl.tidyverse.org/reference/read_excel.html">readxl::read_excel()</a>.</p>
+<ol type="1">
+<li>You can specify which worksheet to read (with the <code>sheet</code> argument), or even a specific set of cells within a specific worksheet (with the <code>range</code> argument).</li>
+</ol></li>
+<li><p>Writing out (output)</p>
+<ol type="1">
+<li><a href="http://www.sthda.com/english/wiki/r-xlsx-package-a-quick-start-guide-to-manipulate-excel-files-in-r#write-data-to-an-excel-file">xlsx::write.xlsx()</a> function does the trick.</li>
+</ol></li>
+</ol>
+<section id="activity-1" class="level3">
+<h3 class="anchored" data-anchor-id="activity-1">Activity</h3>
+<ol type="1">
+<li><p>Download an Excel (.xlsx) file of your choice (perhaps from the Module “Datasets” in Canvas) or use one that’s already on your harddrive.</p></li>
+<li><p>Open the Excel file (in Excel) and inspect the worksheet(s) to figure out where the data is (i.e., sheet name, cell range).</p></li>
+<li><p>Read in the appropriate worksheet and display it within RStudio with the <a href="https://tibble.tidyverse.org/reference/view.html"><code>view()</code></a> function.</p></li>
+</ol>
+</section>
+</section>
+<section id="spss-.sav-stata-.dta-and-sas-.sas-files" class="level2">
+<h2 class="anchored" data-anchor-id="spss-.sav-stata-.dta-and-sas-.sas-files">SPSS (.sav), Stata (.dta), and SAS (.sas) files</h2>
+<ol type="1">
+<li><p>Reading in (input)</p>
+<ol type="1">
+<li>The <a href="https://www.rdocumentation.org/packages/haven/versions/2.2.0"><code>haven</code></a> R package does the trick.</li>
+</ol></li>
+<li><p>Writing out (output)</p>
+<ol type="1">
+<li>Who cares? You should output it as something more cross-platform-friendly like CSV.</li>
+</ol></li>
+</ol>
+<section id="activity-2" class="level3">
+<h3 class="anchored" data-anchor-id="activity-2"><strong>Activity</strong></h3>
+<ol type="1">
+<li><p>Download the SPSS (.sav) file in the CMS.</p></li>
+<li><p>Read in the SPSS file and display it with <a href="https://tibble.tidyverse.org/reference/view.html">view()</a>.</p></li>
+</ol>
+</section>
+</section>
+<section id="feather-.feather-files" class="level2">
+<h2 class="anchored" data-anchor-id="feather-.feather-files">Feather (.feather) files</h2>
+<ol type="1">
+<li><p>This file format is quickly read and written, which are good for big data files.</p></li>
+<li><p>Reading in (input)</p>
+<ol type="1">
+<li>The <a href="https://www.rdocumentation.org/packages/feather/versions/0.3.5">feather::read_feather()</a> function does it.</li>
+</ol></li>
+<li><p>Writing out (output)</p></li>
+</ol>
+<p>The <a href="https://www.rdocumentation.org/packages/feather/versions/0.3.5">feather::write_feather()</a> function does it.</p>
 
 
 </section>

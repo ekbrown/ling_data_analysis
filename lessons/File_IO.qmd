@@ -6,13 +6,27 @@ title: "File I/O in R"
 
 -   Students will read data from files and writing data to files.
 
+## Directory operations
+
+-   Computers are structured in a hierarchal filesystem (e.g., "/Users/Fernando/Documents/my_novel.docx").
+
+-   Often, R scripts need to move into specific directories (aka. folders) in order to access specific files.
+
+-   R has several functions to move around a filesystem. Here are a few of them:
+
+    -   `getwd()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd)) prints to the console the current working directory (i.e., the directory at the script currently has access to).
+
+    -   `setwd()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd)) sets a directory so that the script has access to it.
+
+    -   `dir()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/list.files), an alias for `list.files()`) lists the contents of a directory, either only in the one directory or also in all sub-directories (with the `recursive` argument).
+
 ## Text files (.txt)
 
 -   **Reading** in data (aka. input) from text files can be accomplished in two ways:
 
     -   Way 1: Slurp all text in the file at once and hold it in the working memory of the computer:
 
-        -   `scan()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scan)) returns a vector (the default) or list.
+        -   `scan()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scan){target="_blank"}) returns a vector (the default) or list.
 
         -   `readLines()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/readLines)) in base R returns a vector with each line (i.e., hard return) in the input file as an element. This is a bare-bones version of `scan()`.
 
@@ -59,3 +73,65 @@ title: "File I/O in R"
     -   `write.table()` ([here](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/write.table)) in base R is the output equivalent of `read.table()` mentioned above.
 
     -   `write_csv()` ([here](https://readr.tidyverse.org/reference/write_delim.html)) in the `readr` package is the output equivalent of the `read_csv()` mentioned above.
+
+### Activity
+
+1.  Install the tidyverse suite of packages with the command `install.packages("tidyverse")` in the console.
+
+2.  Download some TXT files of your choice (perhaps from [Project Gutenberg](https://www.gutenberg.org/) or Saints.zip from the Canvas Module "Datasets").
+
+3.  Create a script that reads in all TXT files in a directory (and perhaps any subdirectories) and simply print the text to the console.
+
+    1.  Include `library("tidyverse")` at the top of your script (i.e., .r file.)
+
+4.  Ramp it up by breaking up the text into words and printing those to the console.
+
+5.  Now for some fun, as a class let's count the number of words in each text file, and print the name of the file and the number of words to the console.
+
+6.  As a final step, let's write out a CSV file with two columns: column A = the name of the file, column B = the number of words in that file.
+
+## Excel files
+
+1.  Reading in (input) an Excel is easy with [readxl::read_excel()](https://readxl.tidyverse.org/reference/read_excel.html).
+
+    1.  You can specify which worksheet to read (with the `sheet` argument), or even a specific set of cells within a specific worksheet (with the `range` argument).
+
+2.  Writing out (output)
+
+    1.  [xlsx::write.xlsx()](http://www.sthda.com/english/wiki/r-xlsx-package-a-quick-start-guide-to-manipulate-excel-files-in-r#write-data-to-an-excel-file) function does the trick.
+
+### Activity
+
+1.  Download an Excel (.xlsx) file of your choice (perhaps from the Module "Datasets" in Canvas) or use one that's already on your harddrive.
+
+2.  Open the Excel file (in Excel) and inspect the worksheet(s) to figure out where the data is (i.e., sheet name, cell range).
+
+3.  Read in the appropriate worksheet and display it within RStudio with the [`view()`](https://tibble.tidyverse.org/reference/view.html) function.
+
+## SPSS (.sav), Stata (.dta), and SAS (.sas) files
+
+1.  Reading in (input)
+
+    1.  The [`haven`](https://www.rdocumentation.org/packages/haven/versions/2.2.0) R package does the trick.
+
+2.  Writing out (output)
+
+    1.  Who cares? You should output it as something more cross-platform-friendly like CSV.
+
+### **Activity**
+
+1.  Download the SPSS (.sav) file in the CMS.
+
+2.  Read in the SPSS file and display it with [view()](https://tibble.tidyverse.org/reference/view.html).
+
+## Feather (.feather) files
+
+1.  This file format is quickly read and written, which are good for big data files.
+
+2.  Reading in (input)
+
+    1.  The [feather::read_feather()](https://www.rdocumentation.org/packages/feather/versions/0.3.5) function does it.
+
+3.  Writing out (output)
+
+The [feather::write_feather()](https://www.rdocumentation.org/packages/feather/versions/0.3.5) function does it.

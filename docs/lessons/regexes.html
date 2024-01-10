@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - ling_data_analysis</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Regular expressions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,23 +23,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./EKB_2023_icon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../EKB_2023_icon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -62,7 +62,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -74,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/regexes.html">Regular expressions</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -89,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Lesson Plans for Linguistic Data Analysis with R</a> 
+      <a href="../">Lesson Plans for Linguistic Data Analysis with R</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -101,7 +101,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -116,31 +116,31 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">R and RStudio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/programming_basics.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/programming_basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Programming basics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/data_structures.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/data_structures.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data structures in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/File_IO.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/File_IO.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">File I/O in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/regexes.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/regexes.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Regular expressions</span></a>
   </div>
 </li>
@@ -152,14 +152,34 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#regular-expressions-aka.-regexes" id="toc-regular-expressions-aka.-regexes" class="nav-link" data-scroll-target="#regular-expressions-aka.-regexes">Regular expressions (aka. regexes)</a></li>
+  <li><a href="#character-classes" id="toc-character-classes" class="nav-link" data-scroll-target="#character-classes">Character classes</a></li>
+  <li><a href="#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator" id="toc-the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator" class="nav-link" data-scroll-target="#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator"><code>|</code> (the “pipe” which is just above the return key on my keyboard) is an “or” operator:&nbsp;&nbsp;</a>
+  <ul class="collapse">
+  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  </ul></li>
+  <li><a href="#capture-groups" id="toc-capture-groups" class="nav-link" data-scroll-target="#capture-groups">Capture groups</a>
+  <ul class="collapse">
+  <li><a href="#activity-1" id="toc-activity-1" class="nav-link" data-scroll-target="#activity-1">Activity</a></li>
+  </ul></li>
+  <li><a href="#lookaround" id="toc-lookaround" class="nav-link" data-scroll-target="#lookaround"><strong>Lookaround</strong></a>
+  <ul class="collapse">
+  <li><a href="#activity-2" id="toc-activity-2" class="nav-link" data-scroll-target="#activity-2"><strong>Activity</strong></a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ling_data_analysis</h1>
+<h1 class="title">Regular expressions</h1>
 </div>
 
 
@@ -174,9 +194,112 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu.</p>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">Objective</h2>
+<ul>
+<li>Students will become proficient with writing regular expressions, including with capture groups and lookaround.</li>
+</ul>
+</section>
+<section id="regular-expressions-aka.-regexes" class="level2">
+<h2 class="anchored" data-anchor-id="regular-expressions-aka.-regexes">Regular expressions (aka. regexes)</h2>
+<ol type="1">
+<li><p>Regular expressions are used to match strings.&nbsp;</p>
+<ol type="1">
+<li>Note: In R, you must use double backslashes, e.g., <code>\\w+</code></li>
+</ol></li>
+<li><p>Online regex checker are useful, such as <a href="https://pythex.org/">here</a> (for Python), <a href="https://regex101.com/">here</a>, and <a href="https://www.regextester.com/">here</a>.</p></li>
+<li><p>Letters represent themselves: <code>"ed"</code> returns <em>ed</em> anywhere in the string, for example, <em><strong>Ed</strong> studi<strong>ed</strong> in the <strong>ed</strong>ucation building</em>.</p></li>
+</ol>
+</section>
+<section id="character-classes" class="level2">
+<h2 class="anchored" data-anchor-id="character-classes">Character classes</h2>
+<ol type="1">
+<li><p><code>\\w</code> = alphanumeric character; <code>\\W</code> = non-alphanumeric character</p></li>
+<li><p><code>\\s</code> = whitespace (i.e., spaces, tab breaks, newlines); <code>\\S</code> = non-whitespace</p></li>
+<li><p><code>\\d</code> = Arabic numeral (i.e., 0-9); <code>\\D</code> = non-Arabic numeral</p></li>
+<li><p><code>[]</code> = character class finds one of the characters between the square brackets:&nbsp;</p>
+<ol type="1">
+<li><p><code>[aeiou]</code> finds one of the five orthographic vowels</p></li>
+<li><p><code>[Aa]</code> find either uppercase or lowercase <em>a</em>&nbsp;</p></li>
+<li><p><code>[a-z]</code> finds one lowercase English character</p></li>
+<li><p><code>[a-zA-Z]</code> returns one lowercase English character or one uppercase English character&nbsp;</p></li>
+<li><p>Example: <code>"latin[aox]"</code> returns <em>latina</em>, <em>latino</em>, <em>latinx</em>.</p></li>
+</ol></li>
+</ol>
+</section>
+<section id="the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator" class="level2">
+<h2 class="anchored" data-anchor-id="the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator"><code>|</code> (the “pipe” which is just above the return key on my keyboard) is an “or” operator:&nbsp;&nbsp;</h2>
+<ol type="1">
+<li><p>Example: <code>"\\bth(is|at|ese|ose) \\w+"</code> returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, <em>this bag</em>, <em>that cat</em>, <em>these plants</em>, <em>those buildings</em>.</p></li>
+<li><p>Quantifiers</p>
+<ol type="1">
+<li><p><code>{min, max}</code> = returns between min and max number of the previous character: <code>"\\w{2,5}"</code> returns between two and five alphanumeric characters. Note that <code>"\\w{,5}"</code> returns up to five alphanumeric characters, and <code>"\\w{2,}"</code> finds two or more alphanumeric characters.</p></li>
+<li><p><code>{integer}</code> = returns the exact number of the previous character: <code>"\\d{4}"</code> returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)</p></li>
+<li><p>Shortcut quantifiers:</p>
+<ol type="1">
+<li><p><code>?</code> means the same as <code>{0, 1}</code>, meaning it returns zero or one of the previous pattern, that is, the previous character is optional</p></li>
+<li><p><code>*</code> is the same as <code>{0,}</code> and returns zero or more of the previous pattern: yes\\!* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc..&nbsp;</p></li>
+<li><p><code>+</code> means <code>{1,}</code> and returns one or more of the previous pattern, for example, <code>"go+l"</code> returns <em>gol</em>, <em>goool</em>, <em>gooooooool</em></p></li>
+</ol></li>
+</ol></li>
+</ol>
+<section id="activity" class="level3">
+<h3 class="anchored" data-anchor-id="activity">Activity</h3>
+<ol type="1">
+<li><p>What do the following regexes match? See example in Section 2.1 <a href="https://web.stanford.edu/~jurafsky/slp3/2.pdf">here</a>.</p>
+<ol type="1">
+<li><p><code>"\\b[Tt]he\\b\\s+\\b[Ii]nternet\\b"</code></p></li>
+<li><p><code>"\\w+ed\\b"</code></p></li>
+<li><p><code>"\\bcent(er|re)\\b"</code></p></li>
+<li><p><code>"\\bwalk(s|ed|ing)?\\b"</code></p></li>
+<li><p><code>"\\b[^aeiou\\W]{2,}\\w+"</code></p></li>
+<li><p><code>"\\b[^aeiou\\W][aeiou]\\w+"</code></p></li>
+</ol></li>
+</ol>
+</section>
+</section>
+<section id="capture-groups" class="level2">
+<h2 class="anchored" data-anchor-id="capture-groups">Capture groups</h2>
+<ol type="1">
+<li><p>Warning: This gets wild.&nbsp;</p></li>
+<li><p>You can have a regular expression remember what it captured in order to search for that same sequence of characters.</p></li>
+<li><p>You can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with <code>\\1</code> for the first capture group, or <code>\\2</code> for the second capture group (if you have more than one capture group in the same regex), etc.</p></li>
+<li><p>Example: <code>"\\w+(\\w) \\1\\w+"</code> returns a bigram whose first word ends with the same letter that the second word begins with, e.g., <em>walke<strong>dd</strong>own</em></p></li>
+</ol>
+<section id="activity-1" class="level3">
+<h3 class="anchored" data-anchor-id="activity-1">Activity</h3>
+<ol type="1">
+<li><p>What do the following regexes match?</p>
+<ol type="1">
+<li><p><code>"([aeiou])\\1"</code></p></li>
+<li><p><code>"\\w*([aeiou])\\1\\w*"</code></p></li>
+<li><p><code>"the (\\w+)er they were, the \\1er they will be"</code></p></li>
+<li><p><code>"[Tt]he (\\w+)er they (\\w+),? the \\1er we \\2"</code></p></li>
+<li><p><code>"\\w+(\\w{2,})\\W+\\w+\\1\\b"</code></p></li>
+</ol></li>
+</ol>
+</section>
+</section>
+<section id="lookaround" class="level2">
+<h2 class="anchored" data-anchor-id="lookaround"><strong>Lookaround</strong></h2>
+<ol type="1">
+<li><p>Lookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.</p>
+<ol type="1">
+<li>See lookahead examples in Section 2.1.7 <a href="https://web.stanford.edu/~jurafsky/slp3/2.pdf">here</a>.</li>
+</ol></li>
+</ol>
+<section id="activity-2" class="level3">
+<h3 class="anchored" data-anchor-id="activity-2"><strong>Activity</strong></h3>
+<ol type="1">
+<li><p>Download at least several TXT files of your choice (perhaps from <a href="https://www.gutenberg.org/">Project Gutenberg</a> or Saints from the LMS).</p></li>
+<li><p>Loop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the <a href="https://stringr.tidyverse.org/"><code>stringr</code></a> package, for example, <a href="https://stringr.tidyverse.org/reference/str_match.html"><code>str_match_all()</code></a>, <a href="https://stringr.tidyverse.org/reference/str_extract.html"><code>str_extract_all()</code></a>, <a href="https://stringr.tidyverse.org/reference/str_locate.html"><code>str_locate_all()</code></a>.</p></li>
+<li><p>Create a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.</p></li>
+<li><p>Ramp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc.</p></li>
+</ol>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

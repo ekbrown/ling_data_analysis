@@ -14,6 +14,13 @@
     "text": "Students will read data from files and writing data to files."
   },
   {
+    "objectID": "lessons/File_IO.html#directory-operations",
+    "href": "lessons/File_IO.html#directory-operations",
+    "title": "File I/O in R",
+    "section": "Directory operations",
+    "text": "Directory operations\n\nComputers are structured in a hierarchal filesystem (e.g., “/Users/Fernando/Documents/my_novel.docx”).\nOften, R scripts need to move into specific directories (aka. folders) in order to access specific files.\nR has several functions to move around a filesystem. Here are a few of them:\n\ngetwd() (here) prints to the console the current working directory (i.e., the directory at the script currently has access to).\nsetwd() (here) sets a directory so that the script has access to it.\ndir() (here, an alias for list.files()) lists the contents of a directory, either only in the one directory or also in all sub-directories (with the recursive argument)."
+  },
+  {
     "objectID": "lessons/File_IO.html#text-files-.txt",
     "href": "lessons/File_IO.html#text-files-.txt",
     "title": "File I/O in R",
@@ -25,7 +32,28 @@
     "href": "lessons/File_IO.html#csv-files-.csv",
     "title": "File I/O in R",
     "section": "CSV files (.csv)",
-    "text": "CSV files (.csv)\n\nReading in tabular datasets from CSV files can be accomplished with several functions:\n\nread.table() (here) is a versatile function with many arguments, that returns a data frame.\nread_csv() (here) in the readr package (part of tidyverse) reads CSV files that have a comma as the separator between columns, and returns a tibble.\nread_tsv() (here) in the readr package reads TSV files that have a tab as the separator between columns, and returns a tibble.\n\nNote: Some files with the extension .csv or .txt are actually .tsv files, that is, the column separator is a tab.\n\n\nWriting out a data frame to a CSV files is a cinch:\n\nwrite.table() (here) in base R is the output equivalent of read.table() mentioned above.\nwrite_csv() (here) in the readr package is the output equivalent of the read_csv() mentioned above."
+    "text": "CSV files (.csv)\n\nReading in tabular datasets from CSV files can be accomplished with several functions:\n\nread.table() (here) is a versatile function with many arguments, that returns a data frame.\nread_csv() (here) in the readr package (part of tidyverse) reads CSV files that have a comma as the separator between columns, and returns a tibble.\nread_tsv() (here) in the readr package reads TSV files that have a tab as the separator between columns, and returns a tibble.\n\nNote: Some files with the extension .csv or .txt are actually .tsv files, that is, the column separator is a tab.\n\n\nWriting out a data frame to a CSV files is a cinch:\n\nwrite.table() (here) in base R is the output equivalent of read.table() mentioned above.\nwrite_csv() (here) in the readr package is the output equivalent of the read_csv() mentioned above.\n\n\n\nActivity\n\nInstall the tidyverse suite of packages with the command install.packages(\"tidyverse\") in the console.\nDownload some TXT files of your choice (perhaps from Project Gutenberg or Saints.zip from the Canvas Module “Datasets”).\nCreate a script that reads in all TXT files in a directory (and perhaps any subdirectories) and simply print the text to the console.\n\nInclude library(\"tidyverse\") at the top of your script (i.e., .r file.)\n\nRamp it up by breaking up the text into words and printing those to the console.\nNow for some fun, as a class let’s count the number of words in each text file, and print the name of the file and the number of words to the console.\nAs a final step, let’s write out a CSV file with two columns: column A = the name of the file, column B = the number of words in that file."
+  },
+  {
+    "objectID": "lessons/File_IO.html#excel-files",
+    "href": "lessons/File_IO.html#excel-files",
+    "title": "File I/O in R",
+    "section": "Excel files",
+    "text": "Excel files\n\nReading in (input) an Excel is easy with readxl::read_excel().\n\nYou can specify which worksheet to read (with the sheet argument), or even a specific set of cells within a specific worksheet (with the range argument).\n\nWriting out (output)\n\nxlsx::write.xlsx() function does the trick.\n\n\n\nActivity\n\nDownload an Excel (.xlsx) file of your choice (perhaps from the Module “Datasets” in Canvas) or use one that’s already on your harddrive.\nOpen the Excel file (in Excel) and inspect the worksheet(s) to figure out where the data is (i.e., sheet name, cell range).\nRead in the appropriate worksheet and display it within RStudio with the view() function."
+  },
+  {
+    "objectID": "lessons/File_IO.html#spss-.sav-stata-.dta-and-sas-.sas-files",
+    "href": "lessons/File_IO.html#spss-.sav-stata-.dta-and-sas-.sas-files",
+    "title": "File I/O in R",
+    "section": "SPSS (.sav), Stata (.dta), and SAS (.sas) files",
+    "text": "SPSS (.sav), Stata (.dta), and SAS (.sas) files\n\nReading in (input)\n\nThe haven R package does the trick.\n\nWriting out (output)\n\nWho cares? You should output it as something more cross-platform-friendly like CSV.\n\n\n\nActivity\n\nDownload the SPSS (.sav) file in the CMS.\nRead in the SPSS file and display it with view()."
+  },
+  {
+    "objectID": "lessons/File_IO.html#feather-.feather-files",
+    "href": "lessons/File_IO.html#feather-.feather-files",
+    "title": "File I/O in R",
+    "section": "Feather (.feather) files",
+    "text": "Feather (.feather) files\n\nThis file format is quickly read and written, which are good for big data files.\nReading in (input)\n\nThe feather::read_feather() function does it.\n\nWriting out (output)\n\nThe feather::write_feather() function does it."
   },
   {
     "objectID": "lessons/programming_basics.html",
@@ -84,11 +112,53 @@
     "text": "Defining functions in R\n\nA very useful ability in R (and all programming languages) is for a user to define their own custom function.\nThe function() function does the trick.\n\nSee a tutorial here.\n\n\nActivity\n\nStudents define a function that takes as input a word and returns as output a logical value (aka. Boolean value) indicating whether the word begins with one of the five orthographic vowels (i.e., a, e, i, o, u).\n\nHint: The %in% keyword will be helpful here.\n\nNow for a little fun and to put these basic programming skills together: Students define a function (likely with smaller helper functions) that translates a sentence from English into Pig Latin. A little refresher on Pig Latin: If a word begins with a vowel, the word yay is added to the end of it; if a word begins with a consonant or consonant cluster (e.g., ch, gr), that consonant or consonant cluster is moved to the end of the word followed by ay.\n\nHint: the stringr package (part of the tidyverse) will be useful here, especially the str_c(), str_sub(), str_split() (and unlist()) functions, as will the letters and LETTERS built-in constants.\nHint: After a good-faith effort, if you need help, see the script written by Dr. Brown by clicking on “▶ Code” below.\n\n\n\n\nCode\nsuppressPackageStartupMessages(library(\"tidyverse\"))\n\n# helper function 1, for vowel words\ntrans_v &lt;-  function(wd, vowels) {\n  return(str_c(wd, \"yay\"))\n}\n\n# helper function 2, for consonant words\ntrans_c &lt;- function(wd, vowels, first_let) {\n  second_let &lt;- str_sub(wd, 2, 2)\n  if (!str_to_lower(second_let) %in% vowels) {\n    first_two &lt;- str_sub(wd, 1, 2)\n    rest_wd &lt;- str_sub(wd, 3, str_length(wd))\n    return(str_c(rest_wd, first_two, \"ay\"))\n  } else {\n    rest_wd &lt;- str_sub(wd, 2, str_length(wd))\n    return(str_c(rest_wd, first_let, \"ay\"))\n  }\n}\n\n# the main function\ntrans_pig &lt;- function(sentence, vowels) {\n  wds &lt;- unlist(str_split(sentence, \"\\\\s+\"))\n  trans_sent &lt;- \"\"\n  for (wd in wds) {\n    first_let &lt;- str_sub(wd, 1, 1)\n    if (str_to_lower(first_let) %in% vowels) {\n      # this is a vowel word\n      trans_sent &lt;- str_c(trans_sent, trans_v(wd, vowels), \" \")\n    } else {\n      # the current word is a consonant word\n      trans_sent &lt;- str_c(trans_sent, trans_c(wd, vowels, first_let), \" \")\n    }\n  }\n  return(str_trim(trans_sent))\n}\n\n### test the function\nsentence &lt;- \"I do not like green eggs and ham.\"\nvowels &lt;- c(\"a\", \"e\", \"i\", \"o\", \"u\")\nprint(trans_pig(sentence, vowels))"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "lessons/regexes.html",
+    "href": "lessons/regexes.html",
+    "title": "Regular expressions",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
+    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+  },
+  {
+    "objectID": "lessons/regexes.html#objective",
+    "href": "lessons/regexes.html#objective",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+  },
+  {
+    "objectID": "lessons/regexes.html#regular-expressions-aka.-regexes",
+    "href": "lessons/regexes.html#regular-expressions-aka.-regexes",
+    "title": "Regular expressions",
+    "section": "Regular expressions (aka. regexes)",
+    "text": "Regular expressions (aka. regexes)\n\nRegular expressions are used to match strings. \n\nNote: In R, you must use double backslashes, e.g., \\\\w+\n\nOnline regex checker are useful, such as here (for Python), here, and here.\nLetters represent themselves: \"ed\" returns ed anywhere in the string, for example, Ed studied in the education building."
+  },
+  {
+    "objectID": "lessons/regexes.html#character-classes",
+    "href": "lessons/regexes.html#character-classes",
+    "title": "Regular expressions",
+    "section": "Character classes",
+    "text": "Character classes\n\n\\\\w = alphanumeric character; \\\\W = non-alphanumeric character\n\\\\s = whitespace (i.e., spaces, tab breaks, newlines); \\\\S = non-whitespace\n\\\\d = Arabic numeral (i.e., 0-9); \\\\D = non-Arabic numeral\n[] = character class finds one of the characters between the square brackets: \n\n[aeiou] finds one of the five orthographic vowels\n[Aa] find either uppercase or lowercase a \n[a-z] finds one lowercase English character\n[a-zA-Z] returns one lowercase English character or one uppercase English character \nExample: \"latin[aox]\" returns latina, latino, latinx."
+  },
+  {
+    "objectID": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
+    "href": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
+    "title": "Regular expressions",
+    "section": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  ",
+    "text": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  \n\nExample: \"\\\\bth(is|at|ese|ose) \\\\w+\" returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, this bag, that cat, these plants, those buildings.\nQuantifiers\n\n{min, max} = returns between min and max number of the previous character: \"\\\\w{2,5}\" returns between two and five alphanumeric characters. Note that \"\\\\w{,5}\" returns up to five alphanumeric characters, and \"\\\\w{2,}\" finds two or more alphanumeric characters.\n{integer} = returns the exact number of the previous character: \"\\\\d{4}\" returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)\nShortcut quantifiers:\n\n? means the same as {0, 1}, meaning it returns zero or one of the previous pattern, that is, the previous character is optional\n* is the same as {0,} and returns zero or more of the previous pattern: yes\\\\!* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc.. \n+ means {1,} and returns one or more of the previous pattern, for example, \"go+l\" returns gol, goool, gooooooool\n\n\n\n\nActivity\n\nWhat do the following regexes match? See example in Section 2.1 here.\n\n\"\\\\b[Tt]he\\\\b\\\\s+\\\\b[Ii]nternet\\\\b\"\n\"\\\\w+ed\\\\b\"\n\"\\\\bcent(er|re)\\\\b\"\n\"\\\\bwalk(s|ed|ing)?\\\\b\"\n\"\\\\b[^aeiou\\\\W]{2,}\\\\w+\"\n\"\\\\b[^aeiou\\\\W][aeiou]\\\\w+\""
+  },
+  {
+    "objectID": "lessons/regexes.html#capture-groups",
+    "href": "lessons/regexes.html#capture-groups",
+    "title": "Regular expressions",
+    "section": "Capture groups",
+    "text": "Capture groups\n\nWarning: This gets wild. \nYou can have a regular expression remember what it captured in order to search for that same sequence of characters.\nYou can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with \\\\1 for the first capture group, or \\\\2 for the second capture group (if you have more than one capture group in the same regex), etc.\nExample: \"\\\\w+(\\\\w) \\\\1\\\\w+\" returns a bigram whose first word ends with the same letter that the second word begins with, e.g., walkeddown\n\n\nActivity\n\nWhat do the following regexes match?\n\n\"([aeiou])\\\\1\"\n\"\\\\w*([aeiou])\\\\1\\\\w*\"\n\"the (\\\\w+)er they were, the \\\\1er they will be\"\n\"[Tt]he (\\\\w+)er they (\\\\w+),? the \\\\1er we \\\\2\"\n\"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\""
+  },
+  {
+    "objectID": "lessons/regexes.html#lookaround",
+    "href": "lessons/regexes.html#lookaround",
+    "title": "Regular expressions",
+    "section": "Lookaround",
+    "text": "Lookaround\n\nLookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.\n\nSee lookahead examples in Section 2.1.7 here.\n\n\n\nActivity\n\nDownload at least several TXT files of your choice (perhaps from Project Gutenberg or Saints from the LMS).\nLoop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the stringr package, for example, str_match_all(), str_extract_all(), str_locate_all().\nCreate a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.\nRamp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc."
   },
   {
     "objectID": "index.html",
@@ -96,6 +166,13 @@
     "title": "ling_data_analysis",
     "section": "",
     "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
   },
   {
     "objectID": "lessons/r_rstudio.html",

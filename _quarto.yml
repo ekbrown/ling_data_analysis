@@ -21,6 +21,7 @@ website:
           - lessons/programming_basics.qmd
           - lessons/data_structures.qmd
           - lessons/File_IO.qmd
+          - lessons/regexes.qmd
 
 format:
   html:

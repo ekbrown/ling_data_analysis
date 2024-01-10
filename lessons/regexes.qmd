@@ -1,0 +1,111 @@
+---
+title: "Regular expressions"
+---
+
+## Objective
+
+-   Students will become proficient with writing regular expressions, including with capture groups and lookaround.
+
+## Regular expressions (aka. regexes)
+
+1.  Regular expressions are used to match strings. 
+
+    1.  Note: In R, you must use double backslashes, e.g., `\\w+`
+
+2.  Online regex checker are useful, such as [here](https://pythex.org/) (for Python), [here](https://regex101.com/), and [here](https://www.regextester.com/).
+
+3.  Letters represent themselves: `"ed"` returns *ed* anywhere in the string, for example, ***Ed** studi**ed** in the **ed**ucation building*.
+
+## Character classes
+
+1.  `\\w` = alphanumeric character; `\\W` = non-alphanumeric character
+
+2.  `\\s` = whitespace (i.e., spaces, tab breaks, newlines); `\\S` = non-whitespace
+
+3.  `\\d` = Arabic numeral (i.e., 0-9); `\\D` = non-Arabic numeral
+
+4.  `[]` = character class finds one of the characters between the square brackets: 
+
+    1.  `[aeiou]` finds one of the five orthographic vowels
+
+    2.  `[Aa]` find either uppercase or lowercase *a* 
+
+    3.  `[a-z]` finds one lowercase English character
+
+    4.  `[a-zA-Z]` returns one lowercase English character or one uppercase English character 
+
+    5.  Example: `"latin[aox]"` returns *latina*, *latino*, *latinx*.
+
+## `|` (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  
+
+1.  Example: `"\\bth(is|at|ese|ose) \\w+"` returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, *this bag*, *that cat*, *these plants*, *those buildings*.
+
+2.  Quantifiers
+
+    1.  `{min, max}` = returns between min and max number of the previous character: `"\\w{2,5}"` returns between two and five alphanumeric characters. Note that `"\\w{,5}"` returns up to five alphanumeric characters, and `"\\w{2,}"` finds two or more alphanumeric characters.
+
+    2.  `{integer}` = returns the exact number of the previous character: `"\\d{4}"` returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)
+
+    3.  Shortcut quantifiers:
+
+        1.  `?` means the same as `{0, 1}`, meaning it returns zero or one of the previous pattern, that is, the previous character is optional
+
+        2.  `*` is the same as `{0,}` and returns zero or more of the previous pattern: yes\\\\!\* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc.. 
+
+        3.  `+` means `{1,}` and returns one or more of the previous pattern, for example, `"go+l"` returns *gol*, *goool*, *gooooooool*
+
+### Activity
+
+1.  What do the following regexes match? See example in Section 2.1 [here](https://web.stanford.edu/~jurafsky/slp3/2.pdf).
+
+    1.  `"\\b[Tt]he\\b\\s+\\b[Ii]nternet\\b"`
+
+    2.  `"\\w+ed\\b"`
+
+    3.  `"\\bcent(er|re)\\b"`
+
+    4.  `"\\bwalk(s|ed|ing)?\\b"`
+
+    5.  `"\\b[^aeiou\\W]{2,}\\w+"`
+
+    6.  `"\\b[^aeiou\\W][aeiou]\\w+"`
+
+## Capture groups
+
+1.  Warning: This gets wild. 
+
+2.  You can have a regular expression remember what it captured in order to search for that same sequence of characters.
+
+3.  You can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with `\\1` for the first capture group, or `\\2` for the second capture group (if you have more than one capture group in the same regex), etc.
+
+4.  Example: `"\\w+(\\w) \\1\\w+"` returns a bigram whose first word ends with the same letter that the second word begins with, e.g., *walke**dd**own*
+
+### Activity
+
+1.  What do the following regexes match?
+
+    1.  `"([aeiou])\\1"`
+
+    2.  `"\\w*([aeiou])\\1\\w*"`
+
+    3.  `"the (\\w+)er they were, the \\1er they will be"`
+
+    4.  `"[Tt]he (\\w+)er they (\\w+),? the \\1er we \\2"`
+
+    5.  `"\\w+(\\w{2,})\\W+\\w+\\1\\b"`
+
+## **Lookaround**
+
+1.  Lookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.
+
+    1.  See lookahead examples in Section 2.1.7 [here](https://web.stanford.edu/~jurafsky/slp3/2.pdf).
+
+### **Activity**
+
+1.  Download at least several TXT files of your choice (perhaps from [Project Gutenberg](https://www.gutenberg.org/) or Saints from the LMS).
+
+2.  Loop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the [`stringr`](https://stringr.tidyverse.org/) package, for example, [`str_match_all()`](https://stringr.tidyverse.org/reference/str_match.html), [`str_extract_all()`](https://stringr.tidyverse.org/reference/str_extract.html), [`str_locate_all()`](https://stringr.tidyverse.org/reference/str_locate.html).
+
+3.  Create a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.
+
+4.  Ramp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc.
