@@ -10,7 +10,7 @@ title: "File I/O in R"
 
 -   Computers are structured in a hierarchal filesystem (e.g., "/Users/Fernando/Documents/my_novel.docx").
 
--   Often, R scripts need to move into specific directories (aka. folders) in order to access specific files.
+-   Often, R scripts need to change directories (aka. folders) in order to access specific files.
 
 -   R has several functions to move around a filesystem. Here are a few of them:
 
