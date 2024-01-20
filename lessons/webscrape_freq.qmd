@@ -164,6 +164,8 @@ It's that time of the class period: your turn!
 
 Find a frequency (or rank) list of your choice on the internet (probably at wikitionary.org) that is not in an HTML table and parse it into a data frame in R. If you need help finding one, try the 2,000 most frequent words in fiction in English [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction) or the 1,000 Japanese basic words [here](https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words).
 
+After a good-faith effort, if you need some help, see Dr. Brown's code below:
+
 English
 
 ```{r}

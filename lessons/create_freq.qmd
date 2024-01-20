@@ -146,7 +146,7 @@ tibble(wd = words) %>%
 
 ## Populate a `list`
 
-A third way to calculate frequencies of words in files is to create an R list and populate the list with words, one file at a time. This is a good way if the corpus that you want frequencies from is too big to fit in the RAM of your computer, or to fit comfortably because it makes your computer work slowly. You can have your script bring into the RAM only one file at a time and populate an R `list`. This approach to getting frequencies is slower than the previous two, so unless you have a good reason for using this approach, it's probably best to one of the previous two approaches (fun fact: Dr. Brown likes the `count()` approach best).
+A third way to calculate frequencies of words in files is to create an R list and populate the list with words, one file at a time. This is a good way if the corpus that you want frequencies from is too big to fit in the RAM of your computer, or too big to fit comfortably because it makes your computer work slowly. You can have your script bring into the RAM only one file at a time and populate an R `list`. This approach to getting frequencies is slower than the previous two, so unless you have a good reason for using this approach, it's probably best to one of the previous two approaches (fun fact: Dr. Brown likes the `count()` approach best).
 
 Let's take a look at an example using the *Saints* corpus:
 
