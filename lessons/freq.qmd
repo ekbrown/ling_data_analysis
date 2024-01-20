@@ -8,7 +8,7 @@ Students will create frequency lists from files on their harddrive.
 
 ## Frequency in language
 
-Frequency is an important construct in many areas of language, and more generally, in human cognition (see our amazing pattern recognition abilities). Frequency affects which words and phrases are learned first, in L1s and L2s. More frequent grammatical constructions are learned first (and better for L2 speakers) than less frequent ones (e.g., active voice vs. passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent word resist analogical leveling (*keep* -\> *\*keeped*, but *leap* -\> *leapt*, *leaped*).
+Frequency is an important construct in many areas of language, and more generally, in human cognition (see our amazing pattern recognition abilities). Frequency affects which words and phrases are learned first, in L1s and L2s. More frequent grammatical constructions are learned before (and better for L2 speakers) than less frequent ones (e.g., active voice vs. passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent word resist analogical leveling (*keep* -\> *\*keeped*, but *leap* -\> *leapt*, *leaped*).
 
 In summary, frequency is super important, and being able to get frequencies of language features, especially words, is an important skill for a language-oriented data analyst.
 
