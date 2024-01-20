@@ -1,0 +1,202 @@
+---
+title: "Webscrape frequencies"
+---
+
+## Objective
+
+Students will use R to webscrape an already-created frequency list on the internet.
+
+## Overview of the internet
+
+Here's a super simplified overview of how the internet works: Clients (e.g., computers, smart phones) that are connected to the internet make HTTP requests to web servers (e.g., byu.edu, npr.org, instagram.com, etc.), and those web servers send back HTTP responses. [Here](https://en.wikipedia.org/wiki/Client_%28computing%29#/media/File:Client-server-model.svg)'s a diagram to illustrate this basic idea.
+
+## R as web browser
+
+R can act like a web browser by making HTTP requests and receiving HTTP responses from web servers. The `rvest` package [here](https://rvest.tidyverse.org/) makes it easy to have R interact with the internet. That package also contains useful functions to parse the HTML in the HTTP response in order to extract information using either [CSS selectors](https://www.w3schools.com/cssref/css_selectors.asp) or [XPath expressions](https://www.w3schools.com/xml/xpath_syntax.asp).
+
+It's a good idea, and actually necessary with some websites, to make R look like a normal web browser when making the request to the web server. We do this by setting the user-agent to a common one that many web browsers use:
+
+```{r}
+# set the user-agent to make R look like a normal web browser to the web server
+httr::set_config(httr::user_agent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"))
+```
+
+## Frequency lists on the internet
+
+There are many frequency lists on the internet, and the free online dictionary [wikitionary](https://en.wiktionary.org/wiki/Wiktionary:Main_Page) makes available a plethora of them [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists).
+
+Sometimes, the frequency lists are in HTML tables, for example:
+
+-   The 1,000 most frequent words in TV and Movie scripts and transcripts in English [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000).
+
+-   The 1,900 most frequent Hindi words [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Hindi_1900).
+
+-   The 10,000 most frequency Serbian words based on TV and Movie subtitles [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Serbian_wordlist).
+
+Other times, the frequency lists are presented as HTML lists (whether ordered or unordered), for example:
+
+-   The 5,000 most frequent words in Danish [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Danish_wordlist).
+
+-   1,000 Japanese basic words [here](https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words).
+
+-   The 2,000 most frequent words in fiction in English [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction).
+
+## HTML tables
+
+Let's webscrape a frequency list that is sitting in an HTML table. Let's use the list of the 1,000 most frequent words in TV and Movie scripts in English [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000).
+
+```{r}
+#| eval: false
+
+# if need, use install.packages() first to download the following packages to your harddrive
+library("tidyverse")
+library("rvest")
+
+url <- "https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000"
+
+# request the page
+page <- read_html(url)
+
+# get the HTML table holding the frequency list
+freqs_table <- html_element(page, "table") 
+
+# convert the HTML table into a data frame (i.e., tibble)
+freqs_df <- html_table(freqs_table, header = TRUE)
+
+# print the frequency table to the console
+print(freqs_df)
+```
+
+You may have noticed that the above code could be put into a single pipeline by using the pipe operator repeatedly:
+
+```{r}
+#| eval: false
+library("tidyverse")
+library("rvest")
+
+"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000" %>% 
+  read_html() %>% 
+  html_element("table") %>% 
+  html_table(header = TRUE) %>% 
+  print()
+```
+
+### Activity
+
+Your turn! Find a frequency list of your choice online that is in an HTML table and webscrape it into a data frame in R. If you've having trouble finding one that is in an HTML table, try the 1,900 most frequent Hindi words [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Hindi_1900) or the 10,000 most frequent Serbian words [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Serbian_wordlist).
+
+After a good-faith effort, if you need help, see Dr. Brown's code below:
+
+Hindi
+
+```{r}
+#| code-fold: true
+#| eval: false
+library("tidyverse")
+library("rvest")
+
+"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Hindi_1900" %>%  # put URL in a string
+  read_html() %>%  # request page
+  html_element("table") %>%  # find first "table" HTML element
+  html_table() %>%  # convert HTML table to data frame (i.e., tibble)
+  print()  # print data frame to console
+```
+
+Serbian
+
+```{r}
+#| code-fold: true
+#| eval: false
+library("tidyverse")
+library("rvest")
+
+# extra exercise: write in appropriate comments below
+"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Serbian_wordlist" %>% 
+  read_html() %>% 
+  html_element("table") %>% 
+  html_table() %>% 
+  print()
+```
+
+## HTML lists
+
+Webscraping HTML lists, whether ordered (i.e., with numbers) or unordered (i.e., with bullets) is more work because we can't use the slick `html_table()` function in `rvest` to convert an HTML table into a data frame in R. Rather, we have to identify which part of the data is the word and which part is the frequency. Further, we have to parse each frequency list separately, as we can't assume that all frequency lists are formatted the same way.
+
+Let's inspect the HTML of the frequency list of the 5,000 most frequency words in Danish in TV and Movie subtitles [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Danish_wordlist). (Seriously, go inspect the HTML of that list before moving on.)
+
+We see that the frequency list is an **o**rdered **l**ist (HTML tag \<ol\>) and that each word and its corresponding frequency is in a **l**ist **i**tem (HTML tag \<li\>) and that the word and its frequency are separated by a space. We can use this information to scrape out the frequency list, and then use the space to identify the word and the frequency in order to put them into separate columns in a data frame in R.
+
+Pro-tip: SelectorGadget ([here](https://chromewebstore.google.com/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb)) is an absolutely super helpful Google Chrome add-on extension that helps to quick identify the CSS Selector of elements of a webpage.
+
+Let's get rolling with the code:
+
+```{r}
+#| eval: false
+library("tidyverse")
+library("rvest")
+
+# put the URL in a string
+"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Danish_wordlist" %>% 
+  
+  # request the HTML page
+  read_html() %>% 
+  
+  # extract the HTML elements <li> that are children of HTML elements <ol>
+  html_elements(css = "ol li") %>% 
+  
+  # keep only the text, that is, remove the HTML tags
+  html_text() %>% 
+  
+  # create a data frame with one column named "both"
+  # note: the dot below pipes the result of the previous step into where the dot is (rather than at the beginning of the function, which is the default behavior of the pipe operator)
+  tibble(both = .) %>% 
+  
+  # separate the "both" column into two columns (i.e., "wd" and "freq") on the space between the word and the frequency
+  separate_wider_delim(cols = "both", delim = " ", names = c("wd", "freq")) %>% 
+  
+  # print the data frame to the console
+  print()
+```
+
+### Activity
+
+It's that time of the class period: your turn!
+
+Find a frequency (or rank) list of your choice on the internet (probably at wikitionary.org) that is not in an HTML table and parse it into a data frame in R. If you need help finding one, try the 2,000 most frequent words in fiction in English [here](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction) or the 1,000 Japanese basic words [here](https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words).
+
+English
+
+```{r}
+#| code-fold: true
+#| eval: false
+library("tidyverse")
+library("rvest")
+
+"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction" %>% 
+  read_html() %>% 
+  html_elements(css = "ol li") %>% 
+  html_text() %>% 
+  tibble(wd = .) %>% 
+  print()
+```
+
+Japanese
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+library("tidyverse")
+library("rvest")
+
+"https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words" %>% 
+  read_html() %>% 
+  html_elements(css = ".mw-parser-output > ul li") %>% 
+  html_text() %>% 
+  tibble(entry = .) %>% 
+  print()
+```
+
+## Question
+
+In most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?

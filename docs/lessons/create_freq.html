@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/freq.html">Creating frequency lists</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/create_freq.html">Creating frequency lists</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -180,8 +180,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/freq.html" class="sidebar-item-text sidebar-link active">
+  <a href="../lessons/create_freq.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Creating frequency lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/webscrape_freq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Webscrape frequencies</span></a>
   </div>
 </li>
       </ul>
@@ -198,13 +204,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
   <li><a href="#frequency-in-language" id="toc-frequency-in-language" class="nav-link" data-scroll-target="#frequency-in-language">Frequency in language</a></li>
-  <li><a href="#getting-frequencies-of-words-in-files" id="toc-getting-frequencies-of-words-in-files" class="nav-link" data-scroll-target="#getting-frequencies-of-words-in-files">Getting frequencies of words in files</a>
+  <li><a href="#getting-frequencies-of-words-in-files" id="toc-getting-frequencies-of-words-in-files" class="nav-link" data-scroll-target="#getting-frequencies-of-words-in-files">Getting frequencies of words in files</a></li>
+  <li><a href="#the-table-function" id="toc-the-table-function" class="nav-link" data-scroll-target="#the-table-function">The <code>table()</code> function</a>
   <ul class="collapse">
-  <li><a href="#the-table-function" id="toc-the-table-function" class="nav-link" data-scroll-target="#the-table-function">The <code>table()</code> function</a></li>
   <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
-  <li><a href="#the-count-function" id="toc-the-count-function" class="nav-link" data-scroll-target="#the-count-function">The <code>count()</code> function</a></li>
+  </ul></li>
+  <li><a href="#the-count-function" id="toc-the-count-function" class="nav-link" data-scroll-target="#the-count-function">The <code>count()</code> function</a>
+  <ul class="collapse">
   <li><a href="#activity-1" id="toc-activity-1" class="nav-link" data-scroll-target="#activity-1">Activity</a></li>
   </ul></li>
+  <li><a href="#populate-a-list" id="toc-populate-a-list" class="nav-link" data-scroll-target="#populate-a-list">Populate a <code>list</code></a></li>
   </ul>
 </nav>
     </div>
@@ -234,12 +243,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="frequency-in-language" class="level2">
 <h2 class="anchored" data-anchor-id="frequency-in-language">Frequency in language</h2>
-<p>Frequency is an important construct in many areas of language, and more generally, in human cognition (see our amazing pattern recognition abilities). Frequency affects which words and phrases are learned first, in L1s and L2s. More frequent grammatical constructions are learned before (and better for L2 speakers) than less frequent ones (e.g., active voice vs.&nbsp;passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent word resist analogical leveling (<em>keep</em> -&gt; <em>*keeped</em>, but <em>leap</em> -&gt; <em>leapt</em>, <em>leaped</em>).</p>
-<p>In summary, frequency is super important, and being able to get frequencies of language features, especially words, is an important skill for a language-oriented data analyst.</p>
+<p>Frequency is an important construct in many areas of language, and more generally, in human cognition (see our amazing pattern recognition abilities). Frequency affects which words and phrases are learned first, in both L1s and L2s. More frequent grammatical constructions are learned before (and better for L2 speakers) than less frequent ones (e.g., active voice vs.&nbsp;passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent words resist analogical leveling (<em>keep</em> -&gt; <em>*keeped</em>, but <em>leap</em> -&gt; <em>leapt</em> -&gt; <em>leaped</em>).</p>
+<p>In summary, frequency is super important, and being able to calculate frequencies of language features, especially words, is an important skill for a language-oriented data analyst.</p>
 </section>
 <section id="getting-frequencies-of-words-in-files" class="level2">
 <h2 class="anchored" data-anchor-id="getting-frequencies-of-words-in-files">Getting frequencies of words in files</h2>
-<p>The logic to calculate frequencies of files on your (2s impersonal) harddrive (yeah, I know, I just spelled that word as one word on purpose because it’s just one lexical unit) in R is simple:</p>
+<p>The logic to calculate frequencies of files on a harddrive in R is simple (when holding all words in RAM; see an alternative below):</p>
 <ol type="1">
 <li><p>Parse the files so that all words in all files are in a single vector with N elements (N being the total number of words across all files);</p></li>
 <li><p>Ask R to count up the number of word tokens per word type in the vector.</p>
@@ -251,11 +260,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol></li>
 </ol></li>
 </ol>
-<section id="the-table-function" class="level3">
-<h3 class="anchored" data-anchor-id="the-table-function">The <code>table()</code> function</h3>
-<p>Let’s take a toy example:</p>
+</section>
+<section id="the-table-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-table-function">The <code>table()</code> function</h2>
+<p>Let’s create a toy example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(<span class="st">"tidyverse"</span>))</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create a sentence</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sentence <span class="ot">&lt;-</span> <span class="st">"I like linguistics, and I like my students, but I love my wife and chidren. Sorry students. Maybe next time."</span></span>
@@ -273,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>freqs <span class="ot">&lt;-</span> <span class="fu">table</span>(words)</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freqs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The output of the <code>table()</code> function is a named one-dimensional array (aka. vector), of class <code>table</code>. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., a word). In order to extract only the names, you can use the <code>names()</code> function:</p>
+<p>The output of the <code>table()</code> function is a named one-dimensional array (like a vector), of class <code>table</code>. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., a word). In order to extract only the names, you can use the <code>names()</code> function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">names</span>(freqs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -283,7 +293,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freqs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The frequencies and their names (i.e., the words) can be put into a data frame and then exported out as a CSV file.</p>
-</section>
 <section id="activity" class="level3">
 <h3 class="anchored" data-anchor-id="activity">Activity</h3>
 <p>Do just that, that is, export to a CSV file the words and frequencies using the result of the above toy example. One tip: You’ll need to coerce the data type of the numbers to integer with <code>as.integer(freqs)</code> when assigning the array to a column in the data frame.</p>
@@ -296,7 +305,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Let’s ramp it up:</p>
-<p>Create a frequency list of words in many text files of your choice (e.g., from Project Gutenberg or the <em>Saints</em> files in the LMS). After a good-faith effort, if you need help, take a look at Dr.&nbsp;Brown’s start to the code below:</p>
+<p>Create a frequency list of words in many text files of your choice (e.g., from Project Gutenberg or the <em>Saints</em> files in the LMS).</p>
+<p>After a good-faith effort, if you need help, take a look at Dr.&nbsp;Brown’s start to the code below:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -314,13 +324,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add the text of the current file to the collector string</span></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  all_str <span class="ot">&lt;-</span> <span class="fu">str_c</span>(all_str, txt, <span class="at">sep =</span> <span class="st">" "</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>}  <span class="co"># next filename</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>After the <code>for</code> loop, the variable <code>all_str</code> is one big string with all text from all files. You should now be able to modify the code in the toy example above to get the frequencies of the words in this single big string. Go for it! You got this! Let’s go! You’re a super star! Etc.!</p>
 </section>
-<section id="the-count-function" class="level3">
-<h3 class="anchored" data-anchor-id="the-count-function">The <code>count()</code> function</h3>
+</section>
+<section id="the-count-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-count-function">The <code>count()</code> function</h2>
 <p>A second way (among other ways) is to take the vector with words (not the big single string, but the vector with each word as a separate element) and create a one-column data frame, and then use <code>count()</code> (within <code>tidyverse</code>). Let’s go!</p>
 <p>Using the <code>words</code> vector from the toy example above:</p>
 <div class="cell">
@@ -329,7 +341,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freqs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Quick little aside</strong>: The pipe operator <code>%&gt;%</code> passes the value on the left-hand side of the operator into the function on the right-hand side, as the first argument to that function.</p>
-</section>
 <section id="activity-1" class="level3">
 <h3 class="anchored" data-anchor-id="activity-1">Activity</h3>
 <p>That’s right, it’s time to step up and use the <code>count()</code> function to calculate frequencies and then write them out to a CSV file. Ready… set… go!</p>
@@ -344,9 +355,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(<span class="at">file =</span> <span class="st">"freqs.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-
-
 </section>
+</section>
+<section id="populate-a-list" class="level2">
+<h2 class="anchored" data-anchor-id="populate-a-list">Populate a <code>list</code></h2>
+<p>A third way to calculate frequencies of words in files is to create an R list and populate the list with words, one file at a time. This is a good way if the corpus that you want frequencies from is too big to fit in the RAM of your computer, or to fit comfortably because it makes your computer work slowly. You can have your script bring into the RAM only one file at a time and populate an R <code>list</code>. This approach to getting frequencies is slower than the previous two, so unless you have a good reason for using this approach, it’s probably best to one of the previous two approaches (fun fact: Dr.&nbsp;Brown likes the <code>count()</code> approach best).</p>
+<p>Let’s take a look at an example using the <em>Saints</em> corpus:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get filenames</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>filenames <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="at">path =</span> <span class="st">"/Users/ekb5/Corpora/Saints/txt/"</span>, <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.txt$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a collector string to collect the text of all files</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>freqs <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># loop over the filenames</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (filename <span class="cf">in</span> filenames) {</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the text from the current file and uppercase it</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  txt <span class="ot">&lt;-</span> <span class="fu">read_file</span>(filename) <span class="sc">%&gt;%</span> <span class="fu">str_to_upper</span>()</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get words in current file and unlist the list into a vector</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  wds <span class="ot">&lt;-</span> <span class="fu">str_extract_all</span>(txt, <span class="st">"[-'’A-Z]+"</span>) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># loop over the vector of words</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (wd <span class="cf">in</span> wds) {</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># test whether the current word is already in the list</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (wd <span class="sc">%in%</span> <span class="fu">names</span>(freqs)) {</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>      <span class="co"># if so, increment the counter for that word by one</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>      freqs[[wd]] <span class="ot">&lt;-</span> freqs[[wd]] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>      <span class="co"># if not, add an entry for the word and give it a value of one</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>      freqs[[wd]] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    }  <span class="co"># end if</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  }  <span class="co"># next word  </span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>}  <span class="co"># next filename</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co"># print out the words and their frequencies to the console</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (wd <span class="cf">in</span> <span class="fu">names</span>(freqs)) {</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(wd, <span class="st">": "</span>, freqs[[wd]], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep=</span><span class="st">""</span>)</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The next step would be put the words and their frequencies into a data frame in order to (more easily) sort them and to (more easily) write them out to a CSV file.</p>
+
+
 </section>
 
 </main> <!-- /main -->

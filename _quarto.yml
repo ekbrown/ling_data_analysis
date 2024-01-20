@@ -22,7 +22,8 @@ website:
           - lessons/data_structures.qmd
           - lessons/File_IO.qmd
           - lessons/regexes.qmd
-          - lessons/freq.qmd
+          - lessons/create_freq.qmd
+          - lessons/webscrape_freq.qmd
 
 format:
   html:

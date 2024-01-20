@@ -8,13 +8,13 @@ Students will create frequency lists from files on their harddrive.
 
 ## Frequency in language
 
-Frequency is an important construct in many areas of language, and more generally, in human cognition (see our amazing pattern recognition abilities). Frequency affects which words and phrases are learned first, in L1s and L2s. More frequent grammatical constructions are learned before (and better for L2 speakers) than less frequent ones (e.g., active voice vs. passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent word resist analogical leveling (*keep* -\> *\*keeped*, but *leap* -\> *leapt*, *leaped*).
+Frequency is an important construct in many areas of language, and more generally, in human cognition (see our amazing pattern recognition abilities). Frequency affects which words and phrases are learned first, in both L1s and L2s. More frequent grammatical constructions are learned before (and better for L2 speakers) than less frequent ones (e.g., active voice vs. passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent words resist analogical leveling (*keep* -\> *\*keeped*, but *leap* -\> *leapt* -\> *leaped*).
 
-In summary, frequency is super important, and being able to get frequencies of language features, especially words, is an important skill for a language-oriented data analyst.
+In summary, frequency is super important, and being able to calculate frequencies of language features, especially words, is an important skill for a language-oriented data analyst.
 
 ## Getting frequencies of words in files
 
-The logic to calculate frequencies of files on your (2s impersonal) harddrive (yeah, I know, I just spelled that word as one word on purpose because it's just one lexical unit) in R is simple:
+The logic to calculate frequencies of files on a harddrive in R is simple (when holding all words in RAM; see an alternative below):
 
 1.  Parse the files so that all words in all files are in a single vector with N elements (N being the total number of words across all files);
 
@@ -25,13 +25,13 @@ The logic to calculate frequencies of files on your (2s impersonal) harddrive (y
         1.  With the base R `table()` function;
         2.  Convert the vector into a one-column data frame and then use `count()` in `tidyverse`.
 
-### The `table()` function
+## The `table()` function
 
-Let's take a toy example:
+Let's create a toy example:
 
 ```{r}
 #| output: false
-suppressPackageStartupMessages(library("tidyverse"))
+library("tidyverse")
 
 # create a sentence
 sentence <- "I like linguistics, and I like my students, but I love my wife and chidren. Sorry students. Maybe next time."
@@ -50,7 +50,7 @@ freqs <- table(words)
 print(freqs)
 ```
 
-The output of the `table()` function is a named one-dimensional array (aka. vector), of class `table`. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., a word). In order to extract only the names, you can use the `names()` function:
+The output of the `table()` function is a named one-dimensional array (like a vector), of class `table`. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., a word). In order to extract only the names, you can use the `names()` function:
 
 ```{r}
 #| output: false
@@ -85,11 +85,13 @@ write_csv(df, file = "freqs.csv")
 
 Let's ramp it up:
 
-Create a frequency list of words in many text files of your choice (e.g., from Project Gutenberg or the *Saints* files in the LMS). After a good-faith effort, if you need help, take a look at Dr. Brown's start to the code below:
+Create a frequency list of words in many text files of your choice (e.g., from Project Gutenberg or the *Saints* files in the LMS).
+
+After a good-faith effort, if you need help, take a look at Dr. Brown's start to the code below:
 
 ```{r}
 #| code-fold: true
-#| output: true
+#| eval: false
 
 # get filenames
 filenames <- dir(path = "/Users/ekb5/Corpora/Saints/txt/", pattern = "\\.txt$", full.names = TRUE, recursive = TRUE)
@@ -105,12 +107,13 @@ for (filename in filenames) {
   
   # add the text of the current file to the collector string
   all_str <- str_c(all_str, txt, sep = " ")
-}
+  
+}  # next filename
 ```
 
 After the `for` loop, the variable `all_str` is one big string with all text from all files. You should now be able to modify the code in the toy example above to get the frequencies of the words in this single big string. Go for it! You got this! Let's go! You're a super star! Etc.!
 
-### The `count()` function
+## The `count()` function
 
 A second way (among other ways) is to take the vector with words (not the big single string, but the vector with each word as a separate element) and create a one-column data frame, and then use `count()` (within `tidyverse`). Let's go!
 
@@ -133,9 +136,59 @@ After a good-faith effort, if you need some help, take a look at Dr. Brown's cod
 
 ```{r}
 #| code-fold: true
+#| output: false
 # using the toy example above:
 # (enjoy all the pipe operators!)
 tibble(wd = words) %>% 
   count(wd) %>% 
   write_csv(file = "freqs.csv")
 ```
+
+## Populate a `list`
+
+A third way to calculate frequencies of words in files is to create an R list and populate the list with words, one file at a time. This is a good way if the corpus that you want frequencies from is too big to fit in the RAM of your computer, or to fit comfortably because it makes your computer work slowly. You can have your script bring into the RAM only one file at a time and populate an R `list`. This approach to getting frequencies is slower than the previous two, so unless you have a good reason for using this approach, it's probably best to one of the previous two approaches (fun fact: Dr. Brown likes the `count()` approach best).
+
+Let's take a look at an example using the *Saints* corpus:
+
+```{r}
+#| eval: false
+
+# get filenames
+filenames <- dir(path = "/Users/ekb5/Corpora/Saints/txt/", pattern = "\\.txt$", full.names = TRUE, recursive = TRUE)
+
+# create a collector string to collect the text of all files
+freqs <- list()
+
+# loop over the filenames
+for (filename in filenames) {
+  
+  # get the text from the current file and uppercase it
+  txt <- read_file(filename) %>% str_to_upper()
+  
+  # get words in current file and unlist the list into a vector
+  wds <- str_extract_all(txt, "[-'’A-Z]+") %>% unlist()
+  
+  # loop over the vector of words
+  for (wd in wds) {
+    
+    # test whether the current word is already in the list
+    if (wd %in% names(freqs)) {
+      
+      # if so, increment the counter for that word by one
+      freqs[[wd]] <- freqs[[wd]] + 1
+      
+    } else {
+      # if not, add an entry for the word and give it a value of one
+      freqs[[wd]] <- 1
+      
+    }  # end if
+  }  # next word  
+}  # next filename
+
+# print out the words and their frequencies to the console
+for (wd in names(freqs)) {
+  cat(wd, ": ", freqs[[wd]], "\n", sep="")
+}
+```
+
+The next step would be put the words and their frequencies into a data frame in order to (more easily) sort them and to (more easily) write them out to a CSV file.
