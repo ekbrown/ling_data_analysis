@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - R and RStudio</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Frequency lists</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -74,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">R and RStudio</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/freq.html">Frequency lists</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -116,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link active">
+  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">R and RStudio</span></a>
   </div>
 </li>
@@ -146,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/freq.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/freq.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Frequency lists</span></a>
   </div>
 </li>
@@ -163,10 +197,14 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
-  <li><a href="#the-r-programming-language" id="toc-the-r-programming-language" class="nav-link" data-scroll-target="#the-r-programming-language">The R programming language</a></li>
-  <li><a href="#rstudio-ide" id="toc-rstudio-ide" class="nav-link" data-scroll-target="#rstudio-ide">RStudio IDE</a></li>
-  <li><a href="#r-projects" id="toc-r-projects" class="nav-link" data-scroll-target="#r-projects">R projects</a></li>
+  <li><a href="#frequency-in-language" id="toc-frequency-in-language" class="nav-link" data-scroll-target="#frequency-in-language">Frequency in language</a></li>
+  <li><a href="#getting-frequencies-of-words-in-files" id="toc-getting-frequencies-of-words-in-files" class="nav-link" data-scroll-target="#getting-frequencies-of-words-in-files">Getting frequencies of words in files</a>
+  <ul class="collapse">
+  <li><a href="#the-table-function" id="toc-the-table-function" class="nav-link" data-scroll-target="#the-table-function">The <code>table()</code> function</a></li>
   <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  <li><a href="#the-count-function" id="toc-the-count-function" class="nav-link" data-scroll-target="#the-count-function">The count() function</a></li>
+  <li><a href="#activity-1" id="toc-activity-1" class="nav-link" data-scroll-target="#activity-1">Activity</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -175,7 +213,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">R and RStudio</h1>
+<h1 class="title">Frequency lists</h1>
 </div>
 
 
@@ -192,57 +230,123 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="objective" class="level2">
 <h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<ul>
-<li>Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)</li>
-</ul>
+<p>Students will create frequency lists from files on their harddrive</p>
 </section>
-<section id="the-r-programming-language" class="level2">
-<h2 class="anchored" data-anchor-id="the-r-programming-language">The R programming language</h2>
-<ul>
-<li><p>R (<a href="https://www.r-project.org/">here</a>) is a programming language specifically designed for statistical analysis and visualization.</p></li>
-<li><p>As an open-source language, there are many third-party add-on packages (<a href="https://cran.r-project.org/web/packages/index.html">here</a>) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN <a href="https://cran.r-project.org/index.html">here</a>).</p></li>
-<li><p>So called “Task Views” (<a href="https://cran.r-project.org/web/views/">here</a>) collect and briefly describe packages related to specific fields, including one for Natural Language Processing (<a href="https://cran.r-project.org/view=NaturalLanguageProcessing">here</a>).</p></li>
-</ul>
+<section id="frequency-in-language" class="level2">
+<h2 class="anchored" data-anchor-id="frequency-in-language">Frequency in language</h2>
+<p>Frequency is an important construct in many areas of language, and more generally, in human cognition (think: our pattern recognition abilities). Frequency affects which words and phrases are learned first, in L1s and L2s. More frequent grammatical constructions are learned first (and better for L2 speakers) than less frequent ones (e.g., active voice vs.&nbsp;passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent word resist analogical change (<em>keep</em> -&gt; <em>*keeped</em>, but <em>leap</em> -&gt; <em>leapt</em>, <em>leaped</em>).</p>
+<p>In summary, frequency is super important, and being able to get frequencies of language features, especially words, is an important skill for a language-oriented data analyst.</p>
 </section>
-<section id="rstudio-ide" class="level2">
-<h2 class="anchored" data-anchor-id="rstudio-ide">RStudio IDE</h2>
-<ul>
-<li><p>Integrated Development Environments (IDEs) facilitate writing computer code.</p></li>
-<li><p>RStudio (<a href="https://posit.co/downloads/">here</a>) from the company Posit (<a href="https://posit.co/">here</a>) is the go-to IDE for R.</p>
-<ul>
-<li><p>Has many useful keyboard shortcuts, cf.&nbsp;<code>Help &gt; Keyboard Shortcuts Help</code></p>
-<ul>
-<li><p>Earl’s favorites are:</p>
-<ul>
-<li><p>Assignment operator: <code>ALT + -</code></p></li>
-<li><p>Pipe operator in tidyverse: <code>CTRL/CMD + SHIFT + m</code></p></li>
-</ul></li>
-</ul></li>
-<li><p>Has many cheat sheets for various tools within R and RStudio, cf.&nbsp;<code>Help &gt; Cheat Sheets</code></p></li>
-</ul></li>
-</ul>
+<section id="getting-frequencies-of-words-in-files" class="level2">
+<h2 class="anchored" data-anchor-id="getting-frequencies-of-words-in-files">Getting frequencies of words in files</h2>
+<p>The logic to calculate frequencies of files on your (2s impersonal) harddrive in R is simple:</p>
+<ol type="1">
+<li><p>Parse the files so that all words in all files are in a single vector with N elements (N being the total number of words across all files);</p></li>
+<li><p>Ask R to count up the number of word tokens per word type in the vector.</p>
+<ol type="1">
+<li><p>There are two ways (Dr.&nbsp;Brown will show) to count up word tokens per word type:</p>
+<ol type="1">
+<li>With the base R <code>table()</code> function;</li>
+<li>Convert the vector into a one-column data frame and then use <code>count()</code>.</li>
+</ol></li>
+</ol></li>
+</ol>
+<section id="the-table-function" class="level3">
+<h3 class="anchored" data-anchor-id="the-table-function">The <code>table()</code> function</h3>
+<p>Let’s take a toy example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(<span class="st">"tidyverse"</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create a sentence</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sentence <span class="ot">&lt;-</span> <span class="st">"I like linguistics, and I like my students, but I love my wife and chidren. Sorry students. Maybe next time."</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># uppercase (or lowercase) the string, so that uppercase and lowercase words (e.g., "The" and "the" and "THE") are treated as the same word</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sentence <span class="ot">&lt;-</span> <span class="fu">str_to_upper</span>(sentence)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># tokenize the string into words</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>words <span class="ot">&lt;-</span> <span class="fu">str_extract_all</span>(sentence, <span class="st">"[-'’A-Z]+"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># unlist the list so that we're left with a vector</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>words <span class="ot">&lt;-</span> <span class="fu">unlist</span>(words)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># throw the vector at table() and watch the magic happen!</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>freqs <span class="ot">&lt;-</span> <span class="fu">table</span>(words)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freqs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The output of the <code>table()</code> function is a named one-dimensional array (aka. vector), of class <code>table</code>. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., the words). In order to extract only the names, you can use the <code>names()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">names</span>(freqs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We probably want to sort the frequencies in descending order:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>freqs <span class="ot">&lt;-</span> <span class="fu">sort</span>(freqs, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freqs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The frequencies and their names (i.e., the words) can be put into a data frame and then exported out as a CSV file.</p>
 </section>
-<section id="r-projects" class="level2">
-<h2 class="anchored" data-anchor-id="r-projects">R projects</h2>
-<ul>
-<li><p>R projects help keep things organized:</p>
-<ul>
-<li><p>Data files, like CSV (.csv) and/or Excel (.xlsx) files</p></li>
-<li><p>Source code files, like R scripts (.r or .R files)</p></li>
-</ul></li>
-<li><p>To create an R project:</p>
-<ul>
-<li><code>File &gt; New Project...</code></li>
-</ul></li>
-</ul>
+<section id="activity" class="level3">
+<h3 class="anchored" data-anchor-id="activity">Activity</h3>
+<p>Do just that, that is, export to a CSV file the words and frequencies using the result of the above toy example. One tip: You’ll need to coerce the data type of the numbers to integer with <code>as.integer(freqs)</code> when assigning the array to a column in the data frame.</p>
+<p>After giving it a good-faith effort, if you need help take a look at Dr.&nbsp;Brown’s code below:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wd =</span> <span class="fu">names</span>(freqs), <span class="at">freq =</span> <span class="fu">as.integer</span>(freqs))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df, <span class="at">file =</span> <span class="st">"freqs.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s ramp it up:</p>
+<p>Create a frequency list of words in many text files of your choice (e.g., from Project Gutenberg or the <em>Saints</em> files in the LMS). After a good-faith effort, if you need help, take a look at Dr.&nbsp;Brown’s start to the code below:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get filenames</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>filenames <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="at">path =</span> <span class="st">"/Users/ekb5/Corpora/Saints/txt/"</span>, <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.txt$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a collector string to collect the text of all files</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>all_str <span class="ot">&lt;-</span> <span class="st">""</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># loop over the filenames</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (filename <span class="cf">in</span> filenames) {</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the text from the current file</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  txt <span class="ot">&lt;-</span> <span class="fu">read_file</span>(filename)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add the text of the current file to the collector string</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  all_str <span class="ot">&lt;-</span> <span class="fu">str_c</span>(all_str, txt, <span class="at">sep =</span> <span class="st">" "</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>After the <code>for</code> loop, the variable <code>all_str</code> is one big string with all text from all files. You should now be able to modify the code in the toy example above to get the frequencies of the words in this single big string. Go for it! You got this! Let’s go! You’re a super star! Etc.!</p>
 </section>
-<section id="activity" class="level2">
-<h2 class="anchored" data-anchor-id="activity">Activity</h2>
-<ul>
-<li>Students explore R and RStudio IDE, perhaps using the RStudio cheat sheet (<code>Help &gt; Cheat Sheets &gt; RStudio IDE Cheat Sheet</code>)</li>
-</ul>
+<section id="the-count-function" class="level3">
+<h3 class="anchored" data-anchor-id="the-count-function">The count() function</h3>
+<p>A second way (among other ways) is to take the vector with words (not the big single string, but the vector with each word as a separate element) and create a one-column data frame, and then use <code>count()</code> (within <code>tidyverse</code>). Let’s go!</p>
+<p>Using the <code>words</code> vector from the toy example above:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wd =</span> words)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>freqs <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">count</span>(wd)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freqs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Quick little aside</strong>: the pipe operator <code>%&gt;%</code> pipes (aka. passes) the value on the left-hand side of the operator into the function on the right-hand side, as the first argument to that function.</p>
+</section>
+<section id="activity-1" class="level3">
+<h3 class="anchored" data-anchor-id="activity-1">Activity</h3>
+<p>That’s right, it’s time to step up and use the <code>count()</code> function to calculate frequencies and then write them out to a CSV file. Ready… set… go!</p>
+<p>After a good-faith effort, if you need so help, take a look at Dr.&nbsp;Brown’s code below:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using the toy example above:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (enjoy all the pipe operators!)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">wd =</span> words) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(wd) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(<span class="at">file =</span> <span class="st">"freqs.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

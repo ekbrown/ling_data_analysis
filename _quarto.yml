@@ -22,6 +22,7 @@ website:
           - lessons/data_structures.qmd
           - lessons/File_IO.qmd
           - lessons/regexes.qmd
+          - lessons/freq.qmd
 
 format:
   html:
