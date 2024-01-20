@@ -1,20 +1,20 @@
 ---
-title: "Frequency lists"
+title: "Creating frequency lists"
 ---
 
 ## Objective
 
-Students will create frequency lists from files on their harddrive
+Students will create frequency lists from files on their harddrive.
 
 ## Frequency in language
 
-Frequency is an important construct in many areas of language, and more generally, in human cognition (think: our pattern recognition abilities). Frequency affects which words and phrases are learned first, in L1s and L2s. More frequent grammatical constructions are learned first (and better for L2 speakers) than less frequent ones (e.g., active voice vs. passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent word resist analogical change (*keep* -\> *\*keeped*, but *leap* -\> *leapt*, *leaped*).
+Frequency is an important construct in many areas of language, and more generally, in human cognition (see our amazing pattern recognition abilities). Frequency affects which words and phrases are learned first, in L1s and L2s. More frequent grammatical constructions are learned first (and better for L2 speakers) than less frequent ones (e.g., active voice vs. passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent word resist analogical leveling (*keep* -\> *\*keeped*, but *leap* -\> *leapt*, *leaped*).
 
 In summary, frequency is super important, and being able to get frequencies of language features, especially words, is an important skill for a language-oriented data analyst.
 
 ## Getting frequencies of words in files
 
-The logic to calculate frequencies of files on your (2s impersonal) harddrive in R is simple:
+The logic to calculate frequencies of files on your (2s impersonal) harddrive (yeah, I know, I just spelled that word as one word on purpose because it's just one lexical unit) in R is simple:
 
 1.  Parse the files so that all words in all files are in a single vector with N elements (N being the total number of words across all files);
 
@@ -23,7 +23,7 @@ The logic to calculate frequencies of files on your (2s impersonal) harddrive in
     1.  There are two ways (Dr. Brown will show) to count up word tokens per word type:
 
         1.  With the base R `table()` function;
-        2.  Convert the vector into a one-column data frame and then use `count()`.
+        2.  Convert the vector into a one-column data frame and then use `count()` in `tidyverse`.
 
 ### The `table()` function
 
@@ -50,7 +50,7 @@ freqs <- table(words)
 print(freqs)
 ```
 
-The output of the `table()` function is a named one-dimensional array (aka. vector), of class `table`. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., the words). In order to extract only the names, you can use the `names()` function:
+The output of the `table()` function is a named one-dimensional array (aka. vector), of class `table`. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., a word). In order to extract only the names, you can use the `names()` function:
 
 ```{r}
 #| output: false
@@ -73,7 +73,7 @@ The frequencies and their names (i.e., the words) can be put into a data frame a
 
 Do just that, that is, export to a CSV file the words and frequencies using the result of the above toy example. One tip: You'll need to coerce the data type of the numbers to integer with `as.integer(freqs)` when assigning the array to a column in the data frame.
 
-After giving it a good-faith effort, if you need help take a look at Dr. Brown's code below:
+After giving it a good-faith effort, if you need help, take a look at Dr. Brown's code below:
 
 ```{r}
 #| code-fold: true
@@ -123,7 +123,7 @@ freqs <- df %>% count(wd)
 print(freqs)
 ```
 
-**Quick little aside**: the pipe operator `%>%` pipes (aka. passes) the value on the left-hand side of the operator into the function on the right-hand side, as the first argument to that function.
+**Quick little aside**: The pipe operator `%>%` passes the value on the left-hand side of the operator into the function on the right-hand side, as the first argument to that function.
 
 ### Activity
 

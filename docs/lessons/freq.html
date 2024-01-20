@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - Frequency lists</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Creating frequency lists</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/freq.html">Frequency lists</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/freq.html">Creating frequency lists</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../lessons/freq.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Frequency lists</span></a>
+ <span class="menu-text">Creating frequency lists</span></a>
   </div>
 </li>
       </ul>
@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Frequency lists</h1>
+<h1 class="title">Creating frequency lists</h1>
 </div>
 
 
@@ -230,16 +230,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="objective" class="level2">
 <h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<p>Students will create frequency lists from files on their harddrive</p>
+<p>Students will create frequency lists from files on their harddrive.</p>
 </section>
 <section id="frequency-in-language" class="level2">
 <h2 class="anchored" data-anchor-id="frequency-in-language">Frequency in language</h2>
-<p>Frequency is an important construct in many areas of language, and more generally, in human cognition (think: our pattern recognition abilities). Frequency affects which words and phrases are learned first, in L1s and L2s. More frequent grammatical constructions are learned first (and better for L2 speakers) than less frequent ones (e.g., active voice vs.&nbsp;passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent word resist analogical change (<em>keep</em> -&gt; <em>*keeped</em>, but <em>leap</em> -&gt; <em>leapt</em>, <em>leaped</em>).</p>
+<p>Frequency is an important construct in many areas of language, and more generally, in human cognition (see our amazing pattern recognition abilities). Frequency affects which words and phrases are learned first, in L1s and L2s. More frequent grammatical constructions are learned first (and better for L2 speakers) than less frequent ones (e.g., active voice vs.&nbsp;passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent word resist analogical leveling (<em>keep</em> -&gt; <em>*keeped</em>, but <em>leap</em> -&gt; <em>leapt</em>, <em>leaped</em>).</p>
 <p>In summary, frequency is super important, and being able to get frequencies of language features, especially words, is an important skill for a language-oriented data analyst.</p>
 </section>
 <section id="getting-frequencies-of-words-in-files" class="level2">
 <h2 class="anchored" data-anchor-id="getting-frequencies-of-words-in-files">Getting frequencies of words in files</h2>
-<p>The logic to calculate frequencies of files on your (2s impersonal) harddrive in R is simple:</p>
+<p>The logic to calculate frequencies of files on your (2s impersonal) harddrive (yeah, I know, I just spelled that word as one word on purpose because it’s just one lexical unit) in R is simple:</p>
 <ol type="1">
 <li><p>Parse the files so that all words in all files are in a single vector with N elements (N being the total number of words across all files);</p></li>
 <li><p>Ask R to count up the number of word tokens per word type in the vector.</p>
@@ -247,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>There are two ways (Dr.&nbsp;Brown will show) to count up word tokens per word type:</p>
 <ol type="1">
 <li>With the base R <code>table()</code> function;</li>
-<li>Convert the vector into a one-column data frame and then use <code>count()</code>.</li>
+<li>Convert the vector into a one-column data frame and then use <code>count()</code> in <code>tidyverse</code>.</li>
 </ol></li>
 </ol></li>
 </ol>
@@ -273,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>freqs <span class="ot">&lt;-</span> <span class="fu">table</span>(words)</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freqs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The output of the <code>table()</code> function is a named one-dimensional array (aka. vector), of class <code>table</code>. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., the words). In order to extract only the names, you can use the <code>names()</code> function:</p>
+<p>The output of the <code>table()</code> function is a named one-dimensional array (aka. vector), of class <code>table</code>. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., a word). In order to extract only the names, you can use the <code>names()</code> function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">names</span>(freqs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="activity" class="level3">
 <h3 class="anchored" data-anchor-id="activity">Activity</h3>
 <p>Do just that, that is, export to a CSV file the words and frequencies using the result of the above toy example. One tip: You’ll need to coerce the data type of the numbers to integer with <code>as.integer(freqs)</code> when assigning the array to a column in the data frame.</p>
-<p>After giving it a good-faith effort, if you need help take a look at Dr.&nbsp;Brown’s code below:</p>
+<p>After giving it a good-faith effort, if you need help, take a look at Dr.&nbsp;Brown’s code below:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -328,7 +328,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>freqs <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">count</span>(wd)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freqs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Quick little aside</strong>: the pipe operator <code>%&gt;%</code> pipes (aka. passes) the value on the left-hand side of the operator into the function on the right-hand side, as the first argument to that function.</p>
+<p><strong>Quick little aside</strong>: The pipe operator <code>%&gt;%</code> passes the value on the left-hand side of the operator into the function on the right-hand side, as the first argument to that function.</p>
 </section>
 <section id="activity-1" class="level3">
 <h3 class="anchored" data-anchor-id="activity-1">Activity</h3>
