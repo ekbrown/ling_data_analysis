@@ -129,7 +129,7 @@ print(freqs)
 
 That's right, it's time to step up and use the `count()` function to calculate frequencies and then write them out to a CSV file. Ready... set... go!
 
-After a good-faith effort, if you need so help, take a look at Dr. Brown's code below:
+After a good-faith effort, if you need some help, take a look at Dr. Brown's code below:
 
 ```{r}
 #| code-fold: true
