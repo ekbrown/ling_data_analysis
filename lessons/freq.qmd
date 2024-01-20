@@ -110,7 +110,7 @@ for (filename in filenames) {
 
 After the `for` loop, the variable `all_str` is one big string with all text from all files. You should now be able to modify the code in the toy example above to get the frequencies of the words in this single big string. Go for it! You got this! Let's go! You're a super star! Etc.!
 
-### The count() function
+### The `count()` function
 
 A second way (among other ways) is to take the vector with words (not the big single string, but the vector with each word as a separate element) and create a one-column data frame, and then use `count()` (within `tidyverse`). Let's go!
 
