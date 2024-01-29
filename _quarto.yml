@@ -24,6 +24,7 @@ website:
           - lessons/regexes.qmd
           - lessons/create_freq.qmd
           - lessons/webscrape_freq.qmd
+          - lessons/quanteda.qmd
 
 format:
   html:
