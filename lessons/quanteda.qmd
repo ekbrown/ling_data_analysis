@@ -8,7 +8,7 @@ title: "quanteda"
 
 ## Using R for textual analysis
 
-The `quanteda` R package is a super useful package for analyzing texts in R. Some of the techniques are corpus linguistic technique through and through: tokenizing into words or sentences, keyword-in-context, removing stopwords. Other techniques might be better considered computational linguistic techniques: sentiment analysis, document feature matrix. Regardless, we need to get to know this package, as I can't call myself a good professor of Linguistics Data Analysis with R without looking at this package.
+The `quanteda` R package is a super useful package for analyzing texts in R. Some of the techniques are corpus linguistic techniques through and through: tokenizing into words or sentences, keyword-in-context, removing stopwords. Other techniques might be better considered computational linguistic techniques: sentiment analysis, document feature matrix. Regardless, we need to get to know this package, as I can't call myself a good professor of Linguistics Data Analysis with R without looking at this package.
 
 ## Install the package and its friends
 
@@ -88,7 +88,7 @@ print(summary(saints))
 The `readtext()` function has a handful of arguments. The `docvarfrom`, `dvsep`, and the `docvarnames` arguments can create a new `docvar` (i.e., metadata about the corpus) from the filenames and/or the filepaths. Take a look at the documentation [here](https://www.rdocumentation.org/packages/readtext/versions/0.90/topics/readtext).
 
 ```{r}
-#| eval: true
+#| eval: false
 library("tidyverse")
 library("quanteda")
 library("readtext")
@@ -109,6 +109,7 @@ You guessed it! It's your turn. Create a corpus of your choice with files of you
 It is super simple to create a subcorpus using a `docvar` (i.e., metadata about the files in the corpus). For example, let's say we have our one Saints corpus with a `docvar` of Volume with values of "01", "02", and "03". In order to create a subcorpus of just the files in Volume 1, we could run the following code. See the docs [here](https://quanteda.io/articles/quickstart.html#subsetting-corpus-objects).
 
 ```{r}
+#| eval: false
 vol01 <- corpus_subset(saints, Volume == "01") 
 ```
 
@@ -123,6 +124,7 @@ Let's perform into a corpus linguistic technique: the keyword-in-context display
 Let's start out slowly with a simple word search using our `Saints` corpus:
 
 ```{r}
+#| eval: false
 # Assuming packages are loaded and corpus has been created
 
 # tokenize and then get concordances
@@ -134,6 +136,7 @@ print(concordances)
 Let's ramp it up with some regular expression pizzazz. **Question**: What does the regular expression find?
 
 ```{r}
+#| eval: false
 toks <- tokens(saints)
 concordances <- kwic(toks, pattern = "\\w+(\\w{2,})\\W+\\w+\\1\\b", valuetype = "regex")
 print(concordances)
