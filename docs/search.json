@@ -56,102 +56,137 @@
     "text": "Feather (.feather) files\n\nThis file format is quickly read and written, which are good for big data files.\nReading in (input)\n\nThe feather::read_feather() function does it.\n\nWriting out (output)\n\nThe feather::write_feather() function does it."
   },
   {
-    "objectID": "lessons/programming_basics.html",
-    "href": "lessons/programming_basics.html",
-    "title": "Programming basics",
+    "objectID": "lessons/data_structures.html",
+    "href": "lessons/data_structures.html",
+    "title": "Data structures in R",
     "section": "",
-    "text": "Students will learn to code the basic building blocks of programming in R."
+    "text": "Students will become familiar with common data structures in R."
   },
   {
-    "objectID": "lessons/programming_basics.html#objective",
-    "href": "lessons/programming_basics.html#objective",
-    "title": "Programming basics",
+    "objectID": "lessons/data_structures.html#objective",
+    "href": "lessons/data_structures.html#objective",
+    "title": "Data structures in R",
     "section": "",
-    "text": "Students will learn to code the basic building blocks of programming in R."
+    "text": "Students will become familiar with common data structures in R."
   },
   {
-    "objectID": "lessons/programming_basics.html#primitive-data-types-in-r",
-    "href": "lessons/programming_basics.html#primitive-data-types-in-r",
-    "title": "Programming basics",
-    "section": "Primitive data types in R",
-    "text": "Primitive data types in R\n\ninteger\n\nThis a whole number, i.e., there is no decimal component, for example “5”.\nTo specify an integer in R, type an uppercase “L” immediately to the right of the number (i.e., no space between the number and the “L”).\n\nE.g., 5L\n\n\nnumeric\n\nThis is a number with a decimal component, for example, “3.14”. Note: Unless an “L” is placed to the right of a whole number, R treats it as a numeric.\nTo specific a numeric in R, just the type the good ol’ fashioned number.\n\nE.g., 3.14\n\nNote: Dr. Brown may refer to this data type as a “float” because of language transfer from Python and Julia.\n\ncharacter\n\nE.g., \"hello world\" and c(\"hello\", \"hola\", \"hej\")\n\nNote: Dr. Brown will likely refer to this data type as “string” because of language transfer from Python and Julia.\nYou can extract part of a string with the sub_str() function (doc here).\n\n\nlogical\n\nThis data type has one of two values, either TRUE or FALSE (or T or F for shorthand).\nDr. Brown may refer to this data type as a “Boolean” because of language transfer from Python and Julia.\n\nThe class() function returns the data type of a variable or value.\n\nEg. class(5L) returns integer, while class(\"hello world\") returns character.\n\n\nActivity\n\nStudents use the class() function to become familiar with the data type of the values that they type."
+    "objectID": "lessons/data_structures.html#common-data-structures-in-r",
+    "href": "lessons/data_structures.html#common-data-structures-in-r",
+    "title": "Data structures in R",
+    "section": "Common data structures in R",
+    "text": "Common data structures in R\n\nvector: A single dimension collection of values of the same data type (e.g., all numeric or all character). Kinda like a list in Python or an array in Julia.\n\nNote: Values of different data types are coerced to the more complex data type, for example, if a numeric (aka. float) and an integer are put into the same vector, both values will have a numeric (aka. float) data type.\nA vector (and list, see below) can be created with the c() function (doc here).\n\ndata.frame: A tabular data structure with columns and rows, much like a table in a spreadsheet like Excel or Google Sheets. See doc here.\ntibble: A slightly modified, and better, data.frame in the tibble (doc here) package within the tidyverse metapackage or ecosystem (doc here). See doc here.\ndata.table: Another tabular data structure, written in C under the hood (so it’s fast) from the data.table package here. See a tutorial here.\nmatrix: Another tabular data structure in base R. Less common than data.frame and tibble and data.table. See doc here.\nlist: A flexible data structure that can hold whatever, including other data structures. See doc here and tutorial here.\n\nActivity\n\nStudents create a few vectors of the same length (i.e., the same number of elements).\nStudents create a single data frame with the several vectors created above. The doc here may be helpful.\nStudents create several data frames and put them in a list.\nStudent iterate over the list with a for loop and print each data frame to the console.\nStudents iterate over the list and then iterate over the row of each data frame, and print each row."
   },
   {
-    "objectID": "lessons/programming_basics.html#operators-in-r",
-    "href": "lessons/programming_basics.html#operators-in-r",
-    "title": "Programming basics",
-    "section": "Operators in R",
-    "text": "Operators in R\n\nAssignment operator: There are two assignment operators in R. The most common is &lt;- but = also works. For example:\n\nfruit &lt;- \"apple\"\nfruits &lt;- c(\"apple\", \"banana\", \"orange\", \"mango\")\n\nKeyboard shortcut in RStudio: ALT/OPT + -\n\npets = c(\"dog\", \"cat\", \"fish\", \"Madagascar hissing cockroach\")\nage = 46 (note: this creates a numeric rather than an integer; if an integer is wanted: age = 46L)\n\nInclusion operator: %in% tests for inclusion of a value in a collection of values (e.g., a vector), for example:\n\n\"apple\" %in% c(\"banana\", \"apple\", \"mango\") returns TRUE\n\"kiwi\" %in% c(\"banana\", \"apple\", \"mango\") returns FALSE\n\nEqual operator: == (i.e., two equal signs together with no space between them) tests whether the left-hand value and the right-hand value are identical, for example:\n\n\"mango\" == \"mango\" returns TRUE\n\"apple\" == \"manzana\" returns FALSE\n\"Hannah\" == \"HANNAH\" returns FALSE\n\nSuper important note: Computers treat lowercase and uppercase letters differently.\n\nThe equal operator can be used with a string on the left-hand side an a vector of strings on the right-hand side, for example:\n\n\"apple\" == c(\"banana\", \"apple\", \"mango\") returns FALSE TRUE FALSE\nQuick discussion: Speculate with a neighbor about the reason the above expression returns FALSE TRUE FALSE.\n\n\n\nActivity\n\nStudents use these three operators to create variables and vectors, and test for inclusion of a string in a vector of strings."
-  },
-  {
-    "objectID": "lessons/programming_basics.html#comments",
-    "href": "lessons/programming_basics.html#comments",
-    "title": "Programming basics",
-    "section": "Comments",
-    "text": "Comments\n\nComments within computer code helps the human readers, whether other humans or your later self, to quickly understand what the various parts of a computer script do.\nComments in R are specified with a hashtag, for example:\n\n\n# assign a value to a variable\ndog &lt;- \"fido\"\n\n# create a vector of multiple elements\nkids &lt;- c(\"Bobby\", \"Luisa\", \"José\")"
-  },
-  {
-    "objectID": "lessons/programming_basics.html#if-else-in-r",
-    "href": "lessons/programming_basics.html#if-else-in-r",
-    "title": "Programming basics",
-    "section": "if else in R",
-    "text": "if else in R\n\nThe logic is simple: Ask a question, and if the answer is TRUE, then do this thing, but if the answer is FALSE, then do that thing.\n\n\n\nTwo approaches to if else in R:\n\nThe most common approach is to use a code block. See an example in the Stack Overflow answer here.\nA less common approach, but super useful for simple if else cases, is to use a function:\n\nbase R ifelse() function here;\ndpylr (part of the tidyverse ecosystem) if_else() function here.\n\n\n\nActivity\n\nStudents create a string with a single word, and then use if else (either a code block of a function) to print to the user whether the word begins with a vowel or a consonant.\n\nHint 1: The print() and cat() can be used to print to the console.\nHint 2: The sub_str() function can be used to extract a sub part of a string.\nHint 3: The %in% operator tests whether the left-hand value is within the right-hand collection."
-  },
-  {
-    "objectID": "lessons/programming_basics.html#loops-in-r",
-    "href": "lessons/programming_basics.html#loops-in-r",
-    "title": "Programming basics",
-    "section": "Loops in R",
-    "text": "Loops in R\n\nThe mighty and super useful for loop iterates over all elements of a collection (e.g., a vector), for example see below (and see another example here):\n\n\n# create a vector\nfruits &lt;- c(\"apple\", \"mango\", \"banana\", \"orange\")\n\n# loop over the elements of the vector\nfor (fruit in fruits) {\n  print(fruit)  # print the current element to the console\n}\n\n\nThe less-common-but-still-useful while loop tests the conditional statement at the beginning of each iteration and runs the body of the loop if the statement evaluates to TRUE. See an example here.\nUseful keywords for both for loops and while loops:\n\nThe next keyword skips the rest of the current iteration and continues to the next iteration. This is very much like continue in Python and Julia.\nThe break keyword stops the loop completely, regardless of which iteration it was in, and no further iteration are executed.\n\n\nActivity\n\nStudents create a for loop to iterate from 1 to 10, skipping even numbers and printing out odd numbers.\n\nHint: The modulus operator %% will be helpful (see here)."
-  },
-  {
-    "objectID": "lessons/programming_basics.html#defining-functions-in-r",
-    "href": "lessons/programming_basics.html#defining-functions-in-r",
-    "title": "Programming basics",
-    "section": "Defining functions in R",
-    "text": "Defining functions in R\n\nA very useful ability in R (and all programming languages) is for a user to define their own custom function.\nThe function() function does the trick.\n\nSee a tutorial here.\n\n\nActivity\n\nStudents define a function that takes as input a word and returns as output a logical value (aka. Boolean value) indicating whether the word begins with one of the five orthographic vowels (i.e., a, e, i, o, u).\n\nHint: The %in% keyword will be helpful here.\n\nNow for a little fun and to put these basic programming skills together: Students define a function (likely with smaller helper functions) that translates a sentence from English into Pig Latin. A little refresher on Pig Latin: If a word begins with a vowel, the word yay is added to the end of it; if a word begins with a consonant or consonant cluster (e.g., ch, gr), that consonant or consonant cluster is moved to the end of the word followed by ay.\n\nHint: the stringr package (part of the tidyverse) will be useful here, especially the str_c(), str_sub(), str_split() (and unlist()) functions, as will the letters and LETTERS built-in constants.\nHint: After a good-faith effort, if you need help, see the script written by Dr. Brown by clicking on “▶ Code” below.\n\n\n\n\nCode\nsuppressPackageStartupMessages(library(\"tidyverse\"))\n\n# helper function 1, for vowel words\ntrans_v &lt;-  function(wd, vowels) {\n  return(str_c(wd, \"yay\"))\n}\n\n# helper function 2, for consonant words\ntrans_c &lt;- function(wd, vowels, first_let) {\n  second_let &lt;- str_sub(wd, 2, 2)\n  if (!str_to_lower(second_let) %in% vowels) {\n    first_two &lt;- str_sub(wd, 1, 2)\n    rest_wd &lt;- str_sub(wd, 3, str_length(wd))\n    return(str_c(rest_wd, first_two, \"ay\"))\n  } else {\n    rest_wd &lt;- str_sub(wd, 2, str_length(wd))\n    return(str_c(rest_wd, first_let, \"ay\"))\n  }\n}\n\n# the main function\ntrans_pig &lt;- function(sentence, vowels) {\n  wds &lt;- unlist(str_split(sentence, \"\\\\s+\"))\n  trans_sent &lt;- \"\"\n  for (wd in wds) {\n    first_let &lt;- str_sub(wd, 1, 1)\n    if (str_to_lower(first_let) %in% vowels) {\n      # this is a vowel word\n      trans_sent &lt;- str_c(trans_sent, trans_v(wd, vowels), \" \")\n    } else {\n      # the current word is a consonant word\n      trans_sent &lt;- str_c(trans_sent, trans_c(wd, vowels, first_let), \" \")\n    }\n  }\n  return(str_trim(trans_sent))\n}\n\n### test the function\nsentence &lt;- \"I do not like green eggs and ham.\"\nvowels &lt;- c(\"a\", \"e\", \"i\", \"o\", \"u\")\nprint(trans_pig(sentence, vowels))"
-  },
-  {
-    "objectID": "lessons/r_rstudio.html",
-    "href": "lessons/r_rstudio.html",
-    "title": "R and RStudio",
+    "objectID": "lessons/create_freq.html",
+    "href": "lessons/create_freq.html",
+    "title": "Creating frequency lists",
     "section": "",
-    "text": "Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)"
+    "text": "Students will create frequency lists from files on their harddrive."
   },
   {
-    "objectID": "lessons/r_rstudio.html#objective",
-    "href": "lessons/r_rstudio.html#objective",
-    "title": "R and RStudio",
+    "objectID": "lessons/create_freq.html#objective",
+    "href": "lessons/create_freq.html#objective",
+    "title": "Creating frequency lists",
     "section": "",
-    "text": "Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)"
+    "text": "Students will create frequency lists from files on their harddrive."
   },
   {
-    "objectID": "lessons/r_rstudio.html#the-r-programming-language",
-    "href": "lessons/r_rstudio.html#the-r-programming-language",
-    "title": "R and RStudio",
-    "section": "The R programming language",
-    "text": "The R programming language\n\nR (here) is a programming language specifically designed for statistical analysis and visualization.\nAs an open-source language, there are many third-party add-on packages (here) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN here).\nSo called “Task Views” (here) collect and briefly describe packages related to specific fields, including one for Natural Language Processing (here)."
+    "objectID": "lessons/create_freq.html#frequency-in-language",
+    "href": "lessons/create_freq.html#frequency-in-language",
+    "title": "Creating frequency lists",
+    "section": "Frequency in language",
+    "text": "Frequency in language\nFrequency is an important construct in many areas of language, and more generally, in human cognition (see our amazing pattern recognition abilities). Frequency affects which words and phrases are learned first, in both L1s and L2s. More frequent grammatical constructions are learned before (and better for L2 speakers) than less frequent ones (e.g., active voice vs. passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent words resist analogical leveling (keep -&gt; *keeped, but leap -&gt; leapt -&gt; leaped).\nIn summary, frequency is super important, and being able to calculate frequencies of language features, especially words, is an important skill for a language-oriented data analyst."
   },
   {
-    "objectID": "lessons/r_rstudio.html#rstudio-ide",
-    "href": "lessons/r_rstudio.html#rstudio-ide",
-    "title": "R and RStudio",
-    "section": "RStudio IDE",
-    "text": "RStudio IDE\n\nIntegrated Development Environments (IDEs) facilitate writing computer code.\nRStudio (here) from the company Posit (here) is the go-to IDE for R.\n\nHas many useful keyboard shortcuts, cf. Help &gt; Keyboard Shortcuts Help\n\nEarl’s favorites are:\n\nAssignment operator: ALT + -\nPipe operator in tidyverse: CTRL/CMD + SHIFT + m\n\n\nHas many cheat sheets for various tools within R and RStudio, cf. Help &gt; Cheat Sheets"
+    "objectID": "lessons/create_freq.html#getting-frequencies-of-words-in-files",
+    "href": "lessons/create_freq.html#getting-frequencies-of-words-in-files",
+    "title": "Creating frequency lists",
+    "section": "Getting frequencies of words in files",
+    "text": "Getting frequencies of words in files\nThe logic to calculate frequencies of files on a harddrive in R is simple (when holding all words in RAM; see an alternative below):\n\nParse the files so that all words in all files are in a single vector with N elements (N being the total number of words across all files);\nAsk R to count up the number of word tokens per word type in the vector.\n\nThere are two ways (Dr. Brown will show) to count up word tokens per word type:\n\nWith the base R table() function;\nConvert the vector into a one-column data frame and then use count() in tidyverse."
   },
   {
-    "objectID": "lessons/r_rstudio.html#r-projects",
-    "href": "lessons/r_rstudio.html#r-projects",
-    "title": "R and RStudio",
-    "section": "R projects",
-    "text": "R projects\n\nR projects help keep things organized:\n\nData files, like CSV (.csv) and/or Excel (.xlsx) files\nSource code files, like R scripts (.r or .R files)\n\nTo create an R project:\n\nFile &gt; New Project..."
+    "objectID": "lessons/create_freq.html#the-table-function",
+    "href": "lessons/create_freq.html#the-table-function",
+    "title": "Creating frequency lists",
+    "section": "The table() function",
+    "text": "The table() function\nLet’s create a toy example:\n\nlibrary(\"tidyverse\")\n\n# create a sentence\nsentence &lt;- \"I like linguistics, and I like my students, but I love my wife and chidren. Sorry students. Maybe next time.\"\n\n# uppercase (or lowercase) the string, so that uppercase and lowercase words (e.g., \"The\" and \"the\" and \"THE\") are treated as the same word\nsentence &lt;- str_to_upper(sentence)\n\n# tokenize the string into words\nwords &lt;- str_extract_all(sentence, \"[-'’A-Z]+\")\n\n# unlist the list so that we're left with a vector\nwords &lt;- unlist(words)\n\n# throw the vector at table() and watch the magic happen!\nfreqs &lt;- table(words)\nprint(freqs)\n\nThe output of the table() function is a named one-dimensional array (like a vector), of class table. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., a word). In order to extract only the names, you can use the names() function:\n\nprint(names(freqs))\n\nWe probably want to sort the frequencies in descending order:\n\nfreqs &lt;- sort(freqs, decreasing = TRUE)\nprint(freqs)\n\nThe frequencies and their names (i.e., the words) can be put into a data frame and then exported out as a CSV file.\n\nActivity\nDo just that, that is, export to a CSV file the words and frequencies using the result of the above toy example. One tip: You’ll need to coerce the data type of the numbers to integer with as.integer(freqs) when assigning the array to a column in the data frame.\nAfter giving it a good-faith effort, if you need help, take a look at Dr. Brown’s code below:\n\n\nCode\ndf &lt;- tibble(wd = names(freqs), freq = as.integer(freqs))\nwrite_csv(df, file = \"freqs.csv\")\n\n\nLet’s ramp it up:\nCreate a frequency list of words in many text files of your choice (e.g., from Project Gutenberg or the Saints files in the LMS).\nAfter a good-faith effort, if you need help, take a look at Dr. Brown’s start to the code below:\n\n\nCode\n# get filenames\nfilenames &lt;- dir(path = \"/Users/ekb5/Corpora/Saints/txt/\", pattern = \"\\\\.txt$\", full.names = TRUE, recursive = TRUE)\n\n# create a collector string to collect the text of all files\nall_str &lt;- \"\"\n\n# loop over the filenames\nfor (filename in filenames) {\n  \n  # get the text from the current file\n  txt &lt;- read_file(filename)\n  \n  # add the text of the current file to the collector string\n  all_str &lt;- str_c(all_str, txt, sep = \" \")\n  \n}  # next filename\n\n\nAfter the for loop, the variable all_str is one big string with all text from all files. You should now be able to modify the code in the toy example above to get the frequencies of the words in this single big string. Go for it! You got this! Let’s go! You’re a super star! Etc.!"
   },
   {
-    "objectID": "lessons/r_rstudio.html#activity",
-    "href": "lessons/r_rstudio.html#activity",
-    "title": "R and RStudio",
-    "section": "Activity",
-    "text": "Activity\n\nStudents explore R and RStudio IDE, perhaps using the RStudio cheat sheet (Help &gt; Cheat Sheets &gt; RStudio IDE Cheat Sheet)"
+    "objectID": "lessons/create_freq.html#the-count-function",
+    "href": "lessons/create_freq.html#the-count-function",
+    "title": "Creating frequency lists",
+    "section": "The count() function",
+    "text": "The count() function\nA second way (among other ways) is to take the vector with words (not the big single string, but the vector with each word as a separate element) and create a one-column data frame, and then use count() (within tidyverse). Let’s go!\nUsing the words vector from the toy example above:\n\ndf &lt;- tibble(wd = words)\nfreqs &lt;- df %&gt;% count(wd)\nprint(freqs)\n\nQuick little aside: The pipe operator %&gt;% passes the value on the left-hand side of the operator into the function on the right-hand side, as the first argument to that function.\n\nActivity\nThat’s right, it’s time to step up and use the count() function to calculate frequencies and then write them out to a CSV file. Ready… set… go!\nAfter a good-faith effort, if you need some help, take a look at Dr. Brown’s code below:\n\n\nCode\n# using the toy example above:\n# (enjoy all the pipe operators!)\ntibble(wd = words) %&gt;% \n  count(wd) %&gt;% \n  write_csv(file = \"freqs.csv\")"
+  },
+  {
+    "objectID": "lessons/create_freq.html#populate-a-list",
+    "href": "lessons/create_freq.html#populate-a-list",
+    "title": "Creating frequency lists",
+    "section": "Populate a list",
+    "text": "Populate a list\nA third way to calculate frequencies of words in files is to create an R list and populate the list with words, one file at a time. This is a good way if the corpus that you want frequencies from is too big to fit in the RAM of your computer, or too big to fit comfortably because it makes your computer work slowly. You can have your script bring into the RAM only one file at a time and populate an R list. This approach to getting frequencies is slower than the previous two, so unless you have a good reason for using this approach, it’s probably best to one of the previous two approaches (fun fact: Dr. Brown likes the count() approach best).\nLet’s take a look at an example using the Saints corpus:\n\n# get filenames\nfilenames &lt;- dir(path = \"/Users/ekb5/Corpora/Saints/txt/\", pattern = \"\\\\.txt$\", full.names = TRUE, recursive = TRUE)\n\n# create a collector string to collect the text of all files\nfreqs &lt;- list()\n\n# loop over the filenames\nfor (filename in filenames) {\n  \n  # get the text from the current file and uppercase it\n  txt &lt;- read_file(filename) %&gt;% str_to_upper()\n  \n  # get words in current file and unlist the list into a vector\n  wds &lt;- str_extract_all(txt, \"[-'’A-Z]+\") %&gt;% unlist()\n  \n  # loop over the vector of words\n  for (wd in wds) {\n    \n    # test whether the current word is already in the list\n    if (wd %in% names(freqs)) {\n      \n      # if so, increment the counter for that word by one\n      freqs[[wd]] &lt;- freqs[[wd]] + 1\n      \n    } else {\n      # if not, add an entry for the word and give it a value of one\n      freqs[[wd]] &lt;- 1\n      \n    }  # end if\n  }  # next word  \n}  # next filename\n\n# print out the words and their frequencies to the console\nfor (wd in names(freqs)) {\n  cat(wd, \": \", freqs[[wd]], \"\\n\", sep=\"\")\n}\n\nThe next step would be put the words and their frequencies into a data frame in order to (more easily) sort them and to (more easily) write them out to a CSV file."
+  },
+  {
+    "objectID": "lessons/regexes.html",
+    "href": "lessons/regexes.html",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+  },
+  {
+    "objectID": "lessons/regexes.html#objective",
+    "href": "lessons/regexes.html#objective",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+  },
+  {
+    "objectID": "lessons/regexes.html#regular-expressions-aka.-regexes",
+    "href": "lessons/regexes.html#regular-expressions-aka.-regexes",
+    "title": "Regular expressions",
+    "section": "Regular expressions (aka. regexes)",
+    "text": "Regular expressions (aka. regexes)\n\nRegular expressions are used to match strings. \n\nNote: In R, you must use double backslashes, e.g., \\\\w+\n\nOnline regex checker are useful, such as here (for Python), here, and here.\nLetters represent themselves: \"ed\" returns ed anywhere in the string, for example, Ed studied in the education building."
+  },
+  {
+    "objectID": "lessons/regexes.html#character-classes",
+    "href": "lessons/regexes.html#character-classes",
+    "title": "Regular expressions",
+    "section": "Character classes",
+    "text": "Character classes\n\n\\\\w = alphanumeric character; \\\\W = non-alphanumeric character\n\\\\s = whitespace (i.e., spaces, tab breaks, newlines); \\\\S = non-whitespace\n\\\\d = Arabic numeral (i.e., 0-9); \\\\D = non-Arabic numeral\n[] = character class finds one of the characters between the square brackets: \n\n[aeiou] finds one of the five orthographic vowels\n[Aa] find either uppercase or lowercase a \n[a-z] finds one lowercase English character\n[a-zA-Z] returns one lowercase English character or one uppercase English character \nExample: \"latin[aox]\" returns latina, latino, latinx."
+  },
+  {
+    "objectID": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
+    "href": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
+    "title": "Regular expressions",
+    "section": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  ",
+    "text": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  \n\nExample: \"\\\\bth(is|at|ese|ose) \\\\w+\" returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, this bag, that cat, these plants, those buildings.\nQuantifiers\n\n{min, max} = returns between min and max number of the previous character: \"\\\\w{2,5}\" returns between two and five alphanumeric characters. Note that \"\\\\w{,5}\" returns up to five alphanumeric characters, and \"\\\\w{2,}\" finds two or more alphanumeric characters.\n{integer} = returns the exact number of the previous character: \"\\\\d{4}\" returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)\nShortcut quantifiers:\n\n? means the same as {0, 1}, meaning it returns zero or one of the previous pattern, that is, the previous character is optional\n* is the same as {0,} and returns zero or more of the previous pattern: yes\\\\!* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc.. \n+ means {1,} and returns one or more of the previous pattern, for example, \"go+l\" returns gol, goool, gooooooool\n\n\n\n\nActivity\n\nWhat do the following regexes match? See example in Section 2.1 here.\n\n\"\\\\b[Tt]he\\\\b\\\\s+\\\\b[Ii]nternet\\\\b\"\n\"\\\\w+ed\\\\b\"\n\"\\\\bcent(er|re)\\\\b\"\n\"\\\\bwalk(s|ed|ing)?\\\\b\"\n\"\\\\b[^aeiou\\\\W]{2,}\\\\w+\"\n\"\\\\b[^aeiou\\\\W][aeiou]\\\\w+\""
+  },
+  {
+    "objectID": "lessons/regexes.html#capture-groups",
+    "href": "lessons/regexes.html#capture-groups",
+    "title": "Regular expressions",
+    "section": "Capture groups",
+    "text": "Capture groups\n\nWarning: This gets wild. \nYou can have a regular expression remember what it captured in order to search for that same sequence of characters.\nYou can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with \\\\1 for the first capture group, or \\\\2 for the second capture group (if you have more than one capture group in the same regex), etc.\nExample: \"\\\\w+(\\\\w) \\\\1\\\\w+\" returns a bigram whose first word ends with the same letter that the second word begins with, e.g., walkeddown\n\n\nActivity\n\nWhat do the following regexes match?\n\n\"([aeiou])\\\\1\"\n\"\\\\w*([aeiou])\\\\1\\\\w*\"\n\"the (\\\\w+)er they were, the \\\\1er they will be\"\n\"[Tt]he (\\\\w+)er they (\\\\w+),? the \\\\1er we \\\\2\"\n\"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\""
+  },
+  {
+    "objectID": "lessons/regexes.html#lookaround",
+    "href": "lessons/regexes.html#lookaround",
+    "title": "Regular expressions",
+    "section": "Lookaround",
+    "text": "Lookaround\n\nLookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.\n\nSee lookahead examples in Section 2.1.7 here.\n\n\n\nActivity\n\nDownload at least several TXT files of your choice (perhaps from Project Gutenberg or Saints from the LMS).\nLoop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the stringr package, for example, str_match_all(), str_extract_all(), str_locate_all().\nCreate a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.\nRamp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ling_data_analysis",
+    "section": "",
+    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
   },
   {
     "objectID": "lessons/webscrape_freq.html",
@@ -210,137 +245,102 @@
     "text": "Question\nIn most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ling_data_analysis",
+    "objectID": "lessons/r_rstudio.html",
+    "href": "lessons/r_rstudio.html",
+    "title": "R and RStudio",
     "section": "",
-    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
+    "text": "Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "lessons/r_rstudio.html#objective",
+    "href": "lessons/r_rstudio.html#objective",
+    "title": "R and RStudio",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
+    "text": "Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)"
   },
   {
-    "objectID": "lessons/regexes.html",
-    "href": "lessons/regexes.html",
-    "title": "Regular expressions",
+    "objectID": "lessons/r_rstudio.html#the-r-programming-language",
+    "href": "lessons/r_rstudio.html#the-r-programming-language",
+    "title": "R and RStudio",
+    "section": "The R programming language",
+    "text": "The R programming language\n\nR (here) is a programming language specifically designed for statistical analysis and visualization.\nAs an open-source language, there are many third-party add-on packages (here) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN here).\nSo called “Task Views” (here) collect and briefly describe packages related to specific fields, including one for Natural Language Processing (here)."
+  },
+  {
+    "objectID": "lessons/r_rstudio.html#rstudio-ide",
+    "href": "lessons/r_rstudio.html#rstudio-ide",
+    "title": "R and RStudio",
+    "section": "RStudio IDE",
+    "text": "RStudio IDE\n\nIntegrated Development Environments (IDEs) facilitate writing computer code.\nRStudio (here) from the company Posit (here) is the go-to IDE for R.\n\nHas many useful keyboard shortcuts, cf. Help &gt; Keyboard Shortcuts Help\n\nEarl’s favorites are:\n\nAssignment operator: ALT + -\nPipe operator in tidyverse: CTRL/CMD + SHIFT + m\n\n\nHas many cheat sheets for various tools within R and RStudio, cf. Help &gt; Cheat Sheets"
+  },
+  {
+    "objectID": "lessons/r_rstudio.html#r-projects",
+    "href": "lessons/r_rstudio.html#r-projects",
+    "title": "R and RStudio",
+    "section": "R projects",
+    "text": "R projects\n\nR projects help keep things organized:\n\nData files, like CSV (.csv) and/or Excel (.xlsx) files\nSource code files, like R scripts (.r or .R files)\n\nTo create an R project:\n\nFile &gt; New Project..."
+  },
+  {
+    "objectID": "lessons/r_rstudio.html#activity",
+    "href": "lessons/r_rstudio.html#activity",
+    "title": "R and RStudio",
+    "section": "Activity",
+    "text": "Activity\n\nStudents explore R and RStudio IDE, perhaps using the RStudio cheat sheet (Help &gt; Cheat Sheets &gt; RStudio IDE Cheat Sheet)"
+  },
+  {
+    "objectID": "lessons/programming_basics.html",
+    "href": "lessons/programming_basics.html",
+    "title": "Programming basics",
     "section": "",
-    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+    "text": "Students will learn to code the basic building blocks of programming in R."
   },
   {
-    "objectID": "lessons/regexes.html#objective",
-    "href": "lessons/regexes.html#objective",
-    "title": "Regular expressions",
+    "objectID": "lessons/programming_basics.html#objective",
+    "href": "lessons/programming_basics.html#objective",
+    "title": "Programming basics",
     "section": "",
-    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+    "text": "Students will learn to code the basic building blocks of programming in R."
   },
   {
-    "objectID": "lessons/regexes.html#regular-expressions-aka.-regexes",
-    "href": "lessons/regexes.html#regular-expressions-aka.-regexes",
-    "title": "Regular expressions",
-    "section": "Regular expressions (aka. regexes)",
-    "text": "Regular expressions (aka. regexes)\n\nRegular expressions are used to match strings. \n\nNote: In R, you must use double backslashes, e.g., \\\\w+\n\nOnline regex checker are useful, such as here (for Python), here, and here.\nLetters represent themselves: \"ed\" returns ed anywhere in the string, for example, Ed studied in the education building."
+    "objectID": "lessons/programming_basics.html#primitive-data-types-in-r",
+    "href": "lessons/programming_basics.html#primitive-data-types-in-r",
+    "title": "Programming basics",
+    "section": "Primitive data types in R",
+    "text": "Primitive data types in R\n\ninteger\n\nThis a whole number, i.e., there is no decimal component, for example “5”.\nTo specify an integer in R, type an uppercase “L” immediately to the right of the number (i.e., no space between the number and the “L”).\n\nE.g., 5L\n\n\nnumeric\n\nThis is a number with a decimal component, for example, “3.14”. Note: Unless an “L” is placed to the right of a whole number, R treats it as a numeric.\nTo specific a numeric in R, just the type the good ol’ fashioned number.\n\nE.g., 3.14\n\nNote: Dr. Brown may refer to this data type as a “float” because of language transfer from Python and Julia.\n\ncharacter\n\nE.g., \"hello world\" and c(\"hello\", \"hola\", \"hej\")\n\nNote: Dr. Brown will likely refer to this data type as “string” because of language transfer from Python and Julia.\nYou can extract part of a string with the sub_str() function (doc here).\n\n\nlogical\n\nThis data type has one of two values, either TRUE or FALSE (or T or F for shorthand).\nDr. Brown may refer to this data type as a “Boolean” because of language transfer from Python and Julia.\n\nThe class() function returns the data type of a variable or value.\n\nEg. class(5L) returns integer, while class(\"hello world\") returns character.\n\n\nActivity\n\nStudents use the class() function to become familiar with the data type of the values that they type."
   },
   {
-    "objectID": "lessons/regexes.html#character-classes",
-    "href": "lessons/regexes.html#character-classes",
-    "title": "Regular expressions",
-    "section": "Character classes",
-    "text": "Character classes\n\n\\\\w = alphanumeric character; \\\\W = non-alphanumeric character\n\\\\s = whitespace (i.e., spaces, tab breaks, newlines); \\\\S = non-whitespace\n\\\\d = Arabic numeral (i.e., 0-9); \\\\D = non-Arabic numeral\n[] = character class finds one of the characters between the square brackets: \n\n[aeiou] finds one of the five orthographic vowels\n[Aa] find either uppercase or lowercase a \n[a-z] finds one lowercase English character\n[a-zA-Z] returns one lowercase English character or one uppercase English character \nExample: \"latin[aox]\" returns latina, latino, latinx."
+    "objectID": "lessons/programming_basics.html#operators-in-r",
+    "href": "lessons/programming_basics.html#operators-in-r",
+    "title": "Programming basics",
+    "section": "Operators in R",
+    "text": "Operators in R\n\nAssignment operator: There are two assignment operators in R. The most common is &lt;- but = also works. For example:\n\nfruit &lt;- \"apple\"\nfruits &lt;- c(\"apple\", \"banana\", \"orange\", \"mango\")\n\nKeyboard shortcut in RStudio: ALT/OPT + -\n\npets = c(\"dog\", \"cat\", \"fish\", \"Madagascar hissing cockroach\")\nage = 46 (note: this creates a numeric rather than an integer; if an integer is wanted: age = 46L)\n\nInclusion operator: %in% tests for inclusion of a value in a collection of values (e.g., a vector), for example:\n\n\"apple\" %in% c(\"banana\", \"apple\", \"mango\") returns TRUE\n\"kiwi\" %in% c(\"banana\", \"apple\", \"mango\") returns FALSE\n\nEqual operator: == (i.e., two equal signs together with no space between them) tests whether the left-hand value and the right-hand value are identical, for example:\n\n\"mango\" == \"mango\" returns TRUE\n\"apple\" == \"manzana\" returns FALSE\n\"Hannah\" == \"HANNAH\" returns FALSE\n\nSuper important note: Computers treat lowercase and uppercase letters differently.\n\nThe equal operator can be used with a string on the left-hand side an a vector of strings on the right-hand side, for example:\n\n\"apple\" == c(\"banana\", \"apple\", \"mango\") returns FALSE TRUE FALSE\nQuick discussion: Speculate with a neighbor about the reason the above expression returns FALSE TRUE FALSE.\n\n\n\nActivity\n\nStudents use these three operators to create variables and vectors, and test for inclusion of a string in a vector of strings."
   },
   {
-    "objectID": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
-    "href": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
-    "title": "Regular expressions",
-    "section": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  ",
-    "text": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  \n\nExample: \"\\\\bth(is|at|ese|ose) \\\\w+\" returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, this bag, that cat, these plants, those buildings.\nQuantifiers\n\n{min, max} = returns between min and max number of the previous character: \"\\\\w{2,5}\" returns between two and five alphanumeric characters. Note that \"\\\\w{,5}\" returns up to five alphanumeric characters, and \"\\\\w{2,}\" finds two or more alphanumeric characters.\n{integer} = returns the exact number of the previous character: \"\\\\d{4}\" returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)\nShortcut quantifiers:\n\n? means the same as {0, 1}, meaning it returns zero or one of the previous pattern, that is, the previous character is optional\n* is the same as {0,} and returns zero or more of the previous pattern: yes\\\\!* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc.. \n+ means {1,} and returns one or more of the previous pattern, for example, \"go+l\" returns gol, goool, gooooooool\n\n\n\n\nActivity\n\nWhat do the following regexes match? See example in Section 2.1 here.\n\n\"\\\\b[Tt]he\\\\b\\\\s+\\\\b[Ii]nternet\\\\b\"\n\"\\\\w+ed\\\\b\"\n\"\\\\bcent(er|re)\\\\b\"\n\"\\\\bwalk(s|ed|ing)?\\\\b\"\n\"\\\\b[^aeiou\\\\W]{2,}\\\\w+\"\n\"\\\\b[^aeiou\\\\W][aeiou]\\\\w+\""
+    "objectID": "lessons/programming_basics.html#comments",
+    "href": "lessons/programming_basics.html#comments",
+    "title": "Programming basics",
+    "section": "Comments",
+    "text": "Comments\n\nComments within computer code helps the human readers, whether other humans or your later self, to quickly understand what the various parts of a computer script do.\nComments in R are specified with a hashtag, for example:\n\n\n# assign a value to a variable\ndog &lt;- \"fido\"\n\n# create a vector of multiple elements\nkids &lt;- c(\"Bobby\", \"Luisa\", \"José\")"
   },
   {
-    "objectID": "lessons/regexes.html#capture-groups",
-    "href": "lessons/regexes.html#capture-groups",
-    "title": "Regular expressions",
-    "section": "Capture groups",
-    "text": "Capture groups\n\nWarning: This gets wild. \nYou can have a regular expression remember what it captured in order to search for that same sequence of characters.\nYou can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with \\\\1 for the first capture group, or \\\\2 for the second capture group (if you have more than one capture group in the same regex), etc.\nExample: \"\\\\w+(\\\\w) \\\\1\\\\w+\" returns a bigram whose first word ends with the same letter that the second word begins with, e.g., walkeddown\n\n\nActivity\n\nWhat do the following regexes match?\n\n\"([aeiou])\\\\1\"\n\"\\\\w*([aeiou])\\\\1\\\\w*\"\n\"the (\\\\w+)er they were, the \\\\1er they will be\"\n\"[Tt]he (\\\\w+)er they (\\\\w+),? the \\\\1er we \\\\2\"\n\"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\""
+    "objectID": "lessons/programming_basics.html#if-else-in-r",
+    "href": "lessons/programming_basics.html#if-else-in-r",
+    "title": "Programming basics",
+    "section": "if else in R",
+    "text": "if else in R\n\nThe logic is simple: Ask a question, and if the answer is TRUE, then do this thing, but if the answer is FALSE, then do that thing.\n\n\n\nTwo approaches to if else in R:\n\nThe most common approach is to use a code block. See an example in the Stack Overflow answer here.\nA less common approach, but super useful for simple if else cases, is to use a function:\n\nbase R ifelse() function here;\ndpylr (part of the tidyverse ecosystem) if_else() function here.\n\n\n\nActivity\n\nStudents create a string with a single word, and then use if else (either a code block of a function) to print to the user whether the word begins with a vowel or a consonant.\n\nHint 1: The print() and cat() can be used to print to the console.\nHint 2: The sub_str() function can be used to extract a sub part of a string.\nHint 3: The %in% operator tests whether the left-hand value is within the right-hand collection."
   },
   {
-    "objectID": "lessons/regexes.html#lookaround",
-    "href": "lessons/regexes.html#lookaround",
-    "title": "Regular expressions",
-    "section": "Lookaround",
-    "text": "Lookaround\n\nLookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.\n\nSee lookahead examples in Section 2.1.7 here.\n\n\n\nActivity\n\nDownload at least several TXT files of your choice (perhaps from Project Gutenberg or Saints from the LMS).\nLoop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the stringr package, for example, str_match_all(), str_extract_all(), str_locate_all().\nCreate a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.\nRamp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc."
+    "objectID": "lessons/programming_basics.html#loops-in-r",
+    "href": "lessons/programming_basics.html#loops-in-r",
+    "title": "Programming basics",
+    "section": "Loops in R",
+    "text": "Loops in R\n\nThe mighty and super useful for loop iterates over all elements of a collection (e.g., a vector), for example see below (and see another example here):\n\n\n# create a vector\nfruits &lt;- c(\"apple\", \"mango\", \"banana\", \"orange\")\n\n# loop over the elements of the vector\nfor (fruit in fruits) {\n  print(fruit)  # print the current element to the console\n}\n\n\nThe less-common-but-still-useful while loop tests the conditional statement at the beginning of each iteration and runs the body of the loop if the statement evaluates to TRUE. See an example here.\nUseful keywords for both for loops and while loops:\n\nThe next keyword skips the rest of the current iteration and continues to the next iteration. This is very much like continue in Python and Julia.\nThe break keyword stops the loop completely, regardless of which iteration it was in, and no further iteration are executed.\n\n\nActivity\n\nStudents create a for loop to iterate from 1 to 10, skipping even numbers and printing out odd numbers.\n\nHint: The modulus operator %% will be helpful (see here)."
   },
   {
-    "objectID": "lessons/create_freq.html",
-    "href": "lessons/create_freq.html",
-    "title": "Creating frequency lists",
-    "section": "",
-    "text": "Students will create frequency lists from files on their harddrive."
-  },
-  {
-    "objectID": "lessons/create_freq.html#objective",
-    "href": "lessons/create_freq.html#objective",
-    "title": "Creating frequency lists",
-    "section": "",
-    "text": "Students will create frequency lists from files on their harddrive."
-  },
-  {
-    "objectID": "lessons/create_freq.html#frequency-in-language",
-    "href": "lessons/create_freq.html#frequency-in-language",
-    "title": "Creating frequency lists",
-    "section": "Frequency in language",
-    "text": "Frequency in language\nFrequency is an important construct in many areas of language, and more generally, in human cognition (see our amazing pattern recognition abilities). Frequency affects which words and phrases are learned first, in both L1s and L2s. More frequent grammatical constructions are learned before (and better for L2 speakers) than less frequent ones (e.g., active voice vs. passive voice in English). More frequency words experience phonetically-driven sound changes (e.g., lenition) first. More frequent words resist analogical leveling (keep -&gt; *keeped, but leap -&gt; leapt -&gt; leaped).\nIn summary, frequency is super important, and being able to calculate frequencies of language features, especially words, is an important skill for a language-oriented data analyst."
-  },
-  {
-    "objectID": "lessons/create_freq.html#getting-frequencies-of-words-in-files",
-    "href": "lessons/create_freq.html#getting-frequencies-of-words-in-files",
-    "title": "Creating frequency lists",
-    "section": "Getting frequencies of words in files",
-    "text": "Getting frequencies of words in files\nThe logic to calculate frequencies of files on a harddrive in R is simple (when holding all words in RAM; see an alternative below):\n\nParse the files so that all words in all files are in a single vector with N elements (N being the total number of words across all files);\nAsk R to count up the number of word tokens per word type in the vector.\n\nThere are two ways (Dr. Brown will show) to count up word tokens per word type:\n\nWith the base R table() function;\nConvert the vector into a one-column data frame and then use count() in tidyverse."
-  },
-  {
-    "objectID": "lessons/create_freq.html#the-table-function",
-    "href": "lessons/create_freq.html#the-table-function",
-    "title": "Creating frequency lists",
-    "section": "The table() function",
-    "text": "The table() function\nLet’s create a toy example:\n\nlibrary(\"tidyverse\")\n\n# create a sentence\nsentence &lt;- \"I like linguistics, and I like my students, but I love my wife and chidren. Sorry students. Maybe next time.\"\n\n# uppercase (or lowercase) the string, so that uppercase and lowercase words (e.g., \"The\" and \"the\" and \"THE\") are treated as the same word\nsentence &lt;- str_to_upper(sentence)\n\n# tokenize the string into words\nwords &lt;- str_extract_all(sentence, \"[-'’A-Z]+\")\n\n# unlist the list so that we're left with a vector\nwords &lt;- unlist(words)\n\n# throw the vector at table() and watch the magic happen!\nfreqs &lt;- table(words)\nprint(freqs)\n\nThe output of the table() function is a named one-dimensional array (like a vector), of class table. The values are the integers (i.e., the frequencies), and each integer has a name (i.e., a word). In order to extract only the names, you can use the names() function:\n\nprint(names(freqs))\n\nWe probably want to sort the frequencies in descending order:\n\nfreqs &lt;- sort(freqs, decreasing = TRUE)\nprint(freqs)\n\nThe frequencies and their names (i.e., the words) can be put into a data frame and then exported out as a CSV file.\n\nActivity\nDo just that, that is, export to a CSV file the words and frequencies using the result of the above toy example. One tip: You’ll need to coerce the data type of the numbers to integer with as.integer(freqs) when assigning the array to a column in the data frame.\nAfter giving it a good-faith effort, if you need help, take a look at Dr. Brown’s code below:\n\n\nCode\ndf &lt;- tibble(wd = names(freqs), freq = as.integer(freqs))\nwrite_csv(df, file = \"freqs.csv\")\n\n\nLet’s ramp it up:\nCreate a frequency list of words in many text files of your choice (e.g., from Project Gutenberg or the Saints files in the LMS).\nAfter a good-faith effort, if you need help, take a look at Dr. Brown’s start to the code below:\n\n\nCode\n# get filenames\nfilenames &lt;- dir(path = \"/Users/ekb5/Corpora/Saints/txt/\", pattern = \"\\\\.txt$\", full.names = TRUE, recursive = TRUE)\n\n# create a collector string to collect the text of all files\nall_str &lt;- \"\"\n\n# loop over the filenames\nfor (filename in filenames) {\n  \n  # get the text from the current file\n  txt &lt;- read_file(filename)\n  \n  # add the text of the current file to the collector string\n  all_str &lt;- str_c(all_str, txt, sep = \" \")\n  \n}  # next filename\n\n\nAfter the for loop, the variable all_str is one big string with all text from all files. You should now be able to modify the code in the toy example above to get the frequencies of the words in this single big string. Go for it! You got this! Let’s go! You’re a super star! Etc.!"
-  },
-  {
-    "objectID": "lessons/create_freq.html#the-count-function",
-    "href": "lessons/create_freq.html#the-count-function",
-    "title": "Creating frequency lists",
-    "section": "The count() function",
-    "text": "The count() function\nA second way (among other ways) is to take the vector with words (not the big single string, but the vector with each word as a separate element) and create a one-column data frame, and then use count() (within tidyverse). Let’s go!\nUsing the words vector from the toy example above:\n\ndf &lt;- tibble(wd = words)\nfreqs &lt;- df %&gt;% count(wd)\nprint(freqs)\n\nQuick little aside: The pipe operator %&gt;% passes the value on the left-hand side of the operator into the function on the right-hand side, as the first argument to that function.\n\nActivity\nThat’s right, it’s time to step up and use the count() function to calculate frequencies and then write them out to a CSV file. Ready… set… go!\nAfter a good-faith effort, if you need some help, take a look at Dr. Brown’s code below:\n\n\nCode\n# using the toy example above:\n# (enjoy all the pipe operators!)\ntibble(wd = words) %&gt;% \n  count(wd) %&gt;% \n  write_csv(file = \"freqs.csv\")"
-  },
-  {
-    "objectID": "lessons/create_freq.html#populate-a-list",
-    "href": "lessons/create_freq.html#populate-a-list",
-    "title": "Creating frequency lists",
-    "section": "Populate a list",
-    "text": "Populate a list\nA third way to calculate frequencies of words in files is to create an R list and populate the list with words, one file at a time. This is a good way if the corpus that you want frequencies from is too big to fit in the RAM of your computer, or too big to fit comfortably because it makes your computer work slowly. You can have your script bring into the RAM only one file at a time and populate an R list. This approach to getting frequencies is slower than the previous two, so unless you have a good reason for using this approach, it’s probably best to one of the previous two approaches (fun fact: Dr. Brown likes the count() approach best).\nLet’s take a look at an example using the Saints corpus:\n\n# get filenames\nfilenames &lt;- dir(path = \"/Users/ekb5/Corpora/Saints/txt/\", pattern = \"\\\\.txt$\", full.names = TRUE, recursive = TRUE)\n\n# create a collector string to collect the text of all files\nfreqs &lt;- list()\n\n# loop over the filenames\nfor (filename in filenames) {\n  \n  # get the text from the current file and uppercase it\n  txt &lt;- read_file(filename) %&gt;% str_to_upper()\n  \n  # get words in current file and unlist the list into a vector\n  wds &lt;- str_extract_all(txt, \"[-'’A-Z]+\") %&gt;% unlist()\n  \n  # loop over the vector of words\n  for (wd in wds) {\n    \n    # test whether the current word is already in the list\n    if (wd %in% names(freqs)) {\n      \n      # if so, increment the counter for that word by one\n      freqs[[wd]] &lt;- freqs[[wd]] + 1\n      \n    } else {\n      # if not, add an entry for the word and give it a value of one\n      freqs[[wd]] &lt;- 1\n      \n    }  # end if\n  }  # next word  \n}  # next filename\n\n# print out the words and their frequencies to the console\nfor (wd in names(freqs)) {\n  cat(wd, \": \", freqs[[wd]], \"\\n\", sep=\"\")\n}\n\nThe next step would be put the words and their frequencies into a data frame in order to (more easily) sort them and to (more easily) write them out to a CSV file."
-  },
-  {
-    "objectID": "lessons/data_structures.html",
-    "href": "lessons/data_structures.html",
-    "title": "Data structures in R",
-    "section": "",
-    "text": "Students will become familiar with common data structures in R."
-  },
-  {
-    "objectID": "lessons/data_structures.html#objective",
-    "href": "lessons/data_structures.html#objective",
-    "title": "Data structures in R",
-    "section": "",
-    "text": "Students will become familiar with common data structures in R."
-  },
-  {
-    "objectID": "lessons/data_structures.html#common-data-structures-in-r",
-    "href": "lessons/data_structures.html#common-data-structures-in-r",
-    "title": "Data structures in R",
-    "section": "Common data structures in R",
-    "text": "Common data structures in R\n\nvector: A single dimension collection of values of the same data type (e.g., all numeric or all character). Kinda like a list in Python or an array in Julia.\n\nNote: Values of different data types are coerced to the more complex data type, for example, if a numeric (aka. float) and an integer are put into the same vector, both values will have a numeric (aka. float) data type.\nA vector (and list, see below) can be created with the c() function (doc here).\n\ndata.frame: A tabular data structure with columns and rows, much like a table in a spreadsheet like Excel or Google Sheets. See doc here.\ntibble: A slightly modified, and better, data.frame in the tibble (doc here) package within the tidyverse metapackage or ecosystem (doc here). See doc here.\ndata.table: Another tabular data structure, written in C under the hood (so it’s fast) from the data.table package here. See a tutorial here.\nmatrix: Another tabular data structure in base R. Less common than data.frame and tibble and data.table. See doc here.\nlist: A flexible data structure that can hold whatever, including other data structures. See doc here and tutorial here.\n\nActivity\n\nStudents create a few vectors of the same length (i.e., the same number of elements).\nStudents create a single data frame with the several vectors created above. The doc here may be helpful.\nStudents create several data frames and put them in a list.\nStudent iterate over the list with a for loop and print each data frame to the console.\nStudents iterate over the list and then iterate over the row of each data frame, and print each row."
+    "objectID": "lessons/programming_basics.html#defining-functions-in-r",
+    "href": "lessons/programming_basics.html#defining-functions-in-r",
+    "title": "Programming basics",
+    "section": "Defining functions in R",
+    "text": "Defining functions in R\n\nA very useful ability in R (and all programming languages) is for a user to define their own custom function.\nThe function() function does the trick.\n\nSee a tutorial here.\n\n\nActivity\n\nStudents define a function that takes as input a word and returns as output a logical value (aka. Boolean value) indicating whether the word begins with one of the five orthographic vowels (i.e., a, e, i, o, u).\n\nHint: The %in% keyword will be helpful here.\n\nNow for a little fun and to put these basic programming skills together: Students define a function (likely with smaller helper functions) that translates a sentence from English into Pig Latin. A little refresher on Pig Latin: If a word begins with a vowel, the word yay is added to the end of it; if a word begins with a consonant or consonant cluster (e.g., ch, gr), that consonant or consonant cluster is moved to the end of the word followed by ay.\n\nHint: the stringr package (part of the tidyverse) will be useful here, especially the str_c(), str_sub(), str_split() (and unlist()) functions, as will the letters and LETTERS built-in constants.\nHint: After a good-faith effort, if you need help, see the script written by Dr. Brown by clicking on “▶ Code” below.\n\n\n\n\nCode\nsuppressPackageStartupMessages(library(\"tidyverse\"))\n\n# helper function 1, for vowel words\ntrans_v &lt;-  function(wd, vowels) {\n  return(str_c(wd, \"yay\"))\n}\n\n# helper function 2, for consonant words\ntrans_c &lt;- function(wd, vowels, first_let) {\n  second_let &lt;- str_sub(wd, 2, 2)\n  if (!str_to_lower(second_let) %in% vowels) {\n    first_two &lt;- str_sub(wd, 1, 2)\n    rest_wd &lt;- str_sub(wd, 3, str_length(wd))\n    return(str_c(rest_wd, first_two, \"ay\"))\n  } else {\n    rest_wd &lt;- str_sub(wd, 2, str_length(wd))\n    return(str_c(rest_wd, first_let, \"ay\"))\n  }\n}\n\n# the main function\ntrans_pig &lt;- function(sentence, vowels) {\n  wds &lt;- unlist(str_split(sentence, \"\\\\s+\"))\n  trans_sent &lt;- \"\"\n  for (wd in wds) {\n    first_let &lt;- str_sub(wd, 1, 1)\n    if (str_to_lower(first_let) %in% vowels) {\n      # this is a vowel word\n      trans_sent &lt;- str_c(trans_sent, trans_v(wd, vowels), \" \")\n    } else {\n      # the current word is a consonant word\n      trans_sent &lt;- str_c(trans_sent, trans_c(wd, vowels, first_let), \" \")\n    }\n  }\n  return(str_trim(trans_sent))\n}\n\n### test the function\nsentence &lt;- \"I do not like green eggs and ham.\"\nvowels &lt;- c(\"a\", \"e\", \"i\", \"o\", \"u\")\nprint(trans_pig(sentence, vowels))"
   },
   {
     "objectID": "lessons/quanteda.html",
@@ -362,13 +362,6 @@
     "title": "quanteda",
     "section": "Using R for textual analysis",
     "text": "Using R for textual analysis\nThe quanteda R package is a super useful package for analyzing texts in R. Some of the techniques are corpus linguistic technique through and through: tokenizing into words or sentences, keyword-in-context, removing stopwords. Other techniques might be better considered computational linguistic techniques: sentiment analysis, document feature matrix. Regardless, we need to get to know this package, as I can’t call myself a good professor of Linguistics Data Analysis with R without looking at this package."
-  },
-  {
-    "objectID": "lessons/quanteda.html#loading-a-corpus",
-    "href": "lessons/quanteda.html#loading-a-corpus",
-    "title": "quanteda",
-    "section": "Loading a corpus",
-    "text": "Loading a corpus\nStep #1: Install the quanteda package and the other related package that the quanteda creators recommend:\n\ninstall.packages(c(\"quanteda\", \"quanteda.textmodels\", \"quanteda.textstats\", \"quanteda.textplots\", \"readtext\", \"spacyr\", \"remotes\"))\n\nThen, we need to install two packages on a Github:\n\nremotes::install_github(\"quanteda/quanteda.corpora\")\n\nDownloading GitHub repo quanteda/quanteda.corpora@HEAD\n\n\ndigest (0.6.31 -&gt; 0.6.34) [CRAN]\n\n\nInstalling 1 packages: digest\n\n\n\nThe downloaded binary packages are in\n    /var/folders/5k/xf2t6tgs4wz6t6w0wq5c0sr4pbnrb8/T//RtmpThQPjU/downloaded_packages\n\n\nRunning `R CMD build`...\n\n\n* checking for file ‘/private/var/folders/5k/xf2t6tgs4wz6t6w0wq5c0sr4pbnrb8/T/RtmpThQPjU/remotes12f33cc2892b/quanteda-quanteda.corpora-ec4b76d/DESCRIPTION’ ... OK\n* preparing ‘quanteda.corpora’:\n* checking DESCRIPTION meta-information ... OK\n* checking for LF line-endings in source and make files and shell scripts\n* checking for empty or unneeded directories\nRemoved empty directory ‘quanteda.corpora/sources’\n* building ‘quanteda.corpora_0.9.2.tar.gz’\n\nremotes::install_github(\"kbenoit/quanteda.dictionaries\")\n\nSkipping install of 'quanteda.dictionaries' from a github remote, the SHA1 (d531a341) has not changed since last install.\n  Use `force = TRUE` to force installation"
   },
   {
     "objectID": "lessons/quanteda.html#install-the-package-and-its-friends",
@@ -397,13 +390,6 @@
     "title": "quanteda",
     "section": "Keyword-in-context (KWIC)",
     "text": "Keyword-in-context (KWIC)\nLet’s perform into a corpus linguistic technique: the keyword-in-context display or concordance lines or concordances. It is super easy to do so with the tokens() and kwic() functions. See example here.\nLet’s start out slowly with a simple word search using our Saints corpus:\n\n# Assuming packages are loaded and corpus has been created\n\n# tokenize and then get concordances\ntoks &lt;- tokens(saints)\nconcordances &lt;- kwic(toks, pattern = \"tree\")\nprint(concordances)\n\nKeyword-in-context with 87 matches.                                                                            \n            [03-plates-of-gold.txt, 1536]            He then found a large |\n               [04-be-watchful.txt, 2620]               he could. A fallen |\n               [04-be-watchful.txt, 2698]         man sprang from behind a |\n    [12-after-much-tribulation.txt, 2451]           , they hit a submerged |\n          [30-fight-like-angels.txt, 543]       take cover behind a fallen |\n         [30-fight-like-angels.txt, 1656]  son﻿—emerged from behind a large |\n         [30-fight-like-angels.txt, 2179]         gather roots from an elm |\n    [36-incline-them-to-gather.txt, 3311]             a twig from an olive |\n        [46-endowed-with-power.txt, 4173]              she sat on a fallen |\n              [02-glory-enough.txt, 1406]          frozen ground. A fallen |\n [03-word-and-will-of-the-lord.txt, 2212]            cut timber, a falling |\n   [04-an-ensign-to-the-nations.txt, 642]  Sometimes the company spotted a |\n   [05-bowed-down-to-the-grave.txt, 1988]           beneath the shade of a |\n   [19-the-chambers-of-the-lord.txt, 509]                   a stick, nor a |\n  [30-a-steady-onward-movement.txt, 2554]               root is sound, the |\n [38-mine-own-due-time-and-way.txt, 1144] found herself beside a beautiful |\n [38-mine-own-due-time-and-way.txt, 1165]           say, “ The underground |\n                 [11-too-heavy.txt, 2948]        hang you from the highest |\n                 [11-too-heavy.txt, 3089]          Lupe dashed to a nearby |\n                 [11-too-heavy.txt, 3191]                two men to a tall |\n                 [11-too-heavy.txt, 6314]       hang them from the highest |\n                 [11-too-heavy.txt, 6334]        hang you from the highest |\n         [16-written-in-heaven.txt, 6284]              , From Acorn to Oak |\n        [18-any-place-on-earth.txt, 4580]          Galli, Under a Leafless |\n        [18-any-place-on-earth.txt, 4857]          Galli, Under a Leafless |\n  [19-the-gospel-of-the-master.txt, 5739]          Galli, Under a Leafless |\n  [19-the-gospel-of-the-master.txt, 5844]          Galli, Under a Leafless |\n  [19-the-gospel-of-the-master.txt, 5979]          Galli, Under a Leafless |\n  [19-the-gospel-of-the-master.txt, 6085]          Galli, Under a Leafless |\n                [20-hard-times.txt, 4482]          Galli, Under a Leafless |\n                [20-hard-times.txt, 4505]          Galli, Under a Leafless |\n                [20-hard-times.txt, 4542]          Galli, Under a Leafless |\n                [20-hard-times.txt, 4553]          Galli, Under a Leafless |\n                [20-hard-times.txt, 4564]          Galli, Under a Leafless |\n            [22-eternal-reward.txt, 6315]          Galli, Under a Leafless |\n            [22-eternal-reward.txt, 6413]          Galli, Under a Leafless |\n            [22-eternal-reward.txt, 6429]          Galli, Under a Leafless |\n     [23-all-that-is-necessary.txt, 6100]          Galli, Under a Leafless |\n     [23-all-that-is-necessary.txt, 6111]          Galli, Under a Leafless |\n     [23-all-that-is-necessary.txt, 6148]          Galli, Under a Leafless |\n        [27-god-is-at-the-helm.txt, 2451] consider planting a “ centennial |\n        [27-god-is-at-the-helm.txt, 5418]          Galli, Under a Leafless |\n        [27-god-is-at-the-helm.txt, 5441]          Galli, Under a Leafless |\n        [27-god-is-at-the-helm.txt, 5461]          Galli, Under a Leafless |\n        [27-god-is-at-the-helm.txt, 5497]          Galli, Under a Leafless |\n              [29-tis-eventide.txt, 5379]          Galli, Under a Leafless |\n              [29-tis-eventide.txt, 5392]          Galli, Under a Leafless |\n              [29-tis-eventide.txt, 5403]          Galli, Under a Leafless |\n              [29-tis-eventide.txt, 5423]          Galli, Under a Leafless |\n              [29-tis-eventide.txt, 5434]          Galli, Under a Leafless |\n              [29-tis-eventide.txt, 5481]          Galli, Under a Leafless |\n              [29-tis-eventide.txt, 5492]          Galli, Under a Leafless |\n                 [30-such-grief.txt, 791]        find was under a leafless |\n                [30-such-grief.txt, 3680]          Galli, Under a Leafless |\n                [30-such-grief.txt, 3711]          Galli, Under a Leafless |\n                [30-such-grief.txt, 3753]          Galli, Under a Leafless |\n                [30-such-grief.txt, 3801]          Galli, Under a Leafless |\n                [30-such-grief.txt, 3814]          Galli, Under a Leafless |\n                [30-such-grief.txt, 3879]          Galli, Under a Leafless |\n                [30-such-grief.txt, 3918]          Galli, Under a Leafless |\n                [30-such-grief.txt, 3979]          Galli, Under a Leafless |\n           [31-the-right-track.txt, 4077]          Galli, Under a Leafless |\n           [31-the-right-track.txt, 4192]          Galli, Under a Leafless |\n           [31-the-right-track.txt, 4205]          Galli, Under a Leafless |\n           [31-the-right-track.txt, 4264]          Galli, Under a Leafless |\n           [31-the-right-track.txt, 4360]          Galli, Under a Leafless |\n      [32-brothers-and-sisters.txt, 5243]          Galli, Under a Leafless |\n      [32-brothers-and-sisters.txt, 5256]          Galli, Under a Leafless |\n      [32-brothers-and-sisters.txt, 5280]          Galli, Under a Leafless |\n      [32-brothers-and-sisters.txt, 5302]          Galli, Under a Leafless |\n      [32-brothers-and-sisters.txt, 5313]          Galli, Under a Leafless |\n           [33-our-fathers-hand.txt, 246]                , he hid behind a |\n           [33-our-fathers-hand.txt, 697]     John O’Donnal knelt beside a |\n          [33-our-fathers-hand.txt, 4801]            ” 34 Anderson, Cherry |\n          [33-our-fathers-hand.txt, 4879]            CHL. Anderson, Cherry |\n          [33-our-fathers-hand.txt, 5067]            CHL; Anderson, Cherry |\n          [33-our-fathers-hand.txt, 5136]            CHL. Anderson, Cherry |\n          [33-our-fathers-hand.txt, 5280]              , From Acorn to Oak |\n          [33-our-fathers-hand.txt, 6300]            141; Anderson, Cherry |\n            [35-we-cannot-fail.txt, 5066]             66. Anderson, Cherry |\n            [35-we-cannot-fail.txt, 5129]            CHL. Anderson, Cherry |\n            [35-we-cannot-fail.txt, 5165]           1950. Anderson, Cherry |\n     [38-more-power-more-light.txt, 3253]          Galli, Under a Leafless |\n     [38-more-power-more-light.txt, 3338]          Galli, Under a Leafless |\n     [38-more-power-more-light.txt, 3571]          Galli, Under a Leafless |\n     [38-more-power-more-light.txt, 3584]          Galli, Under a Leafless |\n                 [39-a-new-era.txt, 3579]          Galli, Under a Leafless |\n                                       \n tree | branch and used it as          \n tree | blocked the path ahead of      \n tree | and struck him with the        \n tree | and nearly capsized. Fearing   \n tree | . She and her daughters        \n tree | near the millpond and crept    \n tree | . When he returned,            \n tree | and contemplated the Atonement.\n tree | along the western bank of      \n tree | had crushed a wagon.           \n tree | struck him and broke some      \n tree | or a patch of green            \n tree | . This became an everyday      \n tree | , nor a particle of            \n tree | will be sound, and             \n tree | , heavy with the finest        \n tree | brings forth very choice fruit \n tree | . ” 36 When the                \n tree | and clung to it as             \n tree | and slung ropes over its       \n tree | ” changed to “ If              \n tree | . ” Monroy, History            \n Tree | , 29; Melvin J                 \n Tree | , 58; Naujoks and              \n Tree | , 58; George H                 \n Tree | , 58; Helga Meischus           \n Tree | , 3–5, 12,                     \n Tree | , 16, 25–27;                   \n Tree | , 32. See Tilsit               \n Tree | , 36; German-Austrian Mission  \n Tree | , 32, 34;                      \n Tree | , 34. Meyer and                \n Tree | , 34–36. Meyer and             \n Tree | , 34; see also                 \n Tree | , 49–52; Johnson and           \n Tree | , 50–52. Topic:                \n Tree | , 50; Reese,                   \n Tree | , 10–12. Meyer and             \n Tree | , 57–59; Naujoks and           \n Tree | , 44. Harold B                 \n tree | ” as a way to                  \n Tree | , 63–65, 78–80.                \n Tree | , 81–84. Overy,                \n Tree | , 84–85; Winter,               \n Tree | , 63, 71,                      \n Tree | , 95–96, 100.                  \n Tree | , 97–100. Meyer and            \n Tree | , 101–2; Meyer,                \n Tree | , 92–93. Meyer and             \n Tree | , 16, 102;                     \n Tree | , 102. Meyer and               \n Tree | , 44, 103–4,                   \n tree | , its branches brown and       \n Tree | , 107, 110;                    \n Tree | , 108; Kershaw,                \n Tree | , 105, 110–12;                 \n Tree | , 112, 187–88.                 \n Tree | , 188–91; Birth,               \n Tree | , 191; Weinberg,               \n Tree | , 108, 117–18,                 \n Tree | , 114, 194–95;                 \n Tree | , 108, 113,                    \n Tree | , 101–3, 123.                  \n Tree | , 113, 115–16,                 \n Tree | , 118; Kuehne,                 \n Tree | , 120; Birth,                  \n Tree | , 127–30, 135.                 \n Tree | , 127, 130,                    \n Tree | , 129, 135–38;                 \n Tree | , 132. Meyer and               \n Tree | , 132–34; Meyer,               \n tree | . 1 Martha had experience      \n tree | in a secluded corner of        \n Tree | behind the Iron Curtain,       \n Tree | behind the Iron Curtain,       \n Tree | behind the Iron Curtain,       \n Tree | behind the Iron Curtain,       \n Tree | , 201–3; Frederick S           \n Tree | behind the Iron Curtain,       \n Tree | behind the Iron Curtain,       \n Tree | behind the Iron Curtain,       \n Tree | behind the Iron Curtain,       \n Tree | , 129; Meyer,                  \n Tree | , 156. Couch,                  \n Tree | , 139–41, 156–58.              \n Tree | , 142; Couch,                  \n Tree | , 152; Couch,                  \n\n\nLet’s ramp it up with some regular expression pizzazz. Question: What does the regular expression find?\n\ntoks &lt;- tokens(saints)\nconcordances &lt;- kwic(toks, pattern = \"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\", valuetype = \"regex\")\nprint(concordances)\n\nKeyword-in-context with 43 matches.                                                 \n                       [15-holy-places.txt, 4805]\n                       [15-holy-places.txt, 4837]\n                       [23-every-snare.txt, 4509]\n       [26-a-holy-and-consecrated-land.txt, 2926]\n        [27-we-proclaim-ourselves-free.txt, 2834]\n            [36-incline-them-to-gather.txt, 2398]\n                      [02-glory-enough.txt, 6437]\n         [03-word-and-will-of-the-lord.txt, 5591]\n              [14-hard-to-be-separated.txt, 1880]\n            [15-in-storms-and-in-calms.txt, 1124]\n           [17-the-folks-are-reforming.txt, 5016]\n          [19-the-chambers-of-the-lord.txt, 5872]\n         [22-like-coals-of-living-fire.txt, 1676]\n [28-until-the-coming-of-the-son-of-man.txt, 270]\n           [30-a-steady-onward-movement.txt, 714]\n            [37-to-the-throne-of-grace.txt, 3750]\n                 [41-so-long-submerged.txt, 2843]\n                 [41-so-long-submerged.txt, 2877]\n       [01-a-brighter-and-a-better-day.txt, 3342]\n          [05-an-essential-preparation.txt, 1501]\n          [05-an-essential-preparation.txt, 5141]\n                [18-any-place-on-earth.txt, 4556]\n                [18-any-place-on-earth.txt, 4618]\n                [18-any-place-on-earth.txt, 4766]\n                [18-any-place-on-earth.txt, 4802]\n                [18-any-place-on-earth.txt, 4842]\n          [19-the-gospel-of-the-master.txt, 5773]\n          [19-the-gospel-of-the-master.txt, 5855]\n          [19-the-gospel-of-the-master.txt, 6169]\n          [19-the-gospel-of-the-master.txt, 6198]\n          [19-the-gospel-of-the-master.txt, 6967]\n          [19-the-gospel-of-the-master.txt, 7132]\n          [19-the-gospel-of-the-master.txt, 7162]\n                        [20-hard-times.txt, 4276]\n                        [20-hard-times.txt, 4486]\n                    [22-eternal-reward.txt, 5056]\n             [23-all-that-is-necessary.txt, 6017]\n                   [25-no-time-to-lose.txt, 4328]\n                   [26-wars-foul-brood.txt, 1191]\n                [27-god-is-at-the-helm.txt, 2637]\n                   [33-our-fathers-hand.txt, 664]\n                    [35-we-cannot-fail.txt, 4997]\n                         [39-a-new-era.txt, 3446]\n                                                             \n             of Zion, circa Early |        June–June        |\n             of Zion, circa Early |        June–June        |\n                  482–84; “ A New |    Revelation﻿—Mormon    |\n            of Zion on the sacred |       ground﻿—and        |\n       meekness and humility, and |     long-suffering      |\n              his readers, “ what |         may﻿—nay         |\n                     , 21. Topic: |    Mexican-American     |\n             of Zion, circa Early |        June–June        |\n            . “ Have patience and |     long-suffering      |\n    the Jacksons were their three | children—seven-year-old |\n                         , [ 5 ]; |         Pic-nic         |\n         Beeton, Genteel Gentile, |        xii–xiii         |\n            arms and chest with a |     strong-smelling     |\n         she demanded more than $ |         200,000         |\n anticipating shall come upon all |   nations—revolutions   |\n          gently and meekly, with |     long-suffering      |\n           agreed to help raise $ |         100,000         |\n           the return of around $ |         400,000         |\n            willing to loan him $ |         200,000         |\n     the Mormon Battalion for the |    Mexican-American     |\n        Topics: Mormon Battalion; |    Mexican-American     |\n                       , 26: 574. |     German-Austrian     |\n            Russia. Topic: Russia |     German-Austrian     |\n                         ” [ 2 ]. |     German-Austrian     |\n               also, for example, |     German-Austrian     |\n                        , 29, 35; |     German-Austrian     |\n         32; Königsberg District, |     German-Austrian     |\n      25–27; Königsberg District, |     German-Austrian     |\n         Mission, French Mission, |     German-Austrian     |\n         Historical Reports, CHL; |     German-Austrian     |\n     “ News of Centennial Reaches |       75,000,000        |\n                    Fete, ” and “ |         800,000         |\n     “ News of Centennial Reaches |       75,000,000        |\n               also, for example, |     German-Austrian     |\n               Leafless Tree, 36; |     German-Austrian     |\n                 Mission, 1933 ). |     German-Austrian     |\n                     of Gray, 35; |     German-Austrian     |\n                       , 81, 200; |     German-Austrian     |\n          with charity, patience, |     long-suffering      |\n     everywhere will have to make |  sacrifices—sacrifices  |\n           patience, charity, and |     long-suffering      |\n             and Münz, “ European |        East-West        |\n            Choir Goes to Europe, |       xvii–xviii        |\n                                     \n 25, 1833, in                        \n 25, 1833, in                        \n Money, ” Cleveland Weekly           \n bid the Saints to gather            \n , ” the Lord promised               \n , what will﻿—become of your          \n War James Allen, Circular           \n 25, 1833, in                        \n , ” he wrote.                       \n Martha, four-year-old Mary,         \n Party at the Head Waters            \n ; “ Slander of Gov                  \n oil and rolled him across           \n in alimony and other claims         \n succeeding revolutions—we may have a\n and love unfeigned. Now             \n for construction, though it         \n worth of Church property that       \n . He said he was                    \n War of 1846–48, the                 \n War Brigham Young Jr.               \n Mission, Manuscript History and     \n Mission, Manuscript History and     \n Mission, Branch Histories,          \n Mission, Manuscript History and     \n Mission, Branch Histories,          \n Mission, Ordinations to the         \n Mission, Emigration Record,         \n Mission, Netherland Mission,        \n Mission, Manuscript History and     \n Persons in America, ”               \n to Hear Centennial over Radio       \n Persons in America, ”               \n Mission, General Minutes,           \n Mission, General Minutes,           \n Mission, Swedish Mission,           \n Mission, General Minutes,           \n Mission, Manuscript History and     \n , and forgiveness. ”                \n the like and extent of              \n . 5 Martha clung to                 \n Migration, ” 521–24,                \n . Topic: Tabernacle Choir           \n\n\nThe main tokenizer function tokens() has a handful of arguments that are worth inspecting. Take a gander here. Also, there many other tokenizer functions that can be useful. Take a look here.\n\nActivity\nGet to know the tokenizing functions and the kwic() function (example here and docs here) with the corpus of your choice."
-  },
-  {
-    "objectID": "lessons/quanteda.html#more-to-come-soon",
-    "href": "lessons/quanteda.html#more-to-come-soon",
-    "title": "quanteda",
-    "section": "MORE TO COME SOON",
-    "text": "MORE TO COME SOON"
   },
   {
     "objectID": "lessons/quanteda.html#more-to-come-soon-about-quanteda",
