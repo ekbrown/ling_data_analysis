@@ -424,6 +424,6 @@
     "href": "lessons/quanteda.html#keyness-analysis",
     "title": "quanteda",
     "section": "Keyness analysis",
-    "text": "Keyness analysis\nWe can use quanteda to perform keyness analysis, that is, to identify the keywords that typify a section of the corpus from the rest of the corpus.\nLet’s get the creators’ example working in the doc page (in console ?textstat_keyness) and here."
+    "text": "Keyness analysis\nWe can use quanteda to perform keyness analysis, that is, to identify the keywords that typify a section of the corpus from the rest of the corpus.\nLet’s get the creators’ example working in the doc page (in console ?textstat_keyness) and here.\n\nActivity\nTake some time to look over the other analysis abilities of quanteda and try to get one or two working with a corpus of your choice."
   }
 ]

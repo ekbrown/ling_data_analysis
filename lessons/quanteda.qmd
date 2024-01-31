@@ -268,3 +268,7 @@ Now, let's make this work with our *Saints* corpus.
 We can use quanteda to perform keyness analysis, that is, to identify the keywords that typify a section of the corpus from the rest of the corpus.
 
 Let's get the creators' example working in the doc page (in console `?textstat_keyness`) and [here](https://quanteda.io/articles/pkgdown/examples/plotting.html?q=keyness#plot-keyness-in-a-target-and-reference-group).
+
+### Activity
+
+Take some time to look over the other analysis abilities of `quanteda` and try to get one or two working with a corpus of your choice.
