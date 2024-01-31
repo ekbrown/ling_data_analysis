@@ -60,7 +60,7 @@ saints <- saints01 + saints02 + saints03
 print(summary(saints))
 ```
 
-### Option 2:  Automate the previous approach (less verbose)
+### Option 2: Automate the previous approach (less verbose)
 
 We can use the [`eval()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/eval) and [`parse()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/parse) functions in base R to automate the previous approach. Shall we?
 
@@ -123,7 +123,7 @@ Let's perform into a corpus linguistic technique: the keyword-in-context display
 
 Let's start out slowly with a simple word search using our `Saints` corpus:
 
-```{r}
+```{r kwic}
 #| eval: false
 # Assuming packages are loaded and corpus has been created
 
@@ -148,4 +148,123 @@ The main tokenizer function `tokens()` has a handful of arguments that are worth
 
 Get to know the tokenizing functions and the kwic() function (example [here](https://quanteda.io/articles/quickstart.html#exploring-corpus-texts) and docs [here](https://quanteda.io/reference/kwic.html)) with the corpus of your choice.
 
-## MORE TO COME SOON ABOUT QUANTEDA
+## Searching with a dictionary
+
+```{r dictionary}
+#| eval: false
+
+library("tidyverse")
+library("quanteda")
+library("readtext")
+setwd("/Users/ekb5/Corpora/Saints/txt/")
+
+# one pipeline will do the trick!
+saints <- readtext(file = "*/*.txt", docvarsfrom = "filepaths", dvsep = "/", docvarnames = c("Volume", "filename")) %>% corpus()
+
+# create a dictionary with named vectors
+dict <- dictionary(list(temple = c("temple", "sealing", "spire", "open house"),
+                missionary = c("missionary", "mission", "labor\\b")))
+
+# search with the dictionary
+kwic(tokens(saints), pattern = dict, valuetype = "regex") %>% print()
+```
+
+## Collocations
+
+You can retrieve collocations with the `textstat_collocations()` function [here](https://quanteda.io/reference/textstat_collocations.html). At the time of making this lesson plan, it only calculates the lambda metric proposed by Blaheta and Johnson (2001):
+
+Blaheta, D. & Johnson, M. (2001). [Unsupervised learning of multi-word verbs](http://web.science.mq.edu.au/~mjohnson/papers/2001/dpb-colloc01.pdf). Presented at the ACLEACL Workshop on the Computational Extraction, Analysis and Exploitation of Collocations.
+
+However, the doc page says that there are plans to add more measures. Hopefully log-dice is in the works, as it's a great word association metric.
+
+Let's retrieve the collocations in the first three volumes of *Saints*:
+
+```{r collocations}
+#| eval: false
+
+library(quanteda)
+library(readtext)
+library(tidyverse)
+library(quanteda.textstats)
+
+# change directories into the Saints directories
+setwd("/Users/ekb5/Corpora/Saints/txt")
+
+# load the Saints corpus, creating a docvar with the Volume that each file belongs to
+saints <- readtext(file = "*/*.txt", docvarsfrom = "filepaths", dvsep = "/", docvarnames = c("Volume", "filename")) %>%  corpus() 
+# retrieve collocations
+saints %>% 
+  tokens() %>% 
+  textstat_collocations()  %>% 
+  arrange(desc(lambda)) %>%  # arrange them in descending order by lambda
+  head(50)  # show only first 50 collocations
+```
+
+That's okay, but there are lots of proper nouns and low-frequency collocations. We can remove those with the `min_count` argument: `textstat_collocations(min_count = 25)`.
+
+If we want, we can also remove function words, which have little semantic value, with a stopword list:
+
+```{r}
+#| eval: false
+
+library("stopwords")
+saints %>% 
+  tokens() %>% 
+  tokens_remove(stopwords("en")) %>% 
+  textstat_collocations(min_count = 25) %>% 
+  arrange(desc(lambda)) %>% 
+  head(50)
+```
+
+### Activity
+
+Go for it! That is, retrieve collocations in a corpus of your choice. Look at and possibly use some of the other arguments in the textstat_collocations() function. Reminder: In order to pull up the doc page of a function within the RStudio IDE, you can type a question mark and then the name of the function (no space between them) in the console, e.g., `?textstat_collocations`. And [here](https://quanteda.io/reference/textstat_collocations.html)'s that same doc page on the internet.
+
+## Document-feature matrix
+
+Within `quanteda`, a document-feature matrix is very similar to a document-term matrix (if you know what that is). It's a tabular dataset (hence the name "matrix") and has the name of the files (aka. documents) as rows, and the features (i.e., words and punctuation) are the columns. [Here](https://quanteda.io/articles/quickstart.html#constructing-a-document-feature-matrix)'s an example. Let's take a look with the *Saints* corpus:
+
+```{r document-feature matrix}
+#| eval: false
+
+library("tidyverse")
+library("quanteda")
+library("readtext")
+setwd("/Users/ekb5/Corpora/Saints/txt/")
+
+# one pipeline will do the trick!
+saints <- readtext(file = "*/*.txt", docvarsfrom = "filepaths", dvsep = "/", docvarnames = c("Volume", "filename")) %>% corpus()
+
+saints %>% 
+  tokens() %>% 
+  dfm()
+```
+
+We can use a dictionary of patterns to limit the number of features (i.e., columns) that are returned in the matrix:
+
+```{r}
+#| eval: false
+dict <- dictionary(list(
+  temple = c("temple", "sealing", "spire", "open house"),
+  missionary = c("missionary", "mission", "labor"))
+  )
+
+saints %>% 
+  tokens() %>% 
+  tokens_lookup(dictionary = dict) %>% 
+  dfm() %>% 
+  as_tibble() %>%  # cast to tibble in order to use arrange below
+  arrange(desc(temple))
+```
+
+## Similarities between texts
+
+You can plot similarities between texts in a corpus. Let's run the example code in the Quick Guide [here](https://quanteda.io/articles/quickstart.html#similarities-between-texts).
+
+Now, let's make this work with our *Saints* corpus.
+
+## Keyness analysis
+
+We can use quanteda to perform keyness analysis, that is, to identify the keywords that typify a section of the corpus from the rest of the corpus.
+
+Let's get the creators' example working in the doc page (in console `?textstat_keyness`) and [here](https://quanteda.io/articles/pkgdown/examples/plotting.html?q=keyness#plot-keyness-in-a-target-and-reference-group).

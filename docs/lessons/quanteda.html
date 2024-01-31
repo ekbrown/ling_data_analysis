@@ -226,7 +226,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#activity-2" id="toc-activity-2" class="nav-link" data-scroll-target="#activity-2">Activity</a></li>
   </ul></li>
-  <li><a href="#more-to-come-soon-about-quanteda" id="toc-more-to-come-soon-about-quanteda" class="nav-link" data-scroll-target="#more-to-come-soon-about-quanteda">MORE TO COME SOON ABOUT QUANTEDA</a></li>
+  <li><a href="#searching-with-a-dictionary" id="toc-searching-with-a-dictionary" class="nav-link" data-scroll-target="#searching-with-a-dictionary">Searching with a dictionary</a></li>
+  <li><a href="#collocations" id="toc-collocations" class="nav-link" data-scroll-target="#collocations">Collocations</a>
+  <ul class="collapse">
+  <li><a href="#activity-3" id="toc-activity-3" class="nav-link" data-scroll-target="#activity-3">Activity</a></li>
+  </ul></li>
+  <li><a href="#document-feature-matrix" id="toc-document-feature-matrix" class="nav-link" data-scroll-target="#document-feature-matrix">Document-feature matrix</a></li>
+  <li><a href="#similarities-between-texts" id="toc-similarities-between-texts" class="nav-link" data-scroll-target="#similarities-between-texts">Similarities between texts</a></li>
+  <li><a href="#keyness-analysis" id="toc-keyness-analysis" class="nav-link" data-scroll-target="#keyness-analysis">Keyness analysis</a></li>
   </ul>
 </nav>
     </div>
@@ -377,8 +384,105 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Get to know the tokenizing functions and the kwic() function (example <a href="https://quanteda.io/articles/quickstart.html#exploring-corpus-texts">here</a> and docs <a href="https://quanteda.io/reference/kwic.html">here</a>) with the corpus of your choice.</p>
 </section>
 </section>
-<section id="more-to-come-soon-about-quanteda" class="level2">
-<h2 class="anchored" data-anchor-id="more-to-come-soon-about-quanteda">MORE TO COME SOON ABOUT QUANTEDA</h2>
+<section id="searching-with-a-dictionary" class="level2">
+<h2 class="anchored" data-anchor-id="searching-with-a-dictionary">Searching with a dictionary</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"quanteda"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readtext"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/ekb5/Corpora/Saints/txt/"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># one pipeline will do the trick!</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>saints <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="at">file =</span> <span class="st">"*/*.txt"</span>, <span class="at">docvarsfrom =</span> <span class="st">"filepaths"</span>, <span class="at">dvsep =</span> <span class="st">"/"</span>, <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">"Volume"</span>, <span class="st">"filename"</span>)) <span class="sc">%&gt;%</span> <span class="fu">corpus</span>()</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create a dictionary with named vectors</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>dict <span class="ot">&lt;-</span> <span class="fu">dictionary</span>(<span class="fu">list</span>(<span class="at">temple =</span> <span class="fu">c</span>(<span class="st">"temple"</span>, <span class="st">"sealing"</span>, <span class="st">"spire"</span>, <span class="st">"open house"</span>),</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">missionary =</span> <span class="fu">c</span>(<span class="st">"missionary"</span>, <span class="st">"mission"</span>, <span class="st">"labor</span><span class="sc">\\</span><span class="st">b"</span>)))</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># search with the dictionary</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">kwic</span>(<span class="fu">tokens</span>(saints), <span class="at">pattern =</span> dict, <span class="at">valuetype =</span> <span class="st">"regex"</span>) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="collocations" class="level2">
+<h2 class="anchored" data-anchor-id="collocations">Collocations</h2>
+<p>You can retrieve collocations with the <code>textstat_collocations()</code> function <a href="https://quanteda.io/reference/textstat_collocations.html">here</a>. At the time of making this lesson plan, it only calculates the lambda metric proposed by Blaheta and Johnson (2001):</p>
+<p>Blaheta, D. &amp; Johnson, M. (2001). <a href="http://web.science.mq.edu.au/~mjohnson/papers/2001/dpb-colloc01.pdf">Unsupervised learning of multi-word verbs</a>. Presented at the ACLEACL Workshop on the Computational Extraction, Analysis and Exploitation of Collocations.</p>
+<p>However, the doc page says that there are plans to add more measures. Hopefully log-dice is in the works, as it’s a great word association metric.</p>
+<p>Let’s retrieve the collocations in the first three volumes of <em>Saints</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readtext)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># change directories into the Saints directories</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/ekb5/Corpora/Saints/txt"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># load the Saints corpus, creating a docvar with the Volume that each file belongs to</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>saints <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="at">file =</span> <span class="st">"*/*.txt"</span>, <span class="at">docvarsfrom =</span> <span class="st">"filepaths"</span>, <span class="at">dvsep =</span> <span class="st">"/"</span>, <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">"Volume"</span>, <span class="st">"filename"</span>)) <span class="sc">%&gt;%</span>  <span class="fu">corpus</span>() </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve collocations</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>saints <span class="sc">%&gt;%</span> </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_collocations</span>()  <span class="sc">%&gt;%</span> </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(lambda)) <span class="sc">%&gt;%</span>  <span class="co"># arrange them in descending order by lambda</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">50</span>)  <span class="co"># show only first 50 collocations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>That’s okay, but there are lots of proper nouns and low-frequency collocations. We can remove those with the <code>min_count</code> argument: <code>textstat_collocations(min_count = 25)</code>.</p>
+<p>If we want, we can also remove function words, which have little semantic value, with a stopword list:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"stopwords"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>saints <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_collocations</span>(<span class="at">min_count =</span> <span class="dv">25</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(lambda)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="activity-3" class="level3">
+<h3 class="anchored" data-anchor-id="activity-3">Activity</h3>
+<p>Go for it! That is, retrieve collocations in a corpus of your choice. Look at and possibly use some of the other arguments in the textstat_collocations() function. Reminder: In order to pull up the doc page of a function within the RStudio IDE, you can type a question mark and then the name of the function (no space between them) in the console, e.g., <code>?textstat_collocations</code>. And <a href="https://quanteda.io/reference/textstat_collocations.html">here</a>’s that same doc page on the internet.</p>
+</section>
+</section>
+<section id="document-feature-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="document-feature-matrix">Document-feature matrix</h2>
+<p>Within <code>quanteda</code>, a document-feature matrix is very similar to a document-term matrix (if you know what that is). It’s a tabular dataset (hence the name “matrix”) and has the name of the files (aka. documents) as rows, and the features (i.e., words and punctuation) are the columns. <a href="https://quanteda.io/articles/quickstart.html#constructing-a-document-feature-matrix">Here</a>’s an example. Let’s take a look with the <em>Saints</em> corpus:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"quanteda"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readtext"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/ekb5/Corpora/Saints/txt/"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># one pipeline will do the trick!</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>saints <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="at">file =</span> <span class="st">"*/*.txt"</span>, <span class="at">docvarsfrom =</span> <span class="st">"filepaths"</span>, <span class="at">dvsep =</span> <span class="st">"/"</span>, <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">"Volume"</span>, <span class="st">"filename"</span>)) <span class="sc">%&gt;%</span> <span class="fu">corpus</span>()</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>saints <span class="sc">%&gt;%</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can use a dictionary of patterns to limit the number of features (i.e., columns) that are returned in the matrix:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dict <span class="ot">&lt;-</span> <span class="fu">dictionary</span>(<span class="fu">list</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">temple =</span> <span class="fu">c</span>(<span class="st">"temple"</span>, <span class="st">"sealing"</span>, <span class="st">"spire"</span>, <span class="st">"open house"</span>),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">missionary =</span> <span class="fu">c</span>(<span class="st">"missionary"</span>, <span class="st">"mission"</span>, <span class="st">"labor"</span>))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>saints <span class="sc">%&gt;%</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_lookup</span>(<span class="at">dictionary =</span> dict) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span>  <span class="co"># cast to tibble in order to use arrange below</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(temple))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="similarities-between-texts" class="level2">
+<h2 class="anchored" data-anchor-id="similarities-between-texts">Similarities between texts</h2>
+<p>You can plot similarities between texts in a corpus. Let’s run the example code in the Quick Guide <a href="https://quanteda.io/articles/quickstart.html#similarities-between-texts">here</a>.</p>
+<p>Now, let’s make this work with our <em>Saints</em> corpus.</p>
+</section>
+<section id="keyness-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="keyness-analysis">Keyness analysis</h2>
+<p>We can use quanteda to perform keyness analysis, that is, to identify the keywords that typify a section of the corpus from the rest of the corpus.</p>
+<p>Let’s get the creators’ example working in the doc page (in console <code>?textstat_keyness</code>) and <a href="https://quanteda.io/articles/pkgdown/examples/plotting.html?q=keyness#plot-keyness-in-a-target-and-reference-group">here</a>.</p>
 
 
 </section>

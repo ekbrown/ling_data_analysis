@@ -392,10 +392,38 @@
     "text": "Keyword-in-context (KWIC)\nLet’s perform into a corpus linguistic technique: the keyword-in-context display or concordance lines or concordances. It is super easy to do so with the tokens() and kwic() functions. See example here.\nLet’s start out slowly with a simple word search using our Saints corpus:\n\n# Assuming packages are loaded and corpus has been created\n\n# tokenize and then get concordances\ntoks &lt;- tokens(saints)\nconcordances &lt;- kwic(toks, pattern = \"tree\")\nprint(concordances)\n\nLet’s ramp it up with some regular expression pizzazz. Question: What does the regular expression find?\n\ntoks &lt;- tokens(saints)\nconcordances &lt;- kwic(toks, pattern = \"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\", valuetype = \"regex\")\nprint(concordances)\n\nThe main tokenizer function tokens() has a handful of arguments that are worth inspecting. Take a gander here. Also, there many other tokenizer functions that can be useful. Take a look here.\n\nActivity\nGet to know the tokenizing functions and the kwic() function (example here and docs here) with the corpus of your choice."
   },
   {
-    "objectID": "lessons/quanteda.html#more-to-come-soon-about-quanteda",
-    "href": "lessons/quanteda.html#more-to-come-soon-about-quanteda",
+    "objectID": "lessons/quanteda.html#searching-with-a-dictionary",
+    "href": "lessons/quanteda.html#searching-with-a-dictionary",
     "title": "quanteda",
-    "section": "MORE TO COME SOON ABOUT QUANTEDA",
-    "text": "MORE TO COME SOON ABOUT QUANTEDA"
+    "section": "Searching with a dictionary",
+    "text": "Searching with a dictionary\n\nlibrary(\"tidyverse\")\nlibrary(\"quanteda\")\nlibrary(\"readtext\")\nsetwd(\"/Users/ekb5/Corpora/Saints/txt/\")\n\n# one pipeline will do the trick!\nsaints &lt;- readtext(file = \"*/*.txt\", docvarsfrom = \"filepaths\", dvsep = \"/\", docvarnames = c(\"Volume\", \"filename\")) %&gt;% corpus()\n\n# create a dictionary with named vectors\ndict &lt;- dictionary(list(temple = c(\"temple\", \"sealing\", \"spire\", \"open house\"),\n                missionary = c(\"missionary\", \"mission\", \"labor\\\\b\")))\n\n# search with the dictionary\nkwic(tokens(saints), pattern = dict, valuetype = \"regex\") %&gt;% print()"
+  },
+  {
+    "objectID": "lessons/quanteda.html#collocations",
+    "href": "lessons/quanteda.html#collocations",
+    "title": "quanteda",
+    "section": "Collocations",
+    "text": "Collocations\nYou can retrieve collocations with the textstat_collocations() function here. At the time of making this lesson plan, it only calculates the lambda metric proposed by Blaheta and Johnson (2001):\nBlaheta, D. & Johnson, M. (2001). Unsupervised learning of multi-word verbs. Presented at the ACLEACL Workshop on the Computational Extraction, Analysis and Exploitation of Collocations.\nHowever, the doc page says that there are plans to add more measures. Hopefully log-dice is in the works, as it’s a great word association metric.\nLet’s retrieve the collocations in the first three volumes of Saints:\n\nlibrary(quanteda)\nlibrary(readtext)\nlibrary(tidyverse)\nlibrary(quanteda.textstats)\n\n# change directories into the Saints directories\nsetwd(\"/Users/ekb5/Corpora/Saints/txt\")\n\n# load the Saints corpus, creating a docvar with the Volume that each file belongs to\nsaints &lt;- readtext(file = \"*/*.txt\", docvarsfrom = \"filepaths\", dvsep = \"/\", docvarnames = c(\"Volume\", \"filename\")) %&gt;%  corpus() \n# retrieve collocations\nsaints %&gt;% \n  tokens() %&gt;% \n  textstat_collocations()  %&gt;% \n  arrange(desc(lambda)) %&gt;%  # arrange them in descending order by lambda\n  head(50)  # show only first 50 collocations\n\nThat’s okay, but there are lots of proper nouns and low-frequency collocations. We can remove those with the min_count argument: textstat_collocations(min_count = 25).\nIf we want, we can also remove function words, which have little semantic value, with a stopword list:\n\nlibrary(\"stopwords\")\nsaints %&gt;% \n  tokens() %&gt;% \n  tokens_remove(stopwords(\"en\")) %&gt;% \n  textstat_collocations(min_count = 25) %&gt;% \n  arrange(desc(lambda)) %&gt;% \n  head(50)\n\n\nActivity\nGo for it! That is, retrieve collocations in a corpus of your choice. Look at and possibly use some of the other arguments in the textstat_collocations() function. Reminder: In order to pull up the doc page of a function within the RStudio IDE, you can type a question mark and then the name of the function (no space between them) in the console, e.g., ?textstat_collocations. And here’s that same doc page on the internet."
+  },
+  {
+    "objectID": "lessons/quanteda.html#document-feature-matrix",
+    "href": "lessons/quanteda.html#document-feature-matrix",
+    "title": "quanteda",
+    "section": "Document-feature matrix",
+    "text": "Document-feature matrix\nWithin quanteda, a document-feature matrix is very similar to a document-term matrix (if you know what that is). It’s a tabular dataset (hence the name “matrix”) and has the name of the files (aka. documents) as rows, and the features (i.e., words and punctuation) are the columns. Here’s an example. Let’s take a look with the Saints corpus:\n\nlibrary(\"tidyverse\")\nlibrary(\"quanteda\")\nlibrary(\"readtext\")\nsetwd(\"/Users/ekb5/Corpora/Saints/txt/\")\n\n# one pipeline will do the trick!\nsaints &lt;- readtext(file = \"*/*.txt\", docvarsfrom = \"filepaths\", dvsep = \"/\", docvarnames = c(\"Volume\", \"filename\")) %&gt;% corpus()\n\nsaints %&gt;% \n  tokens() %&gt;% \n  dfm()\n\nWe can use a dictionary of patterns to limit the number of features (i.e., columns) that are returned in the matrix:\n\ndict &lt;- dictionary(list(\n  temple = c(\"temple\", \"sealing\", \"spire\", \"open house\"),\n  missionary = c(\"missionary\", \"mission\", \"labor\"))\n  )\n\nsaints %&gt;% \n  tokens() %&gt;% \n  tokens_lookup(dictionary = dict) %&gt;% \n  dfm() %&gt;% \n  as_tibble() %&gt;%  # cast to tibble in order to use arrange below\n  arrange(desc(temple))"
+  },
+  {
+    "objectID": "lessons/quanteda.html#similarities-between-texts",
+    "href": "lessons/quanteda.html#similarities-between-texts",
+    "title": "quanteda",
+    "section": "Similarities between texts",
+    "text": "Similarities between texts\nYou can plot similarities between texts in a corpus. Let’s run the example code in the Quick Guide here.\nNow, let’s make this work with our Saints corpus."
+  },
+  {
+    "objectID": "lessons/quanteda.html#keyness-analysis",
+    "href": "lessons/quanteda.html#keyness-analysis",
+    "title": "quanteda",
+    "section": "Keyness analysis",
+    "text": "Keyness analysis\nWe can use quanteda to perform keyness analysis, that is, to identify the keywords that typify a section of the corpus from the rest of the corpus.\nLet’s get the creators’ example working in the doc page (in console ?textstat_keyness) and here."
   }
 ]
