@@ -1,0 +1,240 @@
+---
+title: "Data Wrangling"
+---
+
+## Objective
+
+Students will manipulate or wrangle a data frame.
+
+## The `dplyr` package
+
+The `dplyr` R package is a core package of `tidyverse`, and has a handful of super useful functions for manipulating or wrangling a data frame. Most of the functions are verbs (e.g., `filter()`, `select()`, etc.) and so the documentation for the package often refers to the main functions of dplyr as verbs.
+
+## Rows
+
+There are three (I guess four) main functions (aka. verbs) for working with rows in `dplyr`: `filter()`, `arrange()` (and it's helper function `desc()`), and `distinct()`.
+
+Pop (formative) quiz!
+
+Instructions: Match each function with its corresponding purpose.
+
+|              |                                                                                             |
+|------------------|------------------------------------------------------|
+| `filter()`   | A. orders the rows based on values in one or more columns                                   |
+| `arrange()`  | B. inverts the order so that the rows are in big-to-small order                             |
+| `desc()`     | C. keeps only unique rows                                                                   |
+| `distinct()` | D. keeps rows that evaluate to TRUE in a conditional statement based on one or more columns |
+
+### Activity
+
+Let's follow the examples given in Chapter 3 "Data transformation" of the book *R for Data Science* (2e). First, let's download the `nycflights13` R package to our harddrive:
+
+```{r load nycflights13}
+#| eval: false
+install.packages("nycflights13", repos = "https://cran.rstudio.com")
+```
+
+Now, let's load the nycflights13 data frame into our R session or script, and our ol' friend `tidyverse`:
+
+```{r}
+#| eval: true
+library("nycflights13")
+library("tidyverse")
+```
+
+Finally, and most importantly, let's try to solve the exercises in section 3.2.5 [here](https://r4ds.hadley.nz/data-transform.html#exercises). After some good-faith work, if you need some help, take a look at Dr. Brown's code below:
+
+"Had an arrival delay of two or more hours"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  filter(arr_delay >= 120)
+```
+
+"Flew to Houston (IAH or HOU)"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  filter(dest %in% c("IAH", "HOU"))
+```
+
+"Were operated by United, American, or Delta"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  filter(carrier %in% c("UA", "AA", "DL"))
+```
+
+"Departed in summer (July, August, and September)"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  filter(month %in% c(7, 8, 9))  # note: the month column has a data type of integer, and therefore you don't need quotes around the numbers
+```
+
+Here's another way to filter for only summer flights:
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  filter(month >= 7 & month <= 9)
+```
+
+"Arrived more than two hours late, but didn’t leave late"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  filter(arr_delay > 120 & dep_delay <= 0)
+```
+
+"Were delayed by at least an hour, but made up over 30 minutes in flight"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  filter(dep_delay >= 60 & arr_delay < 30)
+```
+
+"Sort flights to find the flights with longest departure delays."
+
+```{r}
+flights %>% 
+  arrange(desc(dep_delay))
+```
+
+"Find the flights that left earliest in the morning."
+
+```{r}
+#| eval: true
+#| code-fold: true
+flights %>% 
+  arrange(dep_time)
+```
+
+"Sort flights to find the fastest flights. (Hint: Try including a math calculation inside of your function.)"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  arrange(desc(distance / air_time))
+```
+
+Here's another way, and a preview of the `mutate` function that we'll see below:
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  mutate(speed = distance / air_time) %>% 
+  arrange(desc(speed))
+```
+
+"Was there a flight on every day of 2013?"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  distinct(year, month, day)
+```
+
+"Which flights traveled the farthest distance?"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  arrange(desc(distance))
+```
+
+"Which traveled the least distance?"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights %>% 
+  arrange(distance)
+```
+
+"Does it matter what order you used `filter()` and `arrange()` if you’re using both? Why/why not? Think about the results and how much work the functions would have to do."
+
+Earl speculates that it's probably best to `filter` first so that `arrange` has fewer rows to sort.
+
+## Columns
+
+There are four main functions (i.e., verbs) for working with columns: `mutate()`, `select()` (and its handful of helper functions), `rename()`, and `relocate()`.
+
+Pop quiz time!
+
+Instructions: Match each function (i.e., verb) with its corresponding purpose.
+
+|              |                                                                      |
+|----------------|--------------------------------------------------------|
+| `mutate()`   | A. change the name of the specified column                           |
+| `select()`   | B. creates new columns based on one or more already existing columns |
+| `rename()`   | C. moves the position of the specified columns                       |
+| `relocate()` | D. keeps only the specified columns                                  |
+
+Let's try out the exercises provided in 3.3.5 of Chapter 3 "Data transformation" [here](https://r4ds.hadley.nz/data-transform.html#exercises-1). After a good-faith effort, if you need take a look at Dr. Brown's code below each exercise.
+
+"Compare `dep_time`, `sched_dep_time`, and `dep_delay`. How would you expect those three numbers to be related?"
+
+"Brainstorm as many ways as possible to select `dep_time`, `dep_delay`, `arr_time`, and `arr_delay` from `flights`"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights |> 
+  select("dep_time", "dep_delay", "arr_time", "arr_delay")
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights |> 
+  select(matches("^(dep_|arr_)"))
+```
+
+"Does the result of running the following code surprise you? How do the select helpers deal with upper and lower case by default? How can you change that default?"
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights |> 
+  select(contains("TIME"))
+```
+
+"Rename `air_time` to `air_time_min` to indicate units of measurement and move it to the beginning of the data frame."
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights |> 
+  rename(air_time_min = air_time) |> 
+  relocate(air_time_min, .before = 1)
+```
+
+"Why doesn’t the following work, and what does the error mean?"
+
+```{r}
+flights |> 
+  select(tailnum) |> 
+  arrange(arr_delay)
+```
+
+## Groups
+
+COMING REAL SOON TO A LESSON PLAN NEAR YOU
