@@ -19,7 +19,7 @@ Pop (formative) quiz!
 Instructions: Match each function with its corresponding purpose.
 
 |              |                                                                                             |
-|------------------|------------------------------------------------------|
+|--------------------|----------------------------------------------------|
 | `filter()`   | A. orders the rows based on values in one or more columns                                   |
 | `arrange()`  | B. inverts the order so that the rows are in big-to-small order                             |
 | `desc()`     | C. keeps only unique rows                                                                   |
@@ -37,7 +37,7 @@ install.packages("nycflights13", repos = "https://cran.rstudio.com")
 Now, let's load the nycflights13 data frame into our R session or script, and our ol' friend `tidyverse`:
 
 ```{r}
-#| eval: true
+#| eval: false
 library("nycflights13")
 library("tidyverse")
 ```
@@ -49,7 +49,7 @@ Finally, and most importantly, let's try to solve the exercises in section 3.2.5
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |> 
   filter(arr_delay >= 120)
 ```
 
@@ -58,7 +58,7 @@ flights %>%
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   filter(dest %in% c("IAH", "HOU"))
 ```
 
@@ -67,7 +67,7 @@ flights %>%
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   filter(carrier %in% c("UA", "AA", "DL"))
 ```
 
@@ -76,7 +76,7 @@ flights %>%
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   filter(month %in% c(7, 8, 9))  # note: the month column has a data type of integer, and therefore you don't need quotes around the numbers
 ```
 
@@ -85,7 +85,7 @@ Here's another way to filter for only summer flights:
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   filter(month >= 7 & month <= 9)
 ```
 
@@ -94,7 +94,7 @@ flights %>%
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   filter(arr_delay > 120 & dep_delay <= 0)
 ```
 
@@ -103,23 +103,25 @@ flights %>%
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   filter(dep_delay >= 60 & arr_delay < 30)
 ```
 
 "Sort flights to find the flights with longest departure delays."
 
 ```{r}
-flights %>% 
+#| eval: false
+#| code-fold: true
+flights |>  
   arrange(desc(dep_delay))
 ```
 
 "Find the flights that left earliest in the morning."
 
 ```{r}
-#| eval: true
+#| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   arrange(dep_time)
 ```
 
@@ -128,7 +130,7 @@ flights %>%
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   arrange(desc(distance / air_time))
 ```
 
@@ -137,7 +139,7 @@ Here's another way, and a preview of the `mutate` function that we'll see below:
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   mutate(speed = distance / air_time) %>% 
   arrange(desc(speed))
 ```
@@ -147,7 +149,7 @@ flights %>%
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   distinct(year, month, day)
 ```
 
@@ -156,7 +158,7 @@ flights %>%
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   arrange(desc(distance))
 ```
 
@@ -165,7 +167,7 @@ flights %>%
 ```{r}
 #| eval: false
 #| code-fold: true
-flights %>% 
+flights |>  
   arrange(distance)
 ```
 
@@ -175,14 +177,14 @@ Earl speculates that it's probably best to `filter` first so that `arrange` has 
 
 ## Columns
 
-There are four main functions (i.e., verbs) for working with columns: `mutate()`, `select()` (and its handful of helper functions), `rename()`, and `relocate()`.
+There are four main functions (i.e., verbs) for working with columns: `mutate()`, `select()` (and its handful of helper functions [here](https://dplyr.tidyverse.org/reference/select.html)), `rename()`, and `relocate()`.
 
 Pop quiz time!
 
 Instructions: Match each function (i.e., verb) with its corresponding purpose.
 
 |              |                                                                      |
-|----------------|--------------------------------------------------------|
+|-------------------|-----------------------------------------------------|
 | `mutate()`   | A. change the name of the specified column                           |
 | `select()`   | B. creates new columns based on one or more already existing columns |
 | `rename()`   | C. moves the position of the specified columns                       |
@@ -230,11 +232,101 @@ flights |>
 "Why doesn’t the following work, and what does the error mean?"
 
 ```{r}
+#| eval: false
 flights |> 
   select(tailnum) |> 
   arrange(arr_delay)
 ```
 
-## Groups
+### Activity
+
+Now for some linguistic data. Download the "data_FRC_spch_rate.xlsx" Excel file from the Datasets module in the LMS ([here](https://byu.instructure.com/courses/25080/files/7945989?module_item_id=1966275)). This dataset was used to write the article in the journal *Corpus Linguistics and Linguistic Theory* [here](https://doi.org/10.1515/cllt-2020-0016).
+
+Open it up in Excel (or Google Sheets) and inspect the columns in the "data" sheet and read what type of data each column holds in the "legend" sheet.
+
+Now, read in the "data" sheet into R as a data frame (probably a tibble). Take some time to practice using the functions (i.e., verbs) that work with rows and the functions that work with columns.
+
+```{r}
+#| eval: false
+library("readxl")
+library("tidyverse")
+setwd("/pathway/to/dir")
+sibilants <- read_excel("data_FRC_spch_rate.xlsx", sheet = "data")
+```
+
+Then, try the following exercises. After a good-faith effort to complete these exercises on your own, if you need help take a look at Dr. Brown's code.
+
+1.  Keep only the rows with tokens of /s/ that were maintained as a sibilant.
+
+    ```{r}
+    #| eval: false
+    #| code-fold: true
+    sibilants |> 
+      filter(s == "maintained")
+    ```
+
+2.  Keep only the rows of tokens of /s/ that were deleted (no sibilance) in word final position.
+
+    ```{r}
+    #| eval: false
+    #| code-fold: true
+    sibilants |> 
+      filter(s == "deleted", wd_pos == "wd_final")
+    ```
+
+3.  Create an alphabetized list of unique words with /s/ at the beginning of the word and following by high vowels.
+
+    ```{r}
+    #| eval: false
+    #| code-fold: true
+    sibilants |> 
+      filter(wd_pos == "wd_initial", sound_post == "HiV") |> 
+      distinct(word) |> 
+      arrange(word)
+    ```
+
+4.  Sort the data frame in descending order by lexical frequency, and then in ascending order by word.
+
+    ```{r}
+    #| eval: false
+    #| code-fold: true
+    sibilants |> 
+      arrange(desc(lex_freq), word)
+    ```
+
+5.  Keep only rows with tokens with a speech rate of between 8 and 12 segments per second. Hint: The data type of the column with speech rate (i.e., `spch_rate`) may not have been read in as a numeric (aka. float) value. So, first you may need to coerce that column to a numeric data type with the base R function `as.numeric()`.
+
+    ```{r}
+    #| eval: false
+    #| code-fold: true
+    sibilants |> 
+      mutate(spch_rate = as.numeric(spch_rate)) |> 
+      filter(spch_rate >= 8 & spch_rate <= 12)
+    ```
+
+6.  Create an alphabetized list of unique words with /s/ in which /s/ occurred in a tonic syllable.
+
+    ```{r}
+    #| eval: false
+    #| code-fold: true
+    sibilants |> 
+      filter(stress == "tonic") |> 
+      distinct(word) |> 
+      arrange(word)
+    ```
+
+## Group by
 
 COMING REAL SOON TO A LESSON PLAN NEAR YOU
+
+## Joining data frames
+
+COMING SOON
+
+## Pivoting data frames
+
+COMING SOON
+
+## Working with categorical variables
+
+COMING SOON

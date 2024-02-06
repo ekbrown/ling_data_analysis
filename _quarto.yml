@@ -25,7 +25,9 @@ website:
           - lessons/create_freq.qmd
           - lessons/webscrape_freq.qmd
           - lessons/quanteda.qmd
-
+      - section: "Wrangling"
+        contents:
+          - lessons/wrangling.qmd
 format:
   html:
     theme: cosmo

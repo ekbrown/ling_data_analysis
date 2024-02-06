@@ -94,7 +94,7 @@ After a good-faith effort, if you need help, take a look at Dr. Brown's start to
 #| eval: false
 
 # get filenames
-filenames <- dir(path = "/Users/ekb5/Corpora/Saints/txt/", pattern = "\\.txt$", full.names = TRUE, recursive = TRUE)
+filenames <- dir(path = "/pathway/to/Saints/txt/", pattern = "\\.txt$", full.names = TRUE, recursive = TRUE)
 
 # create a collector string to collect the text of all files
 all_str <- ""
@@ -154,7 +154,7 @@ Let's take a look at an example using the *Saints* corpus:
 #| eval: false
 
 # get filenames
-filenames <- dir(path = "/Users/ekb5/Corpora/Saints/txt/", pattern = "\\.txt$", full.names = TRUE, recursive = TRUE)
+filenames <- dir(path = "/pathway/to/Saints/txt/", pattern = "\\.txt$", full.names = TRUE, recursive = TRUE)
 
 # create a collector string to collect the text of all files
 freqs <- list()

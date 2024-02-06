@@ -42,7 +42,7 @@ Let's read in the corpus such that we add a column with metadata about which vol
 library("tidyverse")
 library("quanteda")
 library("readtext")
-setwd("/Users/ekb5/Corpora/Saints/txt/")
+setwd("/pathway/to/Saints/txt/")
 
 # load each volume as a separate corpus
 saints01 <- readtext("Volume01/*.txt") %>% corpus()  # same as: saints01 <- corpus(readtext("Volume01/*.txt"))
@@ -69,7 +69,7 @@ We can use the [`eval()`](https://www.rdocumentation.org/packages/base/versions/
 library("tidyverse")
 library("quanteda")
 library("readtext")
-setwd("/Users/ekb5/Corpora/Saints/txt/")
+setwd("/pathway/to/Saints/txt/")
 
 # our ol' friend the for loop 
 for (i in 1:3) {
@@ -92,7 +92,7 @@ The `readtext()` function has a handful of arguments. The `docvarfrom`, `dvsep`,
 library("tidyverse")
 library("quanteda")
 library("readtext")
-setwd("/Users/ekb5/Corpora/Saints/txt/")
+setwd("/pathway/to/Saints/txt/")
 
 # one pipeline will do the trick!
 saints <- readtext(file = "*/*.txt", docvarsfrom = "filepaths", dvsep = "/", docvarnames = c("Volume", "filename")) %>% corpus()
@@ -156,7 +156,7 @@ Get to know the tokenizing functions and the kwic() function (example [here](htt
 library("tidyverse")
 library("quanteda")
 library("readtext")
-setwd("/Users/ekb5/Corpora/Saints/txt/")
+setwd("/pathway/to/Saints/txt/")
 
 # one pipeline will do the trick!
 saints <- readtext(file = "*/*.txt", docvarsfrom = "filepaths", dvsep = "/", docvarnames = c("Volume", "filename")) %>% corpus()
@@ -188,7 +188,7 @@ library(tidyverse)
 library(quanteda.textstats)
 
 # change directories into the Saints directories
-setwd("/Users/ekb5/Corpora/Saints/txt")
+setwd("/pathway/to/Saints/txt")
 
 # load the Saints corpus, creating a docvar with the Volume that each file belongs to
 saints <- readtext(file = "*/*.txt", docvarsfrom = "filepaths", dvsep = "/", docvarnames = c("Volume", "filename")) %>%  corpus() 
@@ -230,7 +230,7 @@ Within `quanteda`, a document-feature matrix is very similar to a document-term 
 library("tidyverse")
 library("quanteda")
 library("readtext")
-setwd("/Users/ekb5/Corpora/Saints/txt/")
+setwd("/pathway/to/Saints/txt/")
 
 # one pipeline will do the trick!
 saints <- readtext(file = "*/*.txt", docvarsfrom = "filepaths", dvsep = "/", docvarnames = c("Volume", "filename")) %>% corpus()
