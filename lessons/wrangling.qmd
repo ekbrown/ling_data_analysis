@@ -19,7 +19,7 @@ Pop (formative) quiz!
 Instructions: Match each function with its corresponding purpose.
 
 |              |                                                                                             |
-|--------------------|----------------------------------------------------|
+|-----------------------|-------------------------------------------------|
 | `filter()`   | A. orders the rows based on values in one or more columns                                   |
 | `arrange()`  | B. inverts the order so that the rows are in big-to-small order                             |
 | `desc()`     | C. keeps only unique rows                                                                   |
@@ -184,7 +184,7 @@ Pop quiz time!
 Instructions: Match each function (i.e., verb) with its corresponding purpose.
 
 |              |                                                                      |
-|-------------------|-----------------------------------------------------|
+|----------------------|--------------------------------------------------|
 | `mutate()`   | A. change the name of the specified column                           |
 | `select()`   | B. creates new columns based on one or more already existing columns |
 | `rename()`   | C. moves the position of the specified columns                       |
@@ -242,9 +242,9 @@ flights |>
 
 Now for some linguistic data. Download the "data_FRC_spch_rate.xlsx" Excel file from the Datasets module in the LMS ([here](https://byu.instructure.com/courses/25080/files/7945989?module_item_id=1966275)). This dataset was used to write the article in the journal *Corpus Linguistics and Linguistic Theory* [here](https://doi.org/10.1515/cllt-2020-0016).
 
-Open it up in Excel (or Google Sheets) and inspect the columns in the "data" sheet and read what type of data each column holds in the "legend" sheet.
+Open it up in Excel (or Google Sheets) and inspect the columns in the `data` sheet and read what type of data each column holds in the `legend` sheet.
 
-Now, read in the "data" sheet into R as a data frame (probably a tibble). Take some time to practice using the functions (i.e., verbs) that work with rows and the functions that work with columns.
+Now, read in the `data` sheet into R as a data frame (probably a tibble). Take some time to practice using the functions (i.e., verbs) that work with rows and the functions that work with columns.
 
 ```{r}
 #| eval: false
@@ -317,11 +317,258 @@ Then, try the following exercises. After a good-faith effort to complete these e
 
 ## Group by
 
-COMING REAL SOON TO A LESSON PLAN NEAR YOU
+Another super useful function in `dplyr` is `group_up()`. It doesn't change the data frame itself, but it performs subsequent functions based on the levels of a column or columns. It is often used in conjugation with the `summarize()` function to get group-level information.
+
+As an example, let's first calculate mean departure delay of all flights in the `nycflights13` dataset, then next, let's calculate the mean departure delay by airline (i.e., `carrier` column). However, as a preprocessing step, we need to remove rows what don't have a number in `dep_delay`, but rather an `NA`, because the `mean()` function errs out with missing values. There are two ways to do this: (1) use `filter()` to keep only rows that don't have an `NA` in the `dep_delay` column, or (2) tell the `mean()` function to remove the `NA`s with the `na.rm` argument.
+
+Here's how to use `filter()` for that purpose:
+
+```{r}
+#| eval: false
+library("nycflights13")
+library("tidyverse")
+
+flights |> 
+  filter(!is.na(dep_delay)) |>  # mind the exclamation point
+  summarize(average_departure_delay = mean(dep_delay))
+```
+
+And here we use the `na.rm` argument within the `mean()` function:
+
+```{r}
+#| eval: false
+flights |> 
+  summarize(average_departure_delay = mean(dep_delay, na.rm = TRUE))
+```
+
+So, the mean departure delay across all airlines is 12.6 minutes. The natural follow-up question is whether some airlines have longer delays than others. Enter our new friend `group_by()`. Now, let's perform this mean operation based on the levels (aka. values) of the `carrier` column in order to get the mean departure delay time by airline:
+
+```{r}
+#| eval: false
+flights |> 
+  group_by(carrier) |> # we group before getting the mean
+  summarize(average_departure_delay = mean(dep_delay, na.rm = TRUE))
+```
+
+Micro-activity: Modify the previous code block to sort the resulting data frame so that the airline with the shortest average delay is at the top of the resulting data frame and the airline with the longest average delay is at the bottom. After a good-faith effort, if you need some help, take a look at Dr. Brown's code.
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights |> 
+  group_by(carrier) |> 
+  summarize(average_departure_delay = mean(dep_delay, na.rm = TRUE)) |> 
+  arrange(average_departure_delay)
+```
+
+If you need to group by several columns, just add the additional column names to the `group_by()` call, for example:
+
+```{r}
+#| eval: false
+flights |> 
+  group_by(carrier, origin) |> 
+  summarize(average_departure_delay = mean(dep_delay, na.rm = TRUE))
+```
+
+You don't have to use `group_by()` only with `summarize()`, but it's a common use case. And, importantly, after `summarize()` has finished its work, it ungroups the data frame. If you were to use `group_by()` with other functions, they don't automatically ungroup the data frame, and you would have explicitly do so with the `ungroup()` function. Here's an example:
+
+```{r}
+#| eval: false
+flights |> 
+  group_by(carrier) |> 
+  mutate(aver_dep_delay_airline = mean(dep_delay, na.rm = TRUE)) |> 
+  select(carrier, dep_delay, aver_dep_delay_airline)
+```
+
+Notice that the output says `Groups: carrier [16]`. This means that the data frame is still grouped by the 16 unique levels (aka. values) in the `carrier` column. In order to ungroup it, we can call `ungroup()` after we don't need the groups anymore:
+
+```{r}
+#| eval: false
+flights |> 
+  group_by(carrier) |> 
+  mutate(aver_dep_delay_airline = mean(dep_delay, na.rm = TRUE)) |> 
+  select(carrier, dep_delay, aver_dep_delay_airline) |> 
+  ungroup()
+```
+
+### Activity
+
+Use the `data` sheet within the `data_FRC_spch_rate.xlsx` Excel workbook to get familiar with the `group_by()` and `summarize()`.
+
+```{r}
+#| eval: false
+library("readxl")
+library("tidyverse")
+setwd("/pathway/to/dir/")
+sibilants <- read_excel("data_FRC_spch_rate.xlsx", sheet = "data")
+```
+
+Perhaps you might try getting the mean and/or median speech rate (i.e., column name `spch_rate`) based on whether the /s/ was maintained as a sibilant or deleted (using the column `s`). Note: You'll need to remove rows in the data frame that have `NaN` in `spch_rate` and then you need to convert `spch_rate` to a numeric data type. You can do both of these preprocessing steps right within the pipeline before getting the central tendency measures, if you want. If you get stuck, take a look at Dr. Brown's code below.
+
+```{r}
+#| eval: false
+#| code-fold: true
+sibilants |> 
+  filter(spch_rate != "NaN") |>  # more rows with "NaN"
+  mutate(spch_rate = as.numeric(spch_rate)) |>  # convert data type from character to numeric
+  group_by(s) |> 
+  summarize(
+    mean_spch_rate = mean(spch_rate),
+    median_spch_rate = median(spch_rate))
+```
+
+Activity: Try some other analyses with `group_by()` and `summarize()` and be prepared to share with a neighbor and/or the class.
 
 ## Joining data frames
 
-COMING SOON
+Joining or merging two tables into one is often a necessary step in data analysis, including in linguistic data analysis. For example, let's say we have one data frame (perhaps coming from an Excel file) that has tokens of sounds in words, and we have another data frame (perhaps from a CSV file) with frequencies of words from a large corpus. It would be slick to get the frequencies of word from the frequency data frame and put the appropriate frequency next to the words in the sound data frame. Enter the family of join functions in `dplyr` [here](https://dplyr.tidyverse.org/reference/mutate-joins.html).
+
+Let's start with a super simple example in order to understand the concept, then we'll apply this to bigger datasets. Let's create a data frame (i.e., `tibble`) with two columns: a person, and the fruit that they said during a conversation:
+
+```{r}
+#| eval: false
+library(tidyverse)
+main_df <- tibble(
+  speaker = c("Bob", "Bob", "Billy", "Billy", "Britta", "Britta", "Bonnie"), 
+  word = c("apple", "banana", "orange", "mango", "apple", "manzana", "kiwi")
+)
+print(main_df)
+```
+
+Now, let's create a data frame with some of the speakers' ages:
+
+```{r}
+#| eval: false
+ages <- tibble(
+  person = c("Bonnie", "Billy", "Bob"), 
+  age = c(47, 6, 95)
+)
+print(ages)
+```
+
+You may have noticed that while Britta said a couple words in our `main_df` data frame, she isn't listed in the `ages` data frame. We'll see what happens below when a value in a column in the main data frame doesn't have a corresponding value in the to-be-joined data frame.
+
+In order to create a new column with the age of each of the speakers in `main_df`, we can use the `left_join()` function to join `main_df` and `ages`. This function returns every row in the left-hand or first data frame in the function call (which, if we're using a pipe operator, is the data frame to the left of the pipe), and only the rows in the right-hand or second data frame that have a corresponding value based on the columns specified with the `by` argument. By default, `left_join` joins by common column names, but we can explicitly specify which column in the left-hand data frame corresponds to which column in the right-hand data frame with the `by` argument. Let's take a look:
+
+```{r}
+#| eval: false
+main_df |> 
+  left_join(ages, by = join_by(speaker == person))
+```
+
+Question: Why do we have `speaker` to the left of the double equal sign and `person` to the right?
+
+You probably noticed that Britta's age is `NA` because she isn't listed in the `ages` data frame. If that's a deal-breaker, then we can remove rows with `NA`s with `filter()` as a final step in the pipeline (mind the exclamation point before `is.na()`):
+
+```{r}
+#| eval: false
+main_df |> 
+  left_join(ages, by = join_by(speaker == person)) |> 
+  filter(!is.na(age))
+```
+
+### Toy activity
+
+Let's create a toy data frame with frequencies of the words said by the speakers in `main_df`:
+
+```{r}
+#| eval: false
+freqs <- tibble(
+  wd = c("apple", "banana", "kiwi", "mango"), 
+  freq = c(123, 234, 345, 456)
+)
+print(freqs)
+```
+
+Now, join the `freqs` data frame to the `main_df` so that the frequency of each word is in a new column to the right of the column holding the age of the speakers, so that you end up with a data frame with four columns: `speaker`, `word`, `age`, `freq`. Give it a try, but if you get stuck, take a look at Dr. Brown's code below. Hint: Make sure you are super aware of the column names in the various data frames that you need to join, so that you can give the correct names to the `by` argument.
+
+```{r}
+#| eval: false
+#| code-fold: true
+main_df |> 
+  left_join(ages, by = join_by(speaker == person)) |> 
+  left_join(freqs, by = join_by(word == wd))
+```
+
+### Activity (with a review)
+
+Let's ramp it up to a real activity. Try the following:
+
+1.  Review: Create a data frame with at least one column named `word` (i.e., that has one word per row) using text files of your choice (e.g., *Saints* or texts from Project Gutenberg). You might like to use a regular expression to find different words (e.g., `"\\w+ed\\b"` or `"\\bre\\w+"`), as the next steps will be boring if all rows have the same word.
+
+2.  Review: Create a data frame of frequencies of words from text files of your choice or webscrape a frequency list from the internet (e.g., Wikitionary).
+
+3.  Note: If after a good-faith effort to complete the previous two steps, you can't remember how to do these tasks, download and use two files in the LMS labeled `Dataset_for_over_dan.csv` and `freqs_dan.csv`. The first file has a keyword-in-context display of words in Danish that start with *for* or *over* while the second file has frequencies of words in Danish.
+
+4.  Here's the main exercise of the activity: Join the data frame with words to the data frame with frequencies, so that you have a new column (called `freq`) with the frequency of the word in the `word` (or `node`) column. Again, I can't stress enough the importance of taking the time to double check that you know what the names are of the columns in the several data frame, so that you can correctly pass thme to the `by` argument.
+
+## Separate and unite columns
+
+Other useful functions, this time from the `tidyr` package within `tidyverse`, are the 3-member family of `separate_*` functions (i.e., `separate_wider_delim()`, `separate_wider_position()`, and `separate_wider_regex()`) and the `unite()` function.
+
+The `separate_*` functions are transparently named and split up one column into two or more columns.
+
+-   The `separate_wider_delim()` function splits on a delimiter given to the `delim` argument;
+
+-   The `separate_wider_position()`function splits at fixed character widths given to the `widths` argument;
+
+-   The `separate_wider_regex()` function splits on a regular expression given to the `patterns` argument.
+
+Let's create a data frame with one column with two pieces of information in each row: the speaker who said something, following by a semi-colon, followed by what the speaker said:
+
+```{r}
+#| eval: false
+library(tidyverse)
+hungry <- tibble(
+  conversation = c("Bobby: I'm hungry!", "Cathy: Let's stop at In-n-Out. What do you say to that?!", "Bobby: Sounds good to me. What do you say João?", "João: Eu digo que sim!", "Roberto: Yo también.")
+)
+print(hungry)
+```
+
+Let's start with `separate_wider_delim()`. Pay attention to the arguments in the function.
+
+```{r}
+#| eval: false
+hungry |> 
+  separate_wider_delim(cols = conversation, delim = ": ", names = c("person", "utterance"))
+```
+
+The function `separate_wider_regex()` takes a different approach. Rather than splitting on the given fixed-width delimiter given to the `delim` argument in the previous function, this function takes regular expressions that are used to extract matches out of the string in the row. Specifically, you give it a named character vector in which the names become column names and the elements of the vector are regular expressions to be matched. If no name is given, then that match doesn't make it into the resulting data frame. Let's use this function on the same `hungry` data frame from above. Notice that the regex `":"` doesn't have a name, and therefore isn't returned in the resulting data frame.
+
+```{r}
+#| eval: false
+hungry |> 
+  separate_wider_regex(cols = conversation, patterns = c(person = "^[^:]+", ":", utterance = "[^:]+$"))
+```
+
+For good measure, we'd probably want to trim off that extra space at the beginning of each utterance:
+
+```{r}
+#| eval: false
+hungry |> 
+  separate_wider_regex(cols = conversation, patterns = c(person = "^[^:]+", ":", utterance = "[^:]+$")) |> 
+  mutate(utterance = str_trim(utterance))
+```
+
+Dr. Brown hasn't needed `separate_wider_position()` yet in his life, so let's move on! If you think you might need it, take a look at the docs [here](https://tidyr.tidyverse.org/reference/separate_wider_delim.html).
+
+The `unite()` function is the inverse of the `separate_*` functions, that is, it merges into one column two or more columns. It takes was input the data frame (probably piped in with the pipe operator), the `col` argument which specifies the name of the new column, then the names of the two or more columns to be merged, and the `sep` argument which specifies the character(s) used to join the values in the new column. There are other arguments; take a look at the docs [here](https://tidyr.tidyverse.org/reference/unite.html?q=unite#null).
+
+Let's continue with our `hungry` data frame from above. Let's put the `person` and `utterance` columns back together, but this time with a dash separating the speakers and their corresponding utterances.
+
+```{r}
+#| eval: false
+df_separated <- hungry |> 
+  separate_wider_delim(cols = conversation, delim = ": ", names = c("person", "utterance"))
+print(df_separated)
+
+df_separated |> 
+  unite(col = "combined", person:utterance, sep = " - ")
+```
+
+### Activity
+
+Use some of the `separate_*()` functions and `unite()` on the data frame of your choice.
 
 ## Pivoting data frames
 

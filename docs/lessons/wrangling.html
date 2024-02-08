@@ -235,8 +235,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#activity-1" id="toc-activity-1" class="nav-link" data-scroll-target="#activity-1">Activity</a></li>
   </ul></li>
-  <li><a href="#group-by" id="toc-group-by" class="nav-link" data-scroll-target="#group-by">Group by</a></li>
-  <li><a href="#joining-data-frames" id="toc-joining-data-frames" class="nav-link" data-scroll-target="#joining-data-frames">Joining data frames</a></li>
+  <li><a href="#group-by" id="toc-group-by" class="nav-link" data-scroll-target="#group-by">Group by</a>
+  <ul class="collapse">
+  <li><a href="#activity-2" id="toc-activity-2" class="nav-link" data-scroll-target="#activity-2">Activity</a></li>
+  </ul></li>
+  <li><a href="#joining-data-frames" id="toc-joining-data-frames" class="nav-link" data-scroll-target="#joining-data-frames">Joining data frames</a>
+  <ul class="collapse">
+  <li><a href="#toy-activity" id="toc-toy-activity" class="nav-link" data-scroll-target="#toy-activity">Toy activity</a></li>
+  <li><a href="#activity-with-a-review" id="toc-activity-with-a-review" class="nav-link" data-scroll-target="#activity-with-a-review">Activity (with a review)</a></li>
+  </ul></li>
+  <li><a href="#separate-and-unite-columns" id="toc-separate-and-unite-columns" class="nav-link" data-scroll-target="#separate-and-unite-columns">Separate and unite columns</a>
+  <ul class="collapse">
+  <li><a href="#activity-3" id="toc-activity-3" class="nav-link" data-scroll-target="#activity-3">Activity</a></li>
+  </ul></li>
   <li><a href="#pivoting-data-frames" id="toc-pivoting-data-frames" class="nav-link" data-scroll-target="#pivoting-data-frames">Pivoting data frames</a></li>
   <li><a href="#working-with-categorical-variables" id="toc-working-with-categorical-variables" class="nav-link" data-scroll-target="#working-with-categorical-variables">Working with categorical variables</a></li>
   </ul>
@@ -277,8 +288,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Instructions: Match each function with its corresponding purpose.</p>
 <table class="table">
 <colgroup>
-<col style="width: 27%">
-<col style="width: 72%">
+<col style="width: 31%">
+<col style="width: 68%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -435,8 +446,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Instructions: Match each function (i.e., verb) with its corresponding purpose.</p>
 <table class="table">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 73%">
+<col style="width: 30%">
+<col style="width: 69%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -500,8 +511,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="activity-1" class="level3">
 <h3 class="anchored" data-anchor-id="activity-1">Activity</h3>
 <p>Now for some linguistic data. Download the “data_FRC_spch_rate.xlsx” Excel file from the Datasets module in the LMS (<a href="https://byu.instructure.com/courses/25080/files/7945989?module_item_id=1966275">here</a>). This dataset was used to write the article in the journal <em>Corpus Linguistics and Linguistic Theory</em> <a href="https://doi.org/10.1515/cllt-2020-0016">here</a>.</p>
-<p>Open it up in Excel (or Google Sheets) and inspect the columns in the “data” sheet and read what type of data each column holds in the “legend” sheet.</p>
-<p>Now, read in the “data” sheet into R as a data frame (probably a tibble). Take some time to practice using the functions (i.e., verbs) that work with rows and the functions that work with columns.</p>
+<p>Open it up in Excel (or Google Sheets) and inspect the columns in the <code>data</code> sheet and read what type of data each column holds in the <code>legend</code> sheet.</p>
+<p>Now, read in the <code>data</code> sheet into R as a data frame (probably a tibble). Take some time to practice using the functions (i.e., verbs) that work with rows and the functions that work with columns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
@@ -568,11 +579,196 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="group-by" class="level2">
 <h2 class="anchored" data-anchor-id="group-by">Group by</h2>
-<p>COMING REAL SOON TO A LESSON PLAN NEAR YOU</p>
+<p>Another super useful function in <code>dplyr</code> is <code>group_up()</code>. It doesn’t change the data frame itself, but it performs subsequent functions based on the levels of a column or columns. It is often used in conjugation with the <code>summarize()</code> function to get group-level information.</p>
+<p>As an example, let’s first calculate mean departure delay of all flights in the <code>nycflights13</code> dataset, then next, let’s calculate the mean departure delay by airline (i.e., <code>carrier</code> column). However, as a preprocessing step, we need to remove rows what don’t have a number in <code>dep_delay</code>, but rather an <code>NA</code>, because the <code>mean()</code> function errs out with missing values. There are two ways to do this: (1) use <code>filter()</code> to keep only rows that don’t have an <code>NA</code> in the <code>dep_delay</code> column, or (2) tell the <code>mean()</code> function to remove the <code>NA</code>s with the <code>na.rm</code> argument.</p>
+<p>Here’s how to use <code>filter()</code> for that purpose:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"nycflights13"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(dep_delay)) <span class="sc">|&gt;</span>  <span class="co"># mind the exclamation point</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And here we use the <code>na.rm</code> argument within the <code>mean()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>So, the mean departure delay across all airlines is 12.6 minutes. The natural follow-up question is whether some airlines have longer delays than others. Enter our new friend <code>group_by()</code>. Now, let’s perform this mean operation based on the levels (aka. values) of the <code>carrier</code> column in order to get the mean departure delay time by airline:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">|&gt;</span> <span class="co"># we group before getting the mean</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Micro-activity: Modify the previous code block to sort the resulting data frame so that the airline with the shortest average delay is at the top of the resulting data frame and the airline with the longest average delay is at the bottom. After a good-faith effort, if you need some help, take a look at Dr.&nbsp;Brown’s code.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(average_departure_delay)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>If you need to group by several columns, just add the additional column names to the <code>group_by()</code> call, for example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier, origin) <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You don’t have to use <code>group_by()</code> only with <code>summarize()</code>, but it’s a common use case. And, importantly, after <code>summarize()</code> has finished its work, it ungroups the data frame. If you were to use <code>group_by()</code> with other functions, they don’t automatically ungroup the data frame, and you would have explicitly do so with the <code>ungroup()</code> function. Here’s an example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">aver_dep_delay_airline =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(carrier, dep_delay, aver_dep_delay_airline)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notice that the output says <code>Groups: carrier [16]</code>. This means that the data frame is still grouped by the 16 unique levels (aka. values) in the <code>carrier</code> column. In order to ungroup it, we can call <code>ungroup()</code> after we don’t need the groups anymore:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">aver_dep_delay_airline =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(carrier, dep_delay, aver_dep_delay_airline) <span class="sc">|&gt;</span> </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="activity-2" class="level3">
+<h3 class="anchored" data-anchor-id="activity-2">Activity</h3>
+<p>Use the <code>data</code> sheet within the <code>data_FRC_spch_rate.xlsx</code> Excel workbook to get familiar with the <code>group_by()</code> and <code>summarize()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/pathway/to/dir/"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>sibilants <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data_FRC_spch_rate.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Perhaps you might try getting the mean and/or median speech rate (i.e., column name <code>spch_rate</code>) based on whether the /s/ was maintained as a sibilant or deleted (using the column <code>s</code>). Note: You’ll need to remove rows in the data frame that have <code>NaN</code> in <code>spch_rate</code> and then you need to convert <code>spch_rate</code> to a numeric data type. You can do both of these preprocessing steps right within the pipeline before getting the central tendency measures, if you want. If you get stuck, take a look at Dr.&nbsp;Brown’s code below.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>sibilants <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(spch_rate <span class="sc">!=</span> <span class="st">"NaN"</span>) <span class="sc">|&gt;</span>  <span class="co"># more rows with "NaN"</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">spch_rate =</span> <span class="fu">as.numeric</span>(spch_rate)) <span class="sc">|&gt;</span>  <span class="co"># convert data type from character to numeric</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(s) <span class="sc">|&gt;</span> </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_spch_rate =</span> <span class="fu">mean</span>(spch_rate),</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_spch_rate =</span> <span class="fu">median</span>(spch_rate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Activity: Try some other analyses with <code>group_by()</code> and <code>summarize()</code> and be prepared to share with a neighbor and/or the class.</p>
+</section>
 </section>
 <section id="joining-data-frames" class="level2">
 <h2 class="anchored" data-anchor-id="joining-data-frames">Joining data frames</h2>
-<p>COMING SOON</p>
+<p>Joining or merging two tables into one is often a necessary step in data analysis, including in linguistic data analysis. For example, let’s say we have one data frame (perhaps coming from an Excel file) that has tokens of sounds in words, and we have another data frame (perhaps from a CSV file) with frequencies of words from a large corpus. It would be slick to get the frequencies of word from the frequency data frame and put the appropriate frequency next to the words in the sound data frame. Enter the family of join functions in <code>dplyr</code> <a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">here</a>.</p>
+<p>Let’s start with a super simple example in order to understand the concept, then we’ll apply this to bigger datasets. Let’s create a data frame (i.e., <code>tibble</code>) with two columns: a person, and the fruit that they said during a conversation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>main_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">speaker =</span> <span class="fu">c</span>(<span class="st">"Bob"</span>, <span class="st">"Bob"</span>, <span class="st">"Billy"</span>, <span class="st">"Billy"</span>, <span class="st">"Britta"</span>, <span class="st">"Britta"</span>, <span class="st">"Bonnie"</span>), </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">word =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"orange"</span>, <span class="st">"mango"</span>, <span class="st">"apple"</span>, <span class="st">"manzana"</span>, <span class="st">"kiwi"</span>)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(main_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, let’s create a data frame with some of the speakers’ ages:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>ages <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">person =</span> <span class="fu">c</span>(<span class="st">"Bonnie"</span>, <span class="st">"Billy"</span>, <span class="st">"Bob"</span>), </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">c</span>(<span class="dv">47</span>, <span class="dv">6</span>, <span class="dv">95</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You may have noticed that while Britta said a couple words in our <code>main_df</code> data frame, she isn’t listed in the <code>ages</code> data frame. We’ll see what happens below when a value in a column in the main data frame doesn’t have a corresponding value in the to-be-joined data frame.</p>
+<p>In order to create a new column with the age of each of the speakers in <code>main_df</code>, we can use the <code>left_join()</code> function to join <code>main_df</code> and <code>ages</code>. This function returns every row in the left-hand or first data frame in the function call (which, if we’re using a pipe operator, is the data frame to the left of the pipe), and only the rows in the right-hand or second data frame that have a corresponding value based on the columns specified with the <code>by</code> argument. By default, <code>left_join</code> joins by common column names, but we can explicitly specify which column in the left-hand data frame corresponds to which column in the right-hand data frame with the <code>by</code> argument. Let’s take a look:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>main_df <span class="sc">|&gt;</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ages, <span class="at">by =</span> <span class="fu">join_by</span>(speaker <span class="sc">==</span> person))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Question: Why do we have <code>speaker</code> to the left of the double equal sign and <code>person</code> to the right?</p>
+<p>You probably noticed that Britta’s age is <code>NA</code> because she isn’t listed in the <code>ages</code> data frame. If that’s a deal-breaker, then we can remove rows with <code>NA</code>s with <code>filter()</code> as a final step in the pipeline (mind the exclamation point before <code>is.na()</code>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>main_df <span class="sc">|&gt;</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ages, <span class="at">by =</span> <span class="fu">join_by</span>(speaker <span class="sc">==</span> person)) <span class="sc">|&gt;</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="toy-activity" class="level3">
+<h3 class="anchored" data-anchor-id="toy-activity">Toy activity</h3>
+<p>Let’s create a toy data frame with frequencies of the words said by the speakers in <code>main_df</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>freqs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">wd =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"kiwi"</span>, <span class="st">"mango"</span>), </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">freq =</span> <span class="fu">c</span>(<span class="dv">123</span>, <span class="dv">234</span>, <span class="dv">345</span>, <span class="dv">456</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freqs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, join the <code>freqs</code> data frame to the <code>main_df</code> so that the frequency of each word is in a new column to the right of the column holding the age of the speakers, so that you end up with a data frame with four columns: <code>speaker</code>, <code>word</code>, <code>age</code>, <code>freq</code>. Give it a try, but if you get stuck, take a look at Dr.&nbsp;Brown’s code below. Hint: Make sure you are super aware of the column names in the various data frames that you need to join, so that you can give the correct names to the <code>by</code> argument.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>main_df <span class="sc">|&gt;</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ages, <span class="at">by =</span> <span class="fu">join_by</span>(speaker <span class="sc">==</span> person)) <span class="sc">|&gt;</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(freqs, <span class="at">by =</span> <span class="fu">join_by</span>(word <span class="sc">==</span> wd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="activity-with-a-review" class="level3">
+<h3 class="anchored" data-anchor-id="activity-with-a-review">Activity (with a review)</h3>
+<p>Let’s ramp it up to a real activity. Try the following:</p>
+<ol type="1">
+<li><p>Review: Create a data frame with at least one column named <code>word</code> (i.e., that has one word per row) using text files of your choice (e.g., <em>Saints</em> or texts from Project Gutenberg). You might like to use a regular expression to find different words (e.g., <code>"\\w+ed\\b"</code> or <code>"\\bre\\w+"</code>), as the next steps will be boring if all rows have the same word.</p></li>
+<li><p>Review: Create a data frame of frequencies of words from text files of your choice or webscrape a frequency list from the internet (e.g., Wikitionary).</p></li>
+<li><p>Note: If after a good-faith effort to complete the previous two steps, you can’t remember how to do these tasks, download and use two files in the LMS labeled <code>Dataset_for_over_dan.csv</code> and <code>freqs_dan.csv</code>. The first file has a keyword-in-context display of words in Danish that start with <em>for</em> or <em>over</em> while the second file has frequencies of words in Danish.</p></li>
+<li><p>Here’s the main exercise of the activity: Join the data frame with words to the data frame with frequencies, so that you have a new column (called <code>freq</code>) with the frequency of the word in the <code>word</code> (or <code>node</code>) column. Again, I can’t stress enough the importance of taking the time to double check that you know what the names are of the columns in the several data frame, so that you can correctly pass thme to the <code>by</code> argument.</p></li>
+</ol>
+</section>
+</section>
+<section id="separate-and-unite-columns" class="level2">
+<h2 class="anchored" data-anchor-id="separate-and-unite-columns">Separate and unite columns</h2>
+<p>Other useful functions, this time from the <code>tidyr</code> package within <code>tidyverse</code>, are the 3-member family of <code>separate_*</code> functions (i.e., <code>separate_wider_delim()</code>, <code>separate_wider_position()</code>, and <code>separate_wider_regex()</code>) and the <code>unite()</code> function.</p>
+<p>The <code>separate_*</code> functions are transparently named and split up one column into two or more columns.</p>
+<ul>
+<li><p>The <code>separate_wider_delim()</code> function splits on a delimiter given to the <code>delim</code> argument;</p></li>
+<li><p>The <code>separate_wider_position()</code>function splits at fixed character widths given to the <code>widths</code> argument;</p></li>
+<li><p>The <code>separate_wider_regex()</code> function splits on a regular expression given to the <code>patterns</code> argument.</p></li>
+</ul>
+<p>Let’s create a data frame with one column with two pieces of information in each row: the speaker who said something, following by a semi-colon, followed by what the speaker said:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>hungry <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">conversation =</span> <span class="fu">c</span>(<span class="st">"Bobby: I'm hungry!"</span>, <span class="st">"Cathy: Let's stop at In-n-Out. What do you say to that?!"</span>, <span class="st">"Bobby: Sounds good to me. What do you say João?"</span>, <span class="st">"João: Eu digo que sim!"</span>, <span class="st">"Roberto: Yo también."</span>)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(hungry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s start with <code>separate_wider_delim()</code>. Pay attention to the arguments in the function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>hungry <span class="sc">|&gt;</span> </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(<span class="at">cols =</span> conversation, <span class="at">delim =</span> <span class="st">": "</span>, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"person"</span>, <span class="st">"utterance"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The function <code>separate_wider_regex()</code> takes a different approach. Rather than splitting on the given fixed-width delimiter given to the <code>delim</code> argument in the previous function, this function takes regular expressions that are used to extract matches out of the string in the row. Specifically, you give it a named character vector in which the names become column names and the elements of the vector are regular expressions to be matched. If no name is given, then that match doesn’t make it into the resulting data frame. Let’s use this function on the same <code>hungry</code> data frame from above. Notice that the regex <code>":"</code> doesn’t have a name, and therefore isn’t returned in the resulting data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>hungry <span class="sc">|&gt;</span> </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(<span class="at">cols =</span> conversation, <span class="at">patterns =</span> <span class="fu">c</span>(<span class="at">person =</span> <span class="st">"^[^:]+"</span>, <span class="st">":"</span>, <span class="at">utterance =</span> <span class="st">"[^:]+$"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For good measure, we’d probably want to trim off that extra space at the beginning of each utterance:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>hungry <span class="sc">|&gt;</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(<span class="at">cols =</span> conversation, <span class="at">patterns =</span> <span class="fu">c</span>(<span class="at">person =</span> <span class="st">"^[^:]+"</span>, <span class="st">":"</span>, <span class="at">utterance =</span> <span class="st">"[^:]+$"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">utterance =</span> <span class="fu">str_trim</span>(utterance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Dr.&nbsp;Brown hasn’t needed <code>separate_wider_position()</code> yet in his life, so let’s move on! If you think you might need it, take a look at the docs <a href="https://tidyr.tidyverse.org/reference/separate_wider_delim.html">here</a>.</p>
+<p>The <code>unite()</code> function is the inverse of the <code>separate_*</code> functions, that is, it merges into one column two or more columns. It takes was input the data frame (probably piped in with the pipe operator), the <code>col</code> argument which specifies the name of the new column, then the names of the two or more columns to be merged, and the <code>sep</code> argument which specifies the character(s) used to join the values in the new column. There are other arguments; take a look at the docs <a href="https://tidyr.tidyverse.org/reference/unite.html?q=unite#null">here</a>.</p>
+<p>Let’s continue with our <code>hungry</code> data frame from above. Let’s put the <code>person</code> and <code>utterance</code> columns back together, but this time with a dash separating the speakers and their corresponding utterances.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df_separated <span class="ot">&lt;-</span> hungry <span class="sc">|&gt;</span> </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(<span class="at">cols =</span> conversation, <span class="at">delim =</span> <span class="st">": "</span>, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"person"</span>, <span class="st">"utterance"</span>))</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df_separated)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>df_separated <span class="sc">|&gt;</span> </span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="at">col =</span> <span class="st">"combined"</span>, person<span class="sc">:</span>utterance, <span class="at">sep =</span> <span class="st">" - "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="activity-3" class="level3">
+<h3 class="anchored" data-anchor-id="activity-3">Activity</h3>
+<p>Use some of the <code>separate_*()</code> functions and <code>unite()</code> on the data frame of your choice.</p>
+</section>
 </section>
 <section id="pivoting-data-frames" class="level2">
 <h2 class="anchored" data-anchor-id="pivoting-data-frames">Pivoting data frames</h2>
