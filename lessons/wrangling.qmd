@@ -19,7 +19,7 @@ Pop (formative) quiz!
 Instructions: Match each function with its corresponding purpose.
 
 |              |                                                                                             |
-|-----------------------|-------------------------------------------------|
+|-----------------|-------------------------------------------------------|
 | `filter()`   | A. orders the rows based on values in one or more columns                                   |
 | `arrange()`  | B. inverts the order so that the rows are in big-to-small order                             |
 | `desc()`     | C. keeps only unique rows                                                                   |
@@ -184,7 +184,7 @@ Pop quiz time!
 Instructions: Match each function (i.e., verb) with its corresponding purpose.
 
 |              |                                                                      |
-|----------------------|--------------------------------------------------|
+|------------------|------------------------------------------------------|
 | `mutate()`   | A. change the name of the specified column                           |
 | `select()`   | B. creates new columns based on one or more already existing columns |
 | `rename()`   | C. moves the position of the specified columns                       |
@@ -572,8 +572,291 @@ Use some of the `separate_*()` functions and `unite()` on the data frame of your
 
 ## Pivoting data frames
 
-COMING SOON
+Another useful, and often necessary, step in (linguistic) data analysis is changing the shape of a data frame before running an analysis. Some functions in R and in other languages (e.g., Python and Julia) and in other software (e.g., Excel) require the data frame to be in a specific shape in order to do certain analyses. Being able to transform the data to that shape is an important preprocessing step.
+
+The two main functions for changing the shape of a data frame within `tidyverse` are [`pivot_longer()`](https://tidyr.tidyverse.org/reference/pivot_longer.html) and [`pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html). The function `pivot_longer()` increases the number of rows and decreases the number of columns, while `pivot_wider()` decreases the number of rows and increases the number of columns.
+
+Let's take a super simple example. Let's create a toy data frame with one row and five columns with the ages of people in a sample:
+
+```{r}
+#| eval: false
+library("tidyverse")
+ages <- tibble(Sammy = 20, Edna = 18, Luisa = 16, Heidi = 14, Evelyn = 12)
+print(ages)
+```
+
+As we see, each column represents one person, with the age in the row. Let's reshape the data frame so that we end up with five rows and two columns, with each row giving info about one person, and the first column giving the person's name and the second column giving the person's age:
+
+```{r}
+#| eval: false
+ages |> 
+  pivot_longer(cols = Sammy:Evelyn, names_to = "person", values_to = "age")
+```
+
+The resulting data frame is a "tidy" data frame because each column has only one variable (e.g., person or age) and the rows represent individual observations. The pre-transformed data frame above was **not** tidy because each column had more than one variable (e.g., person and age). Read [Hadley Wickham's paper](https://doi.org/10.18637/jss.v059.i10) for a full explanation of tidy data.
+
+The `pivot_wider()` does the opposite, that is, it make a long(er) data frame wide(r). Let's create another toy data frame, this time in long format and make it wide:
+
+```{r}
+#| eval: false
+heights <- tibble(
+  person = c("Sammy", "Edna", "Luisa", "Heidi", "Evelyn"),
+  height_in = c(72, 70, 69, 63, 64))
+print(heights)
+```
+
+Let's pivot this data frame to a wide format so that there are five columns, with each person's name was the column name, and the rows are the corresponding heights in inches:
+
+```{r}
+#| eval: false
+heights |> 
+  pivot_wider(names_from = person, values_from = height_in)
+```
+
+### Toy activity and review
+
+Create one data frame with the ages and heights of the five people in the above toy examples. Hint: In addition to `pivot_longer()` and/or `pivot_wider()`, you'll also need our ol' friend `left_join()` that we saw above.
+
+After a good-faith effort, if you need help take a look at Dr. Brown's code below:
+
+```{r}
+#| eval: false
+#| code-fold: true
+ages |> 
+  pivot_longer(cols = Sammy:Evelyn, names_to = "person", values_to = "age") |> 
+  left_join(heights, by = join_by(person == person))
+```
+
+### Vowels
+
+Let's take a look at a linguistic example from Dr. Stanley. Download the `sample_vowel_data.csv` file from the LMS \> Datasets. Currently, each row represents one time point for each vowel. There are 27 rows containing F1, F2, and F3 measurements from three tokens of three vowels each, at three timepoints.
+
+Let's load the dataset into our R session as a data frame:
+
+```{r}
+#| eval: false
+library("tidyverse")
+vowels <- read_csv("/pathway/to/sample_vowel_data.csv")
+print(vowels)
+```
+
+Let's change it into a wider format so that the unit of observation (i.e., row) is one vowel. There are 9 rows. Also, save it to a variable named `widest` so we can work with it later.
+
+```{r}
+#| eval: false
+widest <- vowels |> 
+  pivot_wider(names_from = percent, values_from = c(F1, F2, F3))
+print(widest)
+```
+
+Let's change it to a longer format. Now the unit of measurement is one format measurement, per time point, per vowel token. There are 81 rows. Note that I'll need to specify which columns should be affected with the `cols` argument.
+
+```{r}
+#| eval: false
+longest <- vowels |> 
+    pivot_longer(cols = c(F1, F2, F3), 
+                 names_to = "formant", 
+                 values_to = "hz") |> 
+    arrange(formant)
+print(longest)
+```
+
+Let's use our `widest` data frame and pivot it longer. Also, as a shorthand for specifying the columns I want to pivot, I can use `matches()` and a regex:
+
+```{r}
+#| eval: false
+widest |> 
+    pivot_longer(cols = matches("F\\d_\\d\\d"), 
+                 names_to = "formant_percent", 
+                 values_to = "hz")
+```
+
+Here, because each column name contained two pieces of information (`F1_25`), the resulting data set after pivoting contains a single column with two pieces of information: `formant` and `percent`.
+
+Enter our ol' friend `separate()`:
+
+```{r}
+#| eval: false
+widest |> 
+    pivot_longer(cols = matches("F\\d_\\d\\d"), 
+                 names_to = "formant_percent", 
+                 values_to = "hz") |> 
+    separate(formant_percent, 
+             into = c("formant", "percent"), 
+             sep = "_")
+```
+
+But the separation above can happen within pivot functions directly. Below, we provide a vector of names as the value of the `names_to` argument. This then requires the use of the `names_sep` argument, which is where you specify the character that separates the two names.
+
+```{r}
+#| eval: false
+widest |> 
+    pivot_longer(cols = matches("F\\d_\\d\\d"), 
+                 names_to = c("formant", "percent"), 
+                 names_sep = "_", 
+                 values_to = "hz")
+```
+
+### Ramping it up
+
+Let's say we start off with what we see as the widest version of the data in the `widest` data frame. This is not a hypothetical: this is how a lot of sociophonetics software returns the data to the user! We want to pivot it so that it looks like our original version in the `vowels` data frame. One way is to make it longer and then wider again.
+
+```{r}
+#| eval: false
+
+widest |> 
+    pivot_longer(cols = matches("F\\d_\\d\\d"), 
+                 names_to = c("formant", "percent"),
+                 names_sep = "_",
+                 values_to = "hz") |> 
+    pivot_wider(names_from = formant,
+                values_from = hz)
+```
+
+This produces the correct output, but it's a little clunky to do two pivots.
+
+Enter the **black magic** that is `.value`. So instead, we replace the `formant` column name (in the `names_to` argument) with `.value` (mind the period). This then, somehow, takes what would have been the `formant` column and pivots it wider. Note that when we do this, we don't need the `values_from` argument anymore.
+
+```{r}
+#| eval: false
+widest |> 
+    pivot_longer(cols = matches("F\\d_\\d\\d"), 
+                 names_to = c(".value", "percent"),
+                 names_sep = "_")
+```
+
+### Big badboy activity
+
+Download the "RPM_2019_for_Reliability.xlsx" Excel file from LMS \> Datasets module and transform (aka. transpose) the dataset into the shape asked for in the email below that Dr. Brown received from his brother [Alan](https://mcl.as.uky.edu/users/avbrow2):
+
+"I’m sending along that data set that I had originally sent that had those problems. Stayc cleaned it all up and we took some students out who spoke other languages at home. The sheet of interest is the first one labeled “For Earl”. As we had talked about, we just need the data oriented horizontally by item number so across the top the columns would run from 1 to 36 left to right. Each row, then, would represent a different student and ‘1’s or ‘0’s in the columns would indicate correct or incorrect for each item/column. The initial three columns to the left would be the demographic information like gender, grade, immersion/non-immersion. Let me know if that doesn’t make sense."
+
+The first ten rows (i.e., students, of the 104 students) of the transposed dataset should look like the following:
+
+![Transposed dataset](/images/transposed_dataset.png){fig-alt="transposed dataset"}
+
+A couple words to the wise:
+
+-   As is often the case in the wild, this dataset is squirrelly. Take a look at the bottom of the dataset (in Excel) and you'll see that there is "104" below the last row of the first column. You'll need to use the `range` argument in the `read_excel()` function (within the `readxl` package) to read in only the cells with actual student data, that is, rows with something in all five columns.
+
+-   The "104" indicates that there are 104 students in the dataset. The answers to the 36 questions that each student responded to are in sets of 36 rows, with the question number indicated by in the `Page/Item` column. You'll see that the numbers in that column go from 1 to 36, and then start over at 1 with the next student.
+
+-   There is no unique identifier (e.g., ID number) for each student. Before transposing the data frame, you'll need to create a new column with a unique identifier. You can use the `rep()` function, with its `each` argument, to do this. See [Stack Overflow thread](https://stackoverflow.com/a/6432093/2884875) for an example.
+
+-   After transposing the data frame, you should move the column with the unique identifier to the far left.
+
+After a good-faith effort to complete this activity, if you need help take a look at Dr. Brown's code below:
+
+```{r}
+#| eval: false
+#| code-fold: true
+library("tidyverse")
+library("readxl")
+"/pathway/to/RPM_2019_for_Reliability.xlsx" |> 
+  read_excel(range = "For Earl!A1:E3745") |> 
+  mutate(id = rep(1:104, each = 36)) |> 
+  pivot_wider(names_from = "Page/Item", values_from = "Correct/incorrect") |> 
+  relocate(id, .before = 1)
+```
 
 ## Working with categorical variables
 
-COMING SOON
+There are a few handy functions in the `forcats` package within `tidyverse` for working with categorical variables (aka. factors).
+
+The [`fct_recode()`](https://forcats.tidyverse.org/reference/fct_recode.html) function allows the user to manually change or combine levels (aka. values) of a categorical variable. Let's create a toy data frame with words and vowels:
+
+```{r}
+#| eval: false
+library("tidyverse")
+words <- tibble(
+  word = c("wasp", "fleece", "beat", "bit", "pat", "bus", "hot", "cool", "firm", "father"),
+  vowel = c("[ɑ]", "[i]", "[i]", "[ɪ]", "[æ]", "[ʌ]", "[ɔ]", "[u]", "[ɚ]", "[ɑ]")
+)
+print(words)
+```
+
+Now, let's create a new column in which we describe (some of) the vowels:
+
+```{r}
+#| eval: false
+words |> 
+  mutate(description = fct_recode(vowel, "high front closed" = "[i]", "r colored schwa" = "[ɚ]", "stressed schwa (wedge)" = "[ʌ]"))
+```
+
+The [`fct_collapse()`](https://forcats.tidyverse.org/reference/fct_collapse.html) function allows the user to put levels into groups:
+
+```{r}
+#| eval: false
+
+words |> 
+  mutate(height = fct_collapse(vowel, 
+                               hi_V = c("[i]", "[ɪ]", "[u]"), 
+                               lo_V = c("[ɑ]", "[æ]"),
+                               other_level = "mid_V"))
+
+```
+
+Question: What does the `other_level` argument do in the function call above?
+
+The [`fct_relevel()`](https://forcats.tidyverse.org/reference/fct_relevel.html) function allows the user to reorder the levels of a categorical variable. This is often useful when plotting data and the user wants an order of levels different from alphabetical order (the default).
+
+Let's create a toy data frame of voiceless plosives and their voice onset times (VOT):
+
+```{r}
+#| eval: false
+library(tidyverse)
+voiceless_plosives <- tibble(
+  plosive = c("t", "k", "p", "p", "k", "t", "p", "k", "t"),
+  vot = c(23, 34, 45, 56, 67, 78, 89, 91, 21)
+)
+print(voiceless_plosives)
+```
+
+If we create a boxplot (preview of what's coming soon!), we see that "k" is on the left, followed by "p" and "t", because the default way to sort levels is by alphabetical order:
+
+```{r}
+#| eval: false
+voiceless_plosives |> 
+  ggplot(aes(x = plosive, y = vot)) +
+  geom_boxplot()
+```
+
+We probably want "p" followed by "t" and then "k", as that's how they are presented in linguistic literature, based on the place of articulation. Let's use `fct_relevel()` to change the internal order of the levels, and then replot their VOTs:
+
+```{r}
+#| eval: false
+voiceless_plosives |>
+  mutate(plosive = fct_relevel(plosive, "p", "t", "k")) |> 
+  ggplot(aes(x = plosive, y = vot)) +
+  geom_boxplot()
+```
+
+### Activity
+
+Let's create a toy data frame with Spanish words with a dental or alveolar word-final sibilant:
+
+```{r}
+#| eval: false
+
+library("tidyverse")
+sibilants <- tibble(
+  person = c("Raúl", "Raúl", "José", "José", "María"),
+  target_wd = c("árboles", "mesas", "lápiz", "es", "pues"),
+  next_wd = c("de", "en", "y", "que", "."),
+  next_segment = c("d", "e", "i", "k", "#")
+)
+print(sibilants)
+```
+
+Your task is to create a new column that groups the vowels into one level, the consonants into their own group, and then other following segments should be placed into an `other` level.
+
+After a good-faith effort, if you need help, take a look at Dr. Brown's code below:
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+sibilants |>  
+  mutate(next_sound_type = fct_collapse(next_segment, vowel = c("i","e"), consonant = c("d", "k"), other_level = "other"))
+
+```
