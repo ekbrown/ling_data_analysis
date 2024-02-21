@@ -126,6 +126,174 @@
     "text": "Populate a list\nA third way to calculate frequencies of words in files is to create an R list and populate the list with words, one file at a time. This is a good way if the corpus that you want frequencies from is too big to fit in the RAM of your computer, or too big to fit comfortably because it makes your computer work slowly. You can have your script bring into the RAM only one file at a time and populate an R list. This approach to getting frequencies is slower than the previous two, so unless you have a good reason for using this approach, it’s probably best to one of the previous two approaches (fun fact: Dr. Brown likes the count() approach best).\nLet’s take a look at an example using the Saints corpus:\n\n# get filenames\nfilenames &lt;- dir(path = \"/pathway/to/Saints/txt/\", pattern = \"\\\\.txt$\", full.names = TRUE, recursive = TRUE)\n\n# create a collector string to collect the text of all files\nfreqs &lt;- list()\n\n# loop over the filenames\nfor (filename in filenames) {\n  \n  # get the text from the current file and uppercase it\n  txt &lt;- read_file(filename) %&gt;% str_to_upper()\n  \n  # get words in current file and unlist the list into a vector\n  wds &lt;- str_extract_all(txt, \"[-'’A-Z]+\") %&gt;% unlist()\n  \n  # loop over the vector of words\n  for (wd in wds) {\n    \n    # test whether the current word is already in the list\n    if (wd %in% names(freqs)) {\n      \n      # if so, increment the counter for that word by one\n      freqs[[wd]] &lt;- freqs[[wd]] + 1\n      \n    } else {\n      # if not, add an entry for the word and give it a value of one\n      freqs[[wd]] &lt;- 1\n      \n    }  # end if\n  }  # next word  \n}  # next filename\n\n# print out the words and their frequencies to the console\nfor (wd in names(freqs)) {\n  cat(wd, \": \", freqs[[wd]], \"\\n\", sep=\"\")\n}\n\nThe next step would be put the words and their frequencies into a data frame in order to (more easily) sort them and to (more easily) write them out to a CSV file."
   },
   {
+    "objectID": "lessons/visualization.html",
+    "href": "lessons/visualization.html",
+    "title": "Visualization",
+    "section": "",
+    "text": "Students visualize data with easy-to-interpret plots."
+  },
+  {
+    "objectID": "lessons/visualization.html#objective",
+    "href": "lessons/visualization.html#objective",
+    "title": "Visualization",
+    "section": "",
+    "text": "Students visualize data with easy-to-interpret plots."
+  },
+  {
+    "objectID": "lessons/visualization.html#background",
+    "href": "lessons/visualization.html#background",
+    "title": "Visualization",
+    "section": "Background",
+    "text": "Background\nR kicks trash with visualizing data. And the go-to package for creating professional-looking plots is ggplot2, one of the core packages of the tidyverse ecosystem. Base R also creates plots, but anybody who’s anybody is using ggplot2. (Okay, maybe I’m overstating this a bit, but just you wait and see if I’m lying.)"
+  },
+  {
+    "objectID": "lessons/visualization.html#basics",
+    "href": "lessons/visualization.html#basics",
+    "title": "Visualization",
+    "section": "Basics",
+    "text": "Basics\nFirst, we need some data in a data frame (e.g., a tibble). Let’s use the Data_ptk.xlsx file in the LMS:\n\nlibrary(\"tidyverse\")\nlibrary(\"readxl\")\nptk &lt;- read_excel(\"../../../data_analysis/datasets/Data_ptk.xlsx\", sheet = \"data\")\nglimpse(ptk)\nhead(ptk)\n\nThe function ggplot() (no 2, like in the package name) creates a plotting window or palette:\n\nggplot()\n\nThe first argument to ggplot() is a data frame, which can be piped in:\n\nggplot(ptk)\n\n# same as above, but with a pipe\nptk |&gt; ggplot()\n\nThe second argument to ggplot() is a call to the aes() function (short for “aesthetics”) which maps columns in the data frame to elements on the plot. The first argument to aes() is what will be plotted on the x-axis and the second argument, if needed, is what will be plotted on the y-axis. For example, let’s put the levels of LANG on the x-axis:\n\nptk |&gt; \n  ggplot(aes(x = LANG))\n\nOr we can put the prePhonBin on the y-axis:\n\nptk |&gt; \n  ggplot(aes(y = prePhonBin))\n\nYou’ll notice that the above plots don’t actually plot anything yet; they simply set up the plotting window. We now need to add elements to the plot."
+  },
+  {
+    "objectID": "lessons/visualization.html#one-categorical-variable",
+    "href": "lessons/visualization.html#one-categorical-variable",
+    "title": "Visualization",
+    "section": "One categorical variable",
+    "text": "One categorical variable\nPerhaps the most basic plot is of one categorical variable. In order to see the distribution of such a variable across its levels (aka. values or groups), let’s create a popular option: the good ol’ fashioned barplot. Note: The several layers of the plot are separated by a plus sign + rather than the pipe operator, and the layers are often specified with a geom_...() function (short for geometric object). See the section about layers in the reference manual of ggplot2.\n\nptk |&gt; \n  ggplot(aes(x = LANG))+\n  geom_bar()\n\nIt might be good to also get the exact number of tokens in each level with our ol’ friends:\n\nptk |&gt; \n  count(LANG)\n\n\nActivity\n\nTake a look at the variety of barplots that are available in ggplot.\nThen, using the Data_ptk.xlsx dataset, plot the distribution of several categorical variables, for example: LANG, GENRE, prePhonBin, folPhonBin, prevMention, cogStatus, lexClass, wdClass."
+  },
+  {
+    "objectID": "lessons/visualization.html#two-categorical-variables",
+    "href": "lessons/visualization.html#two-categorical-variables",
+    "title": "Visualization",
+    "section": "Two categorical variables",
+    "text": "Two categorical variables\nThe following are popular plots to visualize the distribution of data points across two categorical variables.\n\nStacked barplot\nTo create a stacked (aka. filled) barplot, one categorical variable is given as x in aes() and the other is given as the fill argument in aes(), for example:\n\nptk |&gt; \n  ggplot(aes(x = LANG, fill=prePhonBin))+\n  geom_bar()\n\nSee more examples of barplot in the docs.\nFollow-up question: How can we get the exact numbers of tokens in each of the four subgroups displayed in the plot? After a good-faith effort, if you need help, take a look at Dr. Brown’s code below:\n\n\nCode\nptk |&gt; \n  count(LANG, prePhonBin)\n\n\n\n\nPercent barplot\nTo create a percent barplot, that is, a stacked barplot that sums to 1.0, let’s modify the previous barplot by adding the argument position = \"fill\" to geom_bar(), butoutside of aes() (which isn’t used at all).\n\nptk |&gt; \n  ggplot(aes(x = LANG, fill=prePhonBin))+\n  geom_bar(position = \"fill\")\n\nWe notice that the y-axis is labeled “count”, but those aren’t counts, they’re proportions. Let’s change the axis labels with the labs() element:\n\nptk |&gt; \n  ggplot(aes(x = LANG, fill=prePhonBin))+\n  geom_bar(position = \"fill\")+\n  labs(x = \"Language\", y = \"Proportion\")\n\n\n\nGrouped barplot\nTo create a grouped barplot, modify the previous barplot by changing the argument to position = \"dodge\". Simple enough.\n\nptk |&gt; \n  ggplot(aes(x = LANG, fill=prePhonBin))+\n  geom_bar(position = \"dodge\")\n\n\n\nActivity\n\nGive it a whirl! Using the Data_ptk.xlsx dataset, plot the distribution of sets of two categorical variables, e.g., LANG and GENRE, prePhonBin and folPhonBin, prevMention and cogStatus, lexClass and wdClass, and any combination of these variables.\nIf you’d like, take a look at mosaic plots in the ggmosaic R package. Mosaic plots are another way to visualize two categorical variables. Look at the vignette of ggmosaic for examples of how to make this type of plot in the ggplot framework."
+  },
+  {
+    "objectID": "lessons/visualization.html#one-continuous-variable",
+    "href": "lessons/visualization.html#one-continuous-variable",
+    "title": "Visualization",
+    "section": "One continuous variable",
+    "text": "One continuous variable\nIt is useful to visualize the distribution of continuous variables in order to see whether the variable is distributed normally or has some skew or is bimodal.\nThe following plots are useful for this purpose. You only need to specify the x argument in aes() within ggplot() with the one variable.\n\nHistogram\nA histogram slices or bins of a continuous variable into N bins and then plots the count within each bin on the y-axis. It gives a barplot (i.e., it looks like a barplot), but instead of levels within a categorical variable, the bars are equidistant intervals across a continuous variable. Here’s an example with the continuous variable VOT in the ptk dataset:\n\nptk |&gt; \n  ggplot(aes(x = VOT))+\n  geom_histogram()\n\nYou can specify a specific number of bins with the bins argument, for example:\n\nptk |&gt; \n  ggplot(aes(x = VOT))+\n  geom_histogram(bins = 15)\n\n\n\nDensity plot\nDensity plots are like histograms, but they use a curved line rather than bins:\n\nptk |&gt; \n  ggplot(aes(VOT))+\n  geom_density()\n\nThe cool thing about density plots is that we can specify that the area below the curve sum to 1. That fact will be important when we look at p-values.\nLet’s plot VOT as a density plot:\n\nptk |&gt; \n  ggplot(aes(scale(VOT)))+\n  geom_density(fill = \"blue\")\n\n\n\nActivity\nGive it a go! Plot the distribution of several different continuous variables in the ptk dataset, and be ready to share with a neighbor and/or the class.\nMORE TO COME REAL SOON!"
+  },
+  {
+    "objectID": "lessons/regexes.html",
+    "href": "lessons/regexes.html",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+  },
+  {
+    "objectID": "lessons/regexes.html#objective",
+    "href": "lessons/regexes.html#objective",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+  },
+  {
+    "objectID": "lessons/regexes.html#regular-expressions-aka.-regexes",
+    "href": "lessons/regexes.html#regular-expressions-aka.-regexes",
+    "title": "Regular expressions",
+    "section": "Regular expressions (aka. regexes)",
+    "text": "Regular expressions (aka. regexes)\n\nRegular expressions are used to match strings. \n\nNote: In R, you must use double backslashes, e.g., \\\\w+\n\nOnline regex checker are useful, such as here (for Python), here, and here.\nLetters represent themselves: \"ed\" returns ed anywhere in the string, for example, Ed studied in the education building."
+  },
+  {
+    "objectID": "lessons/regexes.html#character-classes",
+    "href": "lessons/regexes.html#character-classes",
+    "title": "Regular expressions",
+    "section": "Character classes",
+    "text": "Character classes\n\n\\\\w = alphanumeric character; \\\\W = non-alphanumeric character\n\\\\s = whitespace (i.e., spaces, tab breaks, newlines); \\\\S = non-whitespace\n\\\\d = Arabic numeral (i.e., 0-9); \\\\D = non-Arabic numeral\n[] = character class finds one of the characters between the square brackets: \n\n[aeiou] finds one of the five orthographic vowels\n[Aa] find either uppercase or lowercase a \n[a-z] finds one lowercase English character\n[a-zA-Z] returns one lowercase English character or one uppercase English character \nExample: \"latin[aox]\" returns latina, latino, latinx."
+  },
+  {
+    "objectID": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
+    "href": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
+    "title": "Regular expressions",
+    "section": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  ",
+    "text": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  \n\nExample: \"\\\\bth(is|at|ese|ose) \\\\w+\" returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, this bag, that cat, these plants, those buildings.\nQuantifiers\n\n{min, max} = returns between min and max number of the previous character: \"\\\\w{2,5}\" returns between two and five alphanumeric characters. Note that \"\\\\w{,5}\" returns up to five alphanumeric characters, and \"\\\\w{2,}\" finds two or more alphanumeric characters.\n{integer} = returns the exact number of the previous character: \"\\\\d{4}\" returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)\nShortcut quantifiers:\n\n? means the same as {0, 1}, meaning it returns zero or one of the previous pattern, that is, the previous character is optional\n* is the same as {0,} and returns zero or more of the previous pattern: yes\\\\!* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc.. \n+ means {1,} and returns one or more of the previous pattern, for example, \"go+l\" returns gol, goool, gooooooool\n\n\n\n\nActivity\n\nWhat do the following regexes match? See example in Section 2.1 here.\n\n\"\\\\b[Tt]he\\\\b\\\\s+\\\\b[Ii]nternet\\\\b\"\n\"\\\\w+ed\\\\b\"\n\"\\\\bcent(er|re)\\\\b\"\n\"\\\\bwalk(s|ed|ing)?\\\\b\"\n\"\\\\b[^aeiou\\\\W]{2,}\\\\w+\"\n\"\\\\b[^aeiou\\\\W][aeiou]\\\\w+\""
+  },
+  {
+    "objectID": "lessons/regexes.html#capture-groups",
+    "href": "lessons/regexes.html#capture-groups",
+    "title": "Regular expressions",
+    "section": "Capture groups",
+    "text": "Capture groups\n\nWarning: This gets wild. \nYou can have a regular expression remember what it captured in order to search for that same sequence of characters.\nYou can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with \\\\1 for the first capture group, or \\\\2 for the second capture group (if you have more than one capture group in the same regex), etc.\nExample: \"\\\\w+(\\\\w) \\\\1\\\\w+\" returns a bigram whose first word ends with the same letter that the second word begins with, e.g., walkeddown\n\n\nActivity\n\nWhat do the following regexes match?\n\n\"([aeiou])\\\\1\"\n\"\\\\w*([aeiou])\\\\1\\\\w*\"\n\"the (\\\\w+)er they were, the \\\\1er they will be\"\n\"[Tt]he (\\\\w+)er they (\\\\w+),? the \\\\1er we \\\\2\"\n\"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\""
+  },
+  {
+    "objectID": "lessons/regexes.html#lookaround",
+    "href": "lessons/regexes.html#lookaround",
+    "title": "Regular expressions",
+    "section": "Lookaround",
+    "text": "Lookaround\n\nLookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.\n\nSee lookahead examples in Section 2.1.7 here.\n\n\n\nActivity\n\nDownload at least several TXT files of your choice (perhaps from Project Gutenberg or Saints from the LMS).\nLoop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the stringr package, for example, str_match_all(), str_extract_all(), str_locate_all().\nCreate a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.\nRamp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ling_data_analysis",
+    "section": "",
+    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html",
+    "href": "lessons/webscrape_freq.html",
+    "title": "Webscrape frequencies",
+    "section": "",
+    "text": "Students will use R to webscrape an already-created frequency list on the internet."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#objective",
+    "href": "lessons/webscrape_freq.html#objective",
+    "title": "Webscrape frequencies",
+    "section": "",
+    "text": "Students will use R to webscrape an already-created frequency list on the internet."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#overview-of-the-internet",
+    "href": "lessons/webscrape_freq.html#overview-of-the-internet",
+    "title": "Webscrape frequencies",
+    "section": "Overview of the internet",
+    "text": "Overview of the internet\nHere’s a super simplified overview of how the internet works: Clients (e.g., computers, smart phones) that are connected to the internet make HTTP requests to web servers (e.g., byu.edu, npr.org, instagram.com, etc.), and those web servers send back HTTP responses. Here’s a diagram to illustrate this basic idea."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#r-as-web-browser",
+    "href": "lessons/webscrape_freq.html#r-as-web-browser",
+    "title": "Webscrape frequencies",
+    "section": "R as web browser",
+    "text": "R as web browser\nR can act like a web browser by making HTTP requests and receiving HTTP responses from web servers. The rvest package here makes it easy to have R interact with the internet. That package also contains useful functions to parse the HTML in the HTTP response in order to extract information using either CSS selectors or XPath expressions.\nIt’s a good idea, and actually necessary with some websites, to make R look like a normal web browser when making the request to the web server. We do this by setting the user-agent to a common one that many web browsers use:\n\n# set the user-agent to make R look like a normal web browser to the web server\nhttr::set_config(httr::user_agent(\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\"))"
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
+    "href": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
+    "title": "Webscrape frequencies",
+    "section": "Frequency lists on the internet",
+    "text": "Frequency lists on the internet\nThere are many frequency lists on the internet, and the free online dictionary wikitionary makes available a plethora of them here.\nSometimes, the frequency lists are in HTML tables, for example:\n\nThe 1,000 most frequent words in TV and Movie scripts and transcripts in English here.\nThe 1,900 most frequent Hindi words here.\nThe 10,000 most frequency Serbian words based on TV and Movie subtitles here.\n\nOther times, the frequency lists are presented as HTML lists (whether ordered or unordered), for example:\n\nThe 5,000 most frequent words in Danish here.\n1,000 Japanese basic words here.\nThe 2,000 most frequent words in fiction in English here."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#html-tables",
+    "href": "lessons/webscrape_freq.html#html-tables",
+    "title": "Webscrape frequencies",
+    "section": "HTML tables",
+    "text": "HTML tables\nLet’s webscrape a frequency list that is sitting in an HTML table. Let’s use the list of the 1,000 most frequent words in TV and Movie scripts in English here.\n\n# if need, use install.packages() first to download the following packages to your harddrive\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\nurl &lt;- \"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\"\n\n# request the page\npage &lt;- read_html(url)\n\n# get the HTML table holding the frequency list\nfreqs_table &lt;- html_element(page, \"table\") \n\n# convert the HTML table into a data frame (i.e., tibble)\nfreqs_df &lt;- html_table(freqs_table, header = TRUE)\n\n# print the frequency table to the console\nprint(freqs_df)\n\nYou may have noticed that the above code could be put into a single pipeline by using the pipe operator repeatedly:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table(header = TRUE) %&gt;% \n  print()\n\n\nActivity\nYour turn! Find a frequency list of your choice online that is in an HTML table and webscrape it into a data frame in R. If you’ve having trouble finding one that is in an HTML table, try the 1,900 most frequent Hindi words here or the 10,000 most frequent Serbian words here.\nAfter a good-faith effort, if you need help, see Dr. Brown’s code below:\nHindi\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Hindi_1900\" %&gt;%  # put URL in a string\n  read_html() %&gt;%  # request page\n  html_element(\"table\") %&gt;%  # find first \"table\" HTML element\n  html_table() %&gt;%  # convert HTML table to data frame (i.e., tibble)\n  print()  # print data frame to console\n\n\nSerbian\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# extra exercise: write in appropriate comments below\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Serbian_wordlist\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table() %&gt;% \n  print()"
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#html-lists",
+    "href": "lessons/webscrape_freq.html#html-lists",
+    "title": "Webscrape frequencies",
+    "section": "HTML lists",
+    "text": "HTML lists\nWebscraping HTML lists, whether ordered (i.e., with numbers) or unordered (i.e., with bullets) is more work because we can’t use the slick html_table() function in rvest to convert an HTML table into a data frame in R. Rather, we have to identify which part of the data is the word and which part is the frequency. Further, we have to parse each frequency list separately, as we can’t assume that all frequency lists are formatted the same way.\nLet’s inspect the HTML of the frequency list of the 5,000 most frequency words in Danish in TV and Movie subtitles here. (Seriously, go inspect the HTML of that list before moving on.)\nWe see that the frequency list is an ordered list (HTML tag &lt;ol&gt;) and that each word and its corresponding frequency is in a list item (HTML tag &lt;li&gt;) and that the word and its frequency are separated by a space. We can use this information to scrape out the frequency list, and then use the space to identify the word and the frequency in order to put them into separate columns in a data frame in R.\nPro-tip: SelectorGadget (here) is an absolutely super helpful Google Chrome add-on extension that helps to quick identify the CSS Selector of elements of a webpage.\nLet’s get rolling with the code:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# put the URL in a string\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Danish_wordlist\" %&gt;% \n  \n  # request the HTML page\n  read_html() %&gt;% \n  \n  # extract the HTML elements &lt;li&gt; that are children of HTML elements &lt;ol&gt;\n  html_elements(css = \"ol li\") %&gt;% \n  \n  # keep only the text, that is, remove the HTML tags\n  html_text() %&gt;% \n  \n  # create a data frame with one column named \"both\"\n  # note: the dot below pipes the result of the previous step into where the dot is (rather than at the beginning of the function, which is the default behavior of the pipe operator)\n  tibble(both = .) %&gt;% \n  \n  # separate the \"both\" column into two columns (i.e., \"wd\" and \"freq\") on the space between the word and the frequency\n  separate_wider_delim(cols = \"both\", delim = \" \", names = c(\"wd\", \"freq\")) %&gt;% \n  \n  # print the data frame to the console\n  print()\n\n\nActivity\nIt’s that time of the class period: your turn!\nFind a frequency (or rank) list of your choice on the internet (probably at wikitionary.org) that is not in an HTML table and parse it into a data frame in R. If you need help finding one, try the 2,000 most frequent words in fiction in English here or the 1,000 Japanese basic words here.\nAfter a good-faith effort, if you need some help, see Dr. Brown’s code below:\nEnglish\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \"ol li\") %&gt;% \n  html_text() %&gt;% \n  tibble(wd = .) %&gt;% \n  print()\n\n\nJapanese\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \".mw-parser-output &gt; ul li\") %&gt;% \n  html_text() %&gt;% \n  tibble(entry = .) %&gt;% \n  print()"
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#question",
+    "href": "lessons/webscrape_freq.html#question",
+    "title": "Webscrape frequencies",
+    "section": "Question",
+    "text": "Question\nIn most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?"
+  },
+  {
     "objectID": "lessons/wrangling.html",
     "href": "lessons/wrangling.html",
     "title": "Data Wrangling",
@@ -194,125 +362,6 @@
     "title": "Data Wrangling",
     "section": "Working with categorical variables",
     "text": "Working with categorical variables\nThere are a few handy functions in the forcats package within tidyverse for working with categorical variables (aka. factors).\nThe fct_recode() function allows the user to manually change or combine levels (aka. values) of a categorical variable. Let’s create a toy data frame with words and vowels:\n\nlibrary(\"tidyverse\")\nwords &lt;- tibble(\n  word = c(\"wasp\", \"fleece\", \"beat\", \"bit\", \"pat\", \"bus\", \"hot\", \"cool\", \"firm\", \"father\"),\n  vowel = c(\"[ɑ]\", \"[i]\", \"[i]\", \"[ɪ]\", \"[æ]\", \"[ʌ]\", \"[ɔ]\", \"[u]\", \"[ɚ]\", \"[ɑ]\")\n)\nprint(words)\n\nNow, let’s create a new column in which we describe (some of) the vowels:\n\nwords |&gt; \n  mutate(description = fct_recode(vowel, \"high front closed\" = \"[i]\", \"r colored schwa\" = \"[ɚ]\", \"stressed schwa (wedge)\" = \"[ʌ]\"))\n\nThe fct_collapse() function allows the user to put levels into groups:\n\nwords |&gt; \n  mutate(height = fct_collapse(vowel, \n                               hi_V = c(\"[i]\", \"[ɪ]\", \"[u]\"), \n                               lo_V = c(\"[ɑ]\", \"[æ]\"),\n                               other_level = \"mid_V\"))\n\nQuestion: What does the other_level argument do in the function call above?\nThe fct_relevel() function allows the user to reorder the levels of a categorical variable. This is often useful when plotting data and the user wants an order of levels different from alphabetical order (the default).\nLet’s create a toy data frame of voiceless plosives and their voice onset times (VOT):\n\nlibrary(tidyverse)\nvoiceless_plosives &lt;- tibble(\n  plosive = c(\"t\", \"k\", \"p\", \"p\", \"k\", \"t\", \"p\", \"k\", \"t\"),\n  vot = c(23, 34, 45, 56, 67, 78, 89, 91, 21)\n)\nprint(voiceless_plosives)\n\nIf we create a boxplot (preview of what’s coming soon!), we see that “k” is on the left, followed by “p” and “t”, because the default way to sort levels is by alphabetical order:\n\nvoiceless_plosives |&gt; \n  ggplot(aes(x = plosive, y = vot)) +\n  geom_boxplot()\n\nWe probably want “p” followed by “t” and then “k”, as that’s how they are presented in linguistic literature, based on the place of articulation. Let’s use fct_relevel() to change the internal order of the levels, and then replot their VOTs:\n\nvoiceless_plosives |&gt;\n  mutate(plosive = fct_relevel(plosive, \"p\", \"t\", \"k\")) |&gt; \n  ggplot(aes(x = plosive, y = vot)) +\n  geom_boxplot()\n\n\nActivity\nLet’s create a toy data frame with Spanish words with a dental or alveolar word-final sibilant:\n\nlibrary(\"tidyverse\")\nsibilants &lt;- tibble(\n  person = c(\"Raúl\", \"Raúl\", \"José\", \"José\", \"María\"),\n  target_wd = c(\"árboles\", \"mesas\", \"lápiz\", \"es\", \"pues\"),\n  next_wd = c(\"de\", \"en\", \"y\", \"que\", \".\"),\n  next_segment = c(\"d\", \"e\", \"i\", \"k\", \"#\")\n)\nprint(sibilants)\n\nYour task is to create a new column that groups the vowels into one level, the consonants into their own group, and then other following segments should be placed into an other level.\nAfter a good-faith effort, if you need help, take a look at Dr. Brown’s code below:\n\n\nCode\nsibilants |&gt;  \n  mutate(next_sound_type = fct_collapse(next_segment, vowel = c(\"i\",\"e\"), consonant = c(\"d\", \"k\"), other_level = \"other\"))"
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html",
-    "href": "lessons/webscrape_freq.html",
-    "title": "Webscrape frequencies",
-    "section": "",
-    "text": "Students will use R to webscrape an already-created frequency list on the internet."
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#objective",
-    "href": "lessons/webscrape_freq.html#objective",
-    "title": "Webscrape frequencies",
-    "section": "",
-    "text": "Students will use R to webscrape an already-created frequency list on the internet."
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#overview-of-the-internet",
-    "href": "lessons/webscrape_freq.html#overview-of-the-internet",
-    "title": "Webscrape frequencies",
-    "section": "Overview of the internet",
-    "text": "Overview of the internet\nHere’s a super simplified overview of how the internet works: Clients (e.g., computers, smart phones) that are connected to the internet make HTTP requests to web servers (e.g., byu.edu, npr.org, instagram.com, etc.), and those web servers send back HTTP responses. Here’s a diagram to illustrate this basic idea."
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#r-as-web-browser",
-    "href": "lessons/webscrape_freq.html#r-as-web-browser",
-    "title": "Webscrape frequencies",
-    "section": "R as web browser",
-    "text": "R as web browser\nR can act like a web browser by making HTTP requests and receiving HTTP responses from web servers. The rvest package here makes it easy to have R interact with the internet. That package also contains useful functions to parse the HTML in the HTTP response in order to extract information using either CSS selectors or XPath expressions.\nIt’s a good idea, and actually necessary with some websites, to make R look like a normal web browser when making the request to the web server. We do this by setting the user-agent to a common one that many web browsers use:\n\n# set the user-agent to make R look like a normal web browser to the web server\nhttr::set_config(httr::user_agent(\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\"))"
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
-    "href": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
-    "title": "Webscrape frequencies",
-    "section": "Frequency lists on the internet",
-    "text": "Frequency lists on the internet\nThere are many frequency lists on the internet, and the free online dictionary wikitionary makes available a plethora of them here.\nSometimes, the frequency lists are in HTML tables, for example:\n\nThe 1,000 most frequent words in TV and Movie scripts and transcripts in English here.\nThe 1,900 most frequent Hindi words here.\nThe 10,000 most frequency Serbian words based on TV and Movie subtitles here.\n\nOther times, the frequency lists are presented as HTML lists (whether ordered or unordered), for example:\n\nThe 5,000 most frequent words in Danish here.\n1,000 Japanese basic words here.\nThe 2,000 most frequent words in fiction in English here."
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#html-tables",
-    "href": "lessons/webscrape_freq.html#html-tables",
-    "title": "Webscrape frequencies",
-    "section": "HTML tables",
-    "text": "HTML tables\nLet’s webscrape a frequency list that is sitting in an HTML table. Let’s use the list of the 1,000 most frequent words in TV and Movie scripts in English here.\n\n# if need, use install.packages() first to download the following packages to your harddrive\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\nurl &lt;- \"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\"\n\n# request the page\npage &lt;- read_html(url)\n\n# get the HTML table holding the frequency list\nfreqs_table &lt;- html_element(page, \"table\") \n\n# convert the HTML table into a data frame (i.e., tibble)\nfreqs_df &lt;- html_table(freqs_table, header = TRUE)\n\n# print the frequency table to the console\nprint(freqs_df)\n\nYou may have noticed that the above code could be put into a single pipeline by using the pipe operator repeatedly:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table(header = TRUE) %&gt;% \n  print()\n\n\nActivity\nYour turn! Find a frequency list of your choice online that is in an HTML table and webscrape it into a data frame in R. If you’ve having trouble finding one that is in an HTML table, try the 1,900 most frequent Hindi words here or the 10,000 most frequent Serbian words here.\nAfter a good-faith effort, if you need help, see Dr. Brown’s code below:\nHindi\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Hindi_1900\" %&gt;%  # put URL in a string\n  read_html() %&gt;%  # request page\n  html_element(\"table\") %&gt;%  # find first \"table\" HTML element\n  html_table() %&gt;%  # convert HTML table to data frame (i.e., tibble)\n  print()  # print data frame to console\n\n\nSerbian\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# extra exercise: write in appropriate comments below\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Serbian_wordlist\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table() %&gt;% \n  print()"
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#html-lists",
-    "href": "lessons/webscrape_freq.html#html-lists",
-    "title": "Webscrape frequencies",
-    "section": "HTML lists",
-    "text": "HTML lists\nWebscraping HTML lists, whether ordered (i.e., with numbers) or unordered (i.e., with bullets) is more work because we can’t use the slick html_table() function in rvest to convert an HTML table into a data frame in R. Rather, we have to identify which part of the data is the word and which part is the frequency. Further, we have to parse each frequency list separately, as we can’t assume that all frequency lists are formatted the same way.\nLet’s inspect the HTML of the frequency list of the 5,000 most frequency words in Danish in TV and Movie subtitles here. (Seriously, go inspect the HTML of that list before moving on.)\nWe see that the frequency list is an ordered list (HTML tag &lt;ol&gt;) and that each word and its corresponding frequency is in a list item (HTML tag &lt;li&gt;) and that the word and its frequency are separated by a space. We can use this information to scrape out the frequency list, and then use the space to identify the word and the frequency in order to put them into separate columns in a data frame in R.\nPro-tip: SelectorGadget (here) is an absolutely super helpful Google Chrome add-on extension that helps to quick identify the CSS Selector of elements of a webpage.\nLet’s get rolling with the code:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# put the URL in a string\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Danish_wordlist\" %&gt;% \n  \n  # request the HTML page\n  read_html() %&gt;% \n  \n  # extract the HTML elements &lt;li&gt; that are children of HTML elements &lt;ol&gt;\n  html_elements(css = \"ol li\") %&gt;% \n  \n  # keep only the text, that is, remove the HTML tags\n  html_text() %&gt;% \n  \n  # create a data frame with one column named \"both\"\n  # note: the dot below pipes the result of the previous step into where the dot is (rather than at the beginning of the function, which is the default behavior of the pipe operator)\n  tibble(both = .) %&gt;% \n  \n  # separate the \"both\" column into two columns (i.e., \"wd\" and \"freq\") on the space between the word and the frequency\n  separate_wider_delim(cols = \"both\", delim = \" \", names = c(\"wd\", \"freq\")) %&gt;% \n  \n  # print the data frame to the console\n  print()\n\n\nActivity\nIt’s that time of the class period: your turn!\nFind a frequency (or rank) list of your choice on the internet (probably at wikitionary.org) that is not in an HTML table and parse it into a data frame in R. If you need help finding one, try the 2,000 most frequent words in fiction in English here or the 1,000 Japanese basic words here.\nAfter a good-faith effort, if you need some help, see Dr. Brown’s code below:\nEnglish\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \"ol li\") %&gt;% \n  html_text() %&gt;% \n  tibble(wd = .) %&gt;% \n  print()\n\n\nJapanese\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \".mw-parser-output &gt; ul li\") %&gt;% \n  html_text() %&gt;% \n  tibble(entry = .) %&gt;% \n  print()"
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#question",
-    "href": "lessons/webscrape_freq.html#question",
-    "title": "Webscrape frequencies",
-    "section": "Question",
-    "text": "Question\nIn most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ling_data_analysis",
-    "section": "",
-    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
-  },
-  {
-    "objectID": "lessons/regexes.html",
-    "href": "lessons/regexes.html",
-    "title": "Regular expressions",
-    "section": "",
-    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
-  },
-  {
-    "objectID": "lessons/regexes.html#objective",
-    "href": "lessons/regexes.html#objective",
-    "title": "Regular expressions",
-    "section": "",
-    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
-  },
-  {
-    "objectID": "lessons/regexes.html#regular-expressions-aka.-regexes",
-    "href": "lessons/regexes.html#regular-expressions-aka.-regexes",
-    "title": "Regular expressions",
-    "section": "Regular expressions (aka. regexes)",
-    "text": "Regular expressions (aka. regexes)\n\nRegular expressions are used to match strings. \n\nNote: In R, you must use double backslashes, e.g., \\\\w+\n\nOnline regex checker are useful, such as here (for Python), here, and here.\nLetters represent themselves: \"ed\" returns ed anywhere in the string, for example, Ed studied in the education building."
-  },
-  {
-    "objectID": "lessons/regexes.html#character-classes",
-    "href": "lessons/regexes.html#character-classes",
-    "title": "Regular expressions",
-    "section": "Character classes",
-    "text": "Character classes\n\n\\\\w = alphanumeric character; \\\\W = non-alphanumeric character\n\\\\s = whitespace (i.e., spaces, tab breaks, newlines); \\\\S = non-whitespace\n\\\\d = Arabic numeral (i.e., 0-9); \\\\D = non-Arabic numeral\n[] = character class finds one of the characters between the square brackets: \n\n[aeiou] finds one of the five orthographic vowels\n[Aa] find either uppercase or lowercase a \n[a-z] finds one lowercase English character\n[a-zA-Z] returns one lowercase English character or one uppercase English character \nExample: \"latin[aox]\" returns latina, latino, latinx."
-  },
-  {
-    "objectID": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
-    "href": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
-    "title": "Regular expressions",
-    "section": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  ",
-    "text": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  \n\nExample: \"\\\\bth(is|at|ese|ose) \\\\w+\" returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, this bag, that cat, these plants, those buildings.\nQuantifiers\n\n{min, max} = returns between min and max number of the previous character: \"\\\\w{2,5}\" returns between two and five alphanumeric characters. Note that \"\\\\w{,5}\" returns up to five alphanumeric characters, and \"\\\\w{2,}\" finds two or more alphanumeric characters.\n{integer} = returns the exact number of the previous character: \"\\\\d{4}\" returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)\nShortcut quantifiers:\n\n? means the same as {0, 1}, meaning it returns zero or one of the previous pattern, that is, the previous character is optional\n* is the same as {0,} and returns zero or more of the previous pattern: yes\\\\!* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc.. \n+ means {1,} and returns one or more of the previous pattern, for example, \"go+l\" returns gol, goool, gooooooool\n\n\n\n\nActivity\n\nWhat do the following regexes match? See example in Section 2.1 here.\n\n\"\\\\b[Tt]he\\\\b\\\\s+\\\\b[Ii]nternet\\\\b\"\n\"\\\\w+ed\\\\b\"\n\"\\\\bcent(er|re)\\\\b\"\n\"\\\\bwalk(s|ed|ing)?\\\\b\"\n\"\\\\b[^aeiou\\\\W]{2,}\\\\w+\"\n\"\\\\b[^aeiou\\\\W][aeiou]\\\\w+\""
-  },
-  {
-    "objectID": "lessons/regexes.html#capture-groups",
-    "href": "lessons/regexes.html#capture-groups",
-    "title": "Regular expressions",
-    "section": "Capture groups",
-    "text": "Capture groups\n\nWarning: This gets wild. \nYou can have a regular expression remember what it captured in order to search for that same sequence of characters.\nYou can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with \\\\1 for the first capture group, or \\\\2 for the second capture group (if you have more than one capture group in the same regex), etc.\nExample: \"\\\\w+(\\\\w) \\\\1\\\\w+\" returns a bigram whose first word ends with the same letter that the second word begins with, e.g., walkeddown\n\n\nActivity\n\nWhat do the following regexes match?\n\n\"([aeiou])\\\\1\"\n\"\\\\w*([aeiou])\\\\1\\\\w*\"\n\"the (\\\\w+)er they were, the \\\\1er they will be\"\n\"[Tt]he (\\\\w+)er they (\\\\w+),? the \\\\1er we \\\\2\"\n\"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\""
-  },
-  {
-    "objectID": "lessons/regexes.html#lookaround",
-    "href": "lessons/regexes.html#lookaround",
-    "title": "Regular expressions",
-    "section": "Lookaround",
-    "text": "Lookaround\n\nLookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.\n\nSee lookahead examples in Section 2.1.7 here.\n\n\n\nActivity\n\nDownload at least several TXT files of your choice (perhaps from Project Gutenberg or Saints from the LMS).\nLoop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the stringr package, for example, str_match_all(), str_extract_all(), str_locate_all().\nCreate a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.\nRamp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc."
   },
   {
     "objectID": "lessons/r_rstudio.html",

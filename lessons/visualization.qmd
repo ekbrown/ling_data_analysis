@@ -1,0 +1,211 @@
+---
+title: "Visualization"
+---
+
+## Objective
+
+-   Students visualize data with easy-to-interpret plots.
+
+## Background
+
+R kicks trash with visualizing data. And the go-to package for creating professional-looking plots is [`ggplot2`](https://ggplot2.tidyverse.org/), one of the core packages of the `tidyverse` ecosystem. Base R also creates plots, but anybody who's anybody is using `ggplot2`. (Okay, maybe I'm overstating this a bit, but just you wait and see if I'm lying.)
+
+## Basics
+
+First, we need some data in a data frame (e.g., a tibble). Let's use the `Data_ptk.xlsx` file in the LMS:
+
+```{r}
+#| eval: false
+library("tidyverse")
+library("readxl")
+ptk <- read_excel("../../../data_analysis/datasets/Data_ptk.xlsx", sheet = "data")
+glimpse(ptk)
+head(ptk)
+```
+
+The function `ggplot()` (no 2, like in the package name) creates a plotting window or palette:
+
+```{r}
+#| eval: false
+
+ggplot()
+```
+
+The first argument to `ggplot()` is a data frame, which can be piped in:
+
+```{r}
+#| eval: false
+
+ggplot(ptk)
+
+# same as above, but with a pipe
+ptk |> ggplot()
+```
+
+The second argument to `ggplot()` is a call to the `aes()` function (short for "aesthetics") which maps columns in the data frame to elements on the plot. The first argument to `aes()` is what will be plotted on the x-axis and the second argument, if needed, is what will be plotted on the y-axis. For example, let's put the levels of `LANG` on the x-axis:
+
+```{r}
+#| eval: false
+
+ptk |> 
+  ggplot(aes(x = LANG))
+```
+
+Or we can put the `prePhonBin` on the y-axis:
+
+```{r}
+#| eval: false
+
+ptk |> 
+  ggplot(aes(y = prePhonBin))
+```
+
+You'll notice that the above plots don't actually plot anything yet; they simply set up the plotting window. We now need to add elements to the plot.
+
+## One categorical variable
+
+Perhaps the most basic plot is of one categorical variable. In order to see the distribution of such a variable across its levels (aka. values or groups), let's create a popular option: the good ol' fashioned barplot. Note: The several layers of the plot are separated by a plus sign `+` rather than the pipe operator, and the layers are often specified with a `geom_...()` function (short for geometric object). See the section about [layers](https://ggplot2.tidyverse.org/reference/#layers) in the reference manual of ggplot2.
+
+```{r}
+#| eval: false
+ptk |> 
+  ggplot(aes(x = LANG))+
+  geom_bar()
+```
+
+It might be good to also get the exact number of tokens in each level with our ol' friends:
+
+```{r}
+#| eval: false
+ptk |> 
+  count(LANG)
+```
+
+### Activity
+
+-   Take a look at the variety of barplots that are available in [`ggplot`](https://ggplot2.tidyverse.org/reference/geom_bar.html).
+
+-   Then, using the `Data_ptk.xlsx` dataset, plot the distribution of several categorical variables, for example: `LANG`, `GENRE`, `prePhonBin`, `folPhonBin`, `prevMention`, `cogStatus`, `lexClass`, `wdClass`.
+
+## Two categorical variables
+
+The following are popular plots to visualize the distribution of data points across two categorical variables.
+
+### Stacked barplot
+
+To create a stacked (aka. filled) barplot, one categorical variable is given as `x` in `aes()` and the other is given as the fill argument in `aes()`, for example:
+
+```{r}
+#| eval: false
+
+ptk |> 
+  ggplot(aes(x = LANG, fill=prePhonBin))+
+  geom_bar()
+```
+
+See more examples of barplot in the [docs](https://ggplot2.tidyverse.org/reference/geom_bar.html).
+
+Follow-up question: How can we get the exact numbers of tokens in each of the four subgroups displayed in the plot? After a good-faith effort, if you need help, take a look at Dr. Brown's code below:
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+ptk |> 
+  count(LANG, prePhonBin)
+```
+
+### Percent barplot
+
+To create a percent barplot, that is, a stacked barplot that sums to 1.0, let's modify the previous barplot by adding the argument `position = "fill"` to `geom_bar(), but`outside of `aes()` (which isn't used at all).
+
+```{r}
+#| eval: false
+
+ptk |> 
+  ggplot(aes(x = LANG, fill=prePhonBin))+
+  geom_bar(position = "fill")
+```
+
+We notice that the y-axis is labeled "count", but those aren't counts, they're proportions. Let's change the axis labels with the `labs()` element:
+
+```{r}
+#| eval: false
+
+ptk |> 
+  ggplot(aes(x = LANG, fill=prePhonBin))+
+  geom_bar(position = "fill")+
+  labs(x = "Language", y = "Proportion")
+```
+
+### Grouped barplot
+
+To create a grouped barplot, modify the previous barplot by changing the argument to `position = "dodge"`. Simple enough.
+
+```{r}
+#| eval: false
+
+ptk |> 
+  ggplot(aes(x = LANG, fill=prePhonBin))+
+  geom_bar(position = "dodge")
+```
+
+### Activity
+
+-   Give it a whirl! Using the `Data_ptk.xlsx` dataset, plot the distribution of sets of two categorical variables, e.g., `LANG` and `GENRE`, `prePhonBin` and `folPhonBin`, `prevMention` and `cogStatus`, `lexClass` and `wdClass`, and any combination of these variables.
+
+-   If you'd like, take a look at mosaic plots in the [`ggmosaic`](https://cran.r-project.org/web/packages/ggmosaic/) R package. Mosaic plots are another way to visualize two categorical variables. Look at the vignette of `ggmosaic` for examples of how to make this type of plot in the ggplot framework.
+
+## One continuous variable
+
+It is useful to visualize the distribution of continuous variables in order to see whether the variable is distributed normally or has some skew or is bimodal.
+
+The following plots are useful for this purpose. You only need to specify the `x` argument in `aes()` within `ggplot()` with the one variable.
+
+### Histogram
+
+A histogram slices or bins of a continuous variable into N bins and then plots the count within each bin on the y-axis. It gives a barplot (i.e., it looks like a barplot), but instead of levels within a categorical variable, the bars are equidistant intervals across a continuous variable. Here's an example with the continuous variable `VOT` in the `ptk` dataset:
+
+```{r}
+#| eval: false
+ptk |> 
+  ggplot(aes(x = VOT))+
+  geom_histogram()
+```
+
+You can specify a specific number of bins with the `bins` argument, for example:
+
+```{r}
+#| eval: false
+ptk |> 
+  ggplot(aes(x = VOT))+
+  geom_histogram(bins = 15)
+```
+
+### Density plot
+
+Density plots are like histograms, but they use a curved line rather than bins:
+
+```{r}
+#| eval: false
+ptk |> 
+  ggplot(aes(VOT))+
+  geom_density()
+```
+
+The cool thing about density plots is that we can specify that the area below the curve sum to 1. That fact will be important when we look at p-values.
+
+Let's plot `VOT` as a density plot:
+
+```{r}
+#| eval: false
+ptk |> 
+  ggplot(aes(scale(VOT)))+
+  geom_density(fill = "blue")
+```
+
+### Activity
+
+Give it a go! Plot the distribution of several different continuous variables in the `ptk` dataset, and be ready to share with a neighbor and/or the class.
+
+MORE TO COME REAL SOON!

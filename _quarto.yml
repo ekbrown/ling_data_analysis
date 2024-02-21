@@ -22,12 +22,17 @@ website:
           - lessons/data_structures.qmd
           - lessons/File_IO.qmd
           - lessons/regexes.qmd
+      - section: "Frequency"
+        contents:
           - lessons/create_freq.qmd
           - lessons/webscrape_freq.qmd
           - lessons/quanteda.qmd
       - section: "Wrangling"
         contents:
           - lessons/wrangling.qmd
+      - section: "Visualization"
+        contents:
+          - lessons/visualization.qmd
 format:
   html:
     theme: cosmo
