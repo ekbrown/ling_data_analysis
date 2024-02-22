@@ -15,15 +15,17 @@ R kicks trash with visualizing data. And the go-to package for creating professi
 First, we need some data in a data frame (e.g., a tibble). Let's use the `Data_ptk.xlsx` file in the LMS:
 
 ```{r}
-#| eval: false
+#| eval: true
 library("tidyverse")
 library("readxl")
+library("ggmosaic")
+
 ptk <- read_excel("../../../data_analysis/datasets/Data_ptk.xlsx", sheet = "data")
 glimpse(ptk)
 head(ptk)
 ```
 
-The function `ggplot()` (no 2, like in the package name) creates a plotting window or palette:
+The function `ggplot()` (without a 2, like in the package name) creates a plotting window or palette:
 
 ```{r}
 #| eval: false
@@ -60,11 +62,11 @@ ptk |>
   ggplot(aes(y = prePhonBin))
 ```
 
-You'll notice that the above plots don't actually plot anything yet; they simply set up the plotting window. We now need to add elements to the plot.
+You'll notice that the above plots don't actually plot anything yet; they simply set up the plotting window with the right axis labels. We now need to add elements to the plot.
 
 ## One categorical variable
 
-Perhaps the most basic plot is of one categorical variable. In order to see the distribution of such a variable across its levels (aka. values or groups), let's create a popular option: the good ol' fashioned barplot. Note: The several layers of the plot are separated by a plus sign `+` rather than the pipe operator, and the layers are often specified with a `geom_...()` function (short for geometric object). See the section about [layers](https://ggplot2.tidyverse.org/reference/#layers) in the reference manual of ggplot2.
+Perhaps the most basic plot is of one categorical variable. In order to see the distribution of the levels (aka. values or groups) of a categorical variable, let's create a popular option: the good ol' fashioned barplot. Note: The several layers of the plot are separated by a plus sign `+` rather than the pipe operator, and the layers are often specified with a `geom_...()` function (short for geometric object). See the section about [layers](https://ggplot2.tidyverse.org/reference/#layers) in the reference manual of ggplot2.
 
 ```{r}
 #| eval: false
@@ -73,7 +75,7 @@ ptk |>
   geom_bar()
 ```
 
-It might be good to also get the exact number of tokens in each level with our ol' friends:
+It might be good to also get the exact number of tokens in each level with our ol' friend:
 
 ```{r}
 #| eval: false
@@ -83,7 +85,7 @@ ptk |>
 
 ### Activity
 
--   Take a look at the variety of barplots that are available in [`ggplot`](https://ggplot2.tidyverse.org/reference/geom_bar.html).
+-   Take a look at the variety of [barplots](https://ggplot2.tidyverse.org/reference/geom_bar.html) that are available in `ggplot`.
 
 -   Then, using the `Data_ptk.xlsx` dataset, plot the distribution of several categorical variables, for example: `LANG`, `GENRE`, `prePhonBin`, `folPhonBin`, `prevMention`, `cogStatus`, `lexClass`, `wdClass`.
 
@@ -93,19 +95,19 @@ The following are popular plots to visualize the distribution of data points acr
 
 ### Stacked barplot
 
-To create a stacked (aka. filled) barplot, one categorical variable is given as `x` in `aes()` and the other is given as the fill argument in `aes()`, for example:
+To create a stacked (aka. filled) barplot, one categorical variable is given as `x` in `aes()` and the other is given as the `fill` argument in `aes()`, for example:
 
 ```{r}
 #| eval: false
 
 ptk |> 
-  ggplot(aes(x = LANG, fill=prePhonBin))+
+  ggplot(aes(x = LANG, fill = prePhonBin))+
   geom_bar()
 ```
 
 See more examples of barplot in the [docs](https://ggplot2.tidyverse.org/reference/geom_bar.html).
 
-Follow-up question: How can we get the exact numbers of tokens in each of the four subgroups displayed in the plot? After a good-faith effort, if you need help, take a look at Dr. Brown's code below:
+Follow-up question: How can we get the exact numbers of tokens in each of the subgroups displayed in the plot? After a good-faith effort, if you need help, take a look at Dr. Brown's code below:
 
 ```{r}
 #| eval: false
@@ -117,7 +119,7 @@ ptk |>
 
 ### Percent barplot
 
-To create a percent barplot, that is, a stacked barplot that sums to 1.0, let's modify the previous barplot by adding the argument `position = "fill"` to `geom_bar(), but`outside of `aes()` (which isn't used at all).
+To create a percent barplot, that is, a stacked barplot that sums to 1.0, let's modify the previous barplot by adding the argument `position = "fill"` to `geom_bar()`, but outside of `aes()` (which isn't used at all).
 
 ```{r}
 #| eval: false
@@ -146,15 +148,46 @@ To create a grouped barplot, modify the previous barplot by changing the argumen
 #| eval: false
 
 ptk |> 
-  ggplot(aes(x = LANG, fill=prePhonBin))+
+  ggplot(aes(x = LANG, fill = prePhonBin))+
   geom_bar(position = "dodge")
+```
+
+### Mosaic plot
+
+Another useful plot for two categorical variables is a mosaic plot, which displays proportions as relative sizes of the various pieces of the mosaic. Let's download two R packages that can be used to create mosaic plots: [`ggmosaic`](https://cran.r-project.org/web/packages/ggmosaic/) is (given its name) meant to extend `ggplot2`, and [`vcd`](https://cran.r-project.org/web/packages/vcd/index.html) has a transparently named package name: Visualizing Categorical Data.
+
+```{r}
+#| eval: false
+install.packages(c("ggmosaic", "vcd"), repos = "https://cran.rstudio.com")
+```
+
+Let's plot `prePhonBin` on the x-axis and `LANG` on the y-axis:
+
+```{r}
+#| eval: false
+library("ggmosaic")
+ptk |> 
+  ggplot()+
+  geom_mosaic(aes(x = prePhonBin, fill = LANG))
+```
+
+```{r}
+#| eval: false
+library("vcd")
+
+temp <- ptk |> 
+  count(LANG, prePhonBin) |> 
+  pivot_wider(names_from = prePhonBin, values_from = n)
+row_names <- temp |> pull(1)
+temp <- temp |> data.matrix()
+temp <- temp[,-1]
+rownames(temp) <- row_names
+vcd::mosaic(temp, shade = TRUE, varnames = FALSE)
 ```
 
 ### Activity
 
 -   Give it a whirl! Using the `Data_ptk.xlsx` dataset, plot the distribution of sets of two categorical variables, e.g., `LANG` and `GENRE`, `prePhonBin` and `folPhonBin`, `prevMention` and `cogStatus`, `lexClass` and `wdClass`, and any combination of these variables.
-
--   If you'd like, take a look at mosaic plots in the [`ggmosaic`](https://cran.r-project.org/web/packages/ggmosaic/) R package. Mosaic plots are another way to visualize two categorical variables. Look at the vignette of `ggmosaic` for examples of how to make this type of plot in the ggplot framework.
 
 ## One continuous variable
 

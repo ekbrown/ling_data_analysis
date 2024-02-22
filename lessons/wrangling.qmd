@@ -19,7 +19,7 @@ Pop (formative) quiz!
 Instructions: Match each function with its corresponding purpose.
 
 |              |                                                                                             |
-|--------------|---------------------------------------------------------------------------------------------|
+|---------------|---------------------------------------------------------|
 | `filter()`   | A. orders the rows based on values in one or more columns                                   |
 | `arrange()`  | B. inverts the order so that the rows are in big-to-small order                             |
 | `desc()`     | C. keeps only unique rows                                                                   |
@@ -184,7 +184,7 @@ Pop quiz time!
 Instructions: Match each function (i.e., verb) with its corresponding purpose.
 
 |              |                                                                      |
-|--------------|----------------------------------------------------------------------|
+|----------------|--------------------------------------------------------|
 | `mutate()`   | A. change the name of the specified column                           |
 | `select()`   | B. creates new columns based on one or more already existing columns |
 | `rename()`   | C. moves the position of the specified columns                       |
@@ -848,7 +848,7 @@ sibilants <- tibble(
 print(sibilants)
 ```
 
-Your task is to create a new column that groups the vowels into one level, the consonants into their own group, and then other following segments should be placed into an `other` level.
+Your task is to create a new column that groups the vowels into one level, the consonants into their own group, and then all other following segments should be placed into an `other` level.
 
 After a good-faith effort, if you need help, take a look at Dr. Brown's code below:
 
