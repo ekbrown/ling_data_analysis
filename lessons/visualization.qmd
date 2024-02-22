@@ -15,10 +15,9 @@ R kicks trash with visualizing data. And the go-to package for creating professi
 First, we need some data in a data frame (e.g., a tibble). Let's use the `Data_ptk.xlsx` file in the LMS:
 
 ```{r}
-#| eval: true
+#| eval: false
 library("tidyverse")
 library("readxl")
-library("ggmosaic")
 
 ptk <- read_excel("../../../data_analysis/datasets/Data_ptk.xlsx", sheet = "data")
 glimpse(ptk)
@@ -71,7 +70,7 @@ Perhaps the most basic plot is of one categorical variable. In order to see the 
 ```{r}
 #| eval: false
 ptk |> 
-  ggplot(aes(x = LANG))+
+  ggplot(aes(x = LANG)) +
   geom_bar()
 ```
 
@@ -101,7 +100,7 @@ To create a stacked (aka. filled) barplot, one categorical variable is given as 
 #| eval: false
 
 ptk |> 
-  ggplot(aes(x = LANG, fill = prePhonBin))+
+  ggplot(aes(x = LANG, fill = prePhonBin)) +
   geom_bar()
 ```
 
@@ -125,7 +124,7 @@ To create a percent barplot, that is, a stacked barplot that sums to 1.0, let's 
 #| eval: false
 
 ptk |> 
-  ggplot(aes(x = LANG, fill=prePhonBin))+
+  ggplot(aes(x = LANG, fill=prePhonBin)) +
   geom_bar(position = "fill")
 ```
 
@@ -135,8 +134,8 @@ We notice that the y-axis is labeled "count", but those aren't counts, they're p
 #| eval: false
 
 ptk |> 
-  ggplot(aes(x = LANG, fill=prePhonBin))+
-  geom_bar(position = "fill")+
+  ggplot(aes(x = LANG, fill=prePhonBin)) +
+  geom_bar(position = "fill") +
   labs(x = "Language", y = "Proportion")
 ```
 
@@ -148,7 +147,7 @@ To create a grouped barplot, modify the previous barplot by changing the argumen
 #| eval: false
 
 ptk |> 
-  ggplot(aes(x = LANG, fill = prePhonBin))+
+  ggplot(aes(x = LANG, fill = prePhonBin)) +
   geom_bar(position = "dodge")
 ```
 
@@ -167,7 +166,7 @@ Let's plot `prePhonBin` on the x-axis and `LANG` on the y-axis:
 #| eval: false
 library("ggmosaic")
 ptk |> 
-  ggplot()+
+  ggplot() +
   geom_mosaic(aes(x = prePhonBin, fill = LANG))
 ```
 
@@ -202,7 +201,7 @@ A histogram slices or bins of a continuous variable into N bins and then plots t
 ```{r}
 #| eval: false
 ptk |> 
-  ggplot(aes(x = VOT))+
+  ggplot(aes(x = VOT)) +
   geom_histogram()
 ```
 
@@ -211,7 +210,7 @@ You can specify a specific number of bins with the `bins` argument, for example:
 ```{r}
 #| eval: false
 ptk |> 
-  ggplot(aes(x = VOT))+
+  ggplot(aes(x = VOT)) +
   geom_histogram(bins = 15)
 ```
 
@@ -222,7 +221,7 @@ Density plots are like histograms, but they use a curved line rather than bins:
 ```{r}
 #| eval: false
 ptk |> 
-  ggplot(aes(VOT))+
+  ggplot(aes(VOT)) +
   geom_density()
 ```
 
@@ -233,7 +232,7 @@ Let's plot `VOT` as a density plot:
 ```{r}
 #| eval: false
 ptk |> 
-  ggplot(aes(scale(VOT)))+
+  ggplot(aes(scale(VOT))) +
   geom_density(fill = "blue")
 ```
 
@@ -241,4 +240,103 @@ ptk |>
 
 Give it a go! Plot the distribution of several different continuous variables in the `ptk` dataset, and be ready to share with a neighbor and/or the class.
 
-MORE TO COME REAL SOON!
+## Two continuous variables
+
+Enter the mighty scatterplot!
+
+Let's take a look at Dr. Joey Stanley's vowels, literally (well, as literally as we can).
+
+Many thanks are expressed (this is a performative passive verb) to Joey for his data and expertise with plotting vowels. Check out this webpage on [Data Visualization](https://joeystanley.com/pages/dataviz.html).
+
+First, let's download a package to allow us to download R packages from github, and then download the package with his vowels:
+
+```{r}
+#| eval: false
+install.packages("devtools")
+devtools::install_github("joeystanley/joeysvowels")
+```
+
+Let's load a dataset called `coronals` and and inspect it to see what data are included and how they are organized:
+
+```{r}
+#| eval: true
+library("tidyverse")
+midpoints <- joeysvowels::coronals
+glimpse(midpoints)
+head(midpoints)
+```
+
+Let's only use the middle of each vowel and exclude diphthongs. Notice that we save the result of the pipeline back to the same variable name:
+
+```{r}
+midpoints <- midpoints|> 
+    filter(percent == 50)  |> 
+    select(-percent) |> 
+    filter(!vowel %in% c("PRICE", "MOUTH", "CHOICE"))
+```
+
+Let's plot the first two formants of his vowels. In vowel plots, the norm is to plot F2 on the x-axis because it deals with vowel backness (i.e., depth in the mouth) and F1 on the y-axis because it deals with vowel height. Let's add a `geom_point()` layer:
+
+```{r}
+#| eval: true
+midpoints |> 
+  ggplot(aes(x = F2, y = F1)) +
+  geom_point()
+```
+
+In order to put the points in the same position that they are within the mouth, let's reverse the scale of both the x-axis and y-axis:
+
+```{r}
+#| eval: true
+midpoints |> 
+  ggplot(aes(x = F2, y = F1)) +
+  geom_point() +
+  scale_x_reverse() +
+  scale_y_reverse()
+```
+
+That's nice and all, but... how about knowing which dot corresponds to which vowel. Amirite?! Let's go! We can do so by using the `color` argument in the `aes()` call within the `ggplot()` function:
+
+```{r}
+#| eval: true
+midpoints |> 
+  ggplot(aes(x = F2, y = F1, color = vowel)) +
+  geom_point() +
+  scale_x_reverse() +
+  scale_y_reverse()
+```
+
+The gray background of `ggplot` may not be as nice as white when the data points (aka. observations) are colored. Let's fix it (you guys/y'all/youse know by now that you can customize to your heart's delight in R, right?):
+
+```{r}
+midpoints |> 
+  ggplot(aes(x = F2, y = F1, color = vowel)) +
+  geom_point() +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  theme_bw()
+```
+
+If you plan to put this plot in a publication that doesn't support color, you can use the `shape` argument instead:
+
+```{r}
+#| eval: true
+midpoints |> 
+  ggplot(aes(x = F2, y = F1, shape = vowel)) +
+  geom_point() +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  theme_bw()
+```
+
+But, there's a problem: R only gives you six shapes by default, so... keep that in mind if you use shape instead of color. An obvious workaround is to filter only several vowels before piping the data frame into `ggplot()`, for example:
+
+```{r}
+midpoints |> 
+  filter(vowel %in% c("LOT", "THOUGHT")) |> 
+  ggplot(aes(F2, F1, color = vowel, shape = vowel)) + 
+  geom_point() + 
+  scale_x_reverse() + 
+  scale_y_reverse() +
+  theme_bw()
+```
