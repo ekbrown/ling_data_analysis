@@ -259,7 +259,7 @@ devtools::install_github("joeystanley/joeysvowels")
 Let's load a dataset called `coronals` and and inspect it to see what data are included and how they are organized:
 
 ```{r}
-#| eval: true
+#| eval: false
 library("tidyverse")
 midpoints <- joeysvowels::coronals
 glimpse(midpoints)
@@ -269,6 +269,7 @@ head(midpoints)
 Let's only use the middle of each vowel and exclude diphthongs. Notice that we save the result of the pipeline back to the same variable name:
 
 ```{r}
+#| eval: false
 midpoints <- midpoints|> 
     filter(percent == 50)  |> 
     select(-percent) |> 
@@ -278,7 +279,7 @@ midpoints <- midpoints|>
 Let's plot the first two formants of his vowels. In vowel plots, the norm is to plot F2 on the x-axis because it deals with vowel backness (i.e., depth in the mouth) and F1 on the y-axis because it deals with vowel height. Let's add a `geom_point()` layer:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(x = F2, y = F1)) +
   geom_point()
@@ -287,7 +288,7 @@ midpoints |>
 In order to put the points in the same position that they are within the mouth, let's reverse the scale of both the x-axis and y-axis:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(x = F2, y = F1)) +
   geom_point() +
@@ -298,7 +299,7 @@ midpoints |>
 That's nice and all, but... how about knowing which dot corresponds to which vowel. Amirite?! Let's go! We can do so by using the `color` argument in the `aes()` call within the `ggplot()` function:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(x = F2, y = F1, color = vowel)) +
   geom_point() +
@@ -309,6 +310,7 @@ midpoints |>
 The gray background of `ggplot` may not be as nice as white when the data points (aka. observations) are colored. Let's fix it (you guys/y'all/youse know by now that you can customize to your heart's delight in R, right?):
 
 ```{r}
+#| eval: false
 midpoints |> 
   ggplot(aes(x = F2, y = F1, color = vowel)) +
   geom_point() +
@@ -320,7 +322,7 @@ midpoints |>
 If you plan to put this plot in a publication that doesn't support color, you can use the `shape` argument instead:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(x = F2, y = F1, shape = vowel)) +
   geom_point() +
@@ -332,6 +334,7 @@ midpoints |>
 But, there's a problem: R only gives you six shapes by default, so... keep that in mind if you use shape instead of color. An obvious workaround is to filter only several vowels before piping the data frame into `ggplot()`, for example:
 
 ```{r}
+#| eval: false
 midpoints |> 
   filter(vowel %in% c("LOT", "THOUGHT")) |> 
   ggplot(aes(F2, F1, color = vowel, shape = vowel)) + 
