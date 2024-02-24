@@ -211,7 +211,16 @@ You can specify a specific number of bins with the `bins` argument, for example:
 #| eval: false
 ptk |> 
   ggplot(aes(x = VOT)) +
-  geom_histogram(bins = 15)
+  geom_histogram(bins = 10)
+```
+
+Instead of the number of bins (i.e., bars), you can specify the width of each bin on the scale of the variable that you're plotting. This is useful because the bin width is often more meaningful than a simple number of bins. Let's create a bin width of 0.01 seconds (aka. 10 milliseconds):
+
+```{r}
+#| eval: false
+ptk |> 
+  ggplot(aes(x = VOT)) +
+  geom_histogram(binwidth = 0.01)
 ```
 
 ### Density plot
@@ -343,3 +352,392 @@ midpoints |>
   scale_y_reverse() +
   theme_bw()
 ```
+
+We can add more information to the plot with the diameter and/or opacity of the dots. It usually only make sense to vary the diameter or opacity of the dots with a continuous variable.
+
+Let's make a continuous variable of duration of the vowel within our pipeline, before passing our data frame into `ggplot()`. and then specify with the `size` argument that the diameter of the dots should be proportional to the duration of the vowel that the dot represents:
+
+```{r}
+#| eval: false
+midpoints |> 
+  mutate(duration = end - start) |> 
+  ggplot(aes(x = F2, y = F1, color = vowel, size = duration))+
+  geom_point()+
+  scale_x_reverse()+
+  scale_y_reverse()+
+  theme_bw()
+```
+
+The above plot is nice, but the overplotting (i.e., dots on top of each other) makes it a bit hard to tell where there are many dots.
+
+Another way to put a fourth variable in the plot is with the level of transparency fo the dots so that cluster of dots that are on top of each other are easier to see. Rather than the `size` argument, let's use the `alpha` argument:
+
+```{r}
+#| eval: false
+
+midpoints |> 
+  mutate(duration = end - start) |> 
+  ggplot(aes(x = F2, y = F1, color = vowel, alpha = duration))+
+  geom_point()+
+  scale_x_reverse()+
+  scale_y_reverse()+
+  theme_bw()
+```
+
+### Regression line
+
+If you'd like to see how one continuous variable affects the other continuous variable, if at all, plotting a regression line (aka. trend line) is useful. This is a straight line that shows the overall trend through the points. This is done with another layer: `geom_smooth(method = lm)`. The `lm` part of this line refer to a [**l**]{.underline}inear [**m**]{.underline}odel.
+
+Let's go back to our `ptk` dataset and put a regression line through the points off two continuous variables: `VOT` and `COG`.
+
+```{r}
+#| eval: false
+ptk |> 
+  ggplot(aes(x = COG, y = VOT))+
+  geom_point()+ # plot individual data points
+  geom_smooth(method = lm)+ # regression line
+  theme_bw() # make it black and white
+```
+
+### LOESS line
+
+Another option to show the trend through the data points of two continuous variables is a [LOESS](https://en.wikipedia.org/wiki/Local_regression) (locally estimated scatterplot smoothing) line. This is a locally based smoother line that shows the local trend of the dots closest to it. Let's modify our plot above by removing the regression line and putting in a loess line (yeah, I'm gonna use lowercase from here on out):
+
+```{r}
+#| eval: false
+ptk |> 
+  ggplot(aes(x = COG, y = VOT))+
+  geom_point()+
+  geom_smooth(method = loess)+ 
+  theme_bw() 
+```
+
+We can see that the loess line shows that there is a positive relationship between COG (center of gravity) of the friction and the VOT (voice onset time) of the voiceless stops, but that the effect weakens as COG increases (because the loess line becomes flatter).
+
+Of course, we can include both a regression line and a loess line in the same plot. And if we do that, it's probably wise to change the color of one of them and perhaps remove the 95% standard error band around the loess line:
+
+```{r}
+#| eval: false
+ptk |> 
+  ggplot(aes(x = COG, y = VOT))+
+  geom_point()+
+  geom_smooth(method = lm)+
+  geom_smooth(method = loess, se = FALSE, color = "red")+ 
+  theme_bw() 
+```
+
+## One continuous variable and one categorical variable
+
+Another common situation is when we have one continuous variable and one categorical variable and we want to see how they affect each other, if at all.
+
+### Boxplot
+
+The go-to plot for this situation is the mighty boxplot (aka. box and whisker plot).
+
+Let's go back to Joey's vowels. But to make it more manageable for pedagogical purposes, let's filter the vowels so that we only have front vowels, and also create a duration column while we're at it:
+
+```{r}
+#| eval: false
+front_durs <- midpoints |> 
+    filter(vowel %in% c("FLEECE", "KIT", "FACE", "DRESS", "TRAP")) |> 
+    mutate(duration = end - start)
+```
+
+With a boxplot, we need to specify the categorical variable on the x-axis and the continuous variable on the y-axis:
+
+```{r}
+#| eval: false
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_boxplot()+
+  theme_bw()
+```
+
+Boxplots are useful (and better than barplots of the means of a continuous variable) because they show both central tendency (i.e., mean and median) and dispersion or spread around the central tendency.
+
+Here's how to interpret a boxplot:
+
+-   The box shows the middle 50% of the data points, that is, from the first quartile (aka. Q1), which is the 25th percentile, to the third quartile (aka. Q3), which is the 75th percentile;
+
+-   The horizontal line within the box is the median (i.e., 50th percentile);
+
+-   The lines that extend above and below the boxes are called whiskers, and they extend 1.5 times the interquartile range (aka. IQR), which is simply Q3 - Q1, from the box, that is, the upper whisker extend 1.5 IQR above Q3, while the lower whisker extends 1.5 IQR below Q1;
+
+-   Outliers above or below the whiskers are plotted individually as dots.
+
+By default, `geom_boxplot()` doesn't plot the mean, but it's easy to add with another layer. See this tutorial for the [possible shapes](http://www.sthda.com/english/wiki/ggplot2-point-shapes); here we'll choose an "x" with `shape=4`:
+
+```{r}
+#| eval: false
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_boxplot()+
+  stat_summary(fun.y=mean, shape=4)+
+  theme_bw()
+```
+
+Another feature of boxplots in `ggplot` is that you can add notches to the box, which gives visual information about whether the levels might be statistically significantly different from each other (but a real statistical test that gives a p-value should also be run to assert statistical significance). If the notches of two boxes don't overlap vertically, this is prima facie evidence that they are likely statistically significantly different from each other.
+
+```{r}
+#| eval: false
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_boxplot(notch = TRUE)+
+  stat_summary(fun.y=mean, shape=4)+
+  theme_bw()
+```
+
+As a good follow-up, let's do an ANOVA (Analysis of Variance) test, and if the ANOVA returns a significant p-value, let's run a post-doc Tukey Honest Significant Difference test to see if the p-values given for the pairwise comparisons coincides with the notches.
+
+```{r}
+#| eval: false
+results1 <- aov(duration ~ vowel, data = front_durs)
+summary(results1)
+```
+
+Yep, something statistically significant is going on here. Next step is a post-hoc test to which pairwise comparisons are significant:
+
+```{r}
+#| eval: false
+TukeyHSD(results1)
+```
+
+Yep, the p-values indicate that the notches were rightly suggestive of statistical significance.
+
+### Violin plot
+
+Another plot for one continuous variable and one categorical variable is the violin plot. This plot is a combination of a boxplot and a density plot. As with the boxplot above, let's add the mean as an "x". Here we go:
+
+```{r}
+#| eval: false
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_violin()+
+  stat_summary(fun.y=mean, shape=4)+
+  theme_bw()
+```
+
+### Adding observations
+
+Hopefully, you're getting the idea that there are many possibilities when creating plots with R. In fact, we can mix and match, and add additional layers with additional info. For example, we can add individual observations (aka. tokens) to either the boxplot or the violin plot. Let's take a look:
+
+```{r}
+#| eval: false
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_violin()+
+  geom_point()+
+  theme_bw()
+```
+
+The `geom_point()` function adds the data points in a straight, vertical line, which can make it difficult to see exactly how many dots there when they are clustered together. It might be better to either move horizontally a bit, or to make them slightly transparent. In order to offset them a little bit, instead of `geom_point()`, we can use the `geom_jitter()`. And, importantly, we probably want to make sure the dots don't move vertically at all, and only move a little bit horizontally. We can specify limits for the directions with the `width` and `height` arguments in `geom_jitter()`:
+
+```{r}
+#| eval: false
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_violin()+
+  geom_jitter(width = 0.1, height = 0)+
+  theme_bw()
+```
+
+The order of the layers is meaningful, that is, elements of the plot will change based on where they are in the pipeline. For example, what happens if we put the `geom_jitter()` higher up in the pipeline?
+
+```{r}
+#| eval: false
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_jitter(width = 0.1, height = 0)+
+  geom_violin()+
+  theme_bw()
+```
+
+We can also plot individual observations on a boxplot, but it can get confusing because the outliers in a boxplot are plotted individually by `geom_boxplot()`, but also plotted by `geom_jitter()` (a bit little to the left or right):
+
+```{r}
+#| eval: false
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_boxplot()+
+  geom_jitter(width = 0.1, height = 0)+
+  theme_bw()
+```
+
+So, to fix that, we make the outliers that `geom_boxplot()` plots be fully transparent:
+
+```{r}
+#| eval: false
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_boxplot(outlier.alpha = 0)+
+  geom_jitter(width = 0.1, height = 0)+
+  theme_bw()
+```
+
+Anyone for a boxplot and a violin together? Questions: Which one should be overlaid on the other? Should the one in front be slightly transparent so that the one behind it can be seen?
+
+### Activity
+
+Take some time to experiment with several options (e.g., violin behind boxplot, and vice versa) and several different levels of transparency (with the `alpha` argument). If you need some help, take a look at Dr. Brown's code below:
+
+```{r}
+#| eval: false
+#| code-fold: true
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_boxplot()+
+  geom_violin(alpha = 0.3)+
+  stat_summary(fun.y=mean, shape=4)+
+  theme_bw()
+```
+
+### Violin-dot plot
+
+Another possibility is a violin-dot plot that is available in the `see` package. First, let's download that package to our harddrive:
+
+```{r}
+#| eval: false
+install.packages("see", repos = "http://cran.rstudio.com")
+```
+
+You can play with the `dots_size` and `binwidth` arguments to get the dots just right.
+
+```{r}
+#| eval: false
+front_durs |> 
+  ggplot(aes(x = vowel, y = duration))+
+  see::geom_violindot(dots_size = 0.8, binwidth = 0.005)+
+  theme_bw()
+```
+
+### Rug
+
+Another way add individual observations to a plot with is the `geom_rug()` function. It puts the tokens on the edge of the plotting area, so it's really only useful with you have exactly levels in the categorical variable. Let's
+
+```{r}
+#| eval: false
+front_durs |> 
+  filter(vowel %in% c("TRAP", "KIT")) |> 
+  ggplot(aes(x = vowel, y = duration))+
+  geom_boxplot()+
+  geom_rug(data = front_durs |> filter(vowel == "TRAP"), sides = "left")+
+  geom_rug(data = front_durs |> filter(vowel == "KIT"), sides = "right")+
+  theme_bw()
+```
+
+### Activity
+
+Make two plots to visualize each of the following:
+
+1.  The effect, if any, of the previous segment on the duration of vowels;
+
+2.  The effect, if any, of the following segment on the duration of vowels.
+
+Decide which type of plots you'd like (e.g., boxplot with or without notches, violin plot, boxplot and violin plot, with or without individual observations, etc.).
+
+After a good-faith effort, if you need some help take a look at Dr. Brown's code below:
+
+```{r}
+#| eval: false
+#| code-fold: true
+front_durs |> 
+  ggplot(aes(x = pre, y = duration))+
+  geom_boxplot(notch = TRUE)+
+  geom_violin(alpha = 0.5)+
+  stat_summary(fun.y=mean, shape=4)+
+  theme_bw()
+
+front_durs |> 
+  ggplot(aes(x = fol, y = duration))+
+  geom_boxplot(notch = TRUE)+
+  geom_violin(alpha = 0.5)+
+  stat_summary(fun.y=mean, shape=4)+
+  theme_bw()
+```
+
+## Facetting
+
+We can one or two variables to our plot by making an individual plot for each the levels of a categorical variable or two. Let's go back to our histograms above. When we plotted the histogram of all vowels, we didn't know how the various vowels differ with respect to the distribution of their durations. There are two main facetting layers (that Dr. Brown will show here): `facet_wrap()` and `facet_grid()`.
+
+Let's use the `midpoints` dataset from above and create a new column with the duration of the vowel, and save it to a new data frame named `midpoints_durs`:
+
+```{r}
+#| eval: false
+midpoints_durs <- midpoints |> 
+  mutate(duration = end - start)
+```
+
+### `facet_wrap()`
+
+Now, let's create a single plot with subplots with a histogram, one histogram per vowel:
+
+```{r}
+#| eval: false
+midpoints_durs |> 
+  ggplot(aes(x = duration))+
+  geom_histogram(binwidth = 0.01)+
+  facet_wrap(~vowel)+
+  theme_bw()
+```
+
+You may notice the scale of the x-axis and the scale of the y-axis are the same for all subplots. That's useful when you want to directly compare the subplots, which is usually the case. However, if you need to the scales to be independent of each other, you guess it, that can be specified:
+
+```{r}
+#| eval: false
+midpoints_durs |> 
+  ggplot(aes(x = duration))+
+  geom_histogram(binwidth = 0.01)+
+  facet_wrap(~vowel, scales = "free")+
+  theme_bw()
+```
+
+Rather than have independent scales for both the x-axis and the y-axis, you can specify only one if you'd like with `scale = "free_x"` or `scale = "free_y"`. Give it a try!
+
+Also, we can control the number of rows or columns that the subplots are placed in with the `nrow` or `ncol` arguments:
+
+```{r}
+#| eval: false
+midpoints_durs |> 
+  ggplot(aes(x = duration))+
+  geom_histogram(binwidth = 0.01)+
+  facet_wrap(~vowel, scales = "free", nrow = 2)+
+  theme_bw()
+
+midpoints_durs |> 
+  ggplot(aes(x = duration))+
+  geom_histogram(binwidth = 0.01)+
+  facet_wrap(~vowel, scales = "free", ncol = 3)+
+  theme_bw()
+```
+
+### `facet_grid()`
+
+While `facet_wrap()` takes one variable, that is, column in the input data frame, `facet_grid()` takes two columns and creates a grid layout. For example, let's look at the distribution of vowel duration by vowel and by following segment:
+
+```{r}
+#| eval: false
+midpoints_durs |> 
+  ggplot(aes(x = duration))+
+  geom_histogram(binwidth = 0.025)+
+  facet_grid(fol~vowel)+
+  theme_bw()
+```
+
+This layout doesn't allow you to specify the number of rows nor of columns, nor allow the scales to vary independently.
+
+### Activity
+
+Your turn! Make a plot with the distribution of durations by vowel and by preceding segment. Feel free to create histograms or density plots.
+
+After a good-faith effort, if you need help, see Dr. Brown's code below:
+
+```{r}
+#| eval: false
+#| code-fold: true
+midpoints_durs |> 
+  ggplot(aes(x = duration))+
+  geom_histogram()+
+  facet_grid(pre~vowel)
+```
+
+MORE TO COME REAL SOON NOW!
