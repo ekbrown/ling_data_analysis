@@ -1016,7 +1016,7 @@ p + theme_minimal()
 
 ### Activity
 
-Exploration time: Take a look at the docs for the themes by entering `?theme_bw` at the console, and then try from the other themes. Be ready to report which theme you like the most, and which you like the least.
+Exploration time: Take a look at the docs for the themes by entering `?theme_bw` at the console, and then try some of the other themes. Be ready to report on which theme you like the most, and which you like the least.
 
 ### Labels
 
@@ -1039,6 +1039,7 @@ p +
 ```
 
 Or tilt the angle of the labels:
+
 ```{r}
 #| eval: true
 midpoints |> 
