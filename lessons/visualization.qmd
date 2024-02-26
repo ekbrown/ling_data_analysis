@@ -1035,7 +1035,19 @@ We can also adjust the font, angle, horizontal and vertical adjustments of text 
 #| eval: true
 p +
   theme_bw()+
-  theme(text = element_text(family = "Times New Roman"))
+  theme(text = element_text(family = "Times New Roman"),)
+```
+
+Or tilt the angle of the labels:
+```{r}
+#| eval: true
+midpoints |> 
+  mutate(vowel = fct_infreq(vowel)) |> 
+  ggplot(aes(vowel)) + 
+  geom_bar()+
+  theme_bw()+
+  theme(text = element_text(family = "Times New Roman"),
+        axis.text.x = element_text(angle = 45, hjust = 0.5, vjust = 0.5))
 ```
 
 How about something as nasty as this?

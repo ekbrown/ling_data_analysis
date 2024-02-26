@@ -1548,18 +1548,31 @@ KIT-FLEECE   -0.062228070 -0.09719527 -0.027260869 0.0000190</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span></span>
 <span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>),)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="visualization_files/figure-html/unnamed-chunk-79-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>How about something as nasty as this?</p>
+<p>Or tilt the angle of the labels:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span></span>
-<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Joey's vowels"</span>, <span class="at">subtitle =</span> <span class="st">"Notice that this is left-aligned to the plotting area"</span>) <span class="sc">+</span> </span>
-<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.2</span>, <span class="at">vjust =</span> <span class="fl">0.6</span>, <span class="at">angle =</span> <span class="dv">2</span>, <span class="at">family =</span> <span class="st">"Avenir"</span>, <span class="at">size =</span> <span class="dv">18</span>, <span class="at">color =</span> <span class="st">"forestgreen"</span>, <span class="at">face =</span> <span class="st">"italic"</span>, <span class="at">lineheight =</span> <span class="fl">1.2</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">1</span>, <span class="at">r =</span> <span class="fl">0.2</span>, <span class="at">b =</span> <span class="fl">1.4</span>, <span class="at">l =</span> <span class="sc">-</span><span class="dv">4</span>, <span class="at">unit =</span> <span class="st">"cm"</span>), <span class="at">debug =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>midpoints <span class="sc">|&gt;</span> </span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vowel =</span> <span class="fu">fct_infreq</span>(vowel)) <span class="sc">|&gt;</span> </span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(vowel)) <span class="sc">+</span> </span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
+<span id="cb114-5"><a href="#cb114-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb114-6"><a href="#cb114-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>),</span>
+<span id="cb114-7"><a href="#cb114-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="visualization_files/figure-html/unnamed-chunk-80-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>How about something as nasty as this?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span></span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Joey's vowels"</span>, <span class="at">subtitle =</span> <span class="st">"Notice that this is left-aligned to the plotting area"</span>) <span class="sc">+</span> </span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.2</span>, <span class="at">vjust =</span> <span class="fl">0.6</span>, <span class="at">angle =</span> <span class="dv">2</span>, <span class="at">family =</span> <span class="st">"Avenir"</span>, <span class="at">size =</span> <span class="dv">18</span>, <span class="at">color =</span> <span class="st">"forestgreen"</span>, <span class="at">face =</span> <span class="st">"italic"</span>, <span class="at">lineheight =</span> <span class="fl">1.2</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">1</span>, <span class="at">r =</span> <span class="fl">0.2</span>, <span class="at">b =</span> <span class="fl">1.4</span>, <span class="at">l =</span> <span class="sc">-</span><span class="dv">4</span>, <span class="at">unit =</span> <span class="st">"cm"</span>), <span class="at">debug =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="visualization_files/figure-html/unnamed-chunk-81-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
