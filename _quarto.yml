@@ -36,6 +36,9 @@ website:
       - section: "Reproducible research"
         contents: 
           - lessons/quarto.qmd
+      - section: "Other languages"
+        contents:
+          - lessons/python.qmd
 format:
   html:
     theme: cosmo
