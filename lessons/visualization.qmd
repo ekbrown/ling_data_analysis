@@ -15,7 +15,7 @@ R kicks trash with visualizing data. And the go-to package for creating professi
 First, we need some data in a data frame (e.g., a tibble). Let's use the `Data_ptk.xlsx` file in the LMS:
 
 ```{r}
-#| eval: true
+#| eval: false
 library("tidyverse")
 library("readxl")
 
@@ -27,7 +27,7 @@ head(ptk)
 The function `ggplot()` (without a 2, like in the package name) creates a plotting window or palette:
 
 ```{r}
-#| eval: true
+#| eval: false
 
 ggplot()
 ```
@@ -35,7 +35,7 @@ ggplot()
 The first argument to `ggplot()` is a data frame, which can be piped in:
 
 ```{r}
-#| eval: true
+#| eval: false
 
 ggplot(ptk)
 
@@ -46,7 +46,7 @@ ptk |> ggplot()
 The second argument to `ggplot()` is a call to the `aes()` function (short for "aesthetics") which maps columns in the data frame to elements on the plot. The first argument to `aes()` is what will be plotted on the x-axis and the second argument, if needed, is what will be plotted on the y-axis. For example, let's put the levels of `LANG` on the x-axis:
 
 ```{r}
-#| eval: true
+#| eval: false
 
 ptk |> 
   ggplot(aes(x = LANG))
@@ -55,7 +55,7 @@ ptk |>
 Or we can put the `prePhonBin` on the y-axis:
 
 ```{r}
-#| eval: true
+#| eval: false
 
 ptk |> 
   ggplot(aes(y = prePhonBin))
@@ -68,7 +68,7 @@ You'll notice that the above plots don't actually plot anything yet; they simply
 Perhaps the most basic plot is of one categorical variable. In order to see the distribution of the levels (aka. values or groups) of a categorical variable, let's create a popular option: the good ol' fashioned barplot. Note: The several layers of the plot are separated by a plus sign `+` rather than the pipe operator, and the layers are often specified with a `geom_...()` function (short for geometric object). See the section about [layers](https://ggplot2.tidyverse.org/reference/#layers) in the reference manual of ggplot2.
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(x = LANG)) +
   geom_bar()
@@ -77,7 +77,7 @@ ptk |>
 It might be good to also get the exact number of tokens in each level with our ol' friend:
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   count(LANG)
 ```
@@ -97,7 +97,7 @@ The following are popular plots to visualize the distribution of data points acr
 To create a stacked (aka. filled) barplot, one categorical variable is given as `x` in `aes()` and the other is given as the `fill` argument in `aes()`, for example:
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(x = LANG, fill = prePhonBin)) +
   geom_bar()
@@ -108,7 +108,7 @@ See more examples of barplot in the [docs](https://ggplot2.tidyverse.org/referen
 Follow-up question: How can we get the exact numbers of tokens in each of the subgroups displayed in the plot? After a good-faith effort, if you need help, take a look at Dr. Brown's code below:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| code-fold: true
 ptk |> 
   count(LANG, prePhonBin)
@@ -119,7 +119,7 @@ ptk |>
 To create a percent barplot, that is, a stacked barplot that sums to 1.0, let's modify the previous barplot by adding the argument `position = "fill"` to `geom_bar()`, but outside of `aes()` (which isn't used at all).
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(x = LANG, fill=prePhonBin)) +
   geom_bar(position = "fill")
@@ -128,7 +128,7 @@ ptk |>
 We notice that the y-axis is labeled "count", but those aren't counts, they're proportions. Let's change the axis labels with the `labs()` element:
 
 ```{r}
-#| eval: true
+#| eval: false
 
 ptk |> 
   ggplot(aes(x = LANG, fill=prePhonBin)) +
@@ -141,7 +141,7 @@ ptk |>
 To create a grouped barplot, modify the previous barplot by changing the argument to `position = "dodge"`. Simple enough.
 
 ```{r}
-#| eval: true
+#| eval: false
 
 ptk |> 
   ggplot(aes(x = LANG, fill = prePhonBin)) +
@@ -155,7 +155,7 @@ Another useful plot for two categorical variables is a mosaic plot, which displa
 Let's plot `prePhonBin` on the x-axis and `LANG` on the y-axis:
 
 ```{r}
-#| eval: true
+#| eval: false
 library("vcd")
 
 temp <- ptk |> 
@@ -183,7 +183,7 @@ The following plots are useful for this purpose. You only need to specify the `x
 A histogram slices or bins of a continuous variable into N bins and then plots the count within each bin on the y-axis. It gives a barplot (i.e., it looks like a barplot), but instead of levels within a categorical variable, the bars are equidistant intervals across a continuous variable. Here's an example with the continuous variable `VOT` in the `ptk` dataset:
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(x = VOT)) +
   geom_histogram()
@@ -192,7 +192,7 @@ ptk |>
 You can specify a specific number of bins with the `bins` argument, for example:
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(x = VOT)) +
   geom_histogram(bins = 10)
@@ -201,7 +201,7 @@ ptk |>
 Instead of the number of bins (i.e., bars), you can specify the width of each bin on the scale of the variable that you're plotting. This is useful because the bin width is often more meaningful than a simple number of bins. Let's create a bin width of 0.01 seconds (aka. 10 milliseconds):
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(x = VOT)) +
   geom_histogram(binwidth = 0.01)
@@ -212,7 +212,7 @@ ptk |>
 Density plots are like histograms, but they use a curved line rather than bins:
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(VOT)) +
   geom_density()
@@ -223,7 +223,7 @@ The cool thing about density plots is that we can specify that the area below th
 Let's plot `VOT` as a density plot:
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(scale(VOT))) +
   geom_density(fill = "blue")
@@ -252,7 +252,7 @@ devtools::install_github("joeystanley/joeysvowels")
 Let's load a dataset called `coronals` and and inspect it to see what data are included and how they are organized:
 
 ```{r}
-#| eval: true
+#| eval: false
 library("tidyverse")
 midpoints <- joeysvowels::coronals
 glimpse(midpoints)
@@ -262,7 +262,7 @@ head(midpoints)
 Let's only use the middle of each vowel and exclude diphthongs. Notice that we save the result of the pipeline back to the same variable name:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints <- midpoints|> 
     filter(percent == 50)  |> 
     select(-percent) |> 
@@ -272,7 +272,7 @@ midpoints <- midpoints|>
 Let's plot the first two formants of his vowels. In vowel plots, the norm is to plot F2 on the x-axis because it deals with vowel backness (i.e., depth in the mouth) and F1 on the y-axis because it deals with vowel height. Let's add a `geom_point()` layer:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(x = F2, y = F1)) +
   geom_point()
@@ -281,7 +281,7 @@ midpoints |>
 In order to put the points in the same position that they are within the mouth, let's reverse the scale of both the x-axis and y-axis:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(x = F2, y = F1)) +
   geom_point() +
@@ -292,7 +292,7 @@ midpoints |>
 That's nice and all, but... how about knowing which dot corresponds to which vowel. Amirite?! Let's go! We can do so by using the `color` argument in the `aes()` call within the `ggplot()` function:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(x = F2, y = F1, color = vowel)) +
   geom_point() +
@@ -303,7 +303,7 @@ midpoints |>
 The gray background of `ggplot` may not be as nice as white when the data points (aka. observations) are colored. Let's fix it (you guys/y'all/youse know by now that you can customize to your heart's delight in R, right?):
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(x = F2, y = F1, color = vowel)) +
   geom_point() +
@@ -315,7 +315,7 @@ midpoints |>
 If you plan to put this plot in a publication that doesn't support color, you can use the `shape` argument instead:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(x = F2, y = F1, shape = vowel)) +
   geom_point() +
@@ -327,7 +327,7 @@ midpoints |>
 But, there's a problem: R only gives you six shapes by default, so... keep that in mind if you use shape instead of color. An obvious workaround is to filter only several vowels before piping the data frame into `ggplot()`, for example:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   filter(vowel %in% c("LOT", "THOUGHT")) |> 
   ggplot(aes(F2, F1, color = vowel, shape = vowel)) + 
@@ -342,7 +342,7 @@ We can add more information to the plot with the diameter and/or opacity of the 
 Let's make a continuous variable of duration of the vowel within our pipeline, before passing our data frame into `ggplot()`. and then specify with the `size` argument that the diameter of the dots should be proportional to the duration of the vowel that the dot represents:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   mutate(duration = end - start) |> 
   ggplot(aes(x = F2, y = F1, color = vowel, size = duration))+
@@ -357,7 +357,7 @@ The above plot is nice, but the overplotting (i.e., dots on top of each other) m
 Another way to put a fourth variable in the plot is with the level of transparency fo the dots so that cluster of dots that are on top of each other are easier to see. Rather than the `size` argument, let's use the `alpha` argument:
 
 ```{r}
-#| eval: true
+#| eval: false
 
 midpoints |> 
   mutate(duration = end - start) |> 
@@ -371,7 +371,7 @@ midpoints |>
 We can also plot the duration of the vowel as the size of the dots:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   mutate(duration = end - start) |> 
   ggplot(aes(F2, F1, color = vowel, size = duration)) + 
@@ -384,7 +384,7 @@ midpoints |>
 If the dots are too big, we can constrain the range of their sizes:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   mutate(duration = end - start) |> 
   ggplot(aes(F2, F1, color = vowel, size = duration)) + 
@@ -402,7 +402,7 @@ If you'd like to see how one continuous variable affects the other continuous va
 Let's go back to our `ptk` dataset and put a regression line through the points off two continuous variables: `VOT` and `COG`.
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(x = COG, y = VOT))+
   geom_point()+ # plot individual data points
@@ -415,7 +415,7 @@ ptk |>
 Another option to show the trend through the data points of two continuous variables is a [LOESS](https://en.wikipedia.org/wiki/Local_regression) (locally estimated scatterplot smoothing) line. This is a locally based smoother line that shows the local trend of the dots closest to it. Let's modify our plot above by removing the regression line and putting in a loess line (yeah, I'm gonna use lowercase from here on out):
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(x = COG, y = VOT))+
   geom_point()+
@@ -428,7 +428,7 @@ We can see that the loess line shows that there is a positive relationship betwe
 Of course, we can include both a regression line and a loess line in the same plot. And if we do that, it's probably wise to change the color of one of them and perhaps remove the 95% standard error band around the loess line:
 
 ```{r}
-#| eval: true
+#| eval: false
 ptk |> 
   ggplot(aes(x = COG, y = VOT))+
   geom_point()+
@@ -448,7 +448,7 @@ The go-to plot for this situation is the mighty boxplot (aka. box and whisker pl
 Let's go back to Joey's vowels. But to make it more manageable for pedagogical purposes, let's filter the vowels so that we only have front vowels, and also create a duration column while we're at it:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs <- midpoints |> 
     filter(vowel %in% c("FLEECE", "KIT", "FACE", "DRESS", "TRAP")) |> 
     mutate(duration = end - start)
@@ -457,7 +457,7 @@ front_durs <- midpoints |>
 With a boxplot, we need to specify the categorical variable on the x-axis and the continuous variable on the y-axis:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
   geom_boxplot()+
@@ -479,7 +479,7 @@ Here's how to interpret a boxplot:
 By default, `geom_boxplot()` doesn't plot the mean, but it's easy to add with another layer. See this tutorial for the [possible shapes](http://www.sthda.com/english/wiki/ggplot2-point-shapes); here we'll choose an "x" with `shape=4`:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
   geom_boxplot()+
@@ -490,7 +490,7 @@ front_durs |>
 Another feature of boxplots in `ggplot` is that you can add notches to the box, which gives visual information about whether the levels might be statistically significantly different from each other (but a real statistical test that gives a p-value should also be run to assert statistical significance). If the notches of two boxes don't overlap vertically, this is prima facie evidence that they are likely statistically significantly different from each other.
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
   geom_boxplot(notch = TRUE)+
@@ -501,7 +501,7 @@ front_durs |>
 As a good follow-up, let's do an ANOVA (Analysis of Variance) test, and if the ANOVA returns a significant p-value, let's run a post-doc Tukey Honest Significant Difference test to see if the p-values given for the pairwise comparisons coincides with the notches.
 
 ```{r}
-#| eval: true
+#| eval: false
 results1 <- aov(duration ~ vowel, data = front_durs)
 summary(results1)
 ```
@@ -509,7 +509,7 @@ summary(results1)
 Yep, something statistically significant is going on here. Next step is a post-hoc test to which pairwise comparisons are significant:
 
 ```{r}
-#| eval: true
+#| eval: false
 TukeyHSD(results1)
 ```
 
@@ -520,7 +520,7 @@ Yep, the p-values indicate that the notches were rightly suggestive of statistic
 Another plot for one continuous variable and one categorical variable is the violin plot. This plot is a combination of a boxplot and a density plot. As with the boxplot above, let's add the mean as an "x". Here we go:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
   geom_violin()+
@@ -533,7 +533,7 @@ front_durs |>
 Hopefully, you're getting the idea that there are many possibilities when creating plots with R. In fact, we can mix and match, and add additional layers with additional info. For example, we can add individual observations (aka. tokens) to either the boxplot or the violin plot. Let's take a look:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
   geom_violin()+
@@ -544,7 +544,7 @@ front_durs |>
 The `geom_point()` function adds the data points in a straight, vertical line, which can make it difficult to see exactly how many dots there when they are clustered together. It might be better to either move horizontally a bit, or to make them slightly transparent. In order to offset them a little bit, instead of `geom_point()`, we can use the `geom_jitter()`. And, importantly, we probably want to make sure the dots don't move vertically at all, and only move a little bit horizontally. We can specify limits for the directions with the `width` and `height` arguments in `geom_jitter()`:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
   geom_violin()+
@@ -555,7 +555,7 @@ front_durs |>
 The order of the layers is meaningful, that is, elements of the plot will change based on where they are in the pipeline. For example, what happens if we put the `geom_jitter()` higher up in the pipeline?
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
   geom_jitter(width = 0.1, height = 0)+
@@ -566,7 +566,7 @@ front_durs |>
 We can also plot individual observations on a boxplot, but it can get confusing because the outliers in a boxplot are plotted individually by `geom_boxplot()`, but also plotted by `geom_jitter()` (a bit little to the left or right):
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
   geom_boxplot()+
@@ -577,7 +577,7 @@ front_durs |>
 So, to fix that, we make the outliers that `geom_boxplot()` plots be fully transparent:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
   geom_boxplot(outlier.alpha = 0)+
@@ -592,7 +592,7 @@ Anyone for a boxplot and a violin together? Questions: Which one should be overl
 Take some time to experiment with several options (e.g., violin behind boxplot, and vice versa) and several different levels of transparency (with the `alpha` argument). If you need some help, take a look at Dr. Brown's code below:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| code-fold: true
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
@@ -614,7 +614,7 @@ install.packages("see", repos = "http://cran.rstudio.com")
 You can play with the `dots_size` and `binwidth` arguments to get the dots just right.
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration))+
   see::geom_violindot(dots_size = 0.8, binwidth = 0.005)+
@@ -626,7 +626,7 @@ front_durs |>
 Another way add individual observations to a plot with is the `geom_rug()` function. It puts the tokens on the edge of the plotting area, so it's really only useful with you have exactly levels in the categorical variable. Let's
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   filter(vowel %in% c("TRAP", "KIT")) |> 
   ggplot(aes(x = vowel, y = duration))+
@@ -649,7 +649,7 @@ Decide which type of plots you'd like (e.g., boxplot with or without notches, vi
 After a good-faith effort, if you need some help take a look at Dr. Brown's code below:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| code-fold: true
 front_durs |> 
   ggplot(aes(x = pre, y = duration))+
@@ -673,7 +673,7 @@ We can one or two variables to our plot by making an individual plot for each th
 Let's use the `midpoints` dataset from above and create a new column with the duration of the vowel, and save it to a new data frame named `midpoints_durs`:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints_durs <- midpoints |> 
   mutate(duration = end - start)
 ```
@@ -683,7 +683,7 @@ midpoints_durs <- midpoints |>
 Now, let's create a single plot with subplots with a histogram, one histogram per vowel:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints_durs |> 
   ggplot(aes(x = duration))+
   geom_histogram(binwidth = 0.01)+
@@ -694,7 +694,7 @@ midpoints_durs |>
 You may notice the scale of the x-axis and the scale of the y-axis are the same for all subplots. That's useful when you want to directly compare the subplots, which is usually the case. However, if you need to the scales to be independent of each other, you guess it, that can be specified:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints_durs |> 
   ggplot(aes(x = duration))+
   geom_histogram(binwidth = 0.01)+
@@ -707,7 +707,7 @@ Rather than have independent scales for both the x-axis and the y-axis, you can 
 Also, we can control the number of rows or columns that the subplots are placed in with the `nrow` or `ncol` arguments:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints_durs |> 
   ggplot(aes(x = duration))+
   geom_histogram(binwidth = 0.01)+
@@ -726,7 +726,7 @@ midpoints_durs |>
 While `facet_wrap()` takes one variable, that is, column in the input data frame, `facet_grid()` takes two columns and creates a grid layout. For example, let's look at the distribution of vowel duration by vowel and by following segment:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints_durs |> 
   ggplot(aes(x = duration))+
   geom_histogram(binwidth = 0.025)+
@@ -743,7 +743,7 @@ Your turn! Make a plot with the distribution of durations by vowel and by preced
 After a good-faith effort, if you need help, see Dr. Brown's code below:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| code-fold: true
 midpoints_durs |> 
   ggplot(aes(x = duration))+
@@ -763,7 +763,7 @@ colors()
 The RStudio IDE displays the highlights the name of the color right in the source file (aka. script). Let's change the color of the lines with the `color` argument and the color of the fill of the boxes of a boxplot with the `fill` argument:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration)) + 
   geom_boxplot(color = "navy", fill = "lightblue")+
@@ -773,7 +773,7 @@ front_durs |>
 Note that when you explicitly specify colors in the call to a layer, it overrides any previous color specification. For example, if I have `ggplot()` to plot a color, but then give `geom_boxplot()` specific colors, only the colors given to the later layer are plotted.
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration, color = vowel)) + 
   geom_boxplot(color = "navy", fill = "lightblue")+
@@ -783,7 +783,7 @@ front_durs |>
 However, if a particular layer doesn't overwrite a color specification inherited from `ggplot()`, for example `geom_jitter()` below, then the later layer use the color from `ggplot()`:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration, color = vowel)) + 
   geom_boxplot(color = "navy", fill = "lightblue")+
@@ -798,7 +798,7 @@ So, the `aes()` in `ggplot()` passes its color down to the subsequent layers, bu
 Compare and contrast the following three blocks of code their resulting plots. Identify how the plots differ and how the placement of `color = vowel` affects which elements of the plot are colored.
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(vowel, duration)) + 
   geom_boxplot(aes(color = vowel)) + 
@@ -823,7 +823,7 @@ Check out the docs for `scale_color_distiller()` for other color palettes.
 In the code above, we only map color to a categorical variable. But, we can also map it to a continuous variable. Let's use the midpoints data frame from above:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints_durs |> 
   ggplot(aes(F2, F1, color = duration)) + 
   geom_point() + 
@@ -835,7 +835,7 @@ midpoints_durs |>
 By default, `ggplot()` uses the blue-to-black palette, but we can change it manually if we'd like:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints_durs |> 
   ggplot(aes(F2, F1, color = duration)) + 
   geom_point() + 
@@ -850,7 +850,7 @@ midpoints_durs |>
 Let's take a look at our a boxplot with jittered observations:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs |> 
   ggplot(aes(x = vowel, y = duration)) + 
   geom_boxplot(outlier.alpha = 0) + 
@@ -861,7 +861,7 @@ front_durs |>
 We can also adjust levels of a categorical variable so that they appear in a different order. This can be done in one of two place: with the `dplyr` part of the pipeline, or within the `ggplot` part of the pipeline. First, let's reorder the levels with our ol' friend `fct_relevel()`:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs %>%
   mutate(vowel = fct_relevel(vowel, c("FLEECE", "KIT", "FACE", "DRESS", "TRAP"))) |> 
   ggplot(aes(vowel, duration)) + 
@@ -873,7 +873,7 @@ front_durs %>%
 Or, we could ask use a `ggplot` layer to reorder the levels of this categorical variable:
 
 ```{r}
-#| eval: true
+#| eval: false
 front_durs %>%
   ggplot(aes(vowel, duration)) + 
   geom_boxplot(outlier.size = 0) + 
@@ -891,7 +891,7 @@ Create a boxplot of the five vowels in the `front_durs` data frame and order the
 After a good-faith effort, if you need help, take a look at Dr. Brown's code:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| code-fold: true
 ordered_by_median <- front_durs |> 
   group_by(vowel) |> 
@@ -910,7 +910,7 @@ front_durs |>
 We can also order bar of a barplot as well. Let's use the `midpoints` data frame to order the vowel in descending order by frequency:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   mutate(vowel = fct_infreq(vowel)) |> 
   ggplot(aes(vowel)) + 
@@ -923,7 +923,7 @@ midpoints |>
 Let's go back to our scatterplot with F1 and F2 of vowels:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(F2, F1, color = vowel)) + 
   geom_point() + 
@@ -935,7 +935,7 @@ midpoints |>
 ...And now add ellipses around two-thirds of the data points per vowel:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(F2, F1, color = vowel)) + 
   geom_point(alpha = 0.5) + 
@@ -948,7 +948,7 @@ midpoints |>
 With so many vowels and some of the colors so close to each other, it'd be nice to add labels right on the plot. You guessed it! That can be done. First, let's create a small data frame with the mean F1 and mean F2 by vowel:
 
 ```{r}
-#| eval: true
+#| eval: false
 F_means <- midpoints %>%
   group_by(vowel) %>%
   summarize(mean_F1 = mean(F1), mean_F2 = mean(F2))
@@ -957,7 +957,7 @@ F_means <- midpoints %>%
 Now let's use those means in order to place the labels in the right spots on the plot:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(F2, F1, color = vowel)) + 
   geom_point(alpha = 0.5) + 
@@ -971,7 +971,7 @@ midpoints |>
 Given the fact that the labels are difficult to read because of the dots behind him, it might be best to use black labels:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   ggplot(aes(F2, F1, color = vowel)) + 
   geom_point(alpha = 0.5) + 
@@ -989,7 +989,7 @@ midpoints |>
 The default color background of `ggplot` is gray, for example:
 
 ```{r}
-#| eval: true
+#| eval: false
 p <- midpoints |> 
   ggplot(aes(F2, F1, color = vowel)) + 
   geom_point(alpha = 0.5) + 
@@ -1003,14 +1003,14 @@ print(p)
 As you may have noticed by now, Dr. Brown prefers the black-n-white theme that `theme_bw()` gives.
 
 ```{r}
-#| eval: true
+#| eval: false
 p + theme_bw()
 ```
 
 Another nice theme is `theme_minimal()`, which is basically the `theme_bw()` but without the border:
 
 ```{r}
-#| eval: true
+#| eval: false
 p + theme_minimal()
 ```
 
@@ -1023,7 +1023,7 @@ Exploration time: Take a look at the docs for the themes by entering `?theme_bw`
 We can add custom labels to our plots with the `labs()` layer.
 
 ```{r}
-#| eval: true
+#| eval: false
 p + 
   theme_classic()+
   labs(title = "F1 and F2 by Vowel", subtitle = "of Joey Stanley's speech", x = "Second formant (F2)", y = "First formant (F1)")
@@ -1032,7 +1032,7 @@ p +
 We can also adjust the font, angle, horizontal and vertical adjustments of text on the plot, for example:
 
 ```{r}
-#| eval: true
+#| eval: false
 p +
   theme_bw()+
   theme(text = element_text(family = "Times New Roman"),)
@@ -1041,7 +1041,7 @@ p +
 Or tilt the angle of the labels:
 
 ```{r}
-#| eval: true
+#| eval: false
 midpoints |> 
   mutate(vowel = fct_infreq(vowel)) |> 
   ggplot(aes(vowel)) + 
@@ -1054,7 +1054,7 @@ midpoints |>
 How about something as nasty as this?
 
 ```{r}
-#| eval: true
+#| eval: false
 p +
   labs(title = "Joey's vowels", subtitle = "Notice that this is left-aligned to the plotting area") + 
     theme(plot.title = element_text(hjust = 0.2, vjust = 0.6, angle = 2, family = "Avenir", size = 18, color = "forestgreen", face = "italic", lineheight = 1.2, margin = margin(t = 1, r = 0.2, b = 1.4, l = -4, unit = "cm"), debug = TRUE))

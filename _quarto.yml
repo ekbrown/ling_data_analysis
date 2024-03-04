@@ -33,6 +33,9 @@ website:
       - section: "Visualization"
         contents:
           - lessons/visualization.qmd
+      - section: "Reproducible research"
+        contents: 
+          - lessons/quarto.qmd
 format:
   html:
     theme: cosmo

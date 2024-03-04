@@ -1,0 +1,41 @@
+---
+title: "Quarto"
+---
+
+## Objective
+
+Students will write a Quarto document that integrates prose and code, and the output of the code.
+
+## Reproducible research
+
+Clearing laying out methods is an important consideration when publishing original research so that others can reproduce or replicate your research. One useful way to do that is to make available the computer code that goes into the data collection and data analysis parts of the research process.
+
+Enter documents that knit together code and prose. The current cool-kid-on-the-block is the Quarto document. All the lesson plans that Dr. Brown has created have been produced as Quarto documents. The RStudio IDE makes it super easy to write Quarto document and integrate R code (and Python and Julia code too!) with prose around the code. Also, the writer of the document can specify whether the output of the code is rendered. For example, Dr. Brown usually does not render the output of the R code.
+
+## Getting started
+
+Steps:
+
+1.  Within RStudio, click on File \> New File \> Quarto Document...
+
+2.  Give the document a name
+
+3.  Start writing prose and/or code!
+
+## Choose your own adventure
+
+...Or jump between adventures, as needed.
+
+Within RStudio, you can use the Source editor or the Visual editor, or jump back and forth as needed. For example, Dr. Brown uses the Visual editor the vast majority of the time, but occasionally jumps over to the Source editor in order to have more control over formatting.
+
+## Markdown syntax
+
+Quarto documents accept Markdown syntax to format the prose. It provides the basic of word processing documents, like different levels of headers, bold font, italics, underlined. Importantly and usefully, it also provides a way to format code within the prose.
+
+### Activity
+
+Take a look at the two cheatsheets that RStudio has about Markdown syntax (Help \> Cheat Sheets \> R Markdown Cheat Sheet & R Markdown Reference Guide) or websites about Mardown, for example, [markdownguide.org](https://www.markdownguide.org/basic-syntax/).
+
+Now, create a Quarto document and use the Source editor only to create a (simple) HTML output document.
+
+Next, create another Quarto document, but this time, use the Visual editor as much as possible.
