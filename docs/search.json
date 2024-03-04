@@ -415,44 +415,44 @@
   {
     "objectID": "lessons/quarto.html",
     "href": "lessons/quarto.html",
-    "title": "Quarto",
+    "title": "Quarto documents",
     "section": "",
     "text": "Students will write a Quarto document that integrates prose and code, and the output of the code."
   },
   {
     "objectID": "lessons/quarto.html#objective",
     "href": "lessons/quarto.html#objective",
-    "title": "Quarto",
+    "title": "Quarto documents",
     "section": "",
     "text": "Students will write a Quarto document that integrates prose and code, and the output of the code."
   },
   {
     "objectID": "lessons/quarto.html#reproducible-research",
     "href": "lessons/quarto.html#reproducible-research",
-    "title": "Quarto",
+    "title": "Quarto documents",
     "section": "Reproducible research",
     "text": "Reproducible research\nClearing laying out methods is an important consideration when publishing original research so that others can reproduce or replicate your research. One useful way to do that is to make available the computer code that goes into the data collection and data analysis parts of the research process.\nEnter documents that knit together code and prose. The current cool-kid-on-the-block is the Quarto document. All the lesson plans that Dr. Brown has created have been produced as Quarto documents. The RStudio IDE makes it super easy to write Quarto document and integrate R code (and Python and Julia code too!) with prose around the code. Also, the writer of the document can specify whether the output of the code is rendered. For example, Dr. Brown usually does not render the output of the R code."
   },
   {
     "objectID": "lessons/quarto.html#getting-started",
     "href": "lessons/quarto.html#getting-started",
-    "title": "Quarto",
+    "title": "Quarto documents",
     "section": "Getting started",
     "text": "Getting started\nSteps:\n\nWithin RStudio, click on File &gt; New File &gt; Quarto Document…\nGive the document a name\nStart writing prose and/or code!"
   },
   {
     "objectID": "lessons/quarto.html#choose-your-own-adventure",
     "href": "lessons/quarto.html#choose-your-own-adventure",
-    "title": "Quarto",
+    "title": "Quarto documents",
     "section": "Choose your own adventure",
-    "text": "Choose your own adventure\n…Or jump between adventures, as needed.\nWithin RStudio, you can use the Source editor or the Visual editor, or jump back and forth as needed. For example, Dr. Brown uses the Visual editor the vast majority of the time, but occasionally jumps over to the Source editor in order to have more control over formatting."
+    "text": "Choose your own adventure\n…Or jump between adventures, as needed.\nWithin RStudio, you can use the Source editor or the Visual editor, or jump back and forth as needed. For example, Dr. Brown uses the Visual editor the vast majority of the time, but occasionally jumps over to the Source editor in order to have more control over formatting.\nIn order to insert a code block on a new line, you can type a forward slash “/”, and a drop-down menu will appear from which you can select the type of code you want to insert (most commonly R code). There’s also a keyboard short to insert an R code block: Mac &gt; Cmd + Opt + i; Windows &gt; Ctrl + Alt + i."
   },
   {
     "objectID": "lessons/quarto.html#markdown-syntax",
     "href": "lessons/quarto.html#markdown-syntax",
-    "title": "Quarto",
+    "title": "Quarto documents",
     "section": "Markdown syntax",
-    "text": "Markdown syntax\nQuarto documents accept Markdown syntax to format the prose. It provides the basic of word processing documents, like different levels of headers, bold font, italics, underlined. Importantly and usefully, it also provides a way to format code within the prose.\n\nActivity\nTake a look at the two cheatsheets that RStudio has about Markdown syntax (Help &gt; Cheat Sheets &gt; R Markdown Cheat Sheet & R Markdown Reference Guide) or websites about Mardown, for example, markdownguide.org.\nNow, create a Quarto document and use the Source editor only to create a (simple) HTML output document.\nNext, create another Quarto document, but this time, use the Visual editor as much as possible."
+    "text": "Markdown syntax\nQuarto documents accept Markdown syntax to format the prose. It provides the basics of word processing documents, like different levels of headers, bold font, italics, underlined, etc. Importantly and usefully, it also provides a way to format code within the prose, for example, print(\"hello world\") returns hello world.\n\nActivity\nTake a look at the two cheatsheets that RStudio has about Markdown syntax (Help &gt; Cheat Sheets &gt; R Markdown Cheat Sheet & R Markdown Reference Guide) or websites about Markdown, for example, markdownguide.org.\nNow, create a Quarto document and use the Source editor only to create a (simple) HTML output document.\nNext, create another Quarto document, but this time, use the Visual editor as much as possible.\nBe prepared to share your documents with the members of the class."
   },
   {
     "objectID": "lessons/r_rstudio.html",

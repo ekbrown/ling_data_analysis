@@ -1,5 +1,5 @@
 ---
-title: "Quarto"
+title: "Quarto documents"
 ---
 
 ## Objective
@@ -28,14 +28,18 @@ Steps:
 
 Within RStudio, you can use the Source editor or the Visual editor, or jump back and forth as needed. For example, Dr. Brown uses the Visual editor the vast majority of the time, but occasionally jumps over to the Source editor in order to have more control over formatting.
 
+In order to insert a code block on a new line, you can type a forward slash "/", and a drop-down menu will appear from which you can select the type of code you want to insert (most commonly R code). There's also a keyboard short to insert an R code block: Mac \> Cmd + Opt + i; Windows \> Ctrl + Alt + i.
+
 ## Markdown syntax
 
-Quarto documents accept Markdown syntax to format the prose. It provides the basic of word processing documents, like different levels of headers, bold font, italics, underlined. Importantly and usefully, it also provides a way to format code within the prose.
+Quarto documents accept Markdown syntax to format the prose. It provides the basics of word processing documents, like different levels of headers, bold font, italics, underlined, etc. Importantly and usefully, it also provides a way to format code within the prose, for example, `print("hello world")` returns `hello world`.
 
 ### Activity
 
-Take a look at the two cheatsheets that RStudio has about Markdown syntax (Help \> Cheat Sheets \> R Markdown Cheat Sheet & R Markdown Reference Guide) or websites about Mardown, for example, [markdownguide.org](https://www.markdownguide.org/basic-syntax/).
+Take a look at the two cheatsheets that RStudio has about Markdown syntax (Help \> Cheat Sheets \> R Markdown Cheat Sheet & R Markdown Reference Guide) or websites about Markdown, for example, [markdownguide.org](https://www.markdownguide.org/basic-syntax/).
 
 Now, create a Quarto document and use the Source editor only to create a (simple) HTML output document.
 
 Next, create another Quarto document, but this time, use the Visual editor as much as possible.
+
+Be prepared to share your documents with the members of the class.
