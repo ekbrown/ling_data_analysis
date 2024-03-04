@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - Calling other languages with R</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Other languages</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/python.html">Other languages</a></li><li class="breadcrumb-item"><a href="../lessons/python.html">Calling other languages with R</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/python.html">Other languages</a></li><li class="breadcrumb-item"><a href="../lessons/python.html">Other languages</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -272,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../lessons/python.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Calling other languages with R</span></a>
+ <span class="menu-text">Other languages</span></a>
   </div>
 </li>
       </ul>
@@ -308,7 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Calling other languages with R</h1>
+<h1 class="title">Other languages</h1>
 </div>
 
 
@@ -325,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="objective" class="level2">
 <h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<p>Students will right R code that calls other languages.</p>
+<p>Students will write R code that calls other languages.</p>
 </section>
 <section id="multilingual-programming-world" class="level2">
 <h2 class="anchored" data-anchor-id="multilingual-programming-world">Multilingual programming world</h2>
@@ -333,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="python" class="level2">
 <h2 class="anchored" data-anchor-id="python">Python</h2>
-<p>By far, Python is the best language for text processing (and is an all-around great language for many tasks). Thus, when an R user has a need to do text processing, it is useful to call on Python for text processing tasks.</p>
+<p>It is Dr.&nbsp;Brown’s opinion that Python is the best language for text processing (and is an all-around great language for many tasks). Thus, when an R user has a need to do text processing, it might be better to call on Python for that specific task.</p>
 <section id="the-reticulate-r-package" class="level3">
 <h3 class="anchored" data-anchor-id="the-reticulate-r-package">The <code>reticulate</code> R package</h3>
 <p>The <a href="https://rstudio.github.io/reticulate/"><code>reticulate</code></a> R package allows R users to call Python from within R. Here’s a simple example:</p>
@@ -350,7 +350,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>tagged <span class="ot">&lt;-</span> nltk<span class="sc">$</span><span class="fu">pos_tag</span>(tokens)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tagged)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you know Python (and NLTK), you might remember that the output of this call in Python itself is a Python <code>list</code> of two-item <code>tuple</code>s. Differently, here we get an R <code>list</code> (which is different from a Python <code>list</code>). We could continue to process this R <code>list</code> as needed, for example, looping over it in a <code>for</code> loop to find particular part-of-speech tags:</p>
+<p>If you know Python (and NLTK), you might remember that the output of this call in Python is a Python <code>list</code> of two-item <code>tuple</code>s. Differently, here we get an R <code>list</code> (which is different from a Python <code>list</code>). We could continue to process this R <code>list</code> as needed, for example, looping over it in a <code>for</code> loop to find particular part-of-speech tags:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R code here</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (tag <span class="cf">in</span> tagged) {</span>
@@ -367,20 +367,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python code here</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"hello Python!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>hello Python!</code></pre>
+</div>
 </div>
 <p>A more meaningful example might be to use the Natural Language Toolkit (NLTK) to tokenize word and perform part-of-speech tagging, like with did above within R using <code>reticulate</code>:. Differently, here, we don’t need <code>reticulate</code> because we calling Python directly on the computer, rather than through R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># more Python code here</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>txt <span class="op">=</span> <span class="st">"The quick brown fox jumped over the lazy dog."</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> nltk.word_tokenize(txt)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># more Python code here</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>txt <span class="op">=</span> <span class="st">"The quick brown fox jumped over the lazy dog."</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> nltk.word_tokenize(txt)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['The', 'quick', 'brown', 'fox', 'jumped', 'over', 'the', 'lazy', 'dog', '.']</code></pre>
+</div>
 </div>
 <p>The above code tokenizes the famous sentence in linguistics into a Python <code>list</code> of words. Now, let’s ask NLTK to tag for part-of-speech:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python code here</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tagged <span class="op">=</span> nltk.pos_tag(tokens)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tagged)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python code here</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tagged <span class="op">=</span> nltk.pos_tag(tokens)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tagged)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[('The', 'DT'), ('quick', 'JJ'), ('brown', 'NN'), ('fox', 'NN'), ('jumped', 'VBD'), ('over', 'IN'), ('the', 'DT'), ('lazy', 'JJ'), ('dog', 'NN'), ('.', '.')]</code></pre>
+</div>
 </div>
 <p>Those with experience with Python may notice that the output of the above code is a Python <code>list</code> with two-item <code>tuple</code>s. We’re back in the comfort of the Python world! (The R world is comfortable too, though.)</p>
 </section>
@@ -396,17 +405,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="c">C++</h3>
 <p>The <a href="https://cran.r-project.org/web/packages/Rcpp/index.html"><code>Rcpp</code></a> R package is an awesome way to have R call C++. This is especially useful for bottlenecks that can be sped up with C++ (which runs much, much faster than R). First, let’s install <code>Rcpp</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"Rcpp"</span>, <span class="at">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"Rcpp"</span>, <span class="at">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, let’s</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Rcpp"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cppFunction</span>(<span class="st">'int add(int x, int y, int z) {</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">  int sum = x + y + z;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">  return sum;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add works like a regular R function</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">add</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Rcpp"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cppFunction</span>(<span class="st">'int add(int x, int y, int z) {</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">  int sum = x + y + z;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">  return sum;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add works like a regular R function</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">add</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In addition to defining C++ function within an R script (i.e., an R file) with <code>cppFunction()</code>, we can write the C++ code with a <code>.cpp</code> file and call that file into an R script with the <code>sourceCpp()</code> function. Take a look at the example in Hadley Wickham’s book, in chapter 25 <a href="https://adv-r.hadley.nz/rcpp.html#sourceCpp">“Rewriting R code in C++”</a>.</p>
 </section>
@@ -414,10 +423,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="julia">Julia</h3>
 <p>The <a href="https://julialang.org/">Julia</a> programming language is a relatively new language oriented towards data science and statistics (very much like R). When you’re writing a Quarto document, you can insert a Julia code block by typing a forward slash “/” and selecting the Julia code block option. First, we need to install the <code>JuliaCall</code> R package:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"JuliaCall"</span>, <span class="at">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"JuliaCall"</span>, <span class="at">repos =</span> <span class="st">"http://cran.rstudio.com/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"hello Julia!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Julia code here</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"hello Julia!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>hello Julia!</code></pre>
+</div>
 </div>
 <p>Using <a href="https://cran.r-project.org/web/packages/JuliaCall/"><code>JuliaCall</code></a>, you can also call Julia directly from within R code. See some examples on their <a href="https://cran.r-project.org/web/packages/JuliaCall/readme/README.html">docs</a>.</p>
 <p>Other programming languages can be called from within R, but Python, C++ and Julia are probably the most common (in Dr.&nbsp;Brown’s uninformed estimation).</p>

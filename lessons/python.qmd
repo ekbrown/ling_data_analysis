@@ -1,10 +1,10 @@
 ---
-title: "Calling other languages with R"
+title: "Other languages"
 ---
 
 ## Objective
 
-Students will right R code that calls other languages.
+Students will write R code that calls other languages.
 
 ## Multilingual programming world
 
@@ -12,7 +12,7 @@ Just like human languages and all their variety and beauty, the variety of progr
 
 ## Python
 
-By far, Python is the best language for text processing (and is an all-around great language for many tasks). Thus, when an R user has a need to do text processing, it is useful to call on Python for text processing tasks.
+It is Dr. Brown's opinion that Python is the best language for text processing (and is an all-around great language for many tasks). Thus, when an R user has a need to do text processing, it might be better to call on Python for that specific task.
 
 ### The `reticulate` R package
 
@@ -33,7 +33,7 @@ tagged <- nltk$pos_tag(tokens)
 print(tagged)
 ```
 
-If you know Python (and NLTK), you might remember that the output of this call in Python itself is a Python `list` of two-item `tuple`s. Differently, here we get an R `list` (which is different from a Python `list`). We could continue to process this R `list` as needed, for example, looping over it in a `for` loop to find particular part-of-speech tags:
+If you know Python (and NLTK), you might remember that the output of this call in Python is a Python `list` of two-item `tuple`s. Differently, here we get an R `list` (which is different from a Python `list`). We could continue to process this R `list` as needed, for example, looping over it in a `for` loop to find particular part-of-speech tags:
 
 ```{r}
 #| eval: false
@@ -52,7 +52,7 @@ We can also write Python code within code blocks in a Quarto document. When work
 The following code blocks are written in a Quarto document (as Dr. Brown uses Quarto document for his lesson plans). The code is pure Python, as if he were writing Python code in a `.py` file. Here's a first simple example:
 
 ```{python}
-#| eval: false
+#| eval: true
 # Python code here
 print("hello Python!")
 ```
@@ -60,7 +60,7 @@ print("hello Python!")
 A more meaningful example might be to use the Natural Language Toolkit (NLTK) to tokenize word and perform part-of-speech tagging, like with did above within R using `reticulate`:. Differently, here, we don't need `reticulate` because we calling Python directly on the computer, rather than through R.
 
 ```{python}
-#| eval: false
+#| eval: true
 # more Python code here
 import nltk
 txt = "The quick brown fox jumped over the lazy dog."
@@ -71,7 +71,7 @@ print(tokens)
 The above code tokenizes the famous sentence in linguistics into a Python `list` of words. Now, let's ask NLTK to tag for part-of-speech:
 
 ```{python}
-#| eval: false
+#| eval: true
 # Python code here
 tagged = nltk.pos_tag(tokens)
 print(tagged)
@@ -121,6 +121,8 @@ install.packages("JuliaCall", repos = "http://cran.rstudio.com/")
 ```
 
 ```{julia}
+#| eval: true
+# Julia code here
 #| eval: false
 println("hello Julia!")
 ```
