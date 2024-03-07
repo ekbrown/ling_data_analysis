@@ -20,7 +20,7 @@ Let's consider a third vector of number, this time of the number of children tha
 
 ## How to remove outliers
 
-There are a couple ways to identify (possible) outliers. One is based on the mean and the standard deviation of the observation. Another way is based on the interquartile range.
+There are a couple ways to identify (possible) outliers. One is based on the mean and the standard deviation of the observations. Another way is based on the interquartile range of the observations.
 
 ### Mean and standard deviation
 
