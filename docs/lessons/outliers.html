@@ -314,6 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#interquartile-range" id="toc-interquartile-range" class="nav-link" data-scroll-target="#interquartile-range">Interquartile range</a></li>
   </ul></li>
   <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  <li><a href="#two-continuous-variables" id="toc-two-continuous-variables" class="nav-link" data-scroll-target="#two-continuous-variables">Two continuous variables</a></li>
   </ul>
 </nav>
     </div>
@@ -389,10 +390,11 @@ z=\frac{x-μ}{σ}
 </section>
 <section id="interquartile-range" class="level3">
 <h3 class="anchored" data-anchor-id="interquartile-range">Interquartile range</h3>
-<p>Another way to identify (possible) outliers is by finding the first quartile (i.e., the 25th percentile, aka. Q<sub>1</sub>) and the third quartile (i.e., the 75th percentile, aka. Q<sub>3</sub>), and then calculating the difference between those two quartiles. The difference between Q<sub>3</sub> and Q<sub>1</sub> is called the interquartile range (aka. IQR). Then, outliers are identified as observations above 1.5 times IQR above Q<sub>3</sub> or 1.5 times IQR below Q<sub>1</sub>. Here’s a mathematical notation:</p>
+<p>Another way to identify (possible) outliers is by finding the first quartile (i.e., the 25th percentile, aka. Q<sub>1</sub>) and the third quartile (i.e., the 75th percentile, aka. Q<sub>3</sub>), and then calculating the difference between those two quartiles. The difference between Q<sub>3</sub> and Q<sub>1</sub> is called the interquartile range (aka. IQR). Then, outliers are identified as observations above 1.5 times IQR above Q<sub>3</sub> or 1.5 times IQR below Q<sub>1</sub>. Here’s the mathematical notation:</p>
 <p><span class="math display">\[
 Q_3+1.5*IQR\quad\text{or}\quad Q_1-1.5* IQR
 \]</span></p>
+<p>Let’s try this in R. First, let’s get Q<sub>1</sub>, Q<sub>3</sub>, and IQR. Then, we’ll use these three values in <code>filter()</code> within a good ol’ fashioned <code>dplyr</code> pipeline:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>quartiles <span class="ot">&lt;-</span> <span class="fu">tibble</span>(baby_heights) <span class="sc">|&gt;</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(baby_heights) <span class="sc">|&gt;</span> </span>
@@ -430,6 +432,9 @@ Q_3+1.5*IQR\quad\text{or}\quad Q_1-1.5* IQR
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</section>
+<section id="two-continuous-variables" class="level2">
+<h2 class="anchored" data-anchor-id="two-continuous-variables">Two continuous variables</h2>
 <p>When you’re looking for outliers across two variables, visual inspection is probaby the easiest way. Here’s a toy example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>

@@ -74,11 +74,13 @@ $$
 
 ### Interquartile range
 
-Another way to identify (possible) outliers is by finding the first quartile (i.e., the 25th percentile, aka. Q~1~) and the third quartile (i.e., the 75th percentile, aka. Q~3~), and then calculating the difference between those two quartiles. The difference between Q~3~ and Q~1~ is called the interquartile range (aka. IQR). Then, outliers are identified as observations above 1.5 times IQR above Q~3~ or 1.5 times IQR below Q~1~. Here's a mathematical notation:
+Another way to identify (possible) outliers is by finding the first quartile (i.e., the 25th percentile, aka. Q~1~) and the third quartile (i.e., the 75th percentile, aka. Q~3~), and then calculating the difference between those two quartiles. The difference between Q~3~ and Q~1~ is called the interquartile range (aka. IQR). Then, outliers are identified as observations above 1.5 times IQR above Q~3~ or 1.5 times IQR below Q~1~. Here's the mathematical notation:
 
 $$
 Q_3+1.5*IQR\quad\text{or}\quad Q_1-1.5* IQR
 $$
+
+Let's try this in R. First, let's get Q~1~, Q~3~, and IQR. Then, we'll use these three values in `filter()` within a good ol' fashioned `dplyr` pipeline:
 
 ```{r}
 #| eval: false
@@ -118,6 +120,8 @@ ptk |>
   filter(VOT_z > -2 & VOT_z < 2) |> 
   dim()
 ```
+
+## Two continuous variables
 
 When you're looking for outliers across two variables, visual inspection is probaby the easiest way. Here's a toy example:
 
