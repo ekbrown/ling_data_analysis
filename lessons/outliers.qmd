@@ -12,11 +12,11 @@ Students will detect and remove outliers of continuous variables.
 
 Outliers of continuous or quantitative variables have extreme values, either extremely low or extremely high. Let's consider this vector of (human) babies heights in inches: `c(21, 19, 20, 18, 20, 73, 22, 18, 19)`. Wait, what? A baby that is 73 inches tall?! That must be an adult. That height is an outlier because it doesn't come from the same population (i.e., babies).
 
-How about this vector of (modern, human) ages of eight siblings: `c(39, 38, 37, 356, 34, 33, 33, 31, 25)`. A modern human being with an age of 365 years?! This is probably a simple data entry mistake (probably the 5 and 6 keys pressed together). The best thing to do would be to take down the right age, and if not, consider this extreme age as an outlier.
+How about this vector of (modern, human) ages of eight siblings: `c(39, 38, 37, 356, 34, 33, 33, 31, 25)`. A modern human being with an age of 365 years?! This is probably a simple data entry mistake (probably the 5 and 6 keys pressed together). The best thing to do here would be to track down the right age, and if that's not possible, consider this extreme age as an outlier and remove it.
 
-Let's consider a third vector of number, this time of the number of children that each of the previously mentioned siblings have: `c(0, 2, 8, 1, 0, 2, 2, 2, 0)`. Wait, someone has eight kids?! Oh yeah, nevermind, that's not uncommon in certain religious groups. So, in this case the eight is an extreme value but not an outlier.
+Let's consider a third vector of number, this time of the number of children that each of the previously mentioned siblings have: `c(0, 2, 8, 1, 0, 2, 2, 2, 0)`. Wait, someone has eight kids?! Oh yeah, nevermind, that's not uncommon in certain religious groups. So, in this case the eight is an extreme value but not an outlier, and it should be kept in the dataset.
 
-**Moral of the story**: It's a (really) good idea to investigate extreme values in order to make sure they actually are outliers that should be excluded, rather than simply extreme values that should still be included.
+**Moral of the story**: It's a (really) good idea to investigate extreme values in order to make sure they actually are outliers that should be excluded, rather than simply extreme values that should still be kept in.
 
 ## How to remove outliers
 
@@ -24,7 +24,7 @@ There are a couple ways to identify (possible) outliers. One is based on the mea
 
 ### Mean and standard deviation
 
-A common way in linguistics to remove outliers is to remove data points that lay outside of the first two standard deviations above or below the mean value of a given continuous variable. Here's the mathematical formula to find the threshold below which or above which outliers can be detected:
+A common way in linguistics to remove outliers is to remove data points that lay outside of the first two standard deviations above or below the mean value of a given continuous variable. Here's the mathematical formula to find the threshold below which or above which possible outliers are detected:
 
 $$
 threshold = μ ± 2 * σ
@@ -44,7 +44,7 @@ tibble(baby_heights) |>
 
 So, the mean is $25.6$ and the standard deviation is $17.8$. So, values below the mean minus two times the standard deviation (i.e., $25.6-2*17.8=-10$), and values above the mean plus two times the standard deviation (i.e., $25.6+2*17.8=61.2$), might safely be considered outliers and can be removed.
 
-Of course, we don't have to do this math by hand, but rather can have R do it for us:
+Of course, we don't have to do this math by hand:
 
 ```{r}
 #| eval: false
@@ -60,10 +60,11 @@ Perhaps an easier way to do the previous filtering is to first create a new colu
 ```{r}
 #| eval: false
 tibble(baby_heights) |> 
-  mutate(z_height = as.vector(scale(baby_heights))) |> filter(z_height > -2 & z_height < 2)
+  mutate(z_height = as.vector(scale(baby_heights))) |>
+  filter(z_height > -2 & z_height < 2)
 ```
 
-What is a z-score, you ask? It is a centered and scaled (aka. normalized) set of values. It is calculated as taking the mean and the standard deviation, and then taking each value and substracting the mean of all numbers, and then dividing the difference by the standard deviation of all values. Here's the mathematical formula to do that:
+What is a z-score, you ask? It is a centered and scaled (aka. normalized) set of values. It is calculated by taking the mean and the standard deviation of a continuous variable, and then taking each value and subtracting the mean, and then dividing that difference by the standard deviation. Here's the mathematical formula to do that:
 
 $$
 z=\frac{x-μ}{σ}
@@ -79,9 +80,25 @@ $$
 Q_3+1.5*IQR\quad\text{or}\quad Q_1-1.5* IQR
 $$
 
+```{r}
+#| eval: false
+quartiles <- tibble(baby_heights) |> 
+  pull(baby_heights) |> 
+  quantile(probs = c(0.25, 0.75))
+q1 <- quartiles[1]
+q3 <- quartiles[2]
+iqr <- q3 - q1
+
+# here we go with the actual filtering
+tibble(baby_heights) |> 
+  filter(
+    baby_heights > q1 - 1.5 * iqr & 
+    baby_heights < q3 + 1.5 * iqr)
+```
+
 ## Activity
 
-Load up a dataset of your choice, for example, from the Dataset module in Canvas, and test several different continuous variables to see if any of them have outliers, and if so, how many outliers.
+Load up a dataset of your choice, for example, from the Dataset module in Canvas, and test several different continuous variables to see if any of them have outliers, and if so, how many outliers. Choose either method to identify (possible) outliers.
 
 After a good-faith effort, if you need help take a look at Dr. Brown's code below:
 

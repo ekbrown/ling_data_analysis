@@ -345,16 +345,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="extreme-values-vs.-outliers">Extreme values vs.&nbsp;outliers</h2>
 <p>(Thanks to Joey Stanley for some of this material!)</p>
 <p>Outliers of continuous or quantitative variables have extreme values, either extremely low or extremely high. Let’s consider this vector of (human) babies heights in inches: <code>c(21, 19, 20, 18, 20, 73, 22, 18, 19)</code>. Wait, what? A baby that is 73 inches tall?! That must be an adult. That height is an outlier because it doesn’t come from the same population (i.e., babies).</p>
-<p>How about this vector of (modern, human) ages of eight siblings: <code>c(39, 38, 37, 356, 34, 33, 33, 31, 25)</code>. A modern human being with an age of 365 years?! This is probably a simple data entry mistake (probably the 5 and 6 keys pressed together). The best thing to do would be to take down the right age, and if not, consider this extreme age as an outlier.</p>
-<p>Let’s consider a third vector of number, this time of the number of children that each of the previously mentioned siblings have: <code>c(0, 2, 8, 1, 0, 2, 2, 2, 0)</code>. Wait, someone has eight kids?! Oh yeah, nevermind, that’s not uncommon in certain religious groups. So, in this case the eight is an extreme value but not an outlier.</p>
-<p><strong>Moral of the story</strong>: It’s a (really) good idea to investigate extreme values in order to make sure they actually are outliers that should be excluded, rather than simply extreme values that should still be included.</p>
+<p>How about this vector of (modern, human) ages of eight siblings: <code>c(39, 38, 37, 356, 34, 33, 33, 31, 25)</code>. A modern human being with an age of 365 years?! This is probably a simple data entry mistake (probably the 5 and 6 keys pressed together). The best thing to do here would be to track down the right age, and if that’s not possible, consider this extreme age as an outlier and remove it.</p>
+<p>Let’s consider a third vector of number, this time of the number of children that each of the previously mentioned siblings have: <code>c(0, 2, 8, 1, 0, 2, 2, 2, 0)</code>. Wait, someone has eight kids?! Oh yeah, nevermind, that’s not uncommon in certain religious groups. So, in this case the eight is an extreme value but not an outlier, and it should be kept in the dataset.</p>
+<p><strong>Moral of the story</strong>: It’s a (really) good idea to investigate extreme values in order to make sure they actually are outliers that should be excluded, rather than simply extreme values that should still be kept in.</p>
 </section>
 <section id="how-to-remove-outliers" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-remove-outliers">How to remove outliers</h2>
 <p>There are a couple ways to identify (possible) outliers. One is based on the mean and the standard deviation of the observation. Another way is based on the interquartile range.</p>
 <section id="mean-and-standard-deviation" class="level3">
 <h3 class="anchored" data-anchor-id="mean-and-standard-deviation">Mean and standard deviation</h3>
-<p>A common way in linguistics to remove outliers is to remove data points that lay outside of the first two standard deviations above or below the mean value of a given continuous variable. Here’s the mathematical formula to find the threshold below which or above which outliers can be detected:</p>
+<p>A common way in linguistics to remove outliers is to remove data points that lay outside of the first two standard deviations above or below the mean value of a given continuous variable. Here’s the mathematical formula to find the threshold below which or above which possible outliers are detected:</p>
 <p><span class="math display">\[
 threshold = μ ± 2 * σ
 \]</span></p>
@@ -367,7 +367,7 @@ threshold = μ ± 2 * σ
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(baby_heights), <span class="fu">sd</span>(baby_heights))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So, the mean is <span class="math inline">\(25.6\)</span> and the standard deviation is <span class="math inline">\(17.8\)</span>. So, values below the mean minus two times the standard deviation (i.e., <span class="math inline">\(25.6-2*17.8=-10\)</span>), and values above the mean plus two times the standard deviation (i.e., <span class="math inline">\(25.6+2*17.8=61.2\)</span>), might safely be considered outliers and can be removed.</p>
-<p>Of course, we don’t have to do this math by hand, but rather can have R do it for us:</p>
+<p>Of course, we don’t have to do this math by hand:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(baby_heights) <span class="sc">|&gt;</span> </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
@@ -378,9 +378,10 @@ threshold = μ ± 2 * σ
 <p>Perhaps an easier way to do the previous filtering is to first create a new column with z-score values of the original ages, and then simply filter on <span class="math inline">\(±2\)</span>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(baby_heights) <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">z_height =</span> <span class="fu">as.vector</span>(<span class="fu">scale</span>(baby_heights))) <span class="sc">|&gt;</span> <span class="fu">filter</span>(z_height <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">&amp;</span> z_height <span class="sc">&lt;</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">z_height =</span> <span class="fu">as.vector</span>(<span class="fu">scale</span>(baby_heights))) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(z_height <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">&amp;</span> z_height <span class="sc">&lt;</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>What is a z-score, you ask? It is a centered and scaled (aka. normalized) set of values. It is calculated as taking the mean and the standard deviation, and then taking each value and substracting the mean of all numbers, and then dividing the difference by the standard deviation of all values. Here’s the mathematical formula to do that:</p>
+<p>What is a z-score, you ask? It is a centered and scaled (aka. normalized) set of values. It is calculated by taking the mean and the standard deviation of a continuous variable, and then taking each value and subtracting the mean, and then dividing that difference by the standard deviation. Here’s the mathematical formula to do that:</p>
 <p><span class="math display">\[
 z=\frac{x-μ}{σ}
 \]</span></p>
@@ -392,44 +393,58 @@ z=\frac{x-μ}{σ}
 <p><span class="math display">\[
 Q_3+1.5*IQR\quad\text{or}\quad Q_1-1.5* IQR
 \]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>quartiles <span class="ot">&lt;-</span> <span class="fu">tibble</span>(baby_heights) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(baby_heights) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">quantile</span>(<span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>q1 <span class="ot">&lt;-</span> quartiles[<span class="dv">1</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>q3 <span class="ot">&lt;-</span> quartiles[<span class="dv">2</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>iqr <span class="ot">&lt;-</span> q3 <span class="sc">-</span> q1</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># here we go with the actual filtering</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(baby_heights) <span class="sc">|&gt;</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    baby_heights <span class="sc">&gt;</span> q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr <span class="sc">&amp;</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    baby_heights <span class="sc">&lt;</span> q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 <section id="activity" class="level2">
 <h2 class="anchored" data-anchor-id="activity">Activity</h2>
-<p>Load up a dataset of your choice, for example, from the Dataset module in Canvas, and test several different continuous variables to see if any of them have outliers, and if so, how many outliers.</p>
+<p>Load up a dataset of your choice, for example, from the Dataset module in Canvas, and test several different continuous variables to see if any of them have outliers, and if so, how many outliers. Choose either method to identify (possible) outliers.</p>
 <p>After a good-faith effort, if you need help take a look at Dr.&nbsp;Brown’s code below:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ptk <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/ekb5/Documents/data_analysis/datasets/Data_ptk.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"data"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># get the number of rows and columns</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>ptk <span class="sc">|&gt;</span> <span class="fu">dim</span>() <span class="co"># rows, columns</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># filter outliers below or above two standard deviations from the mean and then get the number of rows and columns again</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ptk <span class="sc">|&gt;</span> </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">VOT_z =</span> <span class="fu">as.vector</span>(<span class="fu">scale</span>(VOT))) <span class="sc">|&gt;</span> </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(VOT_z <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">&amp;</span> VOT_z <span class="sc">&lt;</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ptk <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/ekb5/Documents/data_analysis/datasets/Data_ptk.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"data"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># get the number of rows and columns</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>ptk <span class="sc">|&gt;</span> <span class="fu">dim</span>() <span class="co"># rows, columns</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># filter outliers below or above two standard deviations from the mean and then get the number of rows and columns again</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>ptk <span class="sc">|&gt;</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">VOT_z =</span> <span class="fu">as.vector</span>(<span class="fu">scale</span>(VOT))) <span class="sc">|&gt;</span> </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(VOT_z <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">&amp;</span> VOT_z <span class="sc">&lt;</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>When you’re looking for outliers across two variables, visual inspection is probaby the easiest way. Here’s a toy example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">min =</span> <span class="dv">23</span>, <span class="at">max =</span> <span class="dv">67</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">jitter</span>(x <span class="sc">*</span> <span class="fl">3.1415926</span>, <span class="at">amount =</span> <span class="dv">20</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(x, y) <span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">59</span>, <span class="at">y =</span> <span class="dv">100</span>))</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y))<span class="sc">+</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">min =</span> <span class="dv">23</span>, <span class="at">max =</span> <span class="dv">67</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">jitter</span>(x <span class="sc">*</span> <span class="fl">3.1415926</span>, <span class="at">amount =</span> <span class="dv">20</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(x, y) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">59</span>, <span class="at">y =</span> <span class="dv">100</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y))<span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As seen, there is an outlier below the majority of the data points (aka. observations). It would be good to filter the data frame in order to only see that particular observation. For example, we could filter so that only tokens with an <code>x</code> value greater than, say, 55 and a <code>y</code> value less than, say, 125 are kept:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x <span class="sc">&gt;</span> <span class="dv">55</span>, y <span class="sc">&lt;</span> <span class="dv">125</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x <span class="sc">&gt;</span> <span class="dv">55</span>, y <span class="sc">&lt;</span> <span class="dv">125</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It would be wise to go look at this particular token to determine if it’s simply an extreme value and should be kept, or if it’s an outlier that should be removed.</p>
 
