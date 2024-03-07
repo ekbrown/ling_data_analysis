@@ -1,0 +1,127 @@
+---
+title: "Detecting outliers"
+---
+
+## Objective
+
+Students will detect and remove outliers of continuous variables.
+
+## Extreme values vs. outliers
+
+(Thanks to Joey Stanley for some of this material!)
+
+Outliers of continuous or quantitative variables have extreme values, either extremely low or extremely high. Let's consider this vector of (human) babies heights in inches: `c(21, 19, 20, 18, 20, 73, 22, 18, 19)`. Wait, what? A baby that is 73 inches tall?! That must be an adult. That height is an outlier because it doesn't come from the same population (i.e., babies).
+
+How about this vector of (modern, human) ages of eight siblings: `c(39, 38, 37, 356, 34, 33, 33, 31, 25)`. A modern human being with an age of 365 years?! This is probably a simple data entry mistake (probably the 5 and 6 keys pressed together). The best thing to do would be to take down the right age, and if not, consider this extreme age as an outlier.
+
+Let's consider a third vector of number, this time of the number of children that each of the previously mentioned siblings have: `c(0, 2, 8, 1, 0, 2, 2, 2, 0)`. Wait, someone has eight kids?! Oh yeah, nevermind, that's not uncommon in certain religious groups. So, in this case the eight is an extreme value but not an outlier.
+
+**Moral of the story**: It's a (really) good idea to investigate extreme values in order to make sure they actually are outliers that should be excluded, rather than simply extreme values that should still be included.
+
+## How to remove outliers
+
+There are a couple ways to identify (possible) outliers. One is based on the mean and the standard deviation of the observation. Another way is based on the interquartile range.
+
+### Mean and standard deviation
+
+A common way in linguistics to remove outliers is to remove data points that lay outside of the first two standard deviations above or below the mean value of a given continuous variable. Here's the mathematical formula to find the threshold below which or above which outliers can be detected:
+
+$$
+threshold = μ ± 2 * σ
+$$
+
+...where $μ$ is the mean of all observations, and $σ$ is the standard deviation of all observations.
+
+Let's go back to our baby heights example above and calculate the mean and standard deviation:
+
+```{r}
+#| eval: false
+library("tidyverse")
+baby_heights <- c(21, 19, 20, 18, 20, 73, 22, 18, 19)
+tibble(baby_heights) |> 
+  summarize(mean(baby_heights), sd(baby_heights))
+```
+
+So, the mean is $25.6$ and the standard deviation is $17.8$. So, values below the mean minus two times the standard deviation (i.e., $25.6-2*17.8=-10$), and values above the mean plus two times the standard deviation (i.e., $25.6+2*17.8=61.2$), might safely be considered outliers and can be removed.
+
+Of course, we don't have to do this math by hand, but rather can have R do it for us:
+
+```{r}
+#| eval: false
+tibble(baby_heights) |> 
+  filter(
+    baby_heights > mean(baby_heights) - 2 * sd(baby_heights) & 
+    baby_heights < mean(baby_heights) + 2 *sd(baby_heights)
+  )
+```
+
+Perhaps an easier way to do the previous filtering is to first create a new column with z-score values of the original ages, and then simply filter on $±2$:
+
+```{r}
+#| eval: false
+tibble(baby_heights) |> 
+  mutate(z_height = as.vector(scale(baby_heights))) |> filter(z_height > -2 & z_height < 2)
+```
+
+What is a z-score, you ask? It is a centered and scaled (aka. normalized) set of values. It is calculated as taking the mean and the standard deviation, and then taking each value and substracting the mean of all numbers, and then dividing the difference by the standard deviation of all values. Here's the mathematical formula to do that:
+
+$$
+z=\frac{x-μ}{σ}
+$$
+
+...where $x$ is each observation, $μ$ is the mean of all observations, and $σ$ is the standard deviation of all observations.
+
+### Interquartile range
+
+Another way to identify (possible) outliers is by finding the first quartile (i.e., the 25th percentile, aka. Q~1~) and the third quartile (i.e., the 75th percentile, aka. Q~3~), and then calculating the difference between those two quartiles. The difference between Q~3~ and Q~1~ is called the interquartile range (aka. IQR). Then, outliers are identified as observations above 1.5 times IQR above Q~3~ or 1.5 times IQR below Q~1~. Here's a mathematical notation:
+
+$$
+Q_3+1.5*IQR\quad\text{or}\quad Q_1-1.5* IQR
+$$
+
+## Activity
+
+Load up a dataset of your choice, for example, from the Dataset module in Canvas, and test several different continuous variables to see if any of them have outliers, and if so, how many outliers.
+
+After a good-faith effort, if you need help take a look at Dr. Brown's code below:
+
+```{r}
+#| eval: false
+#| code-fold: true
+library("tidyverse")
+library("readxl")
+ptk <- read_excel("/Users/ekb5/Documents/data_analysis/datasets/Data_ptk.xlsx", sheet = "data")
+
+# get the number of rows and columns
+ptk |> dim() # rows, columns
+
+# filter outliers below or above two standard deviations from the mean and then get the number of rows and columns again
+ptk |> 
+  mutate(VOT_z = as.vector(scale(VOT))) |> 
+  filter(VOT_z > -2 & VOT_z < 2) |> 
+  dim()
+```
+
+When you're looking for outliers across two variables, visual inspection is probaby the easiest way. Here's a toy example:
+
+```{r}
+#| eval: false
+library("tidyverse")
+x <- runif(n = 100, min = 23, max = 67)
+y <- jitter(x * 3.1415926, amount = 20)
+df <- tibble(x, y) |> 
+  bind_rows(tibble(x = 59, y = 100))
+df |> 
+  ggplot(aes(x = x, y = y))+
+  geom_point()
+```
+
+As seen, there is an outlier below the majority of the data points (aka. observations). It would be good to filter the data frame in order to only see that particular observation. For example, we could filter so that only tokens with an `x` value greater than, say, 55 and a `y` value less than, say, 125 are kept:
+
+```{r}
+#| eval: false
+df |> 
+  filter(x > 55, y < 125)
+```
+
+It would be wise to go look at this particular token to determine if it's simply an extreme value and should be kept, or if it's an outlier that should be removed.

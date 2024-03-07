@@ -1,0 +1,19 @@
+---
+title: "demo"
+---
+
+## Objective
+
+Students will learn about `Quarto`.
+
+## Let's get rollin'!
+
+What should I write? Here's an example of some code:
+
+```{r}
+#| eval: true
+#| code-fold: true
+print("hola mundo")
+```
+
+I just said "hello" in Spanish, with the code `print("hola mundo")`

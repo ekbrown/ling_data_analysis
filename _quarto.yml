@@ -39,6 +39,9 @@ website:
       - section: "Other languages"
         contents:
           - lessons/python.qmd
+      - section: "Descriptive stats"
+        contents:
+          - lessons/outliers.qmd
 format:
   html:
     theme: cosmo

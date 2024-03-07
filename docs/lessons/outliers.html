@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - About</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Detecting outliers</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,23 +57,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./EKB_2023_icon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../EKB_2023_icon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -95,8 +95,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -108,9 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-      Lesson Plans for Linguistic Data Analysis with R
-      </li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/outliers.html">Descriptive stats</a></li><li class="breadcrumb-item"><a href="../lessons/outliers.html">Detecting outliers</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -125,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Lesson Plans for Linguistic Data Analysis with R</a> 
+      <a href="../">Lesson Plans for Linguistic Data Analysis with R</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -137,7 +137,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -152,31 +152,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">R and RStudio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/programming_basics.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/programming_basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Programming basics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/data_structures.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/data_structures.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data structures in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/File_IO.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/File_IO.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">File I/O in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/regexes.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/regexes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regular expressions</span></a>
   </div>
 </li>
@@ -193,19 +193,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/create_freq.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/create_freq.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Creating frequency lists</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/webscrape_freq.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/webscrape_freq.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Webscrape frequencies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/quanteda.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/quanteda.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">quanteda</span></a>
   </div>
 </li>
@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/wrangling.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/wrangling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Wrangling</span></a>
   </div>
 </li>
@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/visualization.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/visualization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Visualization</span></a>
   </div>
 </li>
@@ -256,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/quarto.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/quarto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Quarto documents</span></a>
   </div>
 </li>
@@ -273,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/python.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/python.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Other languages</span></a>
   </div>
 </li>
@@ -290,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/outliers.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/outliers.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Detecting outliers</span></a>
   </div>
 </li>
@@ -302,14 +302,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#extreme-values-vs.-outliers" id="toc-extreme-values-vs.-outliers" class="nav-link" data-scroll-target="#extreme-values-vs.-outliers">Extreme values vs.&nbsp;outliers</a></li>
+  <li><a href="#how-to-remove-outliers" id="toc-how-to-remove-outliers" class="nav-link" data-scroll-target="#how-to-remove-outliers">How to remove outliers</a>
+  <ul class="collapse">
+  <li><a href="#mean-and-standard-deviation" id="toc-mean-and-standard-deviation" class="nav-link" data-scroll-target="#mean-and-standard-deviation">Mean and standard deviation</a></li>
+  <li><a href="#interquartile-range" id="toc-interquartile-range" class="nav-link" data-scroll-target="#interquartile-range">Interquartile range</a></li>
+  </ul></li>
+  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Detecting outliers</h1>
 </div>
 
 
@@ -324,16 +337,104 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>About this site</p>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">Objective</h2>
+<p>Students will detect and remove outliers of continuous variables.</p>
+</section>
+<section id="extreme-values-vs.-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="extreme-values-vs.-outliers">Extreme values vs.&nbsp;outliers</h2>
+<p>(Thanks to Joey Stanley for some of this material!)</p>
+<p>Outliers of continuous or quantitative variables have extreme values, either extremely low or extremely high. Let’s consider this vector of (human) babies heights in inches: <code>c(21, 19, 20, 18, 20, 73, 22, 18, 19)</code>. Wait, what? A baby that is 73 inches tall?! That must be an adult. That height is an outlier because it doesn’t come from the same population (i.e., babies).</p>
+<p>How about this vector of (modern, human) ages of eight siblings: <code>c(39, 38, 37, 356, 34, 33, 33, 31, 25)</code>. A modern human being with an age of 365 years?! This is probably a simple data entry mistake (probably the 5 and 6 keys pressed together). The best thing to do would be to take down the right age, and if not, consider this extreme age as an outlier.</p>
+<p>Let’s consider a third vector of number, this time of the number of children that each of the previously mentioned siblings have: <code>c(0, 2, 8, 1, 0, 2, 2, 2, 0)</code>. Wait, someone has eight kids?! Oh yeah, nevermind, that’s not uncommon in certain religious groups. So, in this case the eight is an extreme value but not an outlier.</p>
+<p><strong>Moral of the story</strong>: It’s a (really) good idea to investigate extreme values in order to make sure they actually are outliers that should be excluded, rather than simply extreme values that should still be included.</p>
+</section>
+<section id="how-to-remove-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-remove-outliers">How to remove outliers</h2>
+<p>There are a couple ways to identify (possible) outliers. One is based on the mean and the standard deviation of the observation. Another way is based on the interquartile range.</p>
+<section id="mean-and-standard-deviation" class="level3">
+<h3 class="anchored" data-anchor-id="mean-and-standard-deviation">Mean and standard deviation</h3>
+<p>A common way in linguistics to remove outliers is to remove data points that lay outside of the first two standard deviations above or below the mean value of a given continuous variable. Here’s the mathematical formula to find the threshold below which or above which outliers can be detected:</p>
+<p><span class="math display">\[
+threshold = μ ± 2 * σ
+\]</span></p>
+<p>…where <span class="math inline">\(μ\)</span> is the mean of all observations, and <span class="math inline">\(σ\)</span> is the standard deviation of all observations.</p>
+<p>Let’s go back to our baby heights example above and calculate the mean and standard deviation:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>baby_heights <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">21</span>, <span class="dv">19</span>, <span class="dv">20</span>, <span class="dv">18</span>, <span class="dv">20</span>, <span class="dv">73</span>, <span class="dv">22</span>, <span class="dv">18</span>, <span class="dv">19</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(baby_heights) <span class="sc">|&gt;</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(baby_heights), <span class="fu">sd</span>(baby_heights))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>So, the mean is <span class="math inline">\(25.6\)</span> and the standard deviation is <span class="math inline">\(17.8\)</span>. So, values below the mean minus two times the standard deviation (i.e., <span class="math inline">\(25.6-2*17.8=-10\)</span>), and values above the mean plus two times the standard deviation (i.e., <span class="math inline">\(25.6+2*17.8=61.2\)</span>), might safely be considered outliers and can be removed.</p>
+<p>Of course, we don’t have to do this math by hand, but rather can have R do it for us:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(baby_heights) <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    baby_heights <span class="sc">&gt;</span> <span class="fu">mean</span>(baby_heights) <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sd</span>(baby_heights) <span class="sc">&amp;</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    baby_heights <span class="sc">&lt;</span> <span class="fu">mean</span>(baby_heights) <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span><span class="fu">sd</span>(baby_heights)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>My name is Earl Kjar Brown and I’m a Dane.</p>
+<p>Perhaps an easier way to do the previous filtering is to first create a new column with z-score values of the original ages, and then simply filter on <span class="math inline">\(±2\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(baby_heights) <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">z_height =</span> <span class="fu">as.vector</span>(<span class="fu">scale</span>(baby_heights))) <span class="sc">|&gt;</span> <span class="fu">filter</span>(z_height <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">&amp;</span> z_height <span class="sc">&lt;</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What is a z-score, you ask? It is a centered and scaled (aka. normalized) set of values. It is calculated as taking the mean and the standard deviation, and then taking each value and substracting the mean of all numbers, and then dividing the difference by the standard deviation of all values. Here’s the mathematical formula to do that:</p>
+<p><span class="math display">\[
+z=\frac{x-μ}{σ}
+\]</span></p>
+<p>…where <span class="math inline">\(x\)</span> is each observation, <span class="math inline">\(μ\)</span> is the mean of all observations, and <span class="math inline">\(σ\)</span> is the standard deviation of all observations.</p>
+</section>
+<section id="interquartile-range" class="level3">
+<h3 class="anchored" data-anchor-id="interquartile-range">Interquartile range</h3>
+<p>Another way to identify (possible) outliers is by finding the first quartile (i.e., the 25th percentile, aka. Q<sub>1</sub>) and the third quartile (i.e., the 75th percentile, aka. Q<sub>3</sub>), and then calculating the difference between those two quartiles. The difference between Q<sub>3</sub> and Q<sub>1</sub> is called the interquartile range (aka. IQR). Then, outliers are identified as observations above 1.5 times IQR above Q<sub>3</sub> or 1.5 times IQR below Q<sub>1</sub>. Here’s a mathematical notation:</p>
+<p><span class="math display">\[
+Q_3+1.5*IQR\quad\text{or}\quad Q_1-1.5* IQR
+\]</span></p>
+</section>
+</section>
+<section id="activity" class="level2">
+<h2 class="anchored" data-anchor-id="activity">Activity</h2>
+<p>Load up a dataset of your choice, for example, from the Dataset module in Canvas, and test several different continuous variables to see if any of them have outliers, and if so, how many outliers.</p>
+<p>After a good-faith effort, if you need help take a look at Dr.&nbsp;Brown’s code below:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ptk <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/ekb5/Documents/data_analysis/datasets/Data_ptk.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"data"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># get the number of rows and columns</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>ptk <span class="sc">|&gt;</span> <span class="fu">dim</span>() <span class="co"># rows, columns</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># filter outliers below or above two standard deviations from the mean and then get the number of rows and columns again</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ptk <span class="sc">|&gt;</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">VOT_z =</span> <span class="fu">as.vector</span>(<span class="fu">scale</span>(VOT))) <span class="sc">|&gt;</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(VOT_z <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">&amp;</span> VOT_z <span class="sc">&lt;</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>When you’re looking for outliers across two variables, visual inspection is probaby the easiest way. Here’s a toy example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">min =</span> <span class="dv">23</span>, <span class="at">max =</span> <span class="dv">67</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">jitter</span>(x <span class="sc">*</span> <span class="fl">3.1415926</span>, <span class="at">amount =</span> <span class="dv">20</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(x, y) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">59</span>, <span class="at">y =</span> <span class="dv">100</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y))<span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As seen, there is an outlier below the majority of the data points (aka. observations). It would be good to filter the data frame in order to only see that particular observation. For example, we could filter so that only tokens with an <code>x</code> value greater than, say, 55 and a <code>y</code> value less than, say, 125 are kept:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x <span class="sc">&gt;</span> <span class="dv">55</span>, y <span class="sc">&lt;</span> <span class="dv">125</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It would be wise to go look at this particular token to determine if it’s simply an extreme value and should be kept, or if it’s an outlier that should be removed.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
