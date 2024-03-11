@@ -1,0 +1,39 @@
+---
+title: "t-test, Wilcoxon test"
+---
+
+## Objective
+
+Students will perform a t-test and a Wilcoxon test
+
+## Formative quiz
+
+Match each term with its corresponding definition.
+
+|                        |                                                                                                                    |
+|------------------------|--------------------------------------------------------------------------------------------------------------------|
+| sample                 | The group that is used to infer about a larger group                                                               |
+| population             | The group that the researcher want to know something about                                                         |
+| point estimate         | a single number that characterizes an aspect of a dataset                                                          |
+| confidence interval    | A range of values that is likely to contain the population value                                                   |
+| standard error         | A measure of how much uncertainty there is in the estimate of the sample mean                                      |
+| t-test                 | A parametric test with a continuous response variable and a categorical variable with exactly two levels           |
+| Wilcoxon test          | A non-parametric test                                                                                              |
+| sigma                  | A Greek letter that usually stands for the standard deviation of a continuous variable of the population           |
+| meu                    | a Greek letter that usually stands for the mean of a continuous variable of a population                           |
+| *n*                    | the number of data points (aka. observations)                                                                      |
+| x                      | A Romanized letter that usually stands for the explanatory variable                                                |
+| y                      | A Romanized letter that usually stands for the response variable.                                                  |
+| response variable      | The thing that is being studied (aka. dependent thing of study)                                                    |
+| explanatory variable   | Something that might affect the thing under study                                                                  |
+| z-score                | A value that is the result of converting a value into units of standard deviations from the mean                   |
+| meu hat                | The mean of the sample                                                                                             |
+| sigma hat              | The standard deviation of the sample                                                                               |
+| alpha level            | The threshold below which the null hypothesis can be rejected                                                      |
+| null hypothesis        | The proposition that there is no effect of the explanatory variable(s) on the response variable                    |
+| alternative hypothesis | The proposition that is likely an effect of the explanatory variable on the response variable                      |
+| normal distribution    | An ideal spread of data points around the central tendency; looks like a good ol' fashioned bell (aka. bell curve) |
+
+: Good ol' fashioned matching quiz
+
+## t-test

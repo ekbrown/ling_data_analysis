@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - R and RStudio</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - t-test, Wilcoxon test</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">R and RStudio</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/t-test.html">t-test, Wilcoxon test</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -116,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link active">
+  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">R and RStudio</span></a>
   </div>
 </li>
@@ -271,7 +271,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/t-test.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/t-test.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">t-test, Wilcoxon test</span></a>
   </div>
 </li>
@@ -288,10 +288,8 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
-  <li><a href="#the-r-programming-language" id="toc-the-r-programming-language" class="nav-link" data-scroll-target="#the-r-programming-language">The R programming language</a></li>
-  <li><a href="#rstudio-ide" id="toc-rstudio-ide" class="nav-link" data-scroll-target="#rstudio-ide">RStudio IDE</a></li>
-  <li><a href="#r-projects" id="toc-r-projects" class="nav-link" data-scroll-target="#r-projects">R projects</a></li>
-  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  <li><a href="#formative-quiz" id="toc-formative-quiz" class="nav-link" data-scroll-target="#formative-quiz">Formative quiz</a></li>
+  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test">t-test</a></li>
   </ul>
 </nav>
     </div>
@@ -300,7 +298,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">R and RStudio</h1>
+<h1 class="title">t-test, Wilcoxon test</h1>
 </div>
 
 
@@ -317,55 +315,107 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="objective" class="level2">
 <h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<ul>
-<li>Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)</li>
-</ul>
+<p>Students will perform a t-test and a Wilcoxon test</p>
 </section>
-<section id="the-r-programming-language" class="level2">
-<h2 class="anchored" data-anchor-id="the-r-programming-language">The R programming language</h2>
-<ul>
-<li><p>R (<a href="https://www.r-project.org/">here</a>) is a programming language specifically designed for statistical analysis and visualization.</p></li>
-<li><p>As an open-source language, there are many third-party add-on packages (<a href="https://cran.r-project.org/web/packages/index.html">here</a>) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN <a href="https://cran.r-project.org/index.html">here</a>).</p></li>
-<li><p>So called “Task Views” (<a href="https://cran.r-project.org/web/views/">here</a>) collect and briefly describe packages related to specific fields, including one for Natural Language Processing (<a href="https://cran.r-project.org/view=NaturalLanguageProcessing">here</a>).</p></li>
-</ul>
+<section id="formative-quiz" class="level2">
+<h2 class="anchored" data-anchor-id="formative-quiz">Formative quiz</h2>
+<p>Match each term with its corresponding definition.</p>
+<table class="table">
+<caption>Good ol’ fashioned matching quiz</caption>
+<colgroup>
+<col style="width: 17%">
+<col style="width: 82%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>sample</td>
+<td>The group that is used to infer about a larger group</td>
+</tr>
+<tr class="even">
+<td>population</td>
+<td>The group that the researcher want to know something about</td>
+</tr>
+<tr class="odd">
+<td>point estimate</td>
+<td>a single number that characterizes an aspect of a dataset</td>
+</tr>
+<tr class="even">
+<td>confidence interval</td>
+<td>A range of values that is likely to contain the population value</td>
+</tr>
+<tr class="odd">
+<td>standard error</td>
+<td>A measure of how much uncertainty there is in the estimate of the sample mean</td>
+</tr>
+<tr class="even">
+<td>t-test</td>
+<td>A parametric test with a continuous response variable and a categorical variable with exactly two levels</td>
+</tr>
+<tr class="odd">
+<td>Wilcoxon test</td>
+<td>A non-parametric test</td>
+</tr>
+<tr class="even">
+<td>sigma</td>
+<td>A Greek letter that usually stands for the standard deviation of a continuous variable of the population</td>
+</tr>
+<tr class="odd">
+<td>meu</td>
+<td>a Greek letter that usually stands for the mean of a continuous variable of a population</td>
+</tr>
+<tr class="even">
+<td><em>n</em></td>
+<td>the number of data points (aka. observations)</td>
+</tr>
+<tr class="odd">
+<td>x</td>
+<td>A Romanized letter that usually stands for the explanatory variable</td>
+</tr>
+<tr class="even">
+<td>y</td>
+<td>A Romanized letter that usually stands for the response variable.</td>
+</tr>
+<tr class="odd">
+<td>response variable</td>
+<td>The thing that is being studied (aka. dependent thing of study)</td>
+</tr>
+<tr class="even">
+<td>explanatory variable</td>
+<td>Something that might affect the thing under study</td>
+</tr>
+<tr class="odd">
+<td>z-score</td>
+<td>A value that is the result of converting a value into units of standard deviations from the mean</td>
+</tr>
+<tr class="even">
+<td>meu hat</td>
+<td>The mean of the sample</td>
+</tr>
+<tr class="odd">
+<td>sigma hat</td>
+<td>The standard deviation of the sample</td>
+</tr>
+<tr class="even">
+<td>alpha level</td>
+<td>The threshold below which the null hypothesis can be rejected</td>
+</tr>
+<tr class="odd">
+<td>null hypothesis</td>
+<td>The proposition that there is no effect of the explanatory variable(s) on the response variable</td>
+</tr>
+<tr class="even">
+<td>alternative hypothesis</td>
+<td>The proposition that is likely an effect of the explanatory variable on the response variable</td>
+</tr>
+<tr class="odd">
+<td>normal distribution</td>
+<td>An ideal spread of data points around the central tendency; looks like a good ol’ fashioned bell (aka. bell curve)</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="rstudio-ide" class="level2">
-<h2 class="anchored" data-anchor-id="rstudio-ide">RStudio IDE</h2>
-<ul>
-<li><p>Integrated Development Environments (IDEs) facilitate writing computer code.</p></li>
-<li><p>RStudio (<a href="https://posit.co/downloads/">here</a>) from the company Posit (<a href="https://posit.co/">here</a>) is the go-to IDE for R.</p>
-<ul>
-<li><p>Has many useful keyboard shortcuts, cf.&nbsp;<code>Help &gt; Keyboard Shortcuts Help</code></p>
-<ul>
-<li><p>Earl’s favorites are:</p>
-<ul>
-<li><p>Assignment operator: <code>ALT + -</code></p></li>
-<li><p>Pipe operator in tidyverse: <code>CTRL/CMD + SHIFT + m</code></p></li>
-</ul></li>
-</ul></li>
-<li><p>Has many cheat sheets for various tools within R and RStudio, cf.&nbsp;<code>Help &gt; Cheat Sheets</code></p></li>
-</ul></li>
-</ul>
-</section>
-<section id="r-projects" class="level2">
-<h2 class="anchored" data-anchor-id="r-projects">R projects</h2>
-<ul>
-<li><p>R projects help keep things organized:</p>
-<ul>
-<li><p>Data files, like CSV (.csv) and/or Excel (.xlsx) files</p></li>
-<li><p>Source code files, like R scripts (.r or .R files)</p></li>
-</ul></li>
-<li><p>To create an R project:</p>
-<ul>
-<li><code>File &gt; New Project...</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="activity" class="level2">
-<h2 class="anchored" data-anchor-id="activity">Activity</h2>
-<ul>
-<li>Students explore R and RStudio IDE, perhaps using the RStudio cheat sheet (<code>Help &gt; Cheat Sheets &gt; RStudio IDE Cheat Sheet</code>)</li>
-</ul>
+<section id="t-test" class="level2">
+<h2 class="anchored" data-anchor-id="t-test">t-test</h2>
 
 
 </section>

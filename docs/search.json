@@ -224,46 +224,221 @@
     "text": "Small adjustments\n\nBackground color\nThe default color background of ggplot is gray, for example:\n\np &lt;- midpoints |&gt; \n  ggplot(aes(F2, F1, color = vowel)) + \n  geom_point(alpha = 0.5) + \n  stat_ellipse(level = 0.67) + \n  geom_text(data = F_means, aes(mean_F2, mean_F1, label = vowel), size = 5, color = \"black\")+\n  scale_x_reverse() + \n  scale_y_reverse()\nprint(p)\n\nAs you may have noticed by now, Dr. Brown prefers the black-n-white theme that theme_bw() gives.\n\np + theme_bw()\n\nAnother nice theme is theme_minimal(), which is basically the theme_bw() but without the border:\n\np + theme_minimal()\n\n\n\nActivity\nExploration time: Take a look at the docs for the themes by entering ?theme_bw at the console, and then try some of the other themes. Be ready to report on which theme you like the most, and which you like the least.\n\n\nLabels\nWe can add custom labels to our plots with the labs() layer.\n\np + \n  theme_classic()+\n  labs(title = \"F1 and F2 by Vowel\", subtitle = \"of Joey Stanley's speech\", x = \"Second formant (F2)\", y = \"First formant (F1)\")\n\nWe can also adjust the font, angle, horizontal and vertical adjustments of text on the plot, for example:\n\np +\n  theme_bw()+\n  theme(text = element_text(family = \"Times New Roman\"),)\n\nOr tilt the angle of the labels:\n\nmidpoints |&gt; \n  mutate(vowel = fct_infreq(vowel)) |&gt; \n  ggplot(aes(vowel)) + \n  geom_bar()+\n  theme_bw()+\n  theme(text = element_text(family = \"Times New Roman\"),\n        axis.text.x = element_text(angle = 45, hjust = 0.5, vjust = 0.5))\n\nHow about something as nasty as this?\n\np +\n  labs(title = \"Joey's vowels\", subtitle = \"Notice that this is left-aligned to the plotting area\") + \n    theme(plot.title = element_text(hjust = 0.2, vjust = 0.6, angle = 2, family = \"Avenir\", size = 18, color = \"forestgreen\", face = \"italic\", lineheight = 1.2, margin = margin(t = 1, r = 0.2, b = 1.4, l = -4, unit = \"cm\"), debug = TRUE))"
   },
   {
-    "objectID": "lessons/quarto.html",
-    "href": "lessons/quarto.html",
-    "title": "Quarto documents",
+    "objectID": "lessons/outliers.html",
+    "href": "lessons/outliers.html",
+    "title": "Detecting outliers",
     "section": "",
-    "text": "Students will write a Quarto document that integrates prose and code, and the output of the code."
+    "text": "Students will detect and remove outliers of continuous variables."
   },
   {
-    "objectID": "lessons/quarto.html#objective",
-    "href": "lessons/quarto.html#objective",
-    "title": "Quarto documents",
+    "objectID": "lessons/outliers.html#objective",
+    "href": "lessons/outliers.html#objective",
+    "title": "Detecting outliers",
     "section": "",
-    "text": "Students will write a Quarto document that integrates prose and code, and the output of the code."
+    "text": "Students will detect and remove outliers of continuous variables."
   },
   {
-    "objectID": "lessons/quarto.html#reproducible-research",
-    "href": "lessons/quarto.html#reproducible-research",
-    "title": "Quarto documents",
-    "section": "Reproducible research",
-    "text": "Reproducible research\nClearing laying out methods is an important consideration when publishing original research so that others can reproduce or replicate your research. One useful way to do that is to make available the computer code that goes into the data collection and data analysis parts of the research process.\nEnter documents that knit together code and prose. The current cool-kid-on-the-block is the Quarto document. All the lesson plans that Dr. Brown has created have been produced as Quarto documents. The RStudio IDE makes it super easy to write Quarto document and integrate R code (and Python and Julia code too!) with prose around the code. Also, the writer of the document can specify whether the output of the code is rendered. For example, Dr. Brown usually does not render the output of the R code."
+    "objectID": "lessons/outliers.html#extreme-values-vs.-outliers",
+    "href": "lessons/outliers.html#extreme-values-vs.-outliers",
+    "title": "Detecting outliers",
+    "section": "Extreme values vs. outliers",
+    "text": "Extreme values vs. outliers\n(Thanks to Joey Stanley for some of this material!)\nOutliers of continuous or quantitative variables have extreme values, either extremely low or extremely high. Let’s consider this vector of (human) babies heights in inches: c(21, 19, 20, 18, 20, 73, 22, 18, 19). Wait, what? A baby that is 73 inches tall?! That must be an adult. That height is an outlier because it doesn’t come from the same population (i.e., babies).\nHow about this vector of (modern, human) ages of eight siblings: c(39, 38, 37, 356, 34, 33, 33, 31, 25). A modern human being with an age of 365 years?! This is probably a simple data entry mistake (probably the 5 and 6 keys pressed together). The best thing to do here would be to track down the right age, and if that’s not possible, consider this extreme age as an outlier and remove it.\nLet’s consider a third vector of number, this time of the number of children that each of the previously mentioned siblings have: c(0, 2, 8, 1, 0, 2, 2, 2, 0). Wait, someone has eight kids?! Oh yeah, nevermind, that’s not uncommon in certain religious groups. So, in this case the eight is an extreme value but not an outlier, and it should be kept in the dataset.\nMoral of the story: It’s a (really) good idea to investigate extreme values in order to make sure they actually are outliers that should be excluded, rather than simply extreme values that should still be kept in."
   },
   {
-    "objectID": "lessons/quarto.html#getting-started",
-    "href": "lessons/quarto.html#getting-started",
-    "title": "Quarto documents",
-    "section": "Getting started",
-    "text": "Getting started\nSteps:\n\nWithin RStudio, click on File &gt; New File &gt; Quarto Document…\nGive the document a name\nStart writing prose and/or code!"
+    "objectID": "lessons/outliers.html#how-to-remove-outliers",
+    "href": "lessons/outliers.html#how-to-remove-outliers",
+    "title": "Detecting outliers",
+    "section": "How to remove outliers",
+    "text": "How to remove outliers\nThere are a couple ways to identify (possible) outliers. One is based on the mean and the standard deviation of the observations. Another way is based on the interquartile range of the observations.\n\nMean and standard deviation\nA common way in linguistics to remove outliers is to remove data points that lay outside of the first two standard deviations above or below the mean value of a given continuous variable. Here’s the mathematical formula to find the threshold below which or above which possible outliers are detected:\n\\[\nthreshold = μ ± 2 * σ\n\\]\n…where \\(μ\\) is the mean of all observations, and \\(σ\\) is the standard deviation of all observations.\nLet’s go back to our baby heights example above and calculate the mean and standard deviation:\n\nlibrary(\"tidyverse\")\nbaby_heights &lt;- c(21, 19, 20, 18, 20, 73, 22, 18, 19)\ntibble(baby_heights) |&gt; \n  summarize(mean(baby_heights), sd(baby_heights))\n\nSo, the mean is \\(25.6\\) and the standard deviation is \\(17.8\\). So, values below the mean minus two times the standard deviation (i.e., \\(25.6-2*17.8=-10\\)), and values above the mean plus two times the standard deviation (i.e., \\(25.6+2*17.8=61.2\\)), might safely be considered outliers and can be removed.\nOf course, we don’t have to do this math by hand:\n\ntibble(baby_heights) |&gt; \n  filter(\n    baby_heights &gt; mean(baby_heights) - 2 * sd(baby_heights) & \n    baby_heights &lt; mean(baby_heights) + 2 *sd(baby_heights)\n  )\n\nPerhaps an easier way to do the previous filtering is to first create a new column with z-score values of the original ages, and then simply filter on \\(±2\\):\n\ntibble(baby_heights) |&gt; \n  mutate(z_height = as.vector(scale(baby_heights))) |&gt;\n  filter(z_height &gt; -2 & z_height &lt; 2)\n\nWhat is a z-score, you ask? It is a centered and scaled (aka. normalized) set of values. It is calculated by taking the mean and the standard deviation of a continuous variable, and then taking each value and subtracting the mean, and then dividing that difference by the standard deviation. Here’s the mathematical formula to do that:\n\\[\nz=\\frac{x-μ}{σ}\n\\]\n…where \\(x\\) is each observation, \\(μ\\) is the mean of all observations, and \\(σ\\) is the standard deviation of all observations.\n\n\nInterquartile range\nAnother way to identify (possible) outliers is by finding the first quartile (i.e., the 25th percentile, aka. Q1) and the third quartile (i.e., the 75th percentile, aka. Q3), and then calculating the difference between those two quartiles. The difference between Q3 and Q1 is called the interquartile range (aka. IQR). Then, outliers are identified as observations above 1.5 times IQR above Q3 or 1.5 times IQR below Q1. Here’s the mathematical notation:\n\\[\nQ_3+1.5*IQR\\quad\\text{or}\\quad Q_1-1.5* IQR\n\\]\nLet’s try this in R. First, let’s get Q1, Q3, and IQR. Then, we’ll use these three values in filter() within a good ol’ fashioned dplyr pipeline:\n\nquartiles &lt;- tibble(baby_heights) |&gt; \n  pull(baby_heights) |&gt; \n  quantile(probs = c(0.25, 0.75))\nq1 &lt;- quartiles[1]\nq3 &lt;- quartiles[2]\niqr &lt;- q3 - q1\n\n# here we go with the actual filtering\ntibble(baby_heights) |&gt; \n  filter(\n    baby_heights &gt; q1 - 1.5 * iqr & \n    baby_heights &lt; q3 + 1.5 * iqr)"
   },
   {
-    "objectID": "lessons/quarto.html#choose-your-own-adventure",
-    "href": "lessons/quarto.html#choose-your-own-adventure",
-    "title": "Quarto documents",
-    "section": "Choose your own adventure",
-    "text": "Choose your own adventure\n…Or jump between adventures, as needed.\nWithin RStudio, you can use the Source editor or the Visual editor, or jump back and forth as needed. For example, Dr. Brown uses the Visual editor the vast majority of the time, but occasionally jumps over to the Source editor in order to have more control over formatting.\nIn order to insert a code block on a new line, you can type a forward slash “/”, and a drop-down menu will appear from which you can select the type of code you want to insert (most commonly R code). There’s also a keyboard short to insert an R code block: Mac &gt; Cmd + Opt + i; Windows &gt; Ctrl + Alt + i."
+    "objectID": "lessons/outliers.html#activity",
+    "href": "lessons/outliers.html#activity",
+    "title": "Detecting outliers",
+    "section": "Activity",
+    "text": "Activity\nLoad up a dataset of your choice, for example, from the Dataset module in Canvas, and test several different continuous variables to see if any of them have outliers, and if so, how many outliers. Choose either method to identify (possible) outliers.\nAfter a good-faith effort, if you need help take a look at Dr. Brown’s code below:\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"readxl\")\nptk &lt;- read_excel(\"/Users/ekb5/Documents/data_analysis/datasets/Data_ptk.xlsx\", sheet = \"data\")\n\n# get the number of rows and columns\nptk |&gt; dim() # rows, columns\n\n# filter outliers below or above two standard deviations from the mean and then get the number of rows and columns again\nptk |&gt; \n  mutate(VOT_z = as.vector(scale(VOT))) |&gt; \n  filter(VOT_z &gt; -2 & VOT_z &lt; 2) |&gt; \n  dim()"
   },
   {
-    "objectID": "lessons/quarto.html#markdown-syntax",
-    "href": "lessons/quarto.html#markdown-syntax",
-    "title": "Quarto documents",
-    "section": "Markdown syntax",
-    "text": "Markdown syntax\nQuarto documents accept Markdown syntax to format the prose. It provides the basics of word processing documents, like different levels of headers, bold font, italics, underlined, etc. Importantly and usefully, it also provides a way to format code within the prose, for example, print(\"hello world\") returns hello world.\n\nActivity\nTake a look at the two cheatsheets that RStudio has about Markdown syntax (Help &gt; Cheat Sheets &gt; R Markdown Cheat Sheet & R Markdown Reference Guide) or websites about Markdown, for example, markdownguide.org.\nNow, create a Quarto document and use the Source editor only to create a (simple) HTML output document.\nNext, create another Quarto document, but this time, use the Visual editor as much as possible.\nBe prepared to share your documents with the members of the class."
+    "objectID": "lessons/outliers.html#two-continuous-variables",
+    "href": "lessons/outliers.html#two-continuous-variables",
+    "title": "Detecting outliers",
+    "section": "Two continuous variables",
+    "text": "Two continuous variables\nWhen you’re looking for outliers across two variables, visual inspection is probaby the easiest way. Here’s a toy example:\n\nlibrary(\"tidyverse\")\nx &lt;- runif(n = 100, min = 23, max = 67)\ny &lt;- jitter(x * 3.1415926, amount = 20)\ndf &lt;- tibble(x, y) |&gt; \n  bind_rows(tibble(x = 59, y = 100))\ndf |&gt; \n  ggplot(aes(x = x, y = y))+\n  geom_point()\n\nAs seen, there is an outlier below the majority of the data points (aka. observations). It would be good to filter the data frame in order to only see that particular observation. For example, we could filter so that only tokens with an x value greater than, say, 55 and a y value less than, say, 125 are kept:\n\ndf |&gt; \n  filter(x &gt; 55, y &lt; 125)\n\nIt would be wise to go look at this particular token to determine if it’s simply an extreme value and should be kept, or if it’s an outlier that should be removed."
+  },
+  {
+    "objectID": "lessons/python.html",
+    "href": "lessons/python.html",
+    "title": "Other languages",
+    "section": "",
+    "text": "Students will write R code that calls other languages."
+  },
+  {
+    "objectID": "lessons/python.html#objective",
+    "href": "lessons/python.html#objective",
+    "title": "Other languages",
+    "section": "",
+    "text": "Students will write R code that calls other languages."
+  },
+  {
+    "objectID": "lessons/python.html#multilingual-programming-world",
+    "href": "lessons/python.html#multilingual-programming-world",
+    "title": "Other languages",
+    "section": "Multilingual programming world",
+    "text": "Multilingual programming world\nJust like human languages and all their variety and beauty, the variety of programming languages gives beauty to the computer world. More specifically, some programming languages are better suited than others for specific tasks. So, rather than having to be monolingual within only one programming language, we can use several languages as needed."
+  },
+  {
+    "objectID": "lessons/python.html#python",
+    "href": "lessons/python.html#python",
+    "title": "Other languages",
+    "section": "Python",
+    "text": "Python\nIt is Dr. Brown’s opinion that Python is the best language for text processing (and is an all-around great language for many tasks). Thus, when an R user has a need to do text processing, it might be better to call on Python for that specific task.\n\nThe reticulate R package\nThe reticulate R package allows R users to call Python from within R. Here’s a simple example:\n\n# R code here\nlibrary(\"reticulate\")\nuse_python(\"/usr/local/bin/python3\")\n\ntxt &lt;- \"The quick brown fox jumped over the lazy dog.\"\n\nnltk &lt;- import(\"nltk\")\ntokens &lt;- nltk$word_tokenize(txt)\nprint(tokens)\ntagged &lt;- nltk$pos_tag(tokens)\nprint(tagged)\n\nIf you know Python (and NLTK), you might remember that the output of this call in Python is a Python list of two-item tuples. Differently, here we get an R list (which is different from a Python list). We could continue to process this R list as needed, for example, looping over it in a for loop to find particular part-of-speech tags:\n\n# R code here\nfor (tag in tagged) {\n  if (tag[2] == \"NN\") {\n    print(tag[1])\n  }\n}\n\n\n\nWithin Quarto documents\nWe can also write Python code within code blocks in a Quarto document. When working in a Quarto document, you can type a forward slash and get a drop-down menu of possible things to insert into your document, one of which is a Python code block.\nThe following code blocks are written in a Quarto document (as Dr. Brown uses Quarto document for his lesson plans). The code is pure Python, as if he were writing Python code in a .py file. Here’s a first simple example:\n\n# Python code here\nprint(\"hello Python!\")\n\nhello Python!\n\n\nA more meaningful example might be to use the Natural Language Toolkit (NLTK) to tokenize word and perform part-of-speech tagging, like with did above within R using reticulate:. Differently, here, we don’t need reticulate because we calling Python directly on the computer, rather than through R.\n\n# more Python code here\nimport nltk\ntxt = \"The quick brown fox jumped over the lazy dog.\"\ntokens = nltk.word_tokenize(txt)\nprint(tokens)\n\n['The', 'quick', 'brown', 'fox', 'jumped', 'over', 'the', 'lazy', 'dog', '.']\n\n\nThe above code tokenizes the famous sentence in linguistics into a Python list of words. Now, let’s ask NLTK to tag for part-of-speech:\n\n# Python code here\ntagged = nltk.pos_tag(tokens)\nprint(tagged)\n\n[('The', 'DT'), ('quick', 'JJ'), ('brown', 'NN'), ('fox', 'NN'), ('jumped', 'VBD'), ('over', 'IN'), ('the', 'DT'), ('lazy', 'JJ'), ('dog', 'NN'), ('.', '.')]\n\n\nThose with experience with Python may notice that the output of the above code is a Python list with two-item tuples. We’re back in the comfort of the Python world! (The R world is comfortable too, though.)\n\n\nActivity\nYour turn! Write some (simple) R code that calls Python using the reticulate package. If you’re not sure what to write, just try to get the examlpes on the reticulate docs working."
+  },
+  {
+    "objectID": "lessons/python.html#other-languages",
+    "href": "lessons/python.html#other-languages",
+    "title": "Other languages",
+    "section": "Other languages",
+    "text": "Other languages\nMany other languages can be called from within R. Some of the most likely to be called from with R are C++ and Julia.\n\nC++\nThe Rcpp R package is an awesome way to have R call C++. This is especially useful for bottlenecks that can be sped up with C++ (which runs much, much faster than R). First, let’s install Rcpp:\n\ninstall.packages(\"Rcpp\", repos = \"http://cran.rstudio.com/\")\n\nNext, let’s\n\nlibrary(\"Rcpp\")\ncppFunction('int add(int x, int y, int z) {\n  int sum = x + y + z;\n  return sum;\n}')\n# add works like a regular R function\nadd(1, 2, 3)\n\nIn addition to defining C++ function within an R script (i.e., an R file) with cppFunction(), we can write the C++ code with a .cpp file and call that file into an R script with the sourceCpp() function. Take a look at the example in Hadley Wickham’s book, in chapter 25 “Rewriting R code in C++”.\n\n\nJulia\nThe Julia programming language is a relatively new language oriented towards data science and statistics (very much like R). When you’re writing a Quarto document, you can insert a Julia code block by typing a forward slash “/” and selecting the Julia code block option. First, we need to install the JuliaCall R package:\n\ninstall.packages(\"JuliaCall\", repos = \"http://cran.rstudio.com/\")\n\n\n# Julia code here\n#| eval: false\nprintln(\"hello Julia!\")\n\nhello Julia!\n\n\nUsing JuliaCall, you can also call Julia directly from within R code. See some examples on their docs.\nOther programming languages can be called from within R, but Python, C++ and Julia are probably the most common (in Dr. Brown’s uninformed estimation)."
+  },
+  {
+    "objectID": "lessons/regexes.html",
+    "href": "lessons/regexes.html",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+  },
+  {
+    "objectID": "lessons/regexes.html#objective",
+    "href": "lessons/regexes.html#objective",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+  },
+  {
+    "objectID": "lessons/regexes.html#regular-expressions-aka.-regexes",
+    "href": "lessons/regexes.html#regular-expressions-aka.-regexes",
+    "title": "Regular expressions",
+    "section": "Regular expressions (aka. regexes)",
+    "text": "Regular expressions (aka. regexes)\n\nRegular expressions are used to match strings. \n\nNote: In R, you must use double backslashes, e.g., \\\\w+\n\nOnline regex checker are useful, such as here (for Python), here, and here.\nLetters represent themselves: \"ed\" returns ed anywhere in the string, for example, Ed studied in the education building."
+  },
+  {
+    "objectID": "lessons/regexes.html#character-classes",
+    "href": "lessons/regexes.html#character-classes",
+    "title": "Regular expressions",
+    "section": "Character classes",
+    "text": "Character classes\n\n\\\\w = alphanumeric character; \\\\W = non-alphanumeric character\n\\\\s = whitespace (i.e., spaces, tab breaks, newlines); \\\\S = non-whitespace\n\\\\d = Arabic numeral (i.e., 0-9); \\\\D = non-Arabic numeral\n[] = character class finds one of the characters between the square brackets: \n\n[aeiou] finds one of the five orthographic vowels\n[Aa] find either uppercase or lowercase a \n[a-z] finds one lowercase English character\n[a-zA-Z] returns one lowercase English character or one uppercase English character \nExample: \"latin[aox]\" returns latina, latino, latinx."
+  },
+  {
+    "objectID": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
+    "href": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
+    "title": "Regular expressions",
+    "section": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  ",
+    "text": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  \n\nExample: \"\\\\bth(is|at|ese|ose) \\\\w+\" returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, this bag, that cat, these plants, those buildings.\nQuantifiers\n\n{min, max} = returns between min and max number of the previous character: \"\\\\w{2,5}\" returns between two and five alphanumeric characters. Note that \"\\\\w{,5}\" returns up to five alphanumeric characters, and \"\\\\w{2,}\" finds two or more alphanumeric characters.\n{integer} = returns the exact number of the previous character: \"\\\\d{4}\" returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)\nShortcut quantifiers:\n\n? means the same as {0, 1}, meaning it returns zero or one of the previous pattern, that is, the previous character is optional\n* is the same as {0,} and returns zero or more of the previous pattern: yes\\\\!* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc.. \n+ means {1,} and returns one or more of the previous pattern, for example, \"go+l\" returns gol, goool, gooooooool\n\n\n\n\nActivity\n\nWhat do the following regexes match? See example in Section 2.1 here.\n\n\"\\\\b[Tt]he\\\\b\\\\s+\\\\b[Ii]nternet\\\\b\"\n\"\\\\w+ed\\\\b\"\n\"\\\\bcent(er|re)\\\\b\"\n\"\\\\bwalk(s|ed|ing)?\\\\b\"\n\"\\\\b[^aeiou\\\\W]{2,}\\\\w+\"\n\"\\\\b[^aeiou\\\\W][aeiou]\\\\w+\""
+  },
+  {
+    "objectID": "lessons/regexes.html#capture-groups",
+    "href": "lessons/regexes.html#capture-groups",
+    "title": "Regular expressions",
+    "section": "Capture groups",
+    "text": "Capture groups\n\nWarning: This gets wild. \nYou can have a regular expression remember what it captured in order to search for that same sequence of characters.\nYou can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with \\\\1 for the first capture group, or \\\\2 for the second capture group (if you have more than one capture group in the same regex), etc.\nExample: \"\\\\w+(\\\\w) \\\\1\\\\w+\" returns a bigram whose first word ends with the same letter that the second word begins with, e.g., walkeddown\n\n\nActivity\n\nWhat do the following regexes match?\n\n\"([aeiou])\\\\1\"\n\"\\\\w*([aeiou])\\\\1\\\\w*\"\n\"the (\\\\w+)er they were, the \\\\1er they will be\"\n\"[Tt]he (\\\\w+)er they (\\\\w+),? the \\\\1er we \\\\2\"\n\"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\""
+  },
+  {
+    "objectID": "lessons/regexes.html#lookaround",
+    "href": "lessons/regexes.html#lookaround",
+    "title": "Regular expressions",
+    "section": "Lookaround",
+    "text": "Lookaround\n\nLookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.\n\nSee lookahead examples in Section 2.1.7 here.\n\n\n\nActivity\n\nDownload at least several TXT files of your choice (perhaps from Project Gutenberg or Saints from the LMS).\nLoop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the stringr package, for example, str_match_all(), str_extract_all(), str_locate_all().\nCreate a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.\nRamp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
+  },
+  {
+    "objectID": "demo.html",
+    "href": "demo.html",
+    "title": "demo",
+    "section": "",
+    "text": "Students will learn about Quarto."
+  },
+  {
+    "objectID": "demo.html#objective",
+    "href": "demo.html#objective",
+    "title": "demo",
+    "section": "",
+    "text": "Students will learn about Quarto."
+  },
+  {
+    "objectID": "demo.html#lets-get-rollin",
+    "href": "demo.html#lets-get-rollin",
+    "title": "demo",
+    "section": "Let’s get rollin’!",
+    "text": "Let’s get rollin’!\nWhat should I write? Here’s an example of some code:\n\n\nCode\nprint(\"hola mundo\")\n\n\n[1] \"hola mundo\"\n\n\nI just said “hello” in Spanish, with the code print(\"hola mundo\")"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ling_data_analysis",
+    "section": "",
+    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html",
+    "href": "lessons/webscrape_freq.html",
+    "title": "Webscrape frequencies",
+    "section": "",
+    "text": "Students will use R to webscrape an already-created frequency list on the internet."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#objective",
+    "href": "lessons/webscrape_freq.html#objective",
+    "title": "Webscrape frequencies",
+    "section": "",
+    "text": "Students will use R to webscrape an already-created frequency list on the internet."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#overview-of-the-internet",
+    "href": "lessons/webscrape_freq.html#overview-of-the-internet",
+    "title": "Webscrape frequencies",
+    "section": "Overview of the internet",
+    "text": "Overview of the internet\nHere’s a super simplified overview of how the internet works: Clients (e.g., computers, smart phones) that are connected to the internet make HTTP requests to web servers (e.g., byu.edu, npr.org, instagram.com, etc.), and those web servers send back HTTP responses. Here’s a diagram to illustrate this basic idea."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#r-as-web-browser",
+    "href": "lessons/webscrape_freq.html#r-as-web-browser",
+    "title": "Webscrape frequencies",
+    "section": "R as web browser",
+    "text": "R as web browser\nR can act like a web browser by making HTTP requests and receiving HTTP responses from web servers. The rvest package here makes it easy to have R interact with the internet. That package also contains useful functions to parse the HTML in the HTTP response in order to extract information using either CSS selectors or XPath expressions.\nIt’s a good idea, and actually necessary with some websites, to make R look like a normal web browser when making the request to the web server. We do this by setting the user-agent to a common one that many web browsers use:\n\n# set the user-agent to make R look like a normal web browser to the web server\nhttr::set_config(httr::user_agent(\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\"))"
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
+    "href": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
+    "title": "Webscrape frequencies",
+    "section": "Frequency lists on the internet",
+    "text": "Frequency lists on the internet\nThere are many frequency lists on the internet, and the free online dictionary wikitionary makes available a plethora of them here.\nSometimes, the frequency lists are in HTML tables, for example:\n\nThe 1,000 most frequent words in TV and Movie scripts and transcripts in English here.\nThe 1,900 most frequent Hindi words here.\nThe 10,000 most frequency Serbian words based on TV and Movie subtitles here.\n\nOther times, the frequency lists are presented as HTML lists (whether ordered or unordered), for example:\n\nThe 5,000 most frequent words in Danish here.\n1,000 Japanese basic words here.\nThe 2,000 most frequent words in fiction in English here."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#html-tables",
+    "href": "lessons/webscrape_freq.html#html-tables",
+    "title": "Webscrape frequencies",
+    "section": "HTML tables",
+    "text": "HTML tables\nLet’s webscrape a frequency list that is sitting in an HTML table. Let’s use the list of the 1,000 most frequent words in TV and Movie scripts in English here.\n\n# if need, use install.packages() first to download the following packages to your harddrive\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\nurl &lt;- \"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\"\n\n# request the page\npage &lt;- read_html(url)\n\n# get the HTML table holding the frequency list\nfreqs_table &lt;- html_element(page, \"table\") \n\n# convert the HTML table into a data frame (i.e., tibble)\nfreqs_df &lt;- html_table(freqs_table, header = TRUE)\n\n# print the frequency table to the console\nprint(freqs_df)\n\nYou may have noticed that the above code could be put into a single pipeline by using the pipe operator repeatedly:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table(header = TRUE) %&gt;% \n  print()\n\n\nActivity\nYour turn! Find a frequency list of your choice online that is in an HTML table and webscrape it into a data frame in R. If you’ve having trouble finding one that is in an HTML table, try the 1,900 most frequent Hindi words here or the 10,000 most frequent Serbian words here.\nAfter a good-faith effort, if you need help, see Dr. Brown’s code below:\nHindi\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Hindi_1900\" %&gt;%  # put URL in a string\n  read_html() %&gt;%  # request page\n  html_element(\"table\") %&gt;%  # find first \"table\" HTML element\n  html_table() %&gt;%  # convert HTML table to data frame (i.e., tibble)\n  print()  # print data frame to console\n\n\nSerbian\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# extra exercise: write in appropriate comments below\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Serbian_wordlist\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table() %&gt;% \n  print()"
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#html-lists",
+    "href": "lessons/webscrape_freq.html#html-lists",
+    "title": "Webscrape frequencies",
+    "section": "HTML lists",
+    "text": "HTML lists\nWebscraping HTML lists, whether ordered (i.e., with numbers) or unordered (i.e., with bullets) is more work because we can’t use the slick html_table() function in rvest to convert an HTML table into a data frame in R. Rather, we have to identify which part of the data is the word and which part is the frequency. Further, we have to parse each frequency list separately, as we can’t assume that all frequency lists are formatted the same way.\nLet’s inspect the HTML of the frequency list of the 5,000 most frequency words in Danish in TV and Movie subtitles here. (Seriously, go inspect the HTML of that list before moving on.)\nWe see that the frequency list is an ordered list (HTML tag &lt;ol&gt;) and that each word and its corresponding frequency is in a list item (HTML tag &lt;li&gt;) and that the word and its frequency are separated by a space. We can use this information to scrape out the frequency list, and then use the space to identify the word and the frequency in order to put them into separate columns in a data frame in R.\nPro-tip: SelectorGadget (here) is an absolutely super helpful Google Chrome add-on extension that helps to quick identify the CSS Selector of elements of a webpage.\nLet’s get rolling with the code:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# put the URL in a string\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Danish_wordlist\" %&gt;% \n  \n  # request the HTML page\n  read_html() %&gt;% \n  \n  # extract the HTML elements &lt;li&gt; that are children of HTML elements &lt;ol&gt;\n  html_elements(css = \"ol li\") %&gt;% \n  \n  # keep only the text, that is, remove the HTML tags\n  html_text() %&gt;% \n  \n  # create a data frame with one column named \"both\"\n  # note: the dot below pipes the result of the previous step into where the dot is (rather than at the beginning of the function, which is the default behavior of the pipe operator)\n  tibble(both = .) %&gt;% \n  \n  # separate the \"both\" column into two columns (i.e., \"wd\" and \"freq\") on the space between the word and the frequency\n  separate_wider_delim(cols = \"both\", delim = \" \", names = c(\"wd\", \"freq\")) %&gt;% \n  \n  # print the data frame to the console\n  print()\n\n\nActivity\nIt’s that time of the class period: your turn!\nFind a frequency (or rank) list of your choice on the internet (probably at wikitionary.org) that is not in an HTML table and parse it into a data frame in R. If you need help finding one, try the 2,000 most frequent words in fiction in English here or the 1,000 Japanese basic words here.\nAfter a good-faith effort, if you need some help, see Dr. Brown’s code below:\nEnglish\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \"ol li\") %&gt;% \n  html_text() %&gt;% \n  tibble(wd = .) %&gt;% \n  print()\n\n\nJapanese\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \".mw-parser-output &gt; ul li\") %&gt;% \n  html_text() %&gt;% \n  tibble(entry = .) %&gt;% \n  print()"
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#question",
+    "href": "lessons/webscrape_freq.html#question",
+    "title": "Webscrape frequencies",
+    "section": "Question",
+    "text": "Question\nIn most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?"
   },
   {
     "objectID": "lessons/wrangling.html",
@@ -336,221 +511,74 @@
     "text": "Working with categorical variables\nThere are a few handy functions in the forcats package within tidyverse for working with categorical variables (aka. factors).\nThe fct_recode() function allows the user to manually change or combine levels (aka. values) of a categorical variable. Let’s create a toy data frame with words and vowels:\n\nlibrary(\"tidyverse\")\nwords &lt;- tibble(\n  word = c(\"wasp\", \"fleece\", \"beat\", \"bit\", \"pat\", \"bus\", \"hot\", \"cool\", \"firm\", \"father\"),\n  vowel = c(\"[ɑ]\", \"[i]\", \"[i]\", \"[ɪ]\", \"[æ]\", \"[ʌ]\", \"[ɔ]\", \"[u]\", \"[ɚ]\", \"[ɑ]\")\n)\nprint(words)\n\nNow, let’s create a new column in which we describe (some of) the vowels:\n\nwords |&gt; \n  mutate(description = fct_recode(vowel, \"high front closed\" = \"[i]\", \"r colored schwa\" = \"[ɚ]\", \"stressed schwa (wedge)\" = \"[ʌ]\"))\n\nThe fct_collapse() function allows the user to put levels into groups:\n\nwords |&gt; \n  mutate(height = fct_collapse(vowel, \n                               hi_V = c(\"[i]\", \"[ɪ]\", \"[u]\"), \n                               lo_V = c(\"[ɑ]\", \"[æ]\"),\n                               other_level = \"mid_V\"))\n\nQuestion: What does the other_level argument do in the function call above?\nThe fct_relevel() function allows the user to reorder the levels of a categorical variable. This is often useful when plotting data and the user wants an order of levels different from alphabetical order (the default).\nLet’s create a toy data frame of voiceless plosives and their voice onset times (VOT):\n\nlibrary(tidyverse)\nvoiceless_plosives &lt;- tibble(\n  plosive = c(\"t\", \"k\", \"p\", \"p\", \"k\", \"t\", \"p\", \"k\", \"t\"),\n  vot = c(23, 34, 45, 56, 67, 78, 89, 91, 21)\n)\nprint(voiceless_plosives)\n\nIf we create a boxplot (preview of what’s coming soon!), we see that “k” is on the left, followed by “p” and “t”, because the default way to sort levels is by alphabetical order:\n\nvoiceless_plosives |&gt; \n  ggplot(aes(x = plosive, y = vot)) +\n  geom_boxplot()\n\nWe probably want “p” followed by “t” and then “k”, as that’s how they are presented in linguistic literature, based on the place of articulation. Let’s use fct_relevel() to change the internal order of the levels, and then replot their VOTs:\n\nvoiceless_plosives |&gt;\n  mutate(plosive = fct_relevel(plosive, \"p\", \"t\", \"k\")) |&gt; \n  ggplot(aes(x = plosive, y = vot)) +\n  geom_boxplot()\n\n\nActivity\nLet’s create a toy data frame with Spanish words with a dental or alveolar word-final sibilant:\n\nlibrary(\"tidyverse\")\nsibilants &lt;- tibble(\n  person = c(\"Raúl\", \"Raúl\", \"José\", \"José\", \"María\"),\n  target_wd = c(\"árboles\", \"mesas\", \"lápiz\", \"es\", \"pues\"),\n  next_wd = c(\"de\", \"en\", \"y\", \"que\", \".\"),\n  next_segment = c(\"d\", \"e\", \"i\", \"k\", \"#\")\n)\nprint(sibilants)\n\nYour task is to create a new column that groups the vowels into one level, the consonants into their own group, and then all other following segments should be placed into an other level.\nAfter a good-faith effort, if you need help, take a look at Dr. Brown’s code below:\n\n\nCode\nsibilants |&gt;  \n  mutate(next_sound_type = fct_collapse(next_segment, vowel = c(\"i\",\"e\"), consonant = c(\"d\", \"k\"), other_level = \"other\"))"
   },
   {
-    "objectID": "lessons/webscrape_freq.html",
-    "href": "lessons/webscrape_freq.html",
-    "title": "Webscrape frequencies",
+    "objectID": "lessons/quarto.html",
+    "href": "lessons/quarto.html",
+    "title": "Quarto documents",
     "section": "",
-    "text": "Students will use R to webscrape an already-created frequency list on the internet."
+    "text": "Students will write a Quarto document that integrates prose and code, and the output of the code."
   },
   {
-    "objectID": "lessons/webscrape_freq.html#objective",
-    "href": "lessons/webscrape_freq.html#objective",
-    "title": "Webscrape frequencies",
+    "objectID": "lessons/quarto.html#objective",
+    "href": "lessons/quarto.html#objective",
+    "title": "Quarto documents",
     "section": "",
-    "text": "Students will use R to webscrape an already-created frequency list on the internet."
+    "text": "Students will write a Quarto document that integrates prose and code, and the output of the code."
   },
   {
-    "objectID": "lessons/webscrape_freq.html#overview-of-the-internet",
-    "href": "lessons/webscrape_freq.html#overview-of-the-internet",
-    "title": "Webscrape frequencies",
-    "section": "Overview of the internet",
-    "text": "Overview of the internet\nHere’s a super simplified overview of how the internet works: Clients (e.g., computers, smart phones) that are connected to the internet make HTTP requests to web servers (e.g., byu.edu, npr.org, instagram.com, etc.), and those web servers send back HTTP responses. Here’s a diagram to illustrate this basic idea."
+    "objectID": "lessons/quarto.html#reproducible-research",
+    "href": "lessons/quarto.html#reproducible-research",
+    "title": "Quarto documents",
+    "section": "Reproducible research",
+    "text": "Reproducible research\nClearing laying out methods is an important consideration when publishing original research so that others can reproduce or replicate your research. One useful way to do that is to make available the computer code that goes into the data collection and data analysis parts of the research process.\nEnter documents that knit together code and prose. The current cool-kid-on-the-block is the Quarto document. All the lesson plans that Dr. Brown has created have been produced as Quarto documents. The RStudio IDE makes it super easy to write Quarto document and integrate R code (and Python and Julia code too!) with prose around the code. Also, the writer of the document can specify whether the output of the code is rendered. For example, Dr. Brown usually does not render the output of the R code."
   },
   {
-    "objectID": "lessons/webscrape_freq.html#r-as-web-browser",
-    "href": "lessons/webscrape_freq.html#r-as-web-browser",
-    "title": "Webscrape frequencies",
-    "section": "R as web browser",
-    "text": "R as web browser\nR can act like a web browser by making HTTP requests and receiving HTTP responses from web servers. The rvest package here makes it easy to have R interact with the internet. That package also contains useful functions to parse the HTML in the HTTP response in order to extract information using either CSS selectors or XPath expressions.\nIt’s a good idea, and actually necessary with some websites, to make R look like a normal web browser when making the request to the web server. We do this by setting the user-agent to a common one that many web browsers use:\n\n# set the user-agent to make R look like a normal web browser to the web server\nhttr::set_config(httr::user_agent(\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\"))"
+    "objectID": "lessons/quarto.html#getting-started",
+    "href": "lessons/quarto.html#getting-started",
+    "title": "Quarto documents",
+    "section": "Getting started",
+    "text": "Getting started\nSteps:\n\nWithin RStudio, click on File &gt; New File &gt; Quarto Document…\nGive the document a name\nStart writing prose and/or code!"
   },
   {
-    "objectID": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
-    "href": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
-    "title": "Webscrape frequencies",
-    "section": "Frequency lists on the internet",
-    "text": "Frequency lists on the internet\nThere are many frequency lists on the internet, and the free online dictionary wikitionary makes available a plethora of them here.\nSometimes, the frequency lists are in HTML tables, for example:\n\nThe 1,000 most frequent words in TV and Movie scripts and transcripts in English here.\nThe 1,900 most frequent Hindi words here.\nThe 10,000 most frequency Serbian words based on TV and Movie subtitles here.\n\nOther times, the frequency lists are presented as HTML lists (whether ordered or unordered), for example:\n\nThe 5,000 most frequent words in Danish here.\n1,000 Japanese basic words here.\nThe 2,000 most frequent words in fiction in English here."
+    "objectID": "lessons/quarto.html#choose-your-own-adventure",
+    "href": "lessons/quarto.html#choose-your-own-adventure",
+    "title": "Quarto documents",
+    "section": "Choose your own adventure",
+    "text": "Choose your own adventure\n…Or jump between adventures, as needed.\nWithin RStudio, you can use the Source editor or the Visual editor, or jump back and forth as needed. For example, Dr. Brown uses the Visual editor the vast majority of the time, but occasionally jumps over to the Source editor in order to have more control over formatting.\nIn order to insert a code block on a new line, you can type a forward slash “/”, and a drop-down menu will appear from which you can select the type of code you want to insert (most commonly R code). There’s also a keyboard short to insert an R code block: Mac &gt; Cmd + Opt + i; Windows &gt; Ctrl + Alt + i."
   },
   {
-    "objectID": "lessons/webscrape_freq.html#html-tables",
-    "href": "lessons/webscrape_freq.html#html-tables",
-    "title": "Webscrape frequencies",
-    "section": "HTML tables",
-    "text": "HTML tables\nLet’s webscrape a frequency list that is sitting in an HTML table. Let’s use the list of the 1,000 most frequent words in TV and Movie scripts in English here.\n\n# if need, use install.packages() first to download the following packages to your harddrive\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\nurl &lt;- \"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\"\n\n# request the page\npage &lt;- read_html(url)\n\n# get the HTML table holding the frequency list\nfreqs_table &lt;- html_element(page, \"table\") \n\n# convert the HTML table into a data frame (i.e., tibble)\nfreqs_df &lt;- html_table(freqs_table, header = TRUE)\n\n# print the frequency table to the console\nprint(freqs_df)\n\nYou may have noticed that the above code could be put into a single pipeline by using the pipe operator repeatedly:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table(header = TRUE) %&gt;% \n  print()\n\n\nActivity\nYour turn! Find a frequency list of your choice online that is in an HTML table and webscrape it into a data frame in R. If you’ve having trouble finding one that is in an HTML table, try the 1,900 most frequent Hindi words here or the 10,000 most frequent Serbian words here.\nAfter a good-faith effort, if you need help, see Dr. Brown’s code below:\nHindi\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Hindi_1900\" %&gt;%  # put URL in a string\n  read_html() %&gt;%  # request page\n  html_element(\"table\") %&gt;%  # find first \"table\" HTML element\n  html_table() %&gt;%  # convert HTML table to data frame (i.e., tibble)\n  print()  # print data frame to console\n\n\nSerbian\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# extra exercise: write in appropriate comments below\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Serbian_wordlist\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table() %&gt;% \n  print()"
+    "objectID": "lessons/quarto.html#markdown-syntax",
+    "href": "lessons/quarto.html#markdown-syntax",
+    "title": "Quarto documents",
+    "section": "Markdown syntax",
+    "text": "Markdown syntax\nQuarto documents accept Markdown syntax to format the prose. It provides the basics of word processing documents, like different levels of headers, bold font, italics, underlined, etc. Importantly and usefully, it also provides a way to format code within the prose, for example, print(\"hello world\") returns hello world.\n\nActivity\nTake a look at the two cheatsheets that RStudio has about Markdown syntax (Help &gt; Cheat Sheets &gt; R Markdown Cheat Sheet & R Markdown Reference Guide) or websites about Markdown, for example, markdownguide.org.\nNow, create a Quarto document and use the Source editor only to create a (simple) HTML output document.\nNext, create another Quarto document, but this time, use the Visual editor as much as possible.\nBe prepared to share your documents with the members of the class."
   },
   {
-    "objectID": "lessons/webscrape_freq.html#html-lists",
-    "href": "lessons/webscrape_freq.html#html-lists",
-    "title": "Webscrape frequencies",
-    "section": "HTML lists",
-    "text": "HTML lists\nWebscraping HTML lists, whether ordered (i.e., with numbers) or unordered (i.e., with bullets) is more work because we can’t use the slick html_table() function in rvest to convert an HTML table into a data frame in R. Rather, we have to identify which part of the data is the word and which part is the frequency. Further, we have to parse each frequency list separately, as we can’t assume that all frequency lists are formatted the same way.\nLet’s inspect the HTML of the frequency list of the 5,000 most frequency words in Danish in TV and Movie subtitles here. (Seriously, go inspect the HTML of that list before moving on.)\nWe see that the frequency list is an ordered list (HTML tag &lt;ol&gt;) and that each word and its corresponding frequency is in a list item (HTML tag &lt;li&gt;) and that the word and its frequency are separated by a space. We can use this information to scrape out the frequency list, and then use the space to identify the word and the frequency in order to put them into separate columns in a data frame in R.\nPro-tip: SelectorGadget (here) is an absolutely super helpful Google Chrome add-on extension that helps to quick identify the CSS Selector of elements of a webpage.\nLet’s get rolling with the code:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# put the URL in a string\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Danish_wordlist\" %&gt;% \n  \n  # request the HTML page\n  read_html() %&gt;% \n  \n  # extract the HTML elements &lt;li&gt; that are children of HTML elements &lt;ol&gt;\n  html_elements(css = \"ol li\") %&gt;% \n  \n  # keep only the text, that is, remove the HTML tags\n  html_text() %&gt;% \n  \n  # create a data frame with one column named \"both\"\n  # note: the dot below pipes the result of the previous step into where the dot is (rather than at the beginning of the function, which is the default behavior of the pipe operator)\n  tibble(both = .) %&gt;% \n  \n  # separate the \"both\" column into two columns (i.e., \"wd\" and \"freq\") on the space between the word and the frequency\n  separate_wider_delim(cols = \"both\", delim = \" \", names = c(\"wd\", \"freq\")) %&gt;% \n  \n  # print the data frame to the console\n  print()\n\n\nActivity\nIt’s that time of the class period: your turn!\nFind a frequency (or rank) list of your choice on the internet (probably at wikitionary.org) that is not in an HTML table and parse it into a data frame in R. If you need help finding one, try the 2,000 most frequent words in fiction in English here or the 1,000 Japanese basic words here.\nAfter a good-faith effort, if you need some help, see Dr. Brown’s code below:\nEnglish\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \"ol li\") %&gt;% \n  html_text() %&gt;% \n  tibble(wd = .) %&gt;% \n  print()\n\n\nJapanese\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \".mw-parser-output &gt; ul li\") %&gt;% \n  html_text() %&gt;% \n  tibble(entry = .) %&gt;% \n  print()"
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#question",
-    "href": "lessons/webscrape_freq.html#question",
-    "title": "Webscrape frequencies",
-    "section": "Question",
-    "text": "Question\nIn most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ling_data_analysis",
+    "objectID": "lessons/t-test.html",
+    "href": "lessons/t-test.html",
+    "title": "t-test, Wilcoxon test",
     "section": "",
-    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
+    "text": "Students will perform a t-test and a Wilcoxon test"
   },
   {
-    "objectID": "demo.html",
-    "href": "demo.html",
-    "title": "demo",
+    "objectID": "lessons/t-test.html#objective",
+    "href": "lessons/t-test.html#objective",
+    "title": "t-test, Wilcoxon test",
     "section": "",
-    "text": "Students will learn about Quarto."
+    "text": "Students will perform a t-test and a Wilcoxon test"
   },
   {
-    "objectID": "demo.html#objective",
-    "href": "demo.html#objective",
-    "title": "demo",
-    "section": "",
-    "text": "Students will learn about Quarto."
+    "objectID": "lessons/t-test.html#formative-quiz",
+    "href": "lessons/t-test.html#formative-quiz",
+    "title": "t-test, Wilcoxon test",
+    "section": "Formative quiz",
+    "text": "Formative quiz\nMatch each term with its corresponding definition.\n\nGood ol’ fashioned matching quiz\n\n\n\n\n\n\nsample\nThe group that is used to infer about a larger group\n\n\npopulation\nThe group that the researcher want to know something about\n\n\npoint estimate\na single number that characterizes an aspect of a dataset\n\n\nconfidence interval\nA range of values that is likely to contain the population value\n\n\nstandard error\nA measure of how much uncertainty there is in the estimate of the sample mean\n\n\nt-test\nA parametric test with a continuous response variable and a categorical variable with exactly two levels\n\n\nWilcoxon test\nA non-parametric test\n\n\nsigma\nA Greek letter that usually stands for the standard deviation of a continuous variable of the population\n\n\nmeu\na Greek letter that usually stands for the mean of a continuous variable of a population\n\n\nn\nthe number of data points (aka. observations)\n\n\nx\nA Romanized letter that usually stands for the explanatory variable\n\n\ny\nA Romanized letter that usually stands for the response variable.\n\n\nresponse variable\nThe thing that is being studied (aka. dependent thing of study)\n\n\nexplanatory variable\nSomething that might affect the thing under study\n\n\nz-score\nA value that is the result of converting a value into units of standard deviations from the mean\n\n\nmeu hat\nThe mean of the sample\n\n\nsigma hat\nThe standard deviation of the sample\n\n\nalpha level\nThe threshold below which the null hypothesis can be rejected\n\n\nnull hypothesis\nThe proposition that there is no effect of the explanatory variable(s) on the response variable\n\n\nalternative hypothesis\nThe proposition that is likely an effect of the explanatory variable on the response variable\n\n\nnormal distribution\nAn ideal spread of data points around the central tendency; looks like a good ol’ fashioned bell (aka. bell curve)"
   },
   {
-    "objectID": "demo.html#lets-get-rollin",
-    "href": "demo.html#lets-get-rollin",
-    "title": "demo",
-    "section": "Let’s get rollin’!",
-    "text": "Let’s get rollin’!\nWhat should I write? Here’s an example of some code:\n\n\nCode\nprint(\"hola mundo\")\n\n\n[1] \"hola mundo\"\n\n\nI just said “hello” in Spanish, with the code print(\"hola mundo\")"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
-  },
-  {
-    "objectID": "lessons/regexes.html",
-    "href": "lessons/regexes.html",
-    "title": "Regular expressions",
-    "section": "",
-    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
-  },
-  {
-    "objectID": "lessons/regexes.html#objective",
-    "href": "lessons/regexes.html#objective",
-    "title": "Regular expressions",
-    "section": "",
-    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
-  },
-  {
-    "objectID": "lessons/regexes.html#regular-expressions-aka.-regexes",
-    "href": "lessons/regexes.html#regular-expressions-aka.-regexes",
-    "title": "Regular expressions",
-    "section": "Regular expressions (aka. regexes)",
-    "text": "Regular expressions (aka. regexes)\n\nRegular expressions are used to match strings. \n\nNote: In R, you must use double backslashes, e.g., \\\\w+\n\nOnline regex checker are useful, such as here (for Python), here, and here.\nLetters represent themselves: \"ed\" returns ed anywhere in the string, for example, Ed studied in the education building."
-  },
-  {
-    "objectID": "lessons/regexes.html#character-classes",
-    "href": "lessons/regexes.html#character-classes",
-    "title": "Regular expressions",
-    "section": "Character classes",
-    "text": "Character classes\n\n\\\\w = alphanumeric character; \\\\W = non-alphanumeric character\n\\\\s = whitespace (i.e., spaces, tab breaks, newlines); \\\\S = non-whitespace\n\\\\d = Arabic numeral (i.e., 0-9); \\\\D = non-Arabic numeral\n[] = character class finds one of the characters between the square brackets: \n\n[aeiou] finds one of the five orthographic vowels\n[Aa] find either uppercase or lowercase a \n[a-z] finds one lowercase English character\n[a-zA-Z] returns one lowercase English character or one uppercase English character \nExample: \"latin[aox]\" returns latina, latino, latinx."
-  },
-  {
-    "objectID": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
-    "href": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
-    "title": "Regular expressions",
-    "section": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  ",
-    "text": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  \n\nExample: \"\\\\bth(is|at|ese|ose) \\\\w+\" returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, this bag, that cat, these plants, those buildings.\nQuantifiers\n\n{min, max} = returns between min and max number of the previous character: \"\\\\w{2,5}\" returns between two and five alphanumeric characters. Note that \"\\\\w{,5}\" returns up to five alphanumeric characters, and \"\\\\w{2,}\" finds two or more alphanumeric characters.\n{integer} = returns the exact number of the previous character: \"\\\\d{4}\" returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)\nShortcut quantifiers:\n\n? means the same as {0, 1}, meaning it returns zero or one of the previous pattern, that is, the previous character is optional\n* is the same as {0,} and returns zero or more of the previous pattern: yes\\\\!* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc.. \n+ means {1,} and returns one or more of the previous pattern, for example, \"go+l\" returns gol, goool, gooooooool\n\n\n\n\nActivity\n\nWhat do the following regexes match? See example in Section 2.1 here.\n\n\"\\\\b[Tt]he\\\\b\\\\s+\\\\b[Ii]nternet\\\\b\"\n\"\\\\w+ed\\\\b\"\n\"\\\\bcent(er|re)\\\\b\"\n\"\\\\bwalk(s|ed|ing)?\\\\b\"\n\"\\\\b[^aeiou\\\\W]{2,}\\\\w+\"\n\"\\\\b[^aeiou\\\\W][aeiou]\\\\w+\""
-  },
-  {
-    "objectID": "lessons/regexes.html#capture-groups",
-    "href": "lessons/regexes.html#capture-groups",
-    "title": "Regular expressions",
-    "section": "Capture groups",
-    "text": "Capture groups\n\nWarning: This gets wild. \nYou can have a regular expression remember what it captured in order to search for that same sequence of characters.\nYou can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with \\\\1 for the first capture group, or \\\\2 for the second capture group (if you have more than one capture group in the same regex), etc.\nExample: \"\\\\w+(\\\\w) \\\\1\\\\w+\" returns a bigram whose first word ends with the same letter that the second word begins with, e.g., walkeddown\n\n\nActivity\n\nWhat do the following regexes match?\n\n\"([aeiou])\\\\1\"\n\"\\\\w*([aeiou])\\\\1\\\\w*\"\n\"the (\\\\w+)er they were, the \\\\1er they will be\"\n\"[Tt]he (\\\\w+)er they (\\\\w+),? the \\\\1er we \\\\2\"\n\"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\""
-  },
-  {
-    "objectID": "lessons/regexes.html#lookaround",
-    "href": "lessons/regexes.html#lookaround",
-    "title": "Regular expressions",
-    "section": "Lookaround",
-    "text": "Lookaround\n\nLookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.\n\nSee lookahead examples in Section 2.1.7 here.\n\n\n\nActivity\n\nDownload at least several TXT files of your choice (perhaps from Project Gutenberg or Saints from the LMS).\nLoop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the stringr package, for example, str_match_all(), str_extract_all(), str_locate_all().\nCreate a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.\nRamp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc."
-  },
-  {
-    "objectID": "lessons/python.html",
-    "href": "lessons/python.html",
-    "title": "Other languages",
-    "section": "",
-    "text": "Students will write R code that calls other languages."
-  },
-  {
-    "objectID": "lessons/python.html#objective",
-    "href": "lessons/python.html#objective",
-    "title": "Other languages",
-    "section": "",
-    "text": "Students will write R code that calls other languages."
-  },
-  {
-    "objectID": "lessons/python.html#multilingual-programming-world",
-    "href": "lessons/python.html#multilingual-programming-world",
-    "title": "Other languages",
-    "section": "Multilingual programming world",
-    "text": "Multilingual programming world\nJust like human languages and all their variety and beauty, the variety of programming languages gives beauty to the computer world. More specifically, some programming languages are better suited than others for specific tasks. So, rather than having to be monolingual within only one programming language, we can use several languages as needed."
-  },
-  {
-    "objectID": "lessons/python.html#python",
-    "href": "lessons/python.html#python",
-    "title": "Other languages",
-    "section": "Python",
-    "text": "Python\nIt is Dr. Brown’s opinion that Python is the best language for text processing (and is an all-around great language for many tasks). Thus, when an R user has a need to do text processing, it might be better to call on Python for that specific task.\n\nThe reticulate R package\nThe reticulate R package allows R users to call Python from within R. Here’s a simple example:\n\n# R code here\nlibrary(\"reticulate\")\nuse_python(\"/usr/local/bin/python3\")\n\ntxt &lt;- \"The quick brown fox jumped over the lazy dog.\"\n\nnltk &lt;- import(\"nltk\")\ntokens &lt;- nltk$word_tokenize(txt)\nprint(tokens)\ntagged &lt;- nltk$pos_tag(tokens)\nprint(tagged)\n\nIf you know Python (and NLTK), you might remember that the output of this call in Python is a Python list of two-item tuples. Differently, here we get an R list (which is different from a Python list). We could continue to process this R list as needed, for example, looping over it in a for loop to find particular part-of-speech tags:\n\n# R code here\nfor (tag in tagged) {\n  if (tag[2] == \"NN\") {\n    print(tag[1])\n  }\n}\n\n\n\nWithin Quarto documents\nWe can also write Python code within code blocks in a Quarto document. When working in a Quarto document, you can type a forward slash and get a drop-down menu of possible things to insert into your document, one of which is a Python code block.\nThe following code blocks are written in a Quarto document (as Dr. Brown uses Quarto document for his lesson plans). The code is pure Python, as if he were writing Python code in a .py file. Here’s a first simple example:\n\n# Python code here\nprint(\"hello Python!\")\n\nhello Python!\n\n\nA more meaningful example might be to use the Natural Language Toolkit (NLTK) to tokenize word and perform part-of-speech tagging, like with did above within R using reticulate:. Differently, here, we don’t need reticulate because we calling Python directly on the computer, rather than through R.\n\n# more Python code here\nimport nltk\ntxt = \"The quick brown fox jumped over the lazy dog.\"\ntokens = nltk.word_tokenize(txt)\nprint(tokens)\n\n['The', 'quick', 'brown', 'fox', 'jumped', 'over', 'the', 'lazy', 'dog', '.']\n\n\nThe above code tokenizes the famous sentence in linguistics into a Python list of words. Now, let’s ask NLTK to tag for part-of-speech:\n\n# Python code here\ntagged = nltk.pos_tag(tokens)\nprint(tagged)\n\n[('The', 'DT'), ('quick', 'JJ'), ('brown', 'NN'), ('fox', 'NN'), ('jumped', 'VBD'), ('over', 'IN'), ('the', 'DT'), ('lazy', 'JJ'), ('dog', 'NN'), ('.', '.')]\n\n\nThose with experience with Python may notice that the output of the above code is a Python list with two-item tuples. We’re back in the comfort of the Python world! (The R world is comfortable too, though.)\n\n\nActivity\nYour turn! Write some (simple) R code that calls Python using the reticulate package. If you’re not sure what to write, just try to get the examlpes on the reticulate docs working."
-  },
-  {
-    "objectID": "lessons/python.html#other-languages",
-    "href": "lessons/python.html#other-languages",
-    "title": "Other languages",
-    "section": "Other languages",
-    "text": "Other languages\nMany other languages can be called from within R. Some of the most likely to be called from with R are C++ and Julia.\n\nC++\nThe Rcpp R package is an awesome way to have R call C++. This is especially useful for bottlenecks that can be sped up with C++ (which runs much, much faster than R). First, let’s install Rcpp:\n\ninstall.packages(\"Rcpp\", repos = \"http://cran.rstudio.com/\")\n\nNext, let’s\n\nlibrary(\"Rcpp\")\ncppFunction('int add(int x, int y, int z) {\n  int sum = x + y + z;\n  return sum;\n}')\n# add works like a regular R function\nadd(1, 2, 3)\n\nIn addition to defining C++ function within an R script (i.e., an R file) with cppFunction(), we can write the C++ code with a .cpp file and call that file into an R script with the sourceCpp() function. Take a look at the example in Hadley Wickham’s book, in chapter 25 “Rewriting R code in C++”.\n\n\nJulia\nThe Julia programming language is a relatively new language oriented towards data science and statistics (very much like R). When you’re writing a Quarto document, you can insert a Julia code block by typing a forward slash “/” and selecting the Julia code block option. First, we need to install the JuliaCall R package:\n\ninstall.packages(\"JuliaCall\", repos = \"http://cran.rstudio.com/\")\n\n\n# Julia code here\n#| eval: false\nprintln(\"hello Julia!\")\n\nhello Julia!\n\n\nUsing JuliaCall, you can also call Julia directly from within R code. See some examples on their docs.\nOther programming languages can be called from within R, but Python, C++ and Julia are probably the most common (in Dr. Brown’s uninformed estimation)."
-  },
-  {
-    "objectID": "lessons/outliers.html",
-    "href": "lessons/outliers.html",
-    "title": "Detecting outliers",
-    "section": "",
-    "text": "Students will detect and remove outliers of continuous variables."
-  },
-  {
-    "objectID": "lessons/outliers.html#objective",
-    "href": "lessons/outliers.html#objective",
-    "title": "Detecting outliers",
-    "section": "",
-    "text": "Students will detect and remove outliers of continuous variables."
-  },
-  {
-    "objectID": "lessons/outliers.html#extreme-values-vs.-outliers",
-    "href": "lessons/outliers.html#extreme-values-vs.-outliers",
-    "title": "Detecting outliers",
-    "section": "Extreme values vs. outliers",
-    "text": "Extreme values vs. outliers\n(Thanks to Joey Stanley for some of this material!)\nOutliers of continuous or quantitative variables have extreme values, either extremely low or extremely high. Let’s consider this vector of (human) babies heights in inches: c(21, 19, 20, 18, 20, 73, 22, 18, 19). Wait, what? A baby that is 73 inches tall?! That must be an adult. That height is an outlier because it doesn’t come from the same population (i.e., babies).\nHow about this vector of (modern, human) ages of eight siblings: c(39, 38, 37, 356, 34, 33, 33, 31, 25). A modern human being with an age of 365 years?! This is probably a simple data entry mistake (probably the 5 and 6 keys pressed together). The best thing to do here would be to track down the right age, and if that’s not possible, consider this extreme age as an outlier and remove it.\nLet’s consider a third vector of number, this time of the number of children that each of the previously mentioned siblings have: c(0, 2, 8, 1, 0, 2, 2, 2, 0). Wait, someone has eight kids?! Oh yeah, nevermind, that’s not uncommon in certain religious groups. So, in this case the eight is an extreme value but not an outlier, and it should be kept in the dataset.\nMoral of the story: It’s a (really) good idea to investigate extreme values in order to make sure they actually are outliers that should be excluded, rather than simply extreme values that should still be kept in."
-  },
-  {
-    "objectID": "lessons/outliers.html#how-to-remove-outliers",
-    "href": "lessons/outliers.html#how-to-remove-outliers",
-    "title": "Detecting outliers",
-    "section": "How to remove outliers",
-    "text": "How to remove outliers\nThere are a couple ways to identify (possible) outliers. One is based on the mean and the standard deviation of the observations. Another way is based on the interquartile range of the observations.\n\nMean and standard deviation\nA common way in linguistics to remove outliers is to remove data points that lay outside of the first two standard deviations above or below the mean value of a given continuous variable. Here’s the mathematical formula to find the threshold below which or above which possible outliers are detected:\n\\[\nthreshold = μ ± 2 * σ\n\\]\n…where \\(μ\\) is the mean of all observations, and \\(σ\\) is the standard deviation of all observations.\nLet’s go back to our baby heights example above and calculate the mean and standard deviation:\n\nlibrary(\"tidyverse\")\nbaby_heights &lt;- c(21, 19, 20, 18, 20, 73, 22, 18, 19)\ntibble(baby_heights) |&gt; \n  summarize(mean(baby_heights), sd(baby_heights))\n\nSo, the mean is \\(25.6\\) and the standard deviation is \\(17.8\\). So, values below the mean minus two times the standard deviation (i.e., \\(25.6-2*17.8=-10\\)), and values above the mean plus two times the standard deviation (i.e., \\(25.6+2*17.8=61.2\\)), might safely be considered outliers and can be removed.\nOf course, we don’t have to do this math by hand:\n\ntibble(baby_heights) |&gt; \n  filter(\n    baby_heights &gt; mean(baby_heights) - 2 * sd(baby_heights) & \n    baby_heights &lt; mean(baby_heights) + 2 *sd(baby_heights)\n  )\n\nPerhaps an easier way to do the previous filtering is to first create a new column with z-score values of the original ages, and then simply filter on \\(±2\\):\n\ntibble(baby_heights) |&gt; \n  mutate(z_height = as.vector(scale(baby_heights))) |&gt;\n  filter(z_height &gt; -2 & z_height &lt; 2)\n\nWhat is a z-score, you ask? It is a centered and scaled (aka. normalized) set of values. It is calculated by taking the mean and the standard deviation of a continuous variable, and then taking each value and subtracting the mean, and then dividing that difference by the standard deviation. Here’s the mathematical formula to do that:\n\\[\nz=\\frac{x-μ}{σ}\n\\]\n…where \\(x\\) is each observation, \\(μ\\) is the mean of all observations, and \\(σ\\) is the standard deviation of all observations.\n\n\nInterquartile range\nAnother way to identify (possible) outliers is by finding the first quartile (i.e., the 25th percentile, aka. Q1) and the third quartile (i.e., the 75th percentile, aka. Q3), and then calculating the difference between those two quartiles. The difference between Q3 and Q1 is called the interquartile range (aka. IQR). Then, outliers are identified as observations above 1.5 times IQR above Q3 or 1.5 times IQR below Q1. Here’s the mathematical notation:\n\\[\nQ_3+1.5*IQR\\quad\\text{or}\\quad Q_1-1.5* IQR\n\\]\nLet’s try this in R. First, let’s get Q1, Q3, and IQR. Then, we’ll use these three values in filter() within a good ol’ fashioned dplyr pipeline:\n\nquartiles &lt;- tibble(baby_heights) |&gt; \n  pull(baby_heights) |&gt; \n  quantile(probs = c(0.25, 0.75))\nq1 &lt;- quartiles[1]\nq3 &lt;- quartiles[2]\niqr &lt;- q3 - q1\n\n# here we go with the actual filtering\ntibble(baby_heights) |&gt; \n  filter(\n    baby_heights &gt; q1 - 1.5 * iqr & \n    baby_heights &lt; q3 + 1.5 * iqr)"
-  },
-  {
-    "objectID": "lessons/outliers.html#activity",
-    "href": "lessons/outliers.html#activity",
-    "title": "Detecting outliers",
-    "section": "Activity",
-    "text": "Activity\nLoad up a dataset of your choice, for example, from the Dataset module in Canvas, and test several different continuous variables to see if any of them have outliers, and if so, how many outliers. Choose either method to identify (possible) outliers.\nAfter a good-faith effort, if you need help take a look at Dr. Brown’s code below:\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"readxl\")\nptk &lt;- read_excel(\"/Users/ekb5/Documents/data_analysis/datasets/Data_ptk.xlsx\", sheet = \"data\")\n\n# get the number of rows and columns\nptk |&gt; dim() # rows, columns\n\n# filter outliers below or above two standard deviations from the mean and then get the number of rows and columns again\nptk |&gt; \n  mutate(VOT_z = as.vector(scale(VOT))) |&gt; \n  filter(VOT_z &gt; -2 & VOT_z &lt; 2) |&gt; \n  dim()"
-  },
-  {
-    "objectID": "lessons/outliers.html#two-continuous-variables",
-    "href": "lessons/outliers.html#two-continuous-variables",
-    "title": "Detecting outliers",
-    "section": "Two continuous variables",
-    "text": "Two continuous variables\nWhen you’re looking for outliers across two variables, visual inspection is probaby the easiest way. Here’s a toy example:\n\nlibrary(\"tidyverse\")\nx &lt;- runif(n = 100, min = 23, max = 67)\ny &lt;- jitter(x * 3.1415926, amount = 20)\ndf &lt;- tibble(x, y) |&gt; \n  bind_rows(tibble(x = 59, y = 100))\ndf |&gt; \n  ggplot(aes(x = x, y = y))+\n  geom_point()\n\nAs seen, there is an outlier below the majority of the data points (aka. observations). It would be good to filter the data frame in order to only see that particular observation. For example, we could filter so that only tokens with an x value greater than, say, 55 and a y value less than, say, 125 are kept:\n\ndf |&gt; \n  filter(x &gt; 55, y &lt; 125)\n\nIt would be wise to go look at this particular token to determine if it’s simply an extreme value and should be kept, or if it’s an outlier that should be removed."
+    "objectID": "lessons/t-test.html#t-test",
+    "href": "lessons/t-test.html#t-test",
+    "title": "t-test, Wilcoxon test",
+    "section": "t-test",
+    "text": "t-test"
   },
   {
     "objectID": "lessons/r_rstudio.html",

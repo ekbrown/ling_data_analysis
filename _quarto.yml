@@ -42,6 +42,9 @@ website:
       - section: "Descriptive stats"
         contents:
           - lessons/outliers.qmd
+      - section: "Inferential stats"
+        contents:
+          - lessons/t-test.qmd
 format:
   html:
     theme: cosmo
