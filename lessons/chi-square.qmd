@@ -73,7 +73,7 @@ If we can to see which cell contributes (the most) to a chi-square test being si
 result$residuals
 ```
 
-Canadians say *bathroom* to infrequently.
+Canadians say *bathroom* too infrequently.
 
 #### Assumption
 
