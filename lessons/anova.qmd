@@ -1,0 +1,69 @@
+---
+title: "ANOVA"
+---
+
+### Objective
+
+Students perform an ANOVA analysis and interpret the results.
+
+## What's in a name?
+
+[ANOVA](http://www.sthda.com/english/wiki/one-way-anova-test-in-r) stands for [**An**]{.underline}alysis [**o**]{.underline}f [**Va**]{.underline}riance. It's very much like the *t*-test and Wilcoxon test, but with three or more levels (aka. groups) in the categorical variable.
+
+|                                   |                                                           |
+|-----------------------------------|-----------------------------------------------------------|
+| ***t*****-test or Wilcoxon test** | **ANOVA**                                                 |
+| old v. young                      | old v. middle age v. young                                |
+| women v. men                      | women v. men. v. kids                                     |
+| Mandarin v. Cantonese             | Mandarin v. Cantonese v. Wu v. Hokkien v. Gan v. Hunanese |
+
+An ANOVA calculates an *F* statistic which, at a high level is calculated with the following formula:
+
+$$
+\frac{variation\ between\ groups}{variation\ within\ groups}
+$$
+
+The hypotheses are:
+
+$$
+H_0:μ_1=μ_2=μ_3...=μ_n
+$$
+
+$$
+H_a:At\ least\ one\ of\ the\ groups\ is\ different\ from\ the\ others.
+$$
+
+```{r}
+library("tidyverse")
+library("joeysvowels")
+front_vowels <- joeysvowels::midpoints %>%
+  filter(vowel %in% c("TRAP", "FACE", "DRESS", "FLEECE", "KIT")) %>% 
+  mutate(dur = end - start)
+front_vowels %>% 
+  ggplot(aes(x = vowel, y = dur))+
+  geom_boxplot(notch = TRUE)
+```
+
+Those notches are trying to tell a story, amirite?!
+
+Let's see what an ANOVA says:
+
+```{r}
+front_vowels %>% 
+  aov(dur~vowel, data = .) -> result
+summary(result)
+```
+
+Okay, the ANOVA feels that there is something goin' on here. Just look at that *p*-value well below 0.05. But, the immediate follow-up question is which groups are significantly different from other groups.
+
+Enter the post-hoc test. Actually, there are quite a few post-hoc test, but we'll use the Tukey Honest Significant Difference post-hoc test (because that's what Dr. Brown sees a lot in publications):
+
+```{r}
+TukeyHSD(result)
+```
+
+Simple enough. The *p*-value tell of which pairwise comparisons are statistically significantly different from each other.
+
+## Activity
+
+Your turn! Find a dataset of your choice and load it up, and find a continuous variable and a categorical variable with at least three levels, and ... you guessed, run an ANOVA.

@@ -45,6 +45,8 @@ website:
       - section: "Inferential stats"
         contents:
           - lessons/t-test.qmd
+          - lessons/anova.qmd
+          - lessons/chi-square.qmd
 format:
   html:
     theme: cosmo

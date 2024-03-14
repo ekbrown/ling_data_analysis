@@ -4,20 +4,20 @@ title: "t-test, Wilcoxon test"
 
 ## Objective
 
-Students will perform a t-test and a Wilcoxon test
+Students will perform a *t*-test and a Wilcoxon test
 
 ## Formative quiz
 
 Match each term with its corresponding definition.
 
 |                        |                                                                                                                    |
-|----------------|--------------------------------------------------------|
+|----------------------|--------------------------------------------------|
 | sample                 | The mean of the sample                                                                                             |
 | population             | A value that is the result of converting a value into units of standard deviations from the mean                   |
 | point estimate         | A Greek letter that usually stands for the standard deviation of a continuous variable of the population           |
 | confidence interval    | A Romanized letter that usually stands for the explanatory variable                                                |
 | standard error         | Something that might affect the thing under study                                                                  |
-| t-test                 | The thing that is being studied (aka. dependent thing of study)                                                    |
+| *t*-test               | The thing that is being studied (aka. dependent thing of study)                                                    |
 | Wilcoxon test          | a Greek letter that usually stands for the mean of a continuous variable of a population                           |
 | sigma                  | An ideal spread of data points around the central tendency; looks like a good ol' fashioned bell (aka. bell curve) |
 | meu                    | the number of data points (aka. observations)                                                                      |
@@ -26,7 +26,7 @@ Match each term with its corresponding definition.
 | y                      | A non-parametric test                                                                                              |
 | response variable      | The group that is used to infer about a larger group                                                               |
 | explanatory variable   | The proposition that is likely an effect of the explanatory variable on the response variable                      |
-| z-score                | A Romanized letter that usually stands for the response variable.                                                  |
+| *z*-score              | A Romanized letter that usually stands for the response variable.                                                  |
 | meu hat                | a single number that characterizes an aspect of a dataset                                                          |
 | sigma hat              | A range of values that is likely to contain the population value                                                   |
 | alpha level            | The threshold below which the null hypothesis can be rejected                                                      |
@@ -36,4 +36,122 @@ Match each term with its corresponding definition.
 
 : Good ol' fashioned matching quiz
 
-## t-test
+## *t*-test
+
+The response variable is continuous (aka. quantitative) and the explanatory variable is categorical with exactly two levels (aka. values or groups).
+
+### Assumptions
+
+The distribution of the response is normal, and/or there are more than 30 data points in each level (aka. group) of the explanatory variable.
+
+The variances of the response variables in both levels of the explanatory are equal. However, this is often not the case and our new friend Mr. Welch proposed an adjustment that provides a correction for unequal variances. The default behavior of the `t.test()` in R (i.e., the `var.equal` argument) is to use Welch's adjustment.
+
+### One-tailed or two-tailed
+
+A one-tailed test should be used when the alternative hypothesis is directional, that is, it hypothesizes that the mean of one group is greater than the mean of the other group, or less than the other group. For example, the null and alternative hypotheses would look something like this:
+
+$$
+H_0:μ_A = μ_B
+$$ $$
+H_a:μ_A>μ_B
+$$
+
+We use a two-tailed t-test when our alternative hypothesis is not directional, that is, it hypothesizes that the mean of one group does not equal the mean of the other group, but it doesn't say anything about direction. For example:
+
+$$
+H_0:μ_A = μ_B
+$$ $$
+H_a:μ_A ≠ μ_B
+$$
+
+## Wilcoxon test
+
+When the data are not normally distributed (and you don't have \>30 observations in each level of the categorical explanatory variable, so that you can use the t-test), the Wilcoxon test is the way to go. This test is also the way to go when you have ordinal data, like responses to a Likert-scale survey.
+
+The Wilcoxon test is apparently super similar to, or in most cases identifical to, the Mann-Whitney test; see [Q&A thread](https://stats.stackexchange.com/a/79849). Our ol' friend Jamovi has a check box for the "Mann-Whitney" test, while the function in R run these test is `wilcox.test()`.
+
+## Question
+
+Let's look at the speech rate in syllables per second of 25 Spanish speakers and 25 Italian speakers. First, let's propose a null hypothesis and an alternative hypothesis. As we don't have any previous information about the speech rate of Spanish and Italian speakers in comparison to each other, our alternative hypothesis will simply be "not equal to" rather than something directional like "greater than" or "less than":
+
+$$
+H_0:μ_S=μ_I
+$$
+$$
+H_a:μ_S≠μ_I
+$$
+
+First, a good ol' fashioned boxplot:
+
+```{r}
+#| eval: true
+library("tidyverse")
+esit <- read_csv("/Users/ekb5/Documents/data_analysis/datasets/span_ital_speaking_rate.csv")
+esit %>% 
+  ggplot(aes(x = language, y = syllables))+
+  geom_boxplot(notch = TRUE)
+```
+
+The non-overlapping notches on the boxes suggest that the difference in the means of the two groups will likely be statistically significantly different.
+
+Enter an inferential statistical test.
+
+First, let's see if the data points are normally distributed. A simple [Shapiro-Wilk normality test](https://www.r-bloggers.com/2019/08/shapiro-wilk-test-for-normality-in-r/):
+
+```{r}
+#| eval: true
+esit %>% 
+  group_by(language) %>% 
+  do(
+    shapiro.test(.$syllables) %>% 
+      broom::tidy()
+  )
+```
+
+Both *p*-values are above 0.05, so that's good.
+
+Now, let's also plot the distribution in a density plot:
+
+```{r}
+esit %>% 
+  ggplot(aes(syllables, color = language))+
+  geom_density()
+```
+
+Not the prettiest (normal) density plots.
+
+And for good measure, let's calculate the [skewness](https://www.r-bloggers.com/2013/06/measures-of-skewness-and-kurtosis/) of each group:
+
+```{r}
+install.packages("moments", repos = "http://rstudio.org")
+```
+
+```{r}
+esit %>% 
+  group_by(language) %>% 
+  do(
+    moments::skewness(.$syllables) %>% 
+      broom::tidy()
+  )
+```
+
+A good rule of thumb is that if the skewness score is between -0.5 and 0.5, the data is normal enough to continue with a parametric test.
+
+Because the Shapiro-Wilk gave us the green light to continue with a t-test, let's go!
+
+```{r}
+esit %>% 
+  t.test(syllables~language, data = ., alternative = "two.sided") -> result
+print(result)
+print(result$stderr)
+```
+
+The *p*-value suggests that the mean speech rate of Spanish speakers is different from the mean speech rate of Italian speakers.
+
+### How to report in paper
+
+"An independent two-tailed t-test compared the speech rate of Spanish speakers (n = 25) and Italian speakers (n = 25). We reject the null hypothesis and conclude that there is a signficant difference in speech rate between these two groups: t~(47.793)~ = -6.34, p ≤ 0.001."
+
+## Activity
+
+Your turn! Use a dataset of your choice and see if there is a statistical difference between the means of a continuous variable based on two categories in a categorical variable.

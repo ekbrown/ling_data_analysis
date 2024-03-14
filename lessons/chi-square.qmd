@@ -1,0 +1,88 @@
+---
+title: "Chi-square test"
+---
+
+## Objective
+
+Students will perform a chi-square (𝜒^2^) test of counts.
+
+## Count 'em up!
+
+The chi-square test is the go-to test for counts of levels in two categorical variables. For example:
+
+-   *bathroom* v. *washroom* in American English v. Canadian English
+
+-   *give it to me* v. *give me it* in academic v. spoken English
+
+-   Latin v. Greek borrowing in legal v. medical jargon
+
+## Contingency tables
+
+When we have two categorical variables, we can (and really should) create a contingency table (aka. cross tab). Let's create some fictitious data for the first example above:
+
+|            |               |               |
+|------------|---------------|---------------|
+|            | American Eng. | Canadian Eng. |
+| *bathroom* | 23            | 10            |
+| *washroom* | 34            | 45            |
+
+## Margins
+
+The margins in the context of contingency tables are the row and columns totals:
+
+|            |               |               |       |
+|------------|---------------|---------------|-------|
+|            | American Eng. | Canadian Eng. | Total |
+| *bathroom* | 23            | 10            | 33    |
+| *washroom* | 34            | 45            | 79    |
+| Total      | 57            | 55            | 112   |
+
+## Observed v. expected
+
+Another super important step in performing the chi-square test is calculating the expected values. Let's take bathroom in American English for a moment. We see that our (fictitious) count is 23, which is our **observed** value. For each cell in the contingency table, we need to calculate the expected value, and that is accomplished by taking the row total and multiplying it by the column total and then dividing that product by the total N: $33\ *\ 57\ /\ 112\ =\ 16.79464$
+
+When we calculate the expected values for each cell in the contingency table, we end up with the following expected values:
+
+|            |               |               |
+|------------|---------------|---------------|
+|            | American Eng. | Canadian Eng. |
+| *bathroom* | 16.79464      | 16.20536      |
+| *washroom* | 40.20536      | 38.79464      |
+
+Let's run a chi-square test:
+
+```{r}
+potty <- matrix(data = c(23, 10, 34, 45), nrow = 2, byrow = TRUE)
+print(potty)
+result = chisq.test(potty)
+print(result)
+
+```
+
+So yeah, we reject the null hypothesis that there is no association between term for where to go potty and the country where English is spoken.
+
+If we want to see the expected values of the contingency table, we can ask for it from the result of the `chisq.test()` call:
+
+```{r}
+result$expected
+```
+
+If we can to see which cell contributes (the most) to a chi-square test being significant, we can look for the largest absolute residual value:
+
+```{r}
+result$residuals
+```
+
+Canadians say *bathroom* to infrequently.
+
+#### Assumption
+
+If any of the expected values is 5 or smaller, we can't use the chi-square. Instead, we'd have to use a Fisher Exact test (this isn't the case with our fictitious dataset, but let's run a Fisher Exact test for fun):
+
+```{r}
+fisher.test(potty)
+```
+
+## Activity
+
+Your turn! Using a dataset of your choice, create a contingency table of two categorical variables of your choice. Then, calculate the a chi-square test or a Fisher Exact test (depending on if any of the expected values is 5 or smaller).

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - ling_data_analysis</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Chi-square test</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,60 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./EKB_2023_icon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../EKB_2023_icon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -61,8 +95,10 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -74,7 +110,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/chi-square.html">Chi-square test</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -89,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Lesson Plans for Linguistic Data Analysis with R</a> 
+      <a href="../">Lesson Plans for Linguistic Data Analysis with R</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -101,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -116,31 +152,31 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">R and RStudio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/programming_basics.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/programming_basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Programming basics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/data_structures.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/data_structures.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data structures in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/File_IO.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/File_IO.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">File I/O in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/regexes.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/regexes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regular expressions</span></a>
   </div>
 </li>
@@ -157,19 +193,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/create_freq.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/create_freq.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Creating frequency lists</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/webscrape_freq.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/webscrape_freq.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Webscrape frequencies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/quanteda.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/quanteda.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">quanteda</span></a>
   </div>
 </li>
@@ -186,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/wrangling.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/wrangling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Wrangling</span></a>
   </div>
 </li>
@@ -203,7 +239,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/visualization.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/visualization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Visualization</span></a>
   </div>
 </li>
@@ -220,7 +256,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/quarto.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/quarto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Quarto documents</span></a>
   </div>
 </li>
@@ -237,7 +273,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/python.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/python.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Other languages</span></a>
   </div>
 </li>
@@ -254,7 +290,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/outliers.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/outliers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Detecting outliers</span></a>
   </div>
 </li>
@@ -271,19 +307,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/t-test.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/t-test.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">t-test, Wilcoxon test</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/anova.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/anova.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ANOVA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/chi-square.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/chi-square.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Chi-square test</span></a>
   </div>
 </li>
@@ -295,14 +331,25 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#count-em-up" id="toc-count-em-up" class="nav-link" data-scroll-target="#count-em-up">Count ’em up!</a></li>
+  <li><a href="#contingency-tables" id="toc-contingency-tables" class="nav-link" data-scroll-target="#contingency-tables">Contingency tables</a></li>
+  <li><a href="#margins" id="toc-margins" class="nav-link" data-scroll-target="#margins">Margins</a></li>
+  <li><a href="#observed-v.-expected" id="toc-observed-v.-expected" class="nav-link" data-scroll-target="#observed-v.-expected">Observed v. expected</a></li>
+  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ling_data_analysis</h1>
+<h1 class="title">Chi-square test</h1>
 </div>
 
 
@@ -317,9 +364,163 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu.</p>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">Objective</h2>
+<p>Students will perform a chi-square (𝜒<sup>2</sup>) test of counts.</p>
+</section>
+<section id="count-em-up" class="level2">
+<h2 class="anchored" data-anchor-id="count-em-up">Count ’em up!</h2>
+<p>The chi-square test is the go-to test for counts of levels in two categorical variables. For example:</p>
+<ul>
+<li><p><em>bathroom</em> v. <em>washroom</em> in American English v. Canadian English</p></li>
+<li><p><em>give it to me</em> v. <em>give me it</em> in academic v. spoken English</p></li>
+<li><p>Latin v. Greek borrowing in legal v. medical jargon</p></li>
+</ul>
+</section>
+<section id="contingency-tables" class="level2">
+<h2 class="anchored" data-anchor-id="contingency-tables">Contingency tables</h2>
+<p>When we have two categorical variables, we can (and really should) create a contingency table (aka. cross tab). Let’s create some fictitious data for the first example above:</p>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td></td>
+<td>American Eng.</td>
+<td>Canadian Eng.</td>
+</tr>
+<tr class="even">
+<td><em>bathroom</em></td>
+<td>23</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td><em>washroom</em></td>
+<td>34</td>
+<td>45</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="margins" class="level2">
+<h2 class="anchored" data-anchor-id="margins">Margins</h2>
+<p>The margins in the context of contingency tables are the row and columns totals:</p>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td></td>
+<td>American Eng.</td>
+<td>Canadian Eng.</td>
+<td>Total</td>
+</tr>
+<tr class="even">
+<td><em>bathroom</em></td>
+<td>23</td>
+<td>10</td>
+<td>33</td>
+</tr>
+<tr class="odd">
+<td><em>washroom</em></td>
+<td>34</td>
+<td>45</td>
+<td>79</td>
+</tr>
+<tr class="even">
+<td>Total</td>
+<td>57</td>
+<td>55</td>
+<td>112</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="observed-v.-expected" class="level2">
+<h2 class="anchored" data-anchor-id="observed-v.-expected">Observed v. expected</h2>
+<p>Another super important step in performing the chi-square test is calculating the expected values. Let’s take bathroom in American English for a moment. We see that our (fictitious) count is 23, which is our <strong>observed</strong> value. For each cell in the contingency table, we need to calculate the expected value, and that is accomplished by taking the row total and multiplying it by the column total and then dividing that product by the total N: <span class="math inline">\(33\ *\ 57\ /\ 112\ =\ 16.79464\)</span></p>
+<p>When we calculate the expected values for each cell in the contingency table, we end up with the following expected values:</p>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td></td>
+<td>American Eng.</td>
+<td>Canadian Eng.</td>
+</tr>
+<tr class="even">
+<td><em>bathroom</em></td>
+<td>16.79464</td>
+<td>16.20536</td>
+</tr>
+<tr class="odd">
+<td><em>washroom</em></td>
+<td>40.20536</td>
+<td>38.79464</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s run a chi-square test:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>potty <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">data =</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">10</span>, <span class="dv">34</span>, <span class="dv">45</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(potty)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]   23   10
+[2,]   34   45</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">=</span> <span class="fu">chisq.test</span>(potty)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  potty
+X-squared = 5.5955, df = 1, p-value = 0.01801</code></pre>
+</div>
+</div>
+<p>So yeah, we reject the null hypothesis that there is no association between term for where to go potty and the country where English is spoken.</p>
+<p>If we want to see the expected values of the contingency table, we can ask for it from the result of the <code>chisq.test()</code> call:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>expected</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         [,1]     [,2]
+[1,] 16.79464 16.20536
+[2,] 40.20536 38.79464</code></pre>
+</div>
+</div>
+<p>If we can to see which cell contributes (the most) to a chi-square test being significant, we can look for the largest absolute residual value:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>residuals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           [,1]       [,2]
+[1,]  1.5141936 -1.5414785
+[2,] -0.9786442  0.9962788</code></pre>
+</div>
+</div>
+<p>Canadians say <em>bathroom</em> to infrequently.</p>
+<section id="assumption" class="level4">
+<h4 class="anchored" data-anchor-id="assumption">Assumption</h4>
+<p>If any of the expected values is 5 or smaller, we can’t use the chi-square. Instead, we’d have to use a Fisher Exact test (this isn’t the case with our fictitious dataset, but let’s run a Fisher Exact test for fun):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(potty)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  potty
+p-value = 0.01288
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+ 1.191312 8.099109
+sample estimates:
+odds ratio 
+  3.013478 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="activity" class="level2">
+<h2 class="anchored" data-anchor-id="activity">Activity</h2>
+<p>Your turn! Using a dataset of your choice, create a contingency table of two categorical variables of your choice. Then, calculate the a chi-square test or a Fisher Exact test (depending on if any of the expected values is 5 or smaller).</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
