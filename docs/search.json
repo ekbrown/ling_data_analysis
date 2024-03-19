@@ -280,146 +280,6 @@
     "text": "Activity\nYour turn! Find a dataset of your choice and load it up, and find a continuous variable and a categorical variable with at least three levels, and … you guessed, run an ANOVA."
   },
   {
-    "objectID": "lessons/regexes.html",
-    "href": "lessons/regexes.html",
-    "title": "Regular expressions",
-    "section": "",
-    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
-  },
-  {
-    "objectID": "lessons/regexes.html#objective",
-    "href": "lessons/regexes.html#objective",
-    "title": "Regular expressions",
-    "section": "",
-    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
-  },
-  {
-    "objectID": "lessons/regexes.html#regular-expressions-aka.-regexes",
-    "href": "lessons/regexes.html#regular-expressions-aka.-regexes",
-    "title": "Regular expressions",
-    "section": "Regular expressions (aka. regexes)",
-    "text": "Regular expressions (aka. regexes)\n\nRegular expressions are used to match strings. \n\nNote: In R, you must use double backslashes, e.g., \\\\w+\n\nOnline regex checker are useful, such as here (for Python), here, and here.\nLetters represent themselves: \"ed\" returns ed anywhere in the string, for example, Ed studied in the education building."
-  },
-  {
-    "objectID": "lessons/regexes.html#character-classes",
-    "href": "lessons/regexes.html#character-classes",
-    "title": "Regular expressions",
-    "section": "Character classes",
-    "text": "Character classes\n\n\\\\w = alphanumeric character; \\\\W = non-alphanumeric character\n\\\\s = whitespace (i.e., spaces, tab breaks, newlines); \\\\S = non-whitespace\n\\\\d = Arabic numeral (i.e., 0-9); \\\\D = non-Arabic numeral\n[] = character class finds one of the characters between the square brackets: \n\n[aeiou] finds one of the five orthographic vowels\n[Aa] find either uppercase or lowercase a \n[a-z] finds one lowercase English character\n[a-zA-Z] returns one lowercase English character or one uppercase English character \nExample: \"latin[aox]\" returns latina, latino, latinx."
-  },
-  {
-    "objectID": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
-    "href": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
-    "title": "Regular expressions",
-    "section": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  ",
-    "text": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  \n\nExample: \"\\\\bth(is|at|ese|ose) \\\\w+\" returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, this bag, that cat, these plants, those buildings.\nQuantifiers\n\n{min, max} = returns between min and max number of the previous character: \"\\\\w{2,5}\" returns between two and five alphanumeric characters. Note that \"\\\\w{,5}\" returns up to five alphanumeric characters, and \"\\\\w{2,}\" finds two or more alphanumeric characters.\n{integer} = returns the exact number of the previous character: \"\\\\d{4}\" returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)\nShortcut quantifiers:\n\n? means the same as {0, 1}, meaning it returns zero or one of the previous pattern, that is, the previous character is optional\n* is the same as {0,} and returns zero or more of the previous pattern: yes\\\\!* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc.. \n+ means {1,} and returns one or more of the previous pattern, for example, \"go+l\" returns gol, goool, gooooooool\n\n\n\n\nActivity\n\nWhat do the following regexes match? See example in Section 2.1 here.\n\n\"\\\\b[Tt]he\\\\b\\\\s+\\\\b[Ii]nternet\\\\b\"\n\"\\\\w+ed\\\\b\"\n\"\\\\bcent(er|re)\\\\b\"\n\"\\\\bwalk(s|ed|ing)?\\\\b\"\n\"\\\\b[^aeiou\\\\W]{2,}\\\\w+\"\n\"\\\\b[^aeiou\\\\W][aeiou]\\\\w+\""
-  },
-  {
-    "objectID": "lessons/regexes.html#capture-groups",
-    "href": "lessons/regexes.html#capture-groups",
-    "title": "Regular expressions",
-    "section": "Capture groups",
-    "text": "Capture groups\n\nWarning: This gets wild. \nYou can have a regular expression remember what it captured in order to search for that same sequence of characters.\nYou can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with \\\\1 for the first capture group, or \\\\2 for the second capture group (if you have more than one capture group in the same regex), etc.\nExample: \"\\\\w+(\\\\w) \\\\1\\\\w+\" returns a bigram whose first word ends with the same letter that the second word begins with, e.g., walkeddown\n\n\nActivity\n\nWhat do the following regexes match?\n\n\"([aeiou])\\\\1\"\n\"\\\\w*([aeiou])\\\\1\\\\w*\"\n\"the (\\\\w+)er they were, the \\\\1er they will be\"\n\"[Tt]he (\\\\w+)er they (\\\\w+),? the \\\\1er we \\\\2\"\n\"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\""
-  },
-  {
-    "objectID": "lessons/regexes.html#lookaround",
-    "href": "lessons/regexes.html#lookaround",
-    "title": "Regular expressions",
-    "section": "Lookaround",
-    "text": "Lookaround\n\nLookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.\n\nSee lookahead examples in Section 2.1.7 here.\n\n\n\nActivity\n\nDownload at least several TXT files of your choice (perhaps from Project Gutenberg or Saints from the LMS).\nLoop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the stringr package, for example, str_match_all(), str_extract_all(), str_locate_all().\nCreate a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.\nRamp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
-  },
-  {
-    "objectID": "demo.html",
-    "href": "demo.html",
-    "title": "demo",
-    "section": "",
-    "text": "Students will learn about Quarto."
-  },
-  {
-    "objectID": "demo.html#objective",
-    "href": "demo.html#objective",
-    "title": "demo",
-    "section": "",
-    "text": "Students will learn about Quarto."
-  },
-  {
-    "objectID": "demo.html#lets-get-rollin",
-    "href": "demo.html#lets-get-rollin",
-    "title": "demo",
-    "section": "Let’s get rollin’!",
-    "text": "Let’s get rollin’!\nWhat should I write? Here’s an example of some code:\n\n\nCode\nprint(\"hola mundo\")\n\n\n[1] \"hola mundo\"\n\n\nI just said “hello” in Spanish, with the code print(\"hola mundo\")"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ling_data_analysis",
-    "section": "",
-    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html",
-    "href": "lessons/webscrape_freq.html",
-    "title": "Webscrape frequencies",
-    "section": "",
-    "text": "Students will use R to webscrape an already-created frequency list on the internet."
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#objective",
-    "href": "lessons/webscrape_freq.html#objective",
-    "title": "Webscrape frequencies",
-    "section": "",
-    "text": "Students will use R to webscrape an already-created frequency list on the internet."
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#overview-of-the-internet",
-    "href": "lessons/webscrape_freq.html#overview-of-the-internet",
-    "title": "Webscrape frequencies",
-    "section": "Overview of the internet",
-    "text": "Overview of the internet\nHere’s a super simplified overview of how the internet works: Clients (e.g., computers, smart phones) that are connected to the internet make HTTP requests to web servers (e.g., byu.edu, npr.org, instagram.com, etc.), and those web servers send back HTTP responses. Here’s a diagram to illustrate this basic idea."
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#r-as-web-browser",
-    "href": "lessons/webscrape_freq.html#r-as-web-browser",
-    "title": "Webscrape frequencies",
-    "section": "R as web browser",
-    "text": "R as web browser\nR can act like a web browser by making HTTP requests and receiving HTTP responses from web servers. The rvest package here makes it easy to have R interact with the internet. That package also contains useful functions to parse the HTML in the HTTP response in order to extract information using either CSS selectors or XPath expressions.\nIt’s a good idea, and actually necessary with some websites, to make R look like a normal web browser when making the request to the web server. We do this by setting the user-agent to a common one that many web browsers use:\n\n# set the user-agent to make R look like a normal web browser to the web server\nhttr::set_config(httr::user_agent(\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\"))"
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
-    "href": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
-    "title": "Webscrape frequencies",
-    "section": "Frequency lists on the internet",
-    "text": "Frequency lists on the internet\nThere are many frequency lists on the internet, and the free online dictionary wikitionary makes available a plethora of them here.\nSometimes, the frequency lists are in HTML tables, for example:\n\nThe 1,000 most frequent words in TV and Movie scripts and transcripts in English here.\nThe 1,900 most frequent Hindi words here.\nThe 10,000 most frequency Serbian words based on TV and Movie subtitles here.\n\nOther times, the frequency lists are presented as HTML lists (whether ordered or unordered), for example:\n\nThe 5,000 most frequent words in Danish here.\n1,000 Japanese basic words here.\nThe 2,000 most frequent words in fiction in English here."
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#html-tables",
-    "href": "lessons/webscrape_freq.html#html-tables",
-    "title": "Webscrape frequencies",
-    "section": "HTML tables",
-    "text": "HTML tables\nLet’s webscrape a frequency list that is sitting in an HTML table. Let’s use the list of the 1,000 most frequent words in TV and Movie scripts in English here.\n\n# if need, use install.packages() first to download the following packages to your harddrive\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\nurl &lt;- \"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\"\n\n# request the page\npage &lt;- read_html(url)\n\n# get the HTML table holding the frequency list\nfreqs_table &lt;- html_element(page, \"table\") \n\n# convert the HTML table into a data frame (i.e., tibble)\nfreqs_df &lt;- html_table(freqs_table, header = TRUE)\n\n# print the frequency table to the console\nprint(freqs_df)\n\nYou may have noticed that the above code could be put into a single pipeline by using the pipe operator repeatedly:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table(header = TRUE) %&gt;% \n  print()\n\n\nActivity\nYour turn! Find a frequency list of your choice online that is in an HTML table and webscrape it into a data frame in R. If you’ve having trouble finding one that is in an HTML table, try the 1,900 most frequent Hindi words here or the 10,000 most frequent Serbian words here.\nAfter a good-faith effort, if you need help, see Dr. Brown’s code below:\nHindi\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Hindi_1900\" %&gt;%  # put URL in a string\n  read_html() %&gt;%  # request page\n  html_element(\"table\") %&gt;%  # find first \"table\" HTML element\n  html_table() %&gt;%  # convert HTML table to data frame (i.e., tibble)\n  print()  # print data frame to console\n\n\nSerbian\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# extra exercise: write in appropriate comments below\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Serbian_wordlist\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table() %&gt;% \n  print()"
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#html-lists",
-    "href": "lessons/webscrape_freq.html#html-lists",
-    "title": "Webscrape frequencies",
-    "section": "HTML lists",
-    "text": "HTML lists\nWebscraping HTML lists, whether ordered (i.e., with numbers) or unordered (i.e., with bullets) is more work because we can’t use the slick html_table() function in rvest to convert an HTML table into a data frame in R. Rather, we have to identify which part of the data is the word and which part is the frequency. Further, we have to parse each frequency list separately, as we can’t assume that all frequency lists are formatted the same way.\nLet’s inspect the HTML of the frequency list of the 5,000 most frequency words in Danish in TV and Movie subtitles here. (Seriously, go inspect the HTML of that list before moving on.)\nWe see that the frequency list is an ordered list (HTML tag &lt;ol&gt;) and that each word and its corresponding frequency is in a list item (HTML tag &lt;li&gt;) and that the word and its frequency are separated by a space. We can use this information to scrape out the frequency list, and then use the space to identify the word and the frequency in order to put them into separate columns in a data frame in R.\nPro-tip: SelectorGadget (here) is an absolutely super helpful Google Chrome add-on extension that helps to quick identify the CSS Selector of elements of a webpage.\nLet’s get rolling with the code:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# put the URL in a string\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Danish_wordlist\" %&gt;% \n  \n  # request the HTML page\n  read_html() %&gt;% \n  \n  # extract the HTML elements &lt;li&gt; that are children of HTML elements &lt;ol&gt;\n  html_elements(css = \"ol li\") %&gt;% \n  \n  # keep only the text, that is, remove the HTML tags\n  html_text() %&gt;% \n  \n  # create a data frame with one column named \"both\"\n  # note: the dot below pipes the result of the previous step into where the dot is (rather than at the beginning of the function, which is the default behavior of the pipe operator)\n  tibble(both = .) %&gt;% \n  \n  # separate the \"both\" column into two columns (i.e., \"wd\" and \"freq\") on the space between the word and the frequency\n  separate_wider_delim(cols = \"both\", delim = \" \", names = c(\"wd\", \"freq\")) %&gt;% \n  \n  # print the data frame to the console\n  print()\n\n\nActivity\nIt’s that time of the class period: your turn!\nFind a frequency (or rank) list of your choice on the internet (probably at wikitionary.org) that is not in an HTML table and parse it into a data frame in R. If you need help finding one, try the 2,000 most frequent words in fiction in English here or the 1,000 Japanese basic words here.\nAfter a good-faith effort, if you need some help, see Dr. Brown’s code below:\nEnglish\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \"ol li\") %&gt;% \n  html_text() %&gt;% \n  tibble(wd = .) %&gt;% \n  print()\n\n\nJapanese\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \".mw-parser-output &gt; ul li\") %&gt;% \n  html_text() %&gt;% \n  tibble(entry = .) %&gt;% \n  print()"
-  },
-  {
-    "objectID": "lessons/webscrape_freq.html#question",
-    "href": "lessons/webscrape_freq.html#question",
-    "title": "Webscrape frequencies",
-    "section": "Question",
-    "text": "Question\nIn most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?"
-  },
-  {
     "objectID": "lessons/wrangling.html",
     "href": "lessons/wrangling.html",
     "title": "Data Wrangling",
@@ -488,6 +348,237 @@
     "title": "Data Wrangling",
     "section": "Working with categorical variables",
     "text": "Working with categorical variables\nThere are a few handy functions in the forcats package within tidyverse for working with categorical variables (aka. factors).\nThe fct_recode() function allows the user to manually change or combine levels (aka. values) of a categorical variable. Let’s create a toy data frame with words and vowels:\n\nlibrary(\"tidyverse\")\nwords &lt;- tibble(\n  word = c(\"wasp\", \"fleece\", \"beat\", \"bit\", \"pat\", \"bus\", \"hot\", \"cool\", \"firm\", \"father\"),\n  vowel = c(\"[ɑ]\", \"[i]\", \"[i]\", \"[ɪ]\", \"[æ]\", \"[ʌ]\", \"[ɔ]\", \"[u]\", \"[ɚ]\", \"[ɑ]\")\n)\nprint(words)\n\nNow, let’s create a new column in which we describe (some of) the vowels:\n\nwords |&gt; \n  mutate(description = fct_recode(vowel, \"high front closed\" = \"[i]\", \"r colored schwa\" = \"[ɚ]\", \"stressed schwa (wedge)\" = \"[ʌ]\"))\n\nThe fct_collapse() function allows the user to put levels into groups:\n\nwords |&gt; \n  mutate(height = fct_collapse(vowel, \n                               hi_V = c(\"[i]\", \"[ɪ]\", \"[u]\"), \n                               lo_V = c(\"[ɑ]\", \"[æ]\"),\n                               other_level = \"mid_V\"))\n\nQuestion: What does the other_level argument do in the function call above?\nThe fct_relevel() function allows the user to reorder the levels of a categorical variable. This is often useful when plotting data and the user wants an order of levels different from alphabetical order (the default).\nLet’s create a toy data frame of voiceless plosives and their voice onset times (VOT):\n\nlibrary(tidyverse)\nvoiceless_plosives &lt;- tibble(\n  plosive = c(\"t\", \"k\", \"p\", \"p\", \"k\", \"t\", \"p\", \"k\", \"t\"),\n  vot = c(23, 34, 45, 56, 67, 78, 89, 91, 21)\n)\nprint(voiceless_plosives)\n\nIf we create a boxplot (preview of what’s coming soon!), we see that “k” is on the left, followed by “p” and “t”, because the default way to sort levels is by alphabetical order:\n\nvoiceless_plosives |&gt; \n  ggplot(aes(x = plosive, y = vot)) +\n  geom_boxplot()\n\nWe probably want “p” followed by “t” and then “k”, as that’s how they are presented in linguistic literature, based on the place of articulation. Let’s use fct_relevel() to change the internal order of the levels, and then replot their VOTs:\n\nvoiceless_plosives |&gt;\n  mutate(plosive = fct_relevel(plosive, \"p\", \"t\", \"k\")) |&gt; \n  ggplot(aes(x = plosive, y = vot)) +\n  geom_boxplot()\n\n\nActivity\nLet’s create a toy data frame with Spanish words with a dental or alveolar word-final sibilant:\n\nlibrary(\"tidyverse\")\nsibilants &lt;- tibble(\n  person = c(\"Raúl\", \"Raúl\", \"José\", \"José\", \"María\"),\n  target_wd = c(\"árboles\", \"mesas\", \"lápiz\", \"es\", \"pues\"),\n  next_wd = c(\"de\", \"en\", \"y\", \"que\", \".\"),\n  next_segment = c(\"d\", \"e\", \"i\", \"k\", \"#\")\n)\nprint(sibilants)\n\nYour task is to create a new column that groups the vowels into one level, the consonants into their own group, and then all other following segments should be placed into an other level.\nAfter a good-faith effort, if you need help, take a look at Dr. Brown’s code below:\n\n\nCode\nsibilants |&gt;  \n  mutate(next_sound_type = fct_collapse(next_segment, vowel = c(\"i\",\"e\"), consonant = c(\"d\", \"k\"), other_level = \"other\"))"
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html",
+    "href": "lessons/webscrape_freq.html",
+    "title": "Webscrape frequencies",
+    "section": "",
+    "text": "Students will use R to webscrape an already-created frequency list on the internet."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#objective",
+    "href": "lessons/webscrape_freq.html#objective",
+    "title": "Webscrape frequencies",
+    "section": "",
+    "text": "Students will use R to webscrape an already-created frequency list on the internet."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#overview-of-the-internet",
+    "href": "lessons/webscrape_freq.html#overview-of-the-internet",
+    "title": "Webscrape frequencies",
+    "section": "Overview of the internet",
+    "text": "Overview of the internet\nHere’s a super simplified overview of how the internet works: Clients (e.g., computers, smart phones) that are connected to the internet make HTTP requests to web servers (e.g., byu.edu, npr.org, instagram.com, etc.), and those web servers send back HTTP responses. Here’s a diagram to illustrate this basic idea."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#r-as-web-browser",
+    "href": "lessons/webscrape_freq.html#r-as-web-browser",
+    "title": "Webscrape frequencies",
+    "section": "R as web browser",
+    "text": "R as web browser\nR can act like a web browser by making HTTP requests and receiving HTTP responses from web servers. The rvest package here makes it easy to have R interact with the internet. That package also contains useful functions to parse the HTML in the HTTP response in order to extract information using either CSS selectors or XPath expressions.\nIt’s a good idea, and actually necessary with some websites, to make R look like a normal web browser when making the request to the web server. We do this by setting the user-agent to a common one that many web browsers use:\n\n# set the user-agent to make R look like a normal web browser to the web server\nhttr::set_config(httr::user_agent(\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\"))"
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
+    "href": "lessons/webscrape_freq.html#frequency-lists-on-the-internet",
+    "title": "Webscrape frequencies",
+    "section": "Frequency lists on the internet",
+    "text": "Frequency lists on the internet\nThere are many frequency lists on the internet, and the free online dictionary wikitionary makes available a plethora of them here.\nSometimes, the frequency lists are in HTML tables, for example:\n\nThe 1,000 most frequent words in TV and Movie scripts and transcripts in English here.\nThe 1,900 most frequent Hindi words here.\nThe 10,000 most frequency Serbian words based on TV and Movie subtitles here.\n\nOther times, the frequency lists are presented as HTML lists (whether ordered or unordered), for example:\n\nThe 5,000 most frequent words in Danish here.\n1,000 Japanese basic words here.\nThe 2,000 most frequent words in fiction in English here."
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#html-tables",
+    "href": "lessons/webscrape_freq.html#html-tables",
+    "title": "Webscrape frequencies",
+    "section": "HTML tables",
+    "text": "HTML tables\nLet’s webscrape a frequency list that is sitting in an HTML table. Let’s use the list of the 1,000 most frequent words in TV and Movie scripts in English here.\n\n# if need, use install.packages() first to download the following packages to your harddrive\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\nurl &lt;- \"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\"\n\n# request the page\npage &lt;- read_html(url)\n\n# get the HTML table holding the frequency list\nfreqs_table &lt;- html_element(page, \"table\") \n\n# convert the HTML table into a data frame (i.e., tibble)\nfreqs_df &lt;- html_table(freqs_table, header = TRUE)\n\n# print the frequency table to the console\nprint(freqs_df)\n\nYou may have noticed that the above code could be put into a single pipeline by using the pipe operator repeatedly:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/TV/2006/1-1000\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table(header = TRUE) %&gt;% \n  print()\n\n\nActivity\nYour turn! Find a frequency list of your choice online that is in an HTML table and webscrape it into a data frame in R. If you’ve having trouble finding one that is in an HTML table, try the 1,900 most frequent Hindi words here or the 10,000 most frequent Serbian words here.\nAfter a good-faith effort, if you need help, see Dr. Brown’s code below:\nHindi\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Hindi_1900\" %&gt;%  # put URL in a string\n  read_html() %&gt;%  # request page\n  html_element(\"table\") %&gt;%  # find first \"table\" HTML element\n  html_table() %&gt;%  # convert HTML table to data frame (i.e., tibble)\n  print()  # print data frame to console\n\n\nSerbian\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# extra exercise: write in appropriate comments below\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Serbian_wordlist\" %&gt;% \n  read_html() %&gt;% \n  html_element(\"table\") %&gt;% \n  html_table() %&gt;% \n  print()"
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#html-lists",
+    "href": "lessons/webscrape_freq.html#html-lists",
+    "title": "Webscrape frequencies",
+    "section": "HTML lists",
+    "text": "HTML lists\nWebscraping HTML lists, whether ordered (i.e., with numbers) or unordered (i.e., with bullets) is more work because we can’t use the slick html_table() function in rvest to convert an HTML table into a data frame in R. Rather, we have to identify which part of the data is the word and which part is the frequency. Further, we have to parse each frequency list separately, as we can’t assume that all frequency lists are formatted the same way.\nLet’s inspect the HTML of the frequency list of the 5,000 most frequency words in Danish in TV and Movie subtitles here. (Seriously, go inspect the HTML of that list before moving on.)\nWe see that the frequency list is an ordered list (HTML tag &lt;ol&gt;) and that each word and its corresponding frequency is in a list item (HTML tag &lt;li&gt;) and that the word and its frequency are separated by a space. We can use this information to scrape out the frequency list, and then use the space to identify the word and the frequency in order to put them into separate columns in a data frame in R.\nPro-tip: SelectorGadget (here) is an absolutely super helpful Google Chrome add-on extension that helps to quick identify the CSS Selector of elements of a webpage.\nLet’s get rolling with the code:\n\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n# put the URL in a string\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Danish_wordlist\" %&gt;% \n  \n  # request the HTML page\n  read_html() %&gt;% \n  \n  # extract the HTML elements &lt;li&gt; that are children of HTML elements &lt;ol&gt;\n  html_elements(css = \"ol li\") %&gt;% \n  \n  # keep only the text, that is, remove the HTML tags\n  html_text() %&gt;% \n  \n  # create a data frame with one column named \"both\"\n  # note: the dot below pipes the result of the previous step into where the dot is (rather than at the beginning of the function, which is the default behavior of the pipe operator)\n  tibble(both = .) %&gt;% \n  \n  # separate the \"both\" column into two columns (i.e., \"wd\" and \"freq\") on the space between the word and the frequency\n  separate_wider_delim(cols = \"both\", delim = \" \", names = c(\"wd\", \"freq\")) %&gt;% \n  \n  # print the data frame to the console\n  print()\n\n\nActivity\nIt’s that time of the class period: your turn!\nFind a frequency (or rank) list of your choice on the internet (probably at wikitionary.org) that is not in an HTML table and parse it into a data frame in R. If you need help finding one, try the 2,000 most frequent words in fiction in English here or the 1,000 Japanese basic words here.\nAfter a good-faith effort, if you need some help, see Dr. Brown’s code below:\nEnglish\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \"ol li\") %&gt;% \n  html_text() %&gt;% \n  tibble(wd = .) %&gt;% \n  print()\n\n\nJapanese\n\n\nCode\nlibrary(\"tidyverse\")\nlibrary(\"rvest\")\n\n\"https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words\" %&gt;% \n  read_html() %&gt;% \n  html_elements(css = \".mw-parser-output &gt; ul li\") %&gt;% \n  html_text() %&gt;% \n  tibble(entry = .) %&gt;% \n  print()"
+  },
+  {
+    "objectID": "lessons/webscrape_freq.html#question",
+    "href": "lessons/webscrape_freq.html#question",
+    "title": "Webscrape frequencies",
+    "section": "Question",
+    "text": "Question\nIn most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ling_data_analysis",
+    "section": "",
+    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
+  },
+  {
+    "objectID": "demo.html",
+    "href": "demo.html",
+    "title": "demo",
+    "section": "",
+    "text": "Students will learn about Quarto."
+  },
+  {
+    "objectID": "demo.html#objective",
+    "href": "demo.html#objective",
+    "title": "demo",
+    "section": "",
+    "text": "Students will learn about Quarto."
+  },
+  {
+    "objectID": "demo.html#lets-get-rollin",
+    "href": "demo.html#lets-get-rollin",
+    "title": "demo",
+    "section": "Let’s get rollin’!",
+    "text": "Let’s get rollin’!\nWhat should I write? Here’s an example of some code:\n\n\nCode\nprint(\"hola mundo\")\n\n\n[1] \"hola mundo\"\n\n\nI just said “hello” in Spanish, with the code print(\"hola mundo\")"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
+  },
+  {
+    "objectID": "lessons/regexes.html",
+    "href": "lessons/regexes.html",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+  },
+  {
+    "objectID": "lessons/regexes.html#objective",
+    "href": "lessons/regexes.html#objective",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Students will become proficient with writing regular expressions, including with capture groups and lookaround."
+  },
+  {
+    "objectID": "lessons/regexes.html#regular-expressions-aka.-regexes",
+    "href": "lessons/regexes.html#regular-expressions-aka.-regexes",
+    "title": "Regular expressions",
+    "section": "Regular expressions (aka. regexes)",
+    "text": "Regular expressions (aka. regexes)\n\nRegular expressions are used to match strings. \n\nNote: In R, you must use double backslashes, e.g., \\\\w+\n\nOnline regex checker are useful, such as here (for Python), here, and here.\nLetters represent themselves: \"ed\" returns ed anywhere in the string, for example, Ed studied in the education building."
+  },
+  {
+    "objectID": "lessons/regexes.html#character-classes",
+    "href": "lessons/regexes.html#character-classes",
+    "title": "Regular expressions",
+    "section": "Character classes",
+    "text": "Character classes\n\n\\\\w = alphanumeric character; \\\\W = non-alphanumeric character\n\\\\s = whitespace (i.e., spaces, tab breaks, newlines); \\\\S = non-whitespace\n\\\\d = Arabic numeral (i.e., 0-9); \\\\D = non-Arabic numeral\n[] = character class finds one of the characters between the square brackets: \n\n[aeiou] finds one of the five orthographic vowels\n[Aa] find either uppercase or lowercase a \n[a-z] finds one lowercase English character\n[a-zA-Z] returns one lowercase English character or one uppercase English character \nExample: \"latin[aox]\" returns latina, latino, latinx."
+  },
+  {
+    "objectID": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
+    "href": "lessons/regexes.html#the-pipe-which-is-just-above-the-return-key-on-my-keyboard-is-an-or-operator",
+    "title": "Regular expressions",
+    "section": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  ",
+    "text": "| (the “pipe” which is just above the return key on my keyboard) is an “or” operator:  \n\nExample: \"\\\\bth(is|at|ese|ose) \\\\w+\" returns an English demonstrative determiner followed by a space, followed by a contiguous span or one or more of alphanumeric character, for example, this bag, that cat, these plants, those buildings.\nQuantifiers\n\n{min, max} = returns between min and max number of the previous character: \"\\\\w{2,5}\" returns between two and five alphanumeric characters. Note that \"\\\\w{,5}\" returns up to five alphanumeric characters, and \"\\\\w{2,}\" finds two or more alphanumeric characters.\n{integer} = returns the exact number of the previous character: \"\\\\d{4}\" returns exactly four Arabic numerals (for example, to find four-digit years in a text or corpus)\nShortcut quantifiers:\n\n? means the same as {0, 1}, meaning it returns zero or one of the previous pattern, that is, the previous character is optional\n* is the same as {0,} and returns zero or more of the previous pattern: yes\\\\!* returns yes, followed by any number of exclamation points, including none at all: yes, yes!, yes!!!, etc.. \n+ means {1,} and returns one or more of the previous pattern, for example, \"go+l\" returns gol, goool, gooooooool\n\n\n\n\nActivity\n\nWhat do the following regexes match? See example in Section 2.1 here.\n\n\"\\\\b[Tt]he\\\\b\\\\s+\\\\b[Ii]nternet\\\\b\"\n\"\\\\w+ed\\\\b\"\n\"\\\\bcent(er|re)\\\\b\"\n\"\\\\bwalk(s|ed|ing)?\\\\b\"\n\"\\\\b[^aeiou\\\\W]{2,}\\\\w+\"\n\"\\\\b[^aeiou\\\\W][aeiou]\\\\w+\""
+  },
+  {
+    "objectID": "lessons/regexes.html#capture-groups",
+    "href": "lessons/regexes.html#capture-groups",
+    "title": "Regular expressions",
+    "section": "Capture groups",
+    "text": "Capture groups\n\nWarning: This gets wild. \nYou can have a regular expression remember what it captured in order to search for that same sequence of characters.\nYou can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with \\\\1 for the first capture group, or \\\\2 for the second capture group (if you have more than one capture group in the same regex), etc.\nExample: \"\\\\w+(\\\\w) \\\\1\\\\w+\" returns a bigram whose first word ends with the same letter that the second word begins with, e.g., walkeddown\n\n\nActivity\n\nWhat do the following regexes match?\n\n\"([aeiou])\\\\1\"\n\"\\\\w*([aeiou])\\\\1\\\\w*\"\n\"the (\\\\w+)er they were, the \\\\1er they will be\"\n\"[Tt]he (\\\\w+)er they (\\\\w+),? the \\\\1er we \\\\2\"\n\"\\\\w+(\\\\w{2,})\\\\W+\\\\w+\\\\1\\\\b\""
+  },
+  {
+    "objectID": "lessons/regexes.html#lookaround",
+    "href": "lessons/regexes.html#lookaround",
+    "title": "Regular expressions",
+    "section": "Lookaround",
+    "text": "Lookaround\n\nLookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.\n\nSee lookahead examples in Section 2.1.7 here.\n\n\n\nActivity\n\nDownload at least several TXT files of your choice (perhaps from Project Gutenberg or Saints from the LMS).\nLoop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the stringr package, for example, str_match_all(), str_extract_all(), str_locate_all().\nCreate a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.\nRamp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc."
+  },
+  {
+    "objectID": "lessons/linear_regression.html",
+    "href": "lessons/linear_regression.html",
+    "title": "Linear regression",
+    "section": "",
+    "text": "Students will build a linear regression model."
+  },
+  {
+    "objectID": "lessons/linear_regression.html#objective",
+    "href": "lessons/linear_regression.html#objective",
+    "title": "Linear regression",
+    "section": "",
+    "text": "Students will build a linear regression model."
+  },
+  {
+    "objectID": "lessons/linear_regression.html#ordinary-least-squares-regression",
+    "href": "lessons/linear_regression.html#ordinary-least-squares-regression",
+    "title": "Linear regression",
+    "section": "Ordinary Least Squares Regression",
+    "text": "Ordinary Least Squares Regression\nA very common form of regression is Ordinary Least Squares (OLS) linear regression. If no modifiers are put before the term “linear regression” then Ordinary Least Squares linear regression is being referred to.\nThe basic idea is to try to fit a straight line (aka. regression line) through data points such that you end up with the lowest possible sum of squared residuals."
+  },
+  {
+    "objectID": "lessons/linear_regression.html#residuals",
+    "href": "lessons/linear_regression.html#residuals",
+    "title": "Linear regression",
+    "section": "Residuals",
+    "text": "Residuals\nA residual in regression is the distance between an observed data point (aka. observation) and the regression line. While there is a mathematical formula to find where exactly that line should go, that is, to find its slope and the value of \\(y\\) when the line crosses \\(x=0\\), for pedagogical purposes, let’s do a bit of trial-n-error."
+  },
+  {
+    "objectID": "lessons/linear_regression.html#toy-example",
+    "href": "lessons/linear_regression.html#toy-example",
+    "title": "Linear regression",
+    "section": "Toy example",
+    "text": "Toy example\nLet’s create a simple data frame:\n\nsuppressPackageStartupMessages(library(\"tidyverse\"))\nmorenos &lt;- tibble(\n  person = c(\"Sam\", \"Eloisa\", \"Lola\", \"Heidi\", \"Ellen\"),\n  height = c(72, 70, 69, 63, 62),\n  age = c(18, 17, 14, 13, 11)\n)\nprint(morenos)\n\n# A tibble: 5 × 3\n  person height   age\n  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;\n1 Sam        72    18\n2 Eloisa     70    17\n3 Lola       69    14\n4 Heidi      63    13\n5 Ellen      62    11\n\n\nLet’s plot height by age of the kids in the above data frame:\n\np1 &lt;- morenos %&gt;% \n  ggplot(aes(x = age, y = height))+\n  geom_point(size = 3)+\n  theme_minimal()\nplot(p1)\n\n\n\n\nIt looks like there is a relationship between height and age of these kids, such that as the kids get older, their heights increase (unsurprisingly)."
+  },
+  {
+    "objectID": "lessons/linear_regression.html#trial-n-error",
+    "href": "lessons/linear_regression.html#trial-n-error",
+    "title": "Linear regression",
+    "section": "Trial-n-error",
+    "text": "Trial-n-error\nLet’s plot some lines and calculate the sum of the squares of the residuals for each line. In the plots below, the black points are observed values while the red points are predicted values. The vertical lines connecting the observed values (black points) and the predicted values (red points) are the residuals (aka. errors).\n\n# define a helper function\nplot_dots_and_line &lt;- function(df, input_slope, input_intercept) {\n  temp &lt;- df %&gt;% \n    mutate(hypothetical = age * input_slope + input_intercept)\n  p1 &lt;- temp %&gt;%\n    ggplot(aes(x = age, y = height))+\n    \n    # draw a straight line with the slope and y-intercept\n    geom_abline(slope = input_slope, intercept = input_intercept, color = \"blue\", linetype=3)+\n    \n    geom_point(aes(y = hypothetical), color = \"red\", size = 3)+\n    geom_segment(aes(xend = age, yend = hypothetical), alpha = 0.5)+\n    geom_point(size = 3)+\n    ggtitle(str_interp(\"Slope = ${input_slope}; y-intercept = ${input_intercept}; Sum of squares of residuals = ${sum((temp$height - temp$hypothetical)^2)}\"))+\n    theme_minimal()\n  return(p1)\n}\n\n# Make a list of guesses of slopes and y-intercepts\nguesses &lt;- list(\n  list(g_slope = 0, g_intercept = 65),\n  list(g_slope = 0.5, g_intercept = 65),\n  list(g_slope = 0.5, g_intercept = 60),\n  list(g_slope = 1, g_intercept = 50),\n  list(g_slope = 1, g_intercept = 52)\n)\n\n# Loop over the guesses\nfor (guess in guesses) {\n  p1 &lt;- plot_dots_and_line(morenos, guess$g_slope, guess$g_intercept)\n  plot(p1)\n}"
+  },
+  {
+    "objectID": "lessons/linear_regression.html#the-formula",
+    "href": "lessons/linear_regression.html#the-formula",
+    "title": "Linear regression",
+    "section": "The formula",
+    "text": "The formula\nOkay, enough horsin’ around. Let’s use the formula (actually formulas, or formulae if you must) to get the best-fit regression line, that is, the line with the lowest sum of squares of residuals.\nHere’s the formula to get the predicted y-value for a given x-value.\n\\[\n\\hat{y}=slope*x+intercept\n\\]\nThe \\(\\hat{y}\\) in the formula is referred to as “y-hat” and is the predicted (aka. fitted) y-value for a given x value. And how do you get the slope and intercept, you ask? Math (don’t freak out, it’s not that bad):\n\\[\nslope = \\frac{N * \\sum{(x * y)} - \\sum{x} * \\sum{y}}{N * \\sum{(x^{2})} - (\\sum{x})^{2}}\n\\]\nWhere:\n\\(N\\) = number of observations in dataset\n\\(*\\) = Good ol’ fashioned multiplication\n\\(\\sum\\) = The sum of the numbers to the right\n\\(x\\) = The explanatory (aka. independent or predictor) variable (here age)\n\\(y\\) = The response (aka. dependent) variable (here height)\nLet’s look at each piece of this formula with color:\n\\[\nslope = \\frac{N * \\color{red} \\sum{(x * y)} \\color{black} - \\color{orange} \\sum{x} \\color{black} * \\color{green} \\sum{y}}{N * \\color{blue} \\sum{(x^{2})} \\color{black} - \\color{purple} (\\sum{x})^{2}}\n\\]\nSo:\n\\(N=5\\) \\(\\color{red} \\sum{(x*y)} \\color{black} =(18*72+17*70+14*69+13*63+11*62)=(1296+1190+966+819+682) = 4953\\)\n\\(\\color{orange} \\sum{x} \\color{black} =(18+17+14+13+11) = 73\\)\n\\(\\color{green} \\sum{y} \\color{black} =(72+70+69+63+62) = 336\\)\n\\(\\color{blue} \\sum{(x^{2})} \\color{black} =(18^{2}+17^{2}+14^{2}+13^{2}+11^{2})=(324+289+196+169+121) = 1099\\)\n\\(\\color{purple} (\\sum{x})^{2} \\color{black} =(18+17+14+13+11)^{2} = 73^{2} = 5329\\)\nNow, let’s put the numbers into the formula and finally get that rascally slope:\n\n\\[slope=\\frac{5* \\color{red} 4953 \\color{black} - \\color{orange} 73 \\color{black} * \\color{green} 336}{5* \\color{blue} 1099 \\color{black} - \\color{purple} 5329}=\\frac{24765-24528}{5495-5329}=\\frac{237}{166}= 1.427711\n\\]\nLovely, the slope of the least squares line (aka. line of best fit) is 1.427711.\nNow, here’s the formula for the y-intercept (which uses the slope that we just calculated):\n\n\\[intercept = \\frac{\\color{green} \\sum{y} \\color{black} - slope * \\color{orange} \\sum{x}}{N}\n\\]\nWe already calculated above all the numbers in this formula, so let’s get crackin’!:\n\\[intercept = \\frac{\\color{green} 336 \\color{black} - 1.427711 * \\color{orange} 73}{5}=\\frac{336-104.2229}{5}=\\frac{231.7771}{5}=46.35542\n\\]\nTerrific, the y-intercept of the least squares line is 46.35542.\nNow, let’s use the slope and the y-intercept we just calculated to draw a line through our data points and calculate the sum of the squares of residuals.\n\nplot_dots_and_line(morenos, 1.427711, 46.35542)"
+  },
+  {
+    "objectID": "lessons/linear_regression.html#fit-a-linear-regression",
+    "href": "lessons/linear_regression.html#fit-a-linear-regression",
+    "title": "Linear regression",
+    "section": "Fit a linear regression",
+    "text": "Fit a linear regression\nAs I’m sure you have likely guessed, there’s a function to do all the math we just did by hand: lm(). Because the dependent variable (aka. response variable) is continuous, we will fit a linear regression (rather than a logistic regression).\n\nfitted_model &lt;- morenos %&gt;% \n  lm(height ~ age, data = .)\nprint(fitted_model)\n\n\nCall:\nlm(formula = height ~ age, data = .)\n\nCoefficients:\n(Intercept)          age  \n     46.355        1.428  \n\n\nThe summary() function gives you the above info as well as more info:\n\nsummary(fitted_model)\n\n\nCall:\nlm(formula = height ~ age, data = .)\n\nResiduals:\n       1        2        3        4        5 \n-0.05422 -0.62651  2.65663 -1.91566 -0.06024 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)   \n(Intercept)  46.3554     4.9552   9.355  0.00259 **\nage           1.4277     0.3342   4.272  0.02355 * \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1.926 on 3 degrees of freedom\nMultiple R-squared:  0.8588,    Adjusted R-squared:  0.8117 \nF-statistic: 18.25 on 1 and 3 DF,  p-value: 0.02355\n\n\nThe Call section and the Residuals sections are transparently named. With small datasets, the residuals are given here in the summary, but when there are many data points (and therefore an equal number of many residuals), only summary information is given about the residuals, specifically the min and max, and the first and third quartiles, and the median. Ideally, the residuals should be normally distributed and centered on zero. If the summary info given isn’t enough to determine those assumptions, you can retrieve all the residuals with the residuals() function:\n\nresiduals(fitted_model)\n\n          1           2           3           4           5 \n-0.05421687 -0.62650602  2.65662651 -1.91566265 -0.06024096 \n\n\nThe Coefficients section gives a lot of numbers. The Estimate column gives the intercept, which again, is the predicted or fitted value of \\(y\\) when \\(x\\) is zero (i.e., the predicted value of the response variable when the explanatory variable has a value of zero). The slope of age is given in the age row, under the Estimate column. What this means, is that for each unit increase of the the explanatory (i.e., age), there is on average a 1.4277 unit increase in the response variable. So, in this toy example, this means that for each year older, a kid is 1.4277 inches taller. And, this general trend is statistically significant because the p-value (i.e., 0.02355) in the far right column (i.e., Pr(&gt;|t|)) is smaller than the alpha level of 0.05 (is we consider that alpha level to be our threshold below this statistical significance occurs)."
+  },
+  {
+    "objectID": "lessons/linear_regression.html#predicted-values",
+    "href": "lessons/linear_regression.html#predicted-values",
+    "title": "Linear regression",
+    "section": "Predicted values",
+    "text": "Predicted values\nWe can get the predicted (aka. fitted) values (i.e., \\(\\hat{y}\\)) from the model and add them to the original dataframe.\n\nmorenos &lt;- morenos %&gt;% \n  mutate(predicted = predict(fitted_model))\nprint(morenos)\n\n# A tibble: 5 × 4\n  person height   age predicted\n  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;\n1 Sam        72    18      72.1\n2 Eloisa     70    17      70.6\n3 Lola       69    14      66.3\n4 Heidi      63    13      64.9\n5 Ellen      62    11      62.1"
+  },
+  {
+    "objectID": "lessons/linear_regression.html#residuals-1",
+    "href": "lessons/linear_regression.html#residuals-1",
+    "title": "Linear regression",
+    "section": "Residuals",
+    "text": "Residuals\nWe can get the residuals from the model and add them to the original dataframe. The residuals are the distances between the observed values and their corresponding predicted values.\n\nmorenos &lt;- morenos %&gt;% \n  mutate(residual = residuals(fitted_model)) \nprint(morenos)\n\n# A tibble: 5 × 5\n  person height   age predicted residual\n  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 Sam        72    18      72.1  -0.0542\n2 Eloisa     70    17      70.6  -0.627 \n3 Lola       69    14      66.3   2.66  \n4 Heidi      63    13      64.9  -1.92  \n5 Ellen      62    11      62.1  -0.0602\n\n\nLet’s now (more easily) plot the observed data points \\(y\\), the predicted values (i.e., \\(\\hat{y}\\)), and the residuals.\n\nmorenos %&gt;% \n  ggplot(aes(x = age, y = height))+\n  geom_smooth(method = lm, se = FALSE, linetype = 3)+\n  geom_point(aes(y = predicted), color = \"red\")+\n  geom_point()+\n  theme_minimal()+\n  geom_segment(aes(xend = age, yend = predicted), alpha = 0.5) \n\n`geom_smooth()` using formula = 'y ~ x'"
+  },
+  {
+    "objectID": "lessons/linear_regression.html#assumptions-of-linear-regression",
+    "href": "lessons/linear_regression.html#assumptions-of-linear-regression",
+    "title": "Linear regression",
+    "section": "Assumptions of linear regression",
+    "text": "Assumptions of linear regression\nLinear regression (like most inferential statistical tests) has a number of assumptions that should be met in order to obtain reliable results. I’m borrowing liberally from Levshina (2015, p. 155) here.\nAssumptions:\n\nThe observations are independent from one another. If the observations are related to each other (e.g., some/many tokens come from the same person or from the same word), then mixed-effect regression should be used with person and/or word specified as what’s called a random effect.\nThe response variable is continuous. If ordinal, then ordinal regression should be used instead. If categorical with two levels in the response variable, then logistic regression should be used. If categorical with three or more levels in the response variable, then multinomial regression should be used.\nThe relationship between the response and explanatory variable is linear. If not, then a transformation of the response and/or explanatory variables should be performed (e.g., taking the logarithm of word frequency).\nThe residuals of the model vary constantly. This is called homoscedasticity of variance. In other words, the variability of the residuals does not increase or decrease with the response variable nor with the explanatory variable(s). Fitting a scatterplot of the residuals by the predicted (aka. fitted) values of the linear model is a good way to detect if there is heteroscedasticity of variance. If there is heteroscedasticity a Box-Cox transformation of the response variable can help. If still problematic, a boostrapping procedure is the next step.\nThere is no multicollinearity of the explanatory variables, that is, they are not (overly) correlated with each other. Value Inflation Factors (VIF) scores below 5 or 10 indicate not much multicollinearity going on. The car package has a vif() function (and there are other packages with a similar functions.)\nThe residuals are not autocorrelated. A p-value below 0.05 in the durbinWatsonTest() function in the car package indicates autocorrelation. This is rarely a problem.\nThe residuals should be normally distributed, with a mean of zero. This assumption becomes less important as sample size increases."
+  },
+  {
+    "objectID": "lessons/linear_regression.html#activity",
+    "href": "lessons/linear_regression.html#activity",
+    "title": "Linear regression",
+    "section": "Activity",
+    "text": "Activity\nFrom Chapter 4 “Linear Regression 1” in Regression Modeling for Linguistic Data v1.1 by Sonderegger et al. (2022).\n\nUsing the languageR::english dataset, create a linear regression model with RTlexdec as the response variable and WrittenFrequency as the only explanatory variable.\nThen, figure out what the predicted RTlexdec for each of the following written frequencies. First, calculate the predicted RTlexdec values manually using the y-intercept and the slope given by the linear regression model (and probably using R as a basic calculator, e.g., \\(y\\text{-}intercept + slope * x\\)). Second, calculate the predicted RTlexdec values by using the predict.lm() function.\n\nWhat is the predicted RTlexdec value when WrittenFrequency is 5?\nHow about when WrittenFrequency is 10?\n\n\nAfter a good-faith effort, if you need help take a look at Dr. Brown’s code below.\n\n\nCode\n# fit linear regression model\nlanguageR::english %&gt;% \n  lm(RTlexdec ~ WrittenFrequency, data = .) -&gt; m1\nsummary(m1)\n\n\n\nCall:\nlm(formula = RTlexdec ~ WrittenFrequency, data = .)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-0.45708 -0.11657 -0.00109  0.10403  0.56085 \n\nCoefficients:\n                  Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)       6.735931   0.006067 1110.19   &lt;2e-16 ***\nWrittenFrequency -0.037010   0.001134  -32.63   &lt;2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.1413 on 4566 degrees of freedom\nMultiple R-squared:  0.1891,    Adjusted R-squared:  0.1889 \nF-statistic:  1065 on 1 and 4566 DF,  p-value: &lt; 2.2e-16\n\n\nCode\n# save the intercept and slope to variables\nintercept &lt;- m1$coefficients[\"(Intercept)\"]\nslope &lt;- m1$coefficients[\"WrittenFrequency\"]\n\n# semi-manual math\nprint(intercept + slope * 5)\n\n\n(Intercept) \n    6.55088 \n\n\nCode\nprint(intercept + slope * 10)\n\n\n(Intercept) \n   6.365829 \n\n\nCode\n# use the predict.lm() function\npredict.lm(m1, newdata = tibble(WrittenFrequency = c(5, 10)))\n\n\n       1        2 \n6.550880 6.365829"
+  },
+  {
+    "objectID": "lessons/linear_regression.html#references",
+    "href": "lessons/linear_regression.html#references",
+    "title": "Linear regression",
+    "section": "References",
+    "text": "References\nLevshina, Natalia. 2015. How to do Linguistics with R: Data Exploration and Statistical Analysis. Amsterdam / Philadelphia: John Benjamins.\nAlso, I thank the creators of these websites, which I relied on heavily: https://drsimonj.svbtle.com/visualising-residuals\nhttps://www.mathsisfun.com/data/least-squares-regression.html"
   },
   {
     "objectID": "lessons/python.html",
