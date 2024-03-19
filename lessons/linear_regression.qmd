@@ -140,7 +140,7 @@ plot_dots_and_line(morenos, 1.427711, 46.35542)
 
 ## Fit a linear regression
 
-As I’m sure you have likely guessed, there’s a function to do all the math we just did by hand: **lm()**. Because the dependent variable (aka. response variable) is continuous, we will fit a linear regression (rather than a logistic regression).
+As I’m sure you have likely guessed, there’s a function to do all the math we just did by hand: [`lm()`](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm). Because the dependent variable (aka. response variable) is continuous, we will fit a linear regression (rather than a logistic regression). When we have only one explanatory variable, the term "simple linear regression" is often used. Differently, when we have two or more explanatory variables, the term "multiple linear regression" is used. We see multiple linear regression below.
 
 ```{r}
 fitted_model <- morenos %>% 
@@ -251,9 +251,61 @@ print(intercept + slope * 10)
 predict.lm(m1, newdata = tibble(WrittenFrequency = c(5, 10)))
 ```
 
+## More than one explanatory variable
+
+The real usefulness of regression analysis is its ability to measure the influence of several explanatory variables at once in order to determine which variables significantly predict or explain the response variable.
+
+Let's look at a multiple linear regression with three explanatory variables. Within the `Rling` package there is a dataset called ELP, which contains a subset of the English Lexicon Project. Let's download the package from the companion website of the textbook [*How to Do Linguistics with R*](https://benjamins.com/sites/z.195/content/package.html) by Levshina. Then change the pathway in the following code and run it:
+
+```{r}
+#| eval: false
+install.packages("/pathway/to/Rling_1.0.tar.gz", repos = NULL, type = "source")
+```
+
+And then load up the dataset and inspect it a bit:
+
+```{r}
+library("tidyverse")
+library("Rling")
+data(ELP)
+glimpse(ELP)
+summary(ELP)
+```
+
+The `Word` column is transparently named. The `Length` column is the length of the word in number of letters (as an integer). The `SUBTLWF` column gives the frequency (i.e., float or double or numeric) of the word normalized to per million words, as attested in a corpus of movie subtitles. The `POS` is transparently named (for a linguist, at least) and has three levels: `JJ` for adjective, `NN` for noun, and `VB` for verb. The `Mean_RT` column gives the mean reaction time in milliseconds (i.e., a float), and will the response variable in our regression.
+
+Let's go with the linear regression!
+
+The response variable (i.e., `Mean_RT` here) goes to the left of the formula operator (i.e., a tilde `~`), and the explanatory variables to the right of that operator, separated by a plus sign `+`. The data frame with the dataset goes with the `data` argument. As is (very) common practice, we'll take the log of frequency to put it on a more linear scale (from it's original zipfian scale; see Vsauce's [video about lexical frequency](https://youtu.be/fCn8zs912OE?si=HrO8L9uNa5l1KKBm)).
+
+Behold, a linear regression and its results:
+
+```{r}
+m1 <- lm(Mean_RT ~ Length + log(SUBTLWF) + POS, data = ELP)
+summary(m1)
+```
+
+### Interpretation
+
+Let's review the interpretation of the output. The `Call` section simply shows the `lm()` call. The `Residuals` section gives summary info about the residuals (but we could see the individual residuals by using the `residuals()` function). The `Coefficients` section gives the y-intercept and the slopes of the three explanatory variables.
+
+First, the `Length` row shows below the `Estimate` column that, on average, with each unit increases of the `Length` variable (i.e., each additional letter in word), there is a 19.555 milliseconds increase in `Mean_RT` (i.e., mean reaction time), and the p-value below the `Pr(>|t|)` column is below 0.0000000000000002 (R's default cutoff with p-values in this summary display). In simple terms, as the lengths of words increase, it takes humans significantly longer to react.
+
+The `log(SUBTLWF)` row shows below the `Estimate` column that, on average, with each unit increase of frequency (on a log scale, given our use of `log()`), mean reaction times decrease by 29.288 milliseconds (note the negative sign before the number), and this happens at a statistically significant rate given the *p*-value.
+
+The `POS` variable has two rows: `POSNN` and `POSVB`. But wait! What happened to `JJ`?! Because `JJ` comes first in the alphabet in comparison to `NN` and `VB`, it was chosen by R as the **reference level** against which the other levels in that categorical variable are compared. So, we compare each of the listed levels (i.e., `NN` and `VB`) to `JJ`, which is not listed. First things first, `POSNN` does not have a *p*-value below 0.05, so we conclude that there is no significant difference between `NN` and `JJ` in this dataset, and then we move on. Because `POSVB`'s *p*-value is below our alpha level of 0.05, we conclude that there is a significant difference between `VB` and `JJ`, such that, on average, reaction times to `VB` (i.e., verbs) is 29.184 milliseconds shorter (i.e., -29.184) than reaction times to `JJ` (i.e., adjectives).
+
+By default, R chooses the level that comes first in alphabetical order to serve as the reference level. If we would like a different level to be the reference level, we can relevel the categorical variable so that another level is first with the [`fct_relevel()`](https://forcats.tidyverse.org/reference/fct_relevel.html) function. We saw this function previously in the context of boxplots, when we changed the order of the boxes.
+
+## Sum contrasts
+
+The comparison of a reference level to the other level(s) of a categorical variable is called "treatment contrasts", and this is the default behavior of `lm()` in R. Another option is called "sum contrasts", which is based on the mean of means of the response variable by each level in the categorical variable. The coefficients given indicate how much above or below that mean of means each level in the categorical is. For more info about sum contrasts, see [this website](https://marissabarlaz.github.io/portfolio/contrastcoding/#sum-coding) or see p. 146 of Levshina (2015) or p. 201 of *Regression Modeling for Linguistic Data* v1.1 (among other good resources).
+
 ## References
 
 Levshina, Natalia. 2015. *How to do Linguistics with R: Data Exploration and Statistical Analysis*. Amsterdam / Philadelphia: John Benjamins.
+
+Sonderegger, Morgan. 2022. *Regression Modeling for Linguistic Data.* [Available online](https://github.com/msonderegger/rmld-v1.1).
 
 Also, I thank the creators of these websites, which I relied on heavily: <https://drsimonj.svbtle.com/visualising-residuals>\
 <https://www.mathsisfun.com/data/least-squares-regression.html>

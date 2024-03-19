@@ -352,6 +352,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#residuals-1" id="toc-residuals-1" class="nav-link" data-scroll-target="#residuals-1">Residuals</a></li>
   <li><a href="#assumptions-of-linear-regression" id="toc-assumptions-of-linear-regression" class="nav-link" data-scroll-target="#assumptions-of-linear-regression">Assumptions of linear regression</a></li>
   <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  <li><a href="#more-than-one-explanatory-variable" id="toc-more-than-one-explanatory-variable" class="nav-link" data-scroll-target="#more-than-one-explanatory-variable">More than one explanatory variable</a>
+  <ul class="collapse">
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#sum-contrasts" id="toc-sum-contrasts" class="nav-link" data-scroll-target="#sum-contrasts">Sum contrasts</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -527,7 +532,7 @@ We already calculated above all the numbers in this formula, so let’s get crac
 </section>
 <section id="fit-a-linear-regression" class="level2">
 <h2 class="anchored" data-anchor-id="fit-a-linear-regression">Fit a linear regression</h2>
-<p>As I’m sure you have likely guessed, there’s a function to do all the math we just did by hand: <strong>lm()</strong>. Because the dependent variable (aka. response variable) is continuous, we will fit a linear regression (rather than a logistic regression).</p>
+<p>As I’m sure you have likely guessed, there’s a function to do all the math we just did by hand: <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm"><code>lm()</code></a>. Because the dependent variable (aka. response variable) is continuous, we will fit a linear regression (rather than a logistic regression). When we have only one explanatory variable, the term “simple linear regression” is often used. Differently, when we have two or more explanatory variables, the term “multiple linear regression” is used. We see multiple linear regression below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fitted_model <span class="ot">&lt;-</span> morenos <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(height <span class="sc">~</span> age, <span class="at">data =</span> .)</span>
@@ -717,9 +722,96 @@ F-statistic:  1065 on 1 and 4566 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
+<section id="more-than-one-explanatory-variable" class="level2">
+<h2 class="anchored" data-anchor-id="more-than-one-explanatory-variable">More than one explanatory variable</h2>
+<p>The real usefulness of regression analysis is its ability to measure the influence of several explanatory variables at once in order to determine which variables significantly predict or explain the response variable.</p>
+<p>Let’s look at a multiple linear regression with three explanatory variables. Within the <code>Rling</code> package there is a dataset called ELP, which contains a subset of the English Lexicon Project. Let’s download the package from the companion website of the textbook <a href="https://benjamins.com/sites/z.195/content/package.html"><em>How to Do Linguistics with R</em></a> by Levshina. Then change the pathway in the following code and run it:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"/pathway/to/Rling_1.0.tar.gz"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And then load up the dataset and inspect it a bit:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Rling"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ELP)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ELP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 880
+Columns: 5
+$ Word    &lt;fct&gt; rackets, stepmother, delineated, swimmers, umpire, cobra, vexe…
+$ Length  &lt;int&gt; 7, 10, 10, 8, 6, 5, 5, 8, 8, 6, 8, 12, 8, 6, 7, 3, 3, 10, 9, 4…
+$ SUBTLWF &lt;dbl&gt; 0.96, 4.24, 0.04, 1.49, 1.06, 3.33, 0.10, 0.06, 0.43, 5.41, 0.…
+$ POS     &lt;fct&gt; NN, NN, VB, NN, NN, NN, VB, NN, NN, NN, VB, NN, JJ, NN, NN, VB…
+$ Mean_RT &lt;dbl&gt; 790.87, 692.55, 960.45, 771.13, 882.50, 645.85, 760.29, 682.26…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ELP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Word         Length         SUBTLWF         POS     
+ abbreviation:  1   Min.   : 3.00   Min.   :   0.020   JJ:159  
+ abortions   :  1   1st Qu.: 7.00   1st Qu.:   0.180   NN:532  
+ abrupt      :  1   Median : 8.00   Median :   0.570   VB:189  
+ absentee    :  1   Mean   : 8.22   Mean   :   8.603           
+ abutment    :  1   3rd Qu.:10.00   3rd Qu.:   2.105           
+ accomplice  :  1   Max.   :20.00   Max.   :2556.730           
+ (Other)     :874                                              
+    Mean_RT      
+ Min.   : 517.5  
+ 1st Qu.: 695.7  
+ Median : 764.5  
+ Mean   : 786.8  
+ 3rd Qu.: 853.0  
+ Max.   :1324.6  
+                 </code></pre>
+</div>
+</div>
+<p>The <code>Word</code> column is transparently named. The <code>Length</code> column is the length of the word in number of letters (as an integer). The <code>SUBTLWF</code> column gives the frequency (i.e., float or double or numeric) of the word normalized to per million words, as attested in a corpus of movie subtitles. The <code>POS</code> is transparently named (for a linguist, at least) and has three levels: <code>JJ</code> for adjective, <code>NN</code> for noun, and <code>VB</code> for verb. The <code>Mean_RT</code> column gives the mean reaction time in milliseconds (i.e., a float), and will the response variable in our regression.</p>
+<p>Let’s go with the linear regression!</p>
+<p>The response variable (i.e., <code>Mean_RT</code> here) goes to the left of the formula operator (i.e., a tilde <code>~</code>), and the explanatory variables to the right of that operator, separated by a plus sign <code>+</code>. The data frame with the dataset goes with the <code>data</code> argument. As is (very) common practice, we’ll take the log of frequency to put it on a more linear scale (from it’s original zipfian scale; see Vsauce’s <a href="https://youtu.be/fCn8zs912OE?si=HrO8L9uNa5l1KKBm">video about lexical frequency</a>).</p>
+<p>Behold, a linear regression and its results:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Mean_RT <span class="sc">~</span> Length <span class="sc">+</span> <span class="fu">log</span>(SUBTLWF) <span class="sc">+</span> POS, <span class="at">data =</span> ELP)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Mean_RT ~ Length + log(SUBTLWF) + POS, data = ELP)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-213.70  -62.55   -9.71   53.87  389.00 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   622.466     14.191  43.864  &lt; 2e-16 ***
+Length         19.555      1.433  13.645  &lt; 2e-16 ***
+log(SUBTLWF)  -29.288      1.784 -16.420  &lt; 2e-16 ***
+POSNN          -6.115      8.506  -0.719  0.47238    
+POSVB         -29.184     10.154  -2.874  0.00415 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 93.29 on 875 degrees of freedom
+Multiple R-squared:  0.4565,    Adjusted R-squared:  0.454 
+F-statistic: 183.7 on 4 and 875 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p>Let’s review the interpretation of the output. The <code>Call</code> section simply shows the <code>lm()</code> call. The <code>Residuals</code> section gives summary info about the residuals (but we could see the individual residuals by using the <code>residuals()</code> function). The <code>Coefficients</code> section gives the y-intercept and the slopes of the three explanatory variables.</p>
+<p>First, the <code>Length</code> row shows below the <code>Estimate</code> column that, on average, with each unit increases of the <code>Length</code> variable (i.e., each additional letter in word), there is a 19.555 milliseconds increase in <code>Mean_RT</code> (i.e., mean reaction time), and the p-value below the <code>Pr(&gt;|t|)</code> column is below 0.0000000000000002 (R’s default cutoff with p-values in this summary display). In simple terms, as the lengths of words increase, it takes humans significantly longer to react.</p>
+<p>The <code>log(SUBTLWF)</code> row shows below the <code>Estimate</code> column that, on average, with each unit increase of frequency (on a log scale, given our use of <code>log()</code>), mean reaction times decrease by 29.288 milliseconds (note the negative sign before the number), and this happens at a statistically significant rate given the <em>p</em>-value.</p>
+<p>The <code>POS</code> variable has two rows: <code>POSNN</code> and <code>POSVB</code>. But wait! What happened to <code>JJ</code>?! Because <code>JJ</code> comes first in the alphabet in comparison to <code>NN</code> and <code>VB</code>, it was chosen by R as the <strong>reference level</strong> against which the other levels in that categorical variable are compared. So, we compare each of the listed levels (i.e., <code>NN</code> and <code>VB</code>) to <code>JJ</code>, which is not listed. First things first, <code>POSNN</code> does not have a <em>p</em>-value below 0.05, so we conclude that there is no significant difference between <code>NN</code> and <code>JJ</code> in this dataset, and then we move on. Because <code>POSVB</code>’s <em>p</em>-value is below our alpha level of 0.05, we conclude that there is a significant difference between <code>VB</code> and <code>JJ</code>, such that, on average, reaction times to <code>VB</code> (i.e., verbs) is 29.184 milliseconds shorter (i.e., -29.184) than reaction times to <code>JJ</code> (i.e., adjectives).</p>
+<p>By default, R chooses the level that comes first in alphabetical order to serve as the reference level. If we would like a different level to be the reference level, we can relevel the categorical variable so that another level is first with the <a href="https://forcats.tidyverse.org/reference/fct_relevel.html"><code>fct_relevel()</code></a> function. We saw this function previously in the context of boxplots, when we changed the order of the boxes.</p>
+</section>
+</section>
+<section id="sum-contrasts" class="level2">
+<h2 class="anchored" data-anchor-id="sum-contrasts">Sum contrasts</h2>
+<p>The comparison of a reference level to the other level(s) of a categorical variable is called “treatment contrasts”, and this is the default behavior of <code>lm()</code> in R. Another option is called “sum contrasts”, which is based on the mean of means of the response variable by each level in the categorical variable. The coefficients given indicate how much above or below that mean of means each level in the categorical is. For more info about sum contrasts, see <a href="https://marissabarlaz.github.io/portfolio/contrastcoding/#sum-coding">this website</a> or see p.&nbsp;146 of Levshina (2015) or p.&nbsp;201 of <em>Regression Modeling for Linguistic Data</em> v1.1 (among other good resources).</p>
+</section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <p>Levshina, Natalia. 2015. <em>How to do Linguistics with R: Data Exploration and Statistical Analysis</em>. Amsterdam / Philadelphia: John Benjamins.</p>
+<p>Sonderegger, Morgan. 2022. <em>Regression Modeling for Linguistic Data.</em> <a href="https://github.com/msonderegger/rmld-v1.1">Available online</a>.</p>
 <p>Also, I thank the creators of these websites, which I relied on heavily: <a href="https://drsimonj.svbtle.com/visualising-residuals" class="uri">https://drsimonj.svbtle.com/visualising-residuals</a><br>
 <a href="https://www.mathsisfun.com/data/least-squares-regression.html" class="uri">https://www.mathsisfun.com/data/least-squares-regression.html</a></p>
 
