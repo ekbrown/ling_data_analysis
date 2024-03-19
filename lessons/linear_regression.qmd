@@ -214,6 +214,8 @@ Assumptions:
 
 7.  The residuals should be normally distributed, with a mean of zero. This assumption becomes less important as sample size increases.
 
+Detailed explanations of these assumptions and how to test for are offered by Levshina (2015, pp. 155 - 162).
+
 ## Activity
 
 From Chapter 4 "[Linear Regression 1](https://github.com/msonderegger/rmld-v1.1/blob/main/rmld_v1.1.pdf)" in *Regression Modeling for Linguistic Data* v1.1 by Sonderegger et al. (2022).
