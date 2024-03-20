@@ -2,9 +2,12 @@
 title: "Interaction between explanatory variables"
 ---
 
-## Load data
+## Objective
+Students will run and interpret the interaction between two explanatory variables.
 
-In the CMS, there's a fictitious dataset named "regionalisms.csv" in the LMS with the number of regionalisms (e.g., *potato bug* for *rolly polly*, *coke* for any soda, *scallions* for *green onions*, etc.) normalized to N per hour of speech, as spoken by 200 speakers grouped by age and sex. Download the CSV file to your harddrive and load it into R.
+## Interactions
+
+Let's talk about interactions between explanatory variables by looking at an example. In the LMS, there's a fictitious dataset named "regionalisms.csv" with the number of regionalisms (e.g., *potato bug* for *rolly polly*, *coke* for any soda, *scallions* for *green onions*, etc.) normalized to N per hour of speech, as spoken by 200 speakers grouped by age and sex. Download the CSV file to your harddrive and load it into R.
 
 ```{r}
 library("tidyverse")
