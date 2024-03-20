@@ -329,6 +329,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Linear regression</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interaction between explanatory variables</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -643,10 +649,10 @@ F-statistic: 18.25 on 1 and 3 DF,  p-value: 0.02355</code></pre>
 <li><p>The observations are independent from one another. If the observations are related to each other (e.g., some/many tokens come from the same person or from the same word), then mixed-effect regression should be used with person and/or word specified as what’s called a random effect.</p></li>
 <li><p>The response variable is continuous. If ordinal, then ordinal regression should be used instead. If categorical with two levels in the response variable, then logistic regression should be used. If categorical with three or more levels in the response variable, then multinomial regression should be used.</p></li>
 <li><p>The relationship between the response and explanatory variable is linear. If not, then a transformation of the response and/or explanatory variables should be performed (e.g., taking the logarithm of word frequency).</p></li>
-<li><p>The residuals of the model vary constantly. This is called homoscedasticity of variance. In other words, the variability of the residuals does not increase or decrease with the response variable nor with the explanatory variable(s). Fitting a scatterplot of the residuals by the predicted (aka. fitted) values of the linear model is a good way to detect if there is heteroscedasticity of variance. If there is heteroscedasticity a Box-Cox transformation of the response variable can help. If still problematic, a boostrapping procedure is the next step.</p></li>
-<li><p>There is no multicollinearity of the explanatory variables, that is, they are not (overly) correlated with each other. Value Inflation Factors (VIF) scores below 5 or 10 indicate not much multicollinearity going on. The <code>car</code> package has a <code>vif()</code> function (and there are other packages with a similar functions.)</p></li>
+<li><p>The residuals of the model vary constantly. This is called homoscedasticity of variance. In other words, the variability of the residuals does not increase or decrease with the response variable nor with the explanatory variable(s). Fitting a scatterplot of the residuals by the predicted (aka. fitted) values of the linear model is a good way to detect if there is heteroscedasticity of variance. If the model was produced by <code>lm()</code>, you can simly call <code>plot(variable_hold_model, which = 1)</code>. If p.&nbsp;157 of Levshina (2015). If there is heteroscedasticity, a Box-Cox transformation of the response variable can help. If still problematic, a boostrapping procedure is the next step.</p></li>
+<li><p>There is no multicollinearity of the explanatory variables, that is, they are not (overly) correlated with each other. Value Inflation Factors (VIF) scores below 5 or 10 indicate not much multicollinearity going on. The <code>car</code> package has a <code>vif()</code> function (and there are other packages with a similar functions.) See pp.&nbsp;159-161 of Levshina (2015).</p></li>
 <li><p>The residuals are not autocorrelated. A p-value below 0.05 in the <a href="https://www.rdocumentation.org/packages/car/versions/3.1-2/topics/durbinWatsonTest"><code>durbinWatsonTest()</code></a> function in the <code>car</code> package indicates autocorrelation. This is rarely a problem.</p></li>
-<li><p>The residuals should be normally distributed, with a mean of zero. This assumption becomes less important as sample size increases.</p></li>
+<li><p>The residuals should be normally distributed, with a mean of zero. This assumption becomes less important as sample size increases. You can plot the residuals of a model with as a histogram or a density plot, after pulling the residuals out with <code>residuals()</code>. Also, you can use a Shapiro-Wilk test with <code>shapiro.test()</code> (<em>p</em>-values above [!] 0.05 suggest a normally distributed distribution), if the dataset has fewer than 5,000 observations.</p></li>
 </ol>
 <p>Detailed explanations of these assumptions and how to test for are offered by Levshina (2015, pp.&nbsp;155 - 162).</p>
 </section>

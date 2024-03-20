@@ -48,6 +48,7 @@ website:
           - lessons/anova.qmd
           - lessons/chi-square.qmd
           - lessons/linear_regression.qmd
+          - lessons/interaction.qmd
 format:
   html:
     theme: cosmo

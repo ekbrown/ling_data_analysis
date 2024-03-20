@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - t-test, Wilcoxon test</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Interaction between explanatory variables</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/t-test.html">t-test, Wilcoxon test</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/interaction.html">Interaction between explanatory variables</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -307,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/t-test.html" class="sidebar-item-text sidebar-link active">
+  <a href="../lessons/t-test.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">t-test, Wilcoxon test</span></a>
   </div>
 </li>
@@ -331,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/interaction.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/interaction.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Interaction between explanatory variables</span></a>
   </div>
 </li>
@@ -347,19 +347,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
-  <li><a href="#formative-quiz" id="toc-formative-quiz" class="nav-link" data-scroll-target="#formative-quiz">Formative quiz</a></li>
-  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test"><em>t</em>-test</a>
-  <ul class="collapse">
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#one-tailed-or-two-tailed" id="toc-one-tailed-or-two-tailed" class="nav-link" data-scroll-target="#one-tailed-or-two-tailed">One-tailed or two-tailed</a></li>
-  </ul></li>
-  <li><a href="#wilcoxon-test" id="toc-wilcoxon-test" class="nav-link" data-scroll-target="#wilcoxon-test">Wilcoxon test</a></li>
-  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a>
-  <ul class="collapse">
-  <li><a href="#how-to-report-in-paper" id="toc-how-to-report-in-paper" class="nav-link" data-scroll-target="#how-to-report-in-paper">How to report in paper</a></li>
-  </ul></li>
-  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link active" data-scroll-target="#load-data">Load data</a></li>
+  <li><a href="#plot-age" id="toc-plot-age" class="nav-link" data-scroll-target="#plot-age">Plot age</a></li>
+  <li><a href="#plot-sex" id="toc-plot-sex" class="nav-link" data-scroll-target="#plot-sex">Plot sex</a></li>
+  <li><a href="#plot-age-and-sex-together" id="toc-plot-age-and-sex-together" class="nav-link" data-scroll-target="#plot-age-and-sex-together">Plot age and sex together</a></li>
+  <li><a href="#only-main-effects" id="toc-only-main-effects" class="nav-link" data-scroll-target="#only-main-effects">Only main effects</a></li>
+  <li><a href="#with-interaction-term" id="toc-with-interaction-term" class="nav-link" data-scroll-target="#with-interaction-term">With interaction term</a></li>
+  <li><a href="#no-interaction" id="toc-no-interaction" class="nav-link" data-scroll-target="#no-interaction">No interaction</a></li>
   </ul>
 </nav>
     </div>
@@ -368,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">t-test, Wilcoxon test</h1>
+<h1 class="title">Interaction between explanatory variables</h1>
 </div>
 
 
@@ -383,145 +377,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="objective" class="level2">
-<h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<p>Students will perform a <em>t</em>-test and a Wilcoxon test</p>
-</section>
-<section id="formative-quiz" class="level2">
-<h2 class="anchored" data-anchor-id="formative-quiz">Formative quiz</h2>
-<p>Match each term with its corresponding definition.</p>
-<table class="table">
-<caption>Good ol’ fashioned matching quiz</caption>
-<colgroup>
-<col style="width: 17%">
-<col style="width: 82%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>sample</td>
-<td>The mean of the sample</td>
-</tr>
-<tr class="even">
-<td>population</td>
-<td>A value that is the result of converting a value into units of standard deviations from the mean</td>
-</tr>
-<tr class="odd">
-<td>point estimate</td>
-<td>A Greek letter that usually stands for the standard deviation of a continuous variable of the population</td>
-</tr>
-<tr class="even">
-<td>confidence interval</td>
-<td>A Romanized letter that usually stands for the explanatory variable</td>
-</tr>
-<tr class="odd">
-<td>standard error</td>
-<td>Something that might affect the thing under study</td>
-</tr>
-<tr class="even">
-<td><em>t</em>-test</td>
-<td>The thing that is being studied (aka. dependent thing of study)</td>
-</tr>
-<tr class="odd">
-<td>Wilcoxon test</td>
-<td>a Greek letter that usually stands for the mean of a continuous variable of a population</td>
-</tr>
-<tr class="even">
-<td>sigma</td>
-<td>An ideal spread of data points around the central tendency; looks like a good ol’ fashioned bell (aka. bell curve)</td>
-</tr>
-<tr class="odd">
-<td>meu</td>
-<td>the number of data points (aka. observations)</td>
-</tr>
-<tr class="even">
-<td><em>n</em></td>
-<td>The standard deviation of the sample</td>
-</tr>
-<tr class="odd">
-<td>x</td>
-<td>The group that the researcher want to know something about</td>
-</tr>
-<tr class="even">
-<td>y</td>
-<td>A non-parametric test</td>
-</tr>
-<tr class="odd">
-<td>response variable</td>
-<td>The group that is used to infer about a larger group</td>
-</tr>
-<tr class="even">
-<td>explanatory variable</td>
-<td>The proposition that is likely an effect of the explanatory variable on the response variable</td>
-</tr>
-<tr class="odd">
-<td><em>z</em>-score</td>
-<td>A Romanized letter that usually stands for the response variable.</td>
-</tr>
-<tr class="even">
-<td>meu hat</td>
-<td>a single number that characterizes an aspect of a dataset</td>
-</tr>
-<tr class="odd">
-<td>sigma hat</td>
-<td>A range of values that is likely to contain the population value</td>
-</tr>
-<tr class="even">
-<td>alpha level</td>
-<td>The threshold below which the null hypothesis can be rejected</td>
-</tr>
-<tr class="odd">
-<td>null hypothesis</td>
-<td>A parametric test with a continuous response variable and a categorical variable with exactly two levels</td>
-</tr>
-<tr class="even">
-<td>alternative hypothesis</td>
-<td>A measure of how much uncertainty there is in the estimate of the sample mean</td>
-</tr>
-<tr class="odd">
-<td>normal distribution</td>
-<td>The proposition that there is no effect of the explanatory variable(s) on the response variable</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="t-test" class="level2">
-<h2 class="anchored" data-anchor-id="t-test"><em>t</em>-test</h2>
-<p>The response variable is continuous (aka. quantitative) and the explanatory variable is categorical with exactly two levels (aka. values or groups).</p>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
-<p>The distribution of the response is normal, and/or there are more than 30 data points in each level (aka. group) of the explanatory variable.</p>
-<p>The variances of the response variables in both levels of the explanatory are equal. However, this is often not the case and our new friend Mr.&nbsp;Welch proposed an adjustment that provides a correction for unequal variances. The default behavior of the <code>t.test()</code> in R (i.e., the <code>var.equal</code> argument) is to use Welch’s adjustment.</p>
-</section>
-<section id="one-tailed-or-two-tailed" class="level3">
-<h3 class="anchored" data-anchor-id="one-tailed-or-two-tailed">One-tailed or two-tailed</h3>
-<p>A one-tailed test should be used when the alternative hypothesis is directional, that is, it hypothesizes that the mean of one group is greater than the mean of the other group, or less than the other group. For example, the null and alternative hypotheses would look something like this:</p>
-<p><span class="math display">\[
-H_0:μ_A = μ_B
-\]</span> <span class="math display">\[
-H_a:μ_A&gt;μ_B
-\]</span></p>
-<p>We use a two-tailed t-test when our alternative hypothesis is not directional, that is, it hypothesizes that the mean of one group does not equal the mean of the other group, but it doesn’t say anything about direction. For example:</p>
-<p><span class="math display">\[
-H_0:μ_A = μ_B
-\]</span> <span class="math display">\[
-H_a:μ_A ≠ μ_B
-\]</span></p>
-</section>
-</section>
-<section id="wilcoxon-test" class="level2">
-<h2 class="anchored" data-anchor-id="wilcoxon-test">Wilcoxon test</h2>
-<p>When the data are not normally distributed (and you don’t have &gt;30 observations in each level of the categorical explanatory variable, so that you can use the t-test), the Wilcoxon test is the way to go. This test is also the way to go when you have ordinal data, like responses to a Likert-scale survey.</p>
-<p>The Wilcoxon test is apparently super similar to, or in most cases identifical to, the Mann-Whitney test; see <a href="https://stats.stackexchange.com/a/79849">Q&amp;A thread</a>. Our ol’ friend Jamovi has a check box for the “Mann-Whitney” test, while the function in R run these test is <code>wilcox.test()</code>.</p>
-</section>
-<section id="question" class="level2">
-<h2 class="anchored" data-anchor-id="question">Question</h2>
-<p>Let’s look at the speech rate in syllables per second of 25 Spanish speakers and 25 Italian speakers. First, let’s propose a null hypothesis and an alternative hypothesis. As we don’t have any previous information about the speech rate of Spanish and Italian speakers in comparison to each other, our alternative hypothesis will simply be “not equal to” rather than something directional like “greater than” or “less than”:</p>
-<p><span class="math display">\[
-H_0:μ_S=μ_I
-\]</span> <span class="math display">\[
-H_a:μ_S≠μ_I
-\]</span></p>
-<p>First, a good ol’ fashioned boxplot:</p>
+<section id="load-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-data">Load data</h2>
+<p>In the CMS, there’s a fictitious dataset named “regionalisms.csv” in the LMS with the number of regionalisms (e.g., <em>potato bug</em> for <em>rolly polly</em>, <em>coke</em> for any soda, <em>scallions</em> for <em>green onions</em>, etc.) normalized to N per hour of speech, as spoken by 200 speakers grouped by age and sex. Download the CSV file to your harddrive and load it into R.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -536,129 +394,228 @@ H_a:μ_S≠μ_I
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>esit <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/ekb5/Documents/data_analysis/datasets/span_ital_speaking_rate.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>region <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/ekb5/Documents/LING_440/regionalisms.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Rows: 50 Columns: 3
+<pre><code>Rows: 200 Columns: 3
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
-chr (1): language
-dbl (2): participant_ID, syllables
+chr (2): age, sex
+dbl (1): n
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> language, <span class="at">y =</span> syllables))<span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plot-age" class="level2">
+<h2 class="anchored" data-anchor-id="plot-age">Plot age</h2>
+<p>What is the effect of age group on number of regionalisms spoken per hour? Let’s draw a boxplot and see.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> region <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> n))<span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean)<span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>p1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_segment()`).</code></pre>
+</div>
 <div class="cell-output-display">
-<p><img src="t-test_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<p><img src="interaction_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The non-overlapping notches on the boxes suggest that the difference in the means of the two groups will likely be statistically significantly different.</p>
-<p>Enter an inferential statistical test.</p>
-<p>First, let’s see if the data points are normally distributed. A simple <a href="https://www.r-bloggers.com/2019/08/shapiro-wilk-test-for-normality-in-r/">Shapiro-Wilk normality test</a>:</p>
+<p>Wow! Looks like we have a serious effect from age group on number of regionalisms, with older speakers using more regionalisms.</p>
+</section>
+<section id="plot-sex" class="level2">
+<h2 class="anchored" data-anchor-id="plot-sex">Plot sex</h2>
+<p>Now let’s see the effect of biological sex on the number of regionalisms spoken per hour.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(language) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shapiro.test</span>(.<span class="sc">$</span>syllables) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-# Groups:   language [2]
-  language statistic p.value method                     
-  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                      
-1 Italian      0.971  0.663  Shapiro-Wilk normality test
-2 Spanish      0.926  0.0710 Shapiro-Wilk normality test</code></pre>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> region <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> n))<span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean)<span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_segment()`).</code></pre>
 </div>
-</div>
-<p>Both <em>p</em>-values are above 0.05, so that’s good.</p>
-<p>Now, let’s also plot the distribution in a density plot:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(syllables, <span class="at">color =</span> language))<span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="t-test_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="interaction_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Not the prettiest (normal) density plots.</p>
-<p>And for good measure, let’s calculate the <a href="https://www.r-bloggers.com/2013/06/measures-of-skewness-and-kurtosis/">skewness</a> of each group:</p>
+<p>Another boxplot that seems to suggest that there is a big effect from sex on number of regionalisms per hour of speech, with men using more regionalisms than women.</p>
+</section>
+<section id="plot-age-and-sex-together" class="level2">
+<h2 class="anchored" data-anchor-id="plot-age-and-sex-together">Plot age and sex together</h2>
+<p>Wait! Hold up! Could it be more complicated than the above boxplots suggest? <strong>Could there be an interaction between age and sex, such that the effect of one variable is affected by the other variable?</strong> Let’s take a look at a faceted boxplot of age group and sex.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"moments"</span>, <span class="at">repos =</span> <span class="st">"http://rstudio.org"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> region <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> n))<span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean)<span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>age)<span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: unable to access index for repository http://rstudio.org/src/contrib:
-  cannot open URL 'http://rstudio.org/src/contrib/PACKAGES'</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_segment()`).
+Removed 2 rows containing missing values (`geom_segment()`).</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'moments' is not available for this version of R
-
-A version of this package for your version of R might be available elsewhere,
-see the ideas at
-https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: unable to access index for repository http://rstudio.org/bin/macosx/big-sur-arm64/contrib/4.3:
-  cannot open URL 'http://rstudio.org/bin/macosx/big-sur-arm64/contrib/4.3/PACKAGES'</code></pre>
+<div class="cell-output-display">
+<p><img src="interaction_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Oh! Now we see what’s going on. It’s not that older speakers in general produce more regionalisms than younger speaker in general, nor that men in general produce more regionalisms than women in general. We see that the effect is really only from older men who produce lots of regionalisms, while all other speakers use many fewer regionalisms.<br><br> The takehome message: <strong>We have an interaction between age group and sex because the effect of one variable is affected by the other variable.</strong><br><br></p>
+</section>
+<section id="only-main-effects" class="level2">
+<h2 class="anchored" data-anchor-id="only-main-effects">Only main effects</h2>
+<p>Let’s fit a linear regression with only the two main effects (i.e., age group and sex). Look at the adjusted <span class="math inline">\(R^{2}\)</span> value and the AIC (<a href="https://en.wikipedia.org/wiki/Akaike_information_criterion">Akaike information criterion</a>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(language) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>(</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    moments<span class="sc">::</span><span class="fu">skewness</span>(.<span class="sc">$</span>syllables) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>      broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: 'tidy.numeric' is deprecated.
-See help("Deprecated")
-
-Warning: 'tidy.numeric' is deprecated.
-See help("Deprecated")</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-# Groups:   language [2]
-  language      x
-  &lt;chr&gt;     &lt;dbl&gt;
-1 Italian  -0.216
-2 Spanish  -0.923</code></pre>
-</div>
-</div>
-<p>A good rule of thumb is that if the skewness score is between -0.5 and 0.5, the data is normal enough to continue with a parametric test.</p>
-<p>Because the Shapiro-Wilk gave us the green light to continue with a t-test, let’s go!</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(syllables<span class="sc">~</span>language, <span class="at">data =</span> ., <span class="at">alternative =</span> <span class="st">"two.sided"</span>) <span class="ot">-&gt;</span> result</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(n <span class="sc">~</span> age <span class="sc">+</span> sex, <span class="at">data =</span> region)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-    Welch Two Sample t-test
+Call:
+lm(formula = n ~ age + sex, data = region)
 
-data:  syllables by language
-t = -6.34, df = 47.793, p-value = 7.695e-08
-alternative hypothesis: true difference in means between group Italian and group Spanish is not equal to 0
-95 percent confidence interval:
- -1.1748003 -0.6090245
-sample estimates:
-mean in group Italian mean in group Spanish 
-             7.013432              7.905345 </code></pre>
+Residuals:
+   Min     1Q Median     3Q    Max 
+-7.505 -2.505 -0.145  2.855  7.945 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  22.0550     0.4739  46.541  &lt; 2e-16 ***
+ageyoung     -4.9100     0.5472  -8.973 2.29e-16 ***
+sexwomen     -4.5500     0.5472  -8.315 1.49e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.869 on 197 degrees of freedom
+Multiple R-squared:  0.4317,    Adjusted R-squared:  0.4259 
+F-statistic: 74.83 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result<span class="sc">$</span>stderr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1406801</code></pre>
+<pre><code>[1] 1113.78</code></pre>
 </div>
 </div>
-<p>The <em>p</em>-value suggests that the mean speech rate of Spanish speakers is different from the mean speech rate of Italian speakers.</p>
-<section id="how-to-report-in-paper" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-report-in-paper">How to report in paper</h3>
-<p>“An independent two-tailed t-test compared the speech rate of Spanish speakers (n = 25) and Italian speakers (n = 25). We reject the null hypothesis and conclude that there is a signficant difference in speech rate between these two groups: t<sub>(47.793)</sub> = -6.34, p ≤ 0.001.”</p>
 </section>
+<section id="with-interaction-term" class="level2">
+<h2 class="anchored" data-anchor-id="with-interaction-term">With interaction term</h2>
+<p>Now, let’s fit a linear regression with the two main effects (i.e., age group and sex) as well as a interaction term between the two main effect. Again, pay attention to the adjusted <span class="math inline">\(R^{2}\)</span> value (the bigger the better with <span class="math inline">\(R^{2}\)</span>) and the AIC value (the smaller the better with AIC), and compare them to the previous linear regression model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(n <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> age<span class="sc">:</span>sex, <span class="at">data =</span> region)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = n ~ age + sex + age:sex, data = region)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+ -5.38  -3.02   0.28   2.62   5.82 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        24.1800     0.4569  52.917   &lt;2e-16 ***
+ageyoung           -9.1600     0.6462 -14.175   &lt;2e-16 ***
+sexwomen           -8.8000     0.6462 -13.618   &lt;2e-16 ***
+ageyoung:sexwomen   8.5000     0.9139   9.301   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.231 on 196 degrees of freedom
+Multiple R-squared:  0.6057,    Adjusted R-squared:  0.5997 
+F-statistic: 100.4 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1042.662</code></pre>
+</div>
+</div>
+<p>Okay, now we’re getting somewhere! The <span class="math inline">\(R^{2}\)</span> has increased and the AIC has decreased, both of which are good. That is, the model with an interaction term explains more of the variability in the response variable, and the estimator of the prediction error has gone down (i.e., AIC).</p>
 </section>
-<section id="activity" class="level2">
-<h2 class="anchored" data-anchor-id="activity">Activity</h2>
-<p>Your turn! Use a dataset of your choice and see if there is a statistical difference between the means of a continuous variable based on two categories in a categorical variable.</p>
+<section id="no-interaction" class="level2">
+<h2 class="anchored" data-anchor-id="no-interaction">No interaction</h2>
+<p>For comparison, if there were an monotonic effect from age group and another monotonic effect from sex, with no interaction effect between these two variables, the boxplot would look something like the following one.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>size_per_group <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>old_men <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_regionalisms =</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">20</span>, <span class="dv">30</span>), <span class="at">size =</span> size_per_group, <span class="at">replace =</span> T),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">35</span>, <span class="dv">55</span>), <span class="at">size =</span> size_per_group, <span class="at">replace =</span> T),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="fu">rep</span>(<span class="st">"men"</span>, size_per_group)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>old_women <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_regionalisms =</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">15</span>, <span class="dv">25</span>), <span class="at">size =</span> size_per_group, <span class="at">replace =</span> T),</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">35</span>, <span class="dv">55</span>), <span class="at">size =</span> size_per_group, <span class="at">replace =</span> T),</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="fu">rep</span>(<span class="st">"women"</span>, size_per_group)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>young_men <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_regionalisms =</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">20</span>), <span class="at">size =</span> size_per_group, <span class="at">replace =</span> T),</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">18</span>, <span class="dv">34</span>), <span class="at">size =</span> size_per_group, <span class="at">replace =</span> T),</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="fu">rep</span>(<span class="st">"men"</span>, size_per_group)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>young_women <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_regionalisms =</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">15</span>), <span class="at">size =</span> size_per_group, <span class="at">replace =</span> T),</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">18</span>, <span class="dv">34</span>), <span class="at">size =</span> size_per_group, <span class="at">replace =</span> T),</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="fu">rep</span>(<span class="st">"women"</span>, size_per_group)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>fake_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(old_men) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(old_women) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(young_men) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(young_women)</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>fake_data <span class="ot">&lt;-</span> fake_data <span class="sc">%&gt;%</span> </span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_group =</span> <span class="fu">ifelse</span>(age <span class="sc">&lt;=</span> <span class="dv">34</span>, <span class="st">"young"</span>, <span class="st">"old"</span>))</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> fake_data <span class="sc">%&gt;%</span> </span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> n_regionalisms))<span class="sc">+</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean)<span class="sc">+</span></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>age_group)<span class="sc">+</span></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>p4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_segment()`).
+Removed 2 rows containing missing values (`geom_segment()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="interaction_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(n_regionalisms <span class="sc">~</span> age_group <span class="sc">+</span> sex <span class="sc">+</span> age_group<span class="sc">:</span>sex, <span class="at">data =</span> fake_data)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = n_regionalisms ~ age_group + sex + age_group:sex, 
+    data = fake_data)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+ -5.36  -2.48  -0.36   2.52   5.52 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)              24.6400     0.4314  57.121  &lt; 2e-16 ***
+age_groupyoung           -9.2800     0.6100 -15.212  &lt; 2e-16 ***
+sexwomen                 -5.1600     0.6100  -8.458 6.19e-15 ***
+age_groupyoung:sexwomen  -0.3400     0.8627  -0.394    0.694    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.05 on 196 degrees of freedom
+Multiple R-squared:  0.7635,    Adjusted R-squared:  0.7599 
+F-statistic: 210.9 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1019.619</code></pre>
+</div>
+</div>
+<p>The interaction term was <strong>not</strong> selected as making a significant contribution to the prediction of the number of regionalisms in this second set of fictitious data.</p>
 
 
 </section>

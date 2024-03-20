@@ -1,0 +1,134 @@
+---
+title: "Interaction between explanatory variables"
+---
+
+## Load data
+
+In the CMS, there's a fictitious dataset named "regionalisms.csv" in the LMS with the number of regionalisms (e.g., *potato bug* for *rolly polly*, *coke* for any soda, *scallions* for *green onions*, etc.) normalized to N per hour of speech, as spoken by 200 speakers grouped by age and sex. Download the CSV file to your harddrive and load it into R.
+
+```{r}
+library("tidyverse")
+region <- read_csv("/Users/ekb5/Documents/LING_440/regionalisms.csv")
+```
+
+## Plot age
+
+What is the effect of age group on number of regionalisms spoken per hour? Let's draw a boxplot and see.
+
+```{r}
+p1 <- region %>% 
+  ggplot(aes(x = age, y = n))+
+  geom_boxplot(notch = TRUE)+
+  stat_summary(fun = mean)+
+  theme_bw()
+p1
+```
+
+Wow! Looks like we have a serious effect from age group on number of regionalisms, with older speakers using more regionalisms.
+
+## Plot sex
+
+Now let's see the effect of biological sex on the number of regionalisms spoken per hour.
+
+```{r}
+p2 <- region %>% 
+  ggplot(aes(x = sex, y = n))+
+  geom_boxplot(notch = TRUE)+
+  stat_summary(fun = mean)+
+  theme_bw()
+p2
+```
+
+Another boxplot that seems to suggest that there is a big effect from sex on number of regionalisms per hour of speech, with men using more regionalisms than women.
+
+## Plot age and sex together
+
+Wait! Hold up! Could it be more complicated than the above boxplots suggest? **Could there be an interaction between age and sex, such that the effect of one variable is affected by the other variable?** Let's take a look at a faceted boxplot of age group and sex.
+
+```{r}
+p3 <- region %>% 
+  ggplot(aes(x = sex, y = n))+
+  geom_boxplot(notch = TRUE)+
+  stat_summary(fun = mean)+
+  facet_wrap(~age)+
+  theme_bw()
+p3
+```
+
+Oh! Now we see what's going on. It's not that older speakers in general produce more regionalisms than younger speaker in general, nor that men in general produce more regionalisms than women in general. We see that the effect is really only from older men who produce lots of regionalisms, while all other speakers use many fewer regionalisms.<br><br> The takehome message: **We have an interaction between age group and sex because the effect of one variable is affected by the other variable.**<br><br>
+
+## Only main effects
+
+Let's fit a linear regression with only the two main effects (i.e., age group and sex). Look at the adjusted $R^{2}$ value and the AIC ([Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)).
+
+```{r}
+m1 <- lm(n ~ age + sex, data = region)
+summary(m1)
+AIC(m1)
+```
+
+## With interaction term
+
+Now, let's fit a linear regression with the two main effects (i.e., age group and sex) as well as a interaction term between the two main effect. Again, pay attention to the adjusted $R^{2}$ value (the bigger the better with $R^{2}$) and the AIC value (the smaller the better with AIC), and compare them to the previous linear regression model.
+
+```{r}
+m2 <- lm(n ~ age + sex + age:sex, data = region)
+summary(m2)
+AIC(m2)
+```
+
+Okay, now we're getting somewhere! The $R^{2}$ has increased and the AIC has decreased, both of which are good. That is, the model with an interaction term explains more of the variability in the response variable, and the estimator of the prediction error has gone down (i.e., AIC).
+
+## No interaction
+
+For comparison, if there were an monotonic effect from age group and another monotonic effect from sex, with no interaction effect between these two variables, the boxplot would look something like the following one.
+
+```{r}
+size_per_group <- 50
+old_men <- tibble(
+  n_regionalisms = sample(seq(20, 30), size = size_per_group, replace = T),
+  age = sample(seq(35, 55), size = size_per_group, replace = T),
+  sex = rep("men", size_per_group)
+)
+old_women <- tibble(
+  n_regionalisms = sample(seq(15, 25), size = size_per_group, replace = T),
+  age = sample(seq(35, 55), size = size_per_group, replace = T),
+  sex = rep("women", size_per_group)
+)
+young_men <- tibble(
+  n_regionalisms = sample(seq(10, 20), size = size_per_group, replace = T),
+  age = sample(seq(18, 34), size = size_per_group, replace = T),
+  sex = rep("men", size_per_group)
+)
+young_women <- tibble(
+  n_regionalisms = sample(seq(5, 15), size = size_per_group, replace = T),
+  age = sample(seq(18, 34), size = size_per_group, replace = T),
+  sex = rep("women", size_per_group)
+)
+  
+fake_data <- tibble() %>% 
+  bind_rows(old_men) %>% 
+  bind_rows(old_women) %>% 
+  bind_rows(young_men) %>% 
+  bind_rows(young_women)
+
+fake_data <- fake_data %>% 
+  mutate(age_group = ifelse(age <= 34, "young", "old"))
+
+p4 <- fake_data %>% 
+  ggplot(aes(x = sex, y = n_regionalisms))+
+  geom_boxplot(notch = TRUE)+
+  stat_summary(fun = mean)+
+  facet_wrap(~age_group)+
+  theme_bw()
+p4
+
+```
+
+```{r}
+m3 <- lm(n_regionalisms ~ age_group + sex + age_group:sex, data = fake_data)
+summary(m3)
+AIC(m3)
+```
+
+The interaction term was **not** selected as making a significant contribution to the prediction of the number of regionalisms in this second set of fictitious data.
