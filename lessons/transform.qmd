@@ -1,0 +1,200 @@
+---
+title: "Transform continuous variables"
+---
+
+## Objective
+
+Students will transform continuous variables in several ways.
+
+## Why transform?
+
+When continuous are not normally distributed, it is often useful to transform them to (try to) them more normally distributed.
+
+## How to transform?
+
+There are several common transformations of continuous variables.
+
+## Natural logarithm
+
+A (very) common transformation of continuous variables, especially word frequency, is to take the natural logarithm (with the [`log()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/log) function). Word frequencies often follow a Zipfian distribution (see the first minute and a half of this V-Sauce [video](https://youtu.be/fCn8zs912OE) to learn what this means). Taking the natural logarithm (often abbreviated as "log") makes the Zipfian distribution more normally distributed.<br><br> Let's take a look at the frequency of words in the [CELEX](https://catalog.ldc.upenn.edu/LDC96L14) corpus, as given in the *english* dataset made available in the [languageR](https://cran.r-project.org/web/packages/languageR/index.html) R package.<br><br> Note: Because the frequencies are already log-transformed, we'll untransform them by taking the exponent (which is the opposite of the log) in order to see the original distribution of frequencies.
+
+### Get the data
+
+```{r}
+#install.packages("languageR")  # if needed, uncomment and run (in console)
+eng <- languageR::english
+```
+
+### Plot raw frequencies
+
+```{r}
+library("tidyverse")
+eng %>% 
+  ggplot(aes(exp(WrittenFrequency)))+
+  geom_histogram()
+
+```
+
+As we can see, the distribution of frequencies is not normally distributed. For fun, let's also do a Shapiro-Wilk normality test (because we have fewer than 5,000 tokens in the dataset).
+
+```{r}
+s1 <- eng %>% 
+  pull(WrittenFrequency) %>% 
+  exp() %>% 
+  shapiro.test()
+s1
+cat("p-value of Shapiro-Wilk test of raw frequencies: ", s1$p.value)
+```
+
+### Plot the log frequencies
+
+```{r}
+eng %>% 
+  ggplot(aes(WrittenFrequency))+  # already log-transformed by dataset creator
+  geom_histogram()
+```
+
+As we can see, the distribution looks a lot more normal than the original, raw frequencies. For kicks, let's do a Shapiro-Wilk normality test on the log-transformed frequencies.
+
+```{r}
+eng %>% 
+  pull(WrittenFrequency) %>% 
+  shapiro.test()
+```
+
+As we see, the p-value is below 0.05 and thus still suggests a non-normal distribution. However, it should be noted that as the number of observations increases, the likelihood of getting a (supposed) non-normal distribution increases. It's for this reason that the Shapiro-Wilk test doesn't allow more than 5,000 tokens.
+
+## Box-Cox transformation
+
+Another transformation of continuous variables is the Box-Cox transformation, named after George Box and David Cox who proposed the transformation in a paper in 1964. See an explanation of the Box-Cox transformation [here](https://www.statology.org/box-cox-transformation-in-r/).
+
+### Rling package
+
+Let's look at another dataset. Download the `Rling` R package from this [website](https://benjamins.com/sites/z.195/content/package.html) and install it by following the directions there.
+
+```{r}
+# after downloading the 'Rling' R package with a web browser...
+# install.packages("/Users/ekb5/Downloads/Rling_1.0.tar.gz", repos = NULL, type = "source")
+```
+
+Let's get the `ELP` (English Lexicon Project) dataset from that package.
+
+```{r}
+library("Rling")
+data(ELP)
+```
+
+### Plot raw mean reaction times
+
+```{r}
+ELP %>% 
+  ggplot(aes(Mean_RT))+
+  geom_histogram()+
+  labs(title = "Histogram of raw mean reaction times")
+```
+
+Looks somewhat normally distributed, but with right skew (a right tail).
+
+Let's look at the distribution when transformed with the natural logarithm.
+
+```{r}
+ELP %>% 
+  ggplot(aes(log(Mean_RT)))+
+  geom_histogram()+
+  labs(title = "Histogram of natural logarithm of mean reaction times")
+```
+
+That moved the mass of the bell curve to the right a bit, and shortened the right tail.
+
+Now let's do a Box-Cox transformation of the mean reaction times using the boxcox() function from the [MASS](https://www.rdocumentation.org/packages/MASS/versions/7.3-58.1/topics/boxcox) R package and draw a histogram.
+
+```{r}
+bc <- MASS::boxcox(ELP$Mean_RT ~ 1, lambda = seq(-10, 10, 1/100))
+lambda <- bc$x[which.max(bc$y)]
+print(lambda)
+
+ELP %>% 
+  mutate(bc_rt = (Mean_RT ^ lambda - 1) / lambda) %>% 
+  ggplot(aes(bc_rt))+
+  geom_histogram()+
+  labs(title = "Box-Cox transformed mean reaction times")
+```
+
+# Residuals of linear regression
+
+One of the assumptions of linear regression is that the residuals are normally distributed with a mean residual of zero. Let's build a linear regression model of mean reaction times as a function of three predictor variables and plots the distribution of the residuals. Next, let's build the same model, but with Box-Cox transformed mean reaction times, and plot the residuals of this second model.
+
+## Raw residuals
+
+First, let's fit a linear model with the raw mean reaction times.
+
+```{r}
+m1 <- ELP %>% 
+  lm(Mean_RT ~ Length + log(SUBTLWF) + POS, data = .)
+```
+
+### Mean raw residual
+
+What's the mean raw residual? How close is it to zero?
+
+```{r}
+cat("Mean of the residuals = ", mean(residuals(m1)))
+```
+
+### Histogram of raw residuals
+
+```{r}
+tibble(res = residuals(m1)) %>% 
+  ggplot(aes(res))+
+  geom_histogram()+
+  ggtitle("Histogram of raw residuals")
+```
+
+### Q-Q plot of raw residuals
+
+Q-Q (quantile-quantile) plot are also useful for visualizing residuals of a linear regression model. We can use two functions [here](https://ggplot2.tidyverse.org/reference/geom_qq.html) of our ol' friend ggplot. To read about the nitty-gritty of Q-Q plots, knock yourself out [here](https://towardsdatascience.com/q-q-plots-explained-5aa8495426c0) and/or [here](https://stats.stackexchange.com/a/101290). The quick-and-dirty interpretation is that we want the points to fall along the diagonal line, because that diagonal line represents a normal distribution.
+
+```{r}
+res <- residuals(m1)
+
+ggplot(tibble(residuals(m1)), aes(sample = res))+
+  stat_qq()+
+  stat_qq_line()+
+  ggtitle("Q-Q plot of raw residuals")
+```
+
+## Box-Cox residuals
+
+Let's fit a linear model with Box-Cox transformed mean reaction times.
+
+```{r}
+m2 <- ELP %>% 
+  mutate(bc_rt = (Mean_RT ^ lambda - 1) / lambda) %>% 
+  lm(bc_rt ~ Length + log(SUBTLWF) + POS, data = .)
+```
+
+### Mean Box-Cox residual
+
+```{r}
+cat("Mean of the residuals = ", mean(residuals(m2)))
+```
+
+### Histogram of Box-Cox residuals
+
+```{r}
+tibble(res = residuals(m2)) %>% 
+  ggplot(aes(res))+
+  geom_histogram()+
+  ggtitle("Histogram of Box-Cox residuals")
+```
+
+### Q-Q plot of Box-Cox residuals
+
+```{r}
+res = residuals(m2)
+
+ggplot(tibble(res), aes(sample = res))+
+  stat_qq()+
+  stat_qq_line()+
+  ggtitle("Q-Q plot of Box-Cox residuals")
+```

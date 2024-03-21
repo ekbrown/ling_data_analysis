@@ -424,7 +424,7 @@
     "href": "lessons/linear_regression.html#assumptions-of-linear-regression",
     "title": "Linear regression",
     "section": "Assumptions of linear regression",
-    "text": "Assumptions of linear regression\nLinear regression (like most inferential statistical tests) has a number of assumptions that should be met in order to obtain reliable results. I’m borrowing liberally from Levshina (2015, p. 155) here.\nAssumptions:\n\nThe observations are independent from one another. If the observations are related to each other (e.g., some/many tokens come from the same person or from the same word), then mixed-effect regression should be used with person and/or word specified as what’s called a random effect.\nThe response variable is continuous. If ordinal, then ordinal regression should be used instead. If categorical with two levels in the response variable, then logistic regression should be used. If categorical with three or more levels in the response variable, then multinomial regression should be used.\nThe relationship between the response and explanatory variable is linear. If not, then a transformation of the response and/or explanatory variables should be performed (e.g., taking the logarithm of word frequency).\nThe residuals of the model vary constantly. This is called homoscedasticity of variance. In other words, the variability of the residuals does not increase or decrease with the response variable nor with the explanatory variable(s). Fitting a scatterplot of the residuals by the predicted (aka. fitted) values of the linear model is a good way to detect if there is heteroscedasticity of variance. If the model was produced by lm(), you can simly call plot(variable_hold_model, which = 1). If p. 157 of Levshina (2015). If there is heteroscedasticity, a Box-Cox transformation of the response variable can help. If still problematic, a boostrapping procedure is the next step.\nThere is no multicollinearity of the explanatory variables, that is, they are not (overly) correlated with each other. Value Inflation Factors (VIF) scores below 5 or 10 indicate not much multicollinearity going on. The car package has a vif() function (and there are other packages with a similar functions.) See pp. 159-161 of Levshina (2015).\nThe residuals are not autocorrelated. A p-value below 0.05 in the durbinWatsonTest() function in the car package indicates autocorrelation. This is rarely a problem.\nThe residuals should be normally distributed, with a mean of zero. This assumption becomes less important as sample size increases. You can plot the residuals of a model with as a histogram or a density plot, after pulling the residuals out with residuals(). Also, you can use a Shapiro-Wilk test with shapiro.test() (p-values above [!] 0.05 suggest a normally distributed distribution), if the dataset has fewer than 5,000 observations.\n\nDetailed explanations of these assumptions and how to test for are offered by Levshina (2015, pp. 155 - 162)."
+    "text": "Assumptions of linear regression\nLinear regression (like most inferential statistical tests) has a number of assumptions that should be met in order to obtain reliable results. I’m borrowing liberally from Levshina (2015, p. 155) here.\nAssumptions:\n\nThe observations are independent from one another. If the observations are related to each other (e.g., some/many tokens come from the same person or from the same word), then mixed-effect regression should be used with person and/or word specified as what’s called a random effect.\nThe response variable is continuous. If ordinal, then ordinal regression should be used instead. If categorical with two levels in the response variable, then logistic regression should be used. If categorical with three or more levels in the response variable, then multinomial regression should be used.\nThe relationship between the response and explanatory variable is linear. If not, then a transformation of the response and/or explanatory variables should be performed (e.g., taking the logarithm of word frequency).\nThe residuals of the model vary constantly. This is called homoscedasticity of variance. In other words, the variability of the residuals does not increase or decrease with the response variable nor with the explanatory variable(s). Fitting a scatterplot of the residuals by the predicted (aka. fitted) values of the linear model is a good way to detect if there is heteroscedasticity of variance. If the model was produced by lm(), you can simply call plot(variable_hold_model, which = 1). See p. 157 of Levshina (2015). Also, the leveneTest() function in the car package tests for homoscedasticity. If there is heteroscedasticity, a Box-Cox transformation of the response variable can help. If still problematic, a boostrapping procedure is a/the next step.\nThere is no multicollinearity of the explanatory variables, that is, they are not (overly) correlated with each other. Value Inflation Factors (VIF) scores below 5 or 10 indicate not much multicollinearity going on. The car package has a vif() function (and there are other packages with a similar functions.) See pp. 159-161 of Levshina (2015).\nThe residuals are not autocorrelated. A p-value below 0.05 in the durbinWatsonTest() function in the car package indicates autocorrelation. This is rarely a problem.\nThe residuals should be normally distributed, with a mean of zero. This assumption becomes less important as sample size increases. You can plot the residuals of a model with as a histogram or a density plot, after pulling the residuals out with residuals(). Also, you can use a Shapiro-Wilk test with shapiro.test() (p-values above [!] 0.05 suggest a normally distributed distribution), if the dataset has fewer than 5,000 observations.\n\nDetailed explanations of these assumptions and how to test for are offered by Levshina (2015, pp. 155 - 162)."
   },
   {
     "objectID": "lessons/linear_regression.html#activity",
@@ -504,41 +504,6 @@
     "text": "Lookaround\n\nLookaround allows you to use surrounding characters to find other characters, but to not consume those surrounding characters.\n\nSee lookahead examples in Section 2.1.7 here.\n\n\n\nActivity\n\nDownload at least several TXT files of your choice (perhaps from Project Gutenberg or Saints from the LMS).\nLoop over the files and search for a regex of your choice with a capture group, and print to screen the results. Use several different regex functions from the stringr package, for example, str_match_all(), str_extract_all(), str_locate_all().\nCreate a tabular dataset of your choice with a regex of your choice. As a first step, you might simple create a data frame with two columns: filename, and regex match.\nRamp it up by creating more columns, perhaps the number of characters in the match, or the number of (orthographic) vowels in the match, etc."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
-  },
-  {
-    "objectID": "demo.html",
-    "href": "demo.html",
-    "title": "demo",
-    "section": "",
-    "text": "Students will learn about Quarto."
-  },
-  {
-    "objectID": "demo.html#objective",
-    "href": "demo.html#objective",
-    "title": "demo",
-    "section": "",
-    "text": "Students will learn about Quarto."
-  },
-  {
-    "objectID": "demo.html#lets-get-rollin",
-    "href": "demo.html#lets-get-rollin",
-    "title": "demo",
-    "section": "Let’s get rollin’!",
-    "text": "Let’s get rollin’!\nWhat should I write? Here’s an example of some code:\n\n\nCode\nprint(\"hola mundo\")\n\n\n[1] \"hola mundo\"\n\n\nI just said “hello” in Spanish, with the code print(\"hola mundo\")"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ling_data_analysis",
-    "section": "",
-    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
-  },
-  {
     "objectID": "lessons/webscrape_freq.html",
     "href": "lessons/webscrape_freq.html",
     "title": "Webscrape frequencies",
@@ -593,6 +558,97 @@
     "title": "Webscrape frequencies",
     "section": "Question",
     "text": "Question\nIn most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ling_data_analysis",
+    "section": "",
+    "text": "Website with Earl Kjar Brown’s lesson plans for Linguistic Data Analysis with R. Click on the lesson plans in the navigation menu."
+  },
+  {
+    "objectID": "demo.html",
+    "href": "demo.html",
+    "title": "demo",
+    "section": "",
+    "text": "Students will learn about Quarto."
+  },
+  {
+    "objectID": "demo.html#objective",
+    "href": "demo.html#objective",
+    "title": "demo",
+    "section": "",
+    "text": "Students will learn about Quarto."
+  },
+  {
+    "objectID": "demo.html#lets-get-rollin",
+    "href": "demo.html#lets-get-rollin",
+    "title": "demo",
+    "section": "Let’s get rollin’!",
+    "text": "Let’s get rollin’!\nWhat should I write? Here’s an example of some code:\n\n\nCode\nprint(\"hola mundo\")\n\n\n[1] \"hola mundo\"\n\n\nI just said “hello” in Spanish, with the code print(\"hola mundo\")"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\nMy name is Earl Kjar Brown and I’m a Dane."
+  },
+  {
+    "objectID": "lessons/transform.html",
+    "href": "lessons/transform.html",
+    "title": "Transform continuous variables",
+    "section": "",
+    "text": "Students will transform continuous variables in several ways."
+  },
+  {
+    "objectID": "lessons/transform.html#objective",
+    "href": "lessons/transform.html#objective",
+    "title": "Transform continuous variables",
+    "section": "",
+    "text": "Students will transform continuous variables in several ways."
+  },
+  {
+    "objectID": "lessons/transform.html#why-transform",
+    "href": "lessons/transform.html#why-transform",
+    "title": "Transform continuous variables",
+    "section": "Why transform?",
+    "text": "Why transform?\nWhen continuous are not normally distributed, it is often useful to transform them to (try to) them more normally distributed."
+  },
+  {
+    "objectID": "lessons/transform.html#how-to-transform",
+    "href": "lessons/transform.html#how-to-transform",
+    "title": "Transform continuous variables",
+    "section": "How to transform?",
+    "text": "How to transform?\nThere are several common transformations of continuous variables."
+  },
+  {
+    "objectID": "lessons/transform.html#natural-logarithm",
+    "href": "lessons/transform.html#natural-logarithm",
+    "title": "Transform continuous variables",
+    "section": "Natural logarithm",
+    "text": "Natural logarithm\nA (very) common transformation of continuous variables, especially word frequency, is to take the natural logarithm (with the log() function). Word frequencies often follow a Zipfian distribution (see the first minute and a half of this V-Sauce video to learn what this means). Taking the natural logarithm (often abbreviated as “log”) makes the Zipfian distribution more normally distributed. Let’s take a look at the frequency of words in the CELEX corpus, as given in the english dataset made available in the languageR R package. Note: Because the frequencies are already log-transformed, we’ll untransform them by taking the exponent (which is the opposite of the log) in order to see the original distribution of frequencies.\n\nGet the data\n\n#install.packages(\"languageR\")  # if needed, uncomment and run (in console)\neng &lt;- languageR::english\n\n\n\nPlot raw frequencies\n\nlibrary(\"tidyverse\")\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.4.4     ✔ tibble    3.2.1\n✔ lubridate 1.9.2     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\neng %&gt;% \n  ggplot(aes(exp(WrittenFrequency)))+\n  geom_histogram()\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\nAs we can see, the distribution of frequencies is not normally distributed. For fun, let’s also do a Shapiro-Wilk normality test (because we have fewer than 5,000 tokens in the dataset).\n\ns1 &lt;- eng %&gt;% \n  pull(WrittenFrequency) %&gt;% \n  exp() %&gt;% \n  shapiro.test()\ns1\n\n\n    Shapiro-Wilk normality test\n\ndata:  .\nW = 0.21867, p-value &lt; 2.2e-16\n\ncat(\"p-value of Shapiro-Wilk test of raw frequencies: \", s1$p.value)\n\np-value of Shapiro-Wilk test of raw frequencies:  9.007604e-88\n\n\n\n\nPlot the log frequencies\n\neng %&gt;% \n  ggplot(aes(WrittenFrequency))+  # already log-transformed by dataset creator\n  geom_histogram()\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\nAs we can see, the distribution looks a lot more normal than the original, raw frequencies. For kicks, let’s do a Shapiro-Wilk normality test on the log-transformed frequencies.\n\neng %&gt;% \n  pull(WrittenFrequency) %&gt;% \n  shapiro.test()\n\n\n    Shapiro-Wilk normality test\n\ndata:  .\nW = 0.99281, p-value = 2.047e-14\n\n\nAs we see, the p-value is below 0.05 and thus still suggests a non-normal distribution. However, it should be noted that as the number of observations increases, the likelihood of getting a (supposed) non-normal distribution increases. It’s for this reason that the Shapiro-Wilk test doesn’t allow more than 5,000 tokens."
+  },
+  {
+    "objectID": "lessons/transform.html#box-cox-transformation",
+    "href": "lessons/transform.html#box-cox-transformation",
+    "title": "Transform continuous variables",
+    "section": "Box-Cox transformation",
+    "text": "Box-Cox transformation\nAnother transformation of continuous variables is the Box-Cox transformation, named after George Box and David Cox who proposed the transformation in a paper in 1964. See an explanation of the Box-Cox transformation here.\n\nRling package\nLet’s look at another dataset. Download the Rling R package from this website and install it by following the directions there.\n\n# after downloading the 'Rling' R package with a web browser...\n# install.packages(\"/Users/ekb5/Downloads/Rling_1.0.tar.gz\", repos = NULL, type = \"source\")\n\nLet’s get the ELP (English Lexicon Project) dataset from that package.\n\nlibrary(\"Rling\")\ndata(ELP)\n\n\n\nPlot raw mean reaction times\n\nELP %&gt;% \n  ggplot(aes(Mean_RT))+\n  geom_histogram()+\n  labs(title = \"Histogram of raw mean reaction times\")\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\nLooks somewhat normally distributed, but with right skew (a right tail).\nLet’s look at the distribution when transformed with the natural logarithm.\n\nELP %&gt;% \n  ggplot(aes(log(Mean_RT)))+\n  geom_histogram()+\n  labs(title = \"Histogram of natural logarithm of mean reaction times\")\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\nThat moved the mass of the bell curve to the right a bit, and shortened the right tail.\nNow let’s do a Box-Cox transformation of the mean reaction times using the boxcox() function from the MASS R package and draw a histogram.\n\nbc &lt;- MASS::boxcox(ELP$Mean_RT ~ 1, lambda = seq(-10, 10, 1/100))\n\n\n\nlambda &lt;- bc$x[which.max(bc$y)]\nprint(lambda)\n\n[1] -1.05\n\nELP %&gt;% \n  mutate(bc_rt = (Mean_RT ^ lambda - 1) / lambda) %&gt;% \n  ggplot(aes(bc_rt))+\n  geom_histogram()+\n  labs(title = \"Box-Cox transformed mean reaction times\")\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`."
+  },
+  {
+    "objectID": "lessons/transform.html#raw-residuals",
+    "href": "lessons/transform.html#raw-residuals",
+    "title": "Transform continuous variables",
+    "section": "Raw residuals",
+    "text": "Raw residuals\nFirst, let’s fit a linear model with the raw mean reaction times.\n\nm1 &lt;- ELP %&gt;% \n  lm(Mean_RT ~ Length + log(SUBTLWF) + POS, data = .)\n\n\nMean raw residual\nWhat’s the mean raw residual? How close is it to zero?\n\ncat(\"Mean of the residuals = \", mean(residuals(m1)))\n\nMean of the residuals =  1.195004e-15\n\n\n\n\nHistogram of raw residuals\n\ntibble(res = residuals(m1)) %&gt;% \n  ggplot(aes(res))+\n  geom_histogram()+\n  ggtitle(\"Histogram of raw residuals\")\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\n\nQ-Q plot of raw residuals\nQ-Q (quantile-quantile) plot are also useful for visualizing residuals of a linear regression model. We can use two functions here of our ol’ friend ggplot. To read about the nitty-gritty of Q-Q plots, knock yourself out here and/or here. The quick-and-dirty interpretation is that we want the points to fall along the diagonal line, because that diagonal line represents a normal distribution.\n\nres &lt;- residuals(m1)\n\nggplot(tibble(residuals(m1)), aes(sample = res))+\n  stat_qq()+\n  stat_qq_line()+\n  ggtitle(\"Q-Q plot of raw residuals\")"
+  },
+  {
+    "objectID": "lessons/transform.html#box-cox-residuals",
+    "href": "lessons/transform.html#box-cox-residuals",
+    "title": "Transform continuous variables",
+    "section": "Box-Cox residuals",
+    "text": "Box-Cox residuals\nLet’s fit a linear model with Box-Cox transformed mean reaction times.\n\nm2 &lt;- ELP %&gt;% \n  mutate(bc_rt = (Mean_RT ^ lambda - 1) / lambda) %&gt;% \n  lm(bc_rt ~ Length + log(SUBTLWF) + POS, data = .)\n\n\nMean Box-Cox residual\n\ncat(\"Mean of the residuals = \", mean(residuals(m2)))\n\nMean of the residuals =  -1.570861e-21\n\n\n\n\nHistogram of Box-Cox residuals\n\ntibble(res = residuals(m2)) %&gt;% \n  ggplot(aes(res))+\n  geom_histogram()+\n  ggtitle(\"Histogram of Box-Cox residuals\")\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\n\nQ-Q plot of Box-Cox residuals\n\nres = residuals(m2)\n\nggplot(tibble(res), aes(sample = res))+\n  stat_qq()+\n  stat_qq_line()+\n  ggtitle(\"Q-Q plot of Box-Cox residuals\")"
   },
   {
     "objectID": "lessons/wrangling.html",
@@ -879,7 +935,7 @@
     "href": "lessons/interaction.html#no-interaction",
     "title": "Interaction between explanatory variables",
     "section": "No interaction",
-    "text": "No interaction\nFor comparison, if there were an monotonic effect from age group and another monotonic effect from sex, with no interaction effect between these two variables, the boxplot would look something like the following one.\n\nsize_per_group &lt;- 50\nold_men &lt;- tibble(\n  n_regionalisms = sample(seq(20, 30), size = size_per_group, replace = T),\n  age = sample(seq(35, 55), size = size_per_group, replace = T),\n  sex = rep(\"men\", size_per_group)\n)\nold_women &lt;- tibble(\n  n_regionalisms = sample(seq(15, 25), size = size_per_group, replace = T),\n  age = sample(seq(35, 55), size = size_per_group, replace = T),\n  sex = rep(\"women\", size_per_group)\n)\nyoung_men &lt;- tibble(\n  n_regionalisms = sample(seq(10, 20), size = size_per_group, replace = T),\n  age = sample(seq(18, 34), size = size_per_group, replace = T),\n  sex = rep(\"men\", size_per_group)\n)\nyoung_women &lt;- tibble(\n  n_regionalisms = sample(seq(5, 15), size = size_per_group, replace = T),\n  age = sample(seq(18, 34), size = size_per_group, replace = T),\n  sex = rep(\"women\", size_per_group)\n)\n  \nfake_data &lt;- tibble() %&gt;% \n  bind_rows(old_men) %&gt;% \n  bind_rows(old_women) %&gt;% \n  bind_rows(young_men) %&gt;% \n  bind_rows(young_women)\n\nfake_data &lt;- fake_data %&gt;% \n  mutate(age_group = ifelse(age &lt;= 34, \"young\", \"old\"))\n\np4 &lt;- fake_data %&gt;% \n  ggplot(aes(x = sex, y = n_regionalisms))+\n  geom_boxplot(notch = TRUE)+\n  stat_summary(fun = mean)+\n  facet_wrap(~age_group)+\n  theme_bw()\np4\n\nWarning: Removed 2 rows containing missing values (`geom_segment()`).\nRemoved 2 rows containing missing values (`geom_segment()`).\n\n\n\n\n\n\nm3 &lt;- lm(n_regionalisms ~ age_group + sex + age_group:sex, data = fake_data)\nsummary(m3)\n\n\nCall:\nlm(formula = n_regionalisms ~ age_group + sex + age_group:sex, \n    data = fake_data)\n\nResiduals:\n   Min     1Q Median     3Q    Max \n -5.70  -2.70   0.06   2.64   5.50 \n\nCoefficients:\n                        Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)              25.3600     0.4344  58.379  &lt; 2e-16 ***\nage_groupyoung           -9.6600     0.6143 -15.724  &lt; 2e-16 ***\nsexwomen                 -5.4200     0.6143  -8.822 6.17e-16 ***\nage_groupyoung:sexwomen  -0.7800     0.8688  -0.898     0.37    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 3.072 on 196 degrees of freedom\nMultiple R-squared:  0.7848,    Adjusted R-squared:  0.7815 \nF-statistic: 238.3 on 3 and 196 DF,  p-value: &lt; 2.2e-16\n\nAIC(m3)\n\n[1] 1022.429\n\n\nThe interaction term was not selected as making a significant contribution to the prediction of the number of regionalisms in this second set of fictitious data."
+    "text": "No interaction\nFor comparison, if there were an monotonic effect from age group and another monotonic effect from sex, with no interaction effect between these two variables, the boxplot would look something like the following one.\n\nsize_per_group &lt;- 50\nold_men &lt;- tibble(\n  n_regionalisms = sample(seq(20, 30), size = size_per_group, replace = T),\n  age = sample(seq(35, 55), size = size_per_group, replace = T),\n  sex = rep(\"men\", size_per_group)\n)\nold_women &lt;- tibble(\n  n_regionalisms = sample(seq(15, 25), size = size_per_group, replace = T),\n  age = sample(seq(35, 55), size = size_per_group, replace = T),\n  sex = rep(\"women\", size_per_group)\n)\nyoung_men &lt;- tibble(\n  n_regionalisms = sample(seq(10, 20), size = size_per_group, replace = T),\n  age = sample(seq(18, 34), size = size_per_group, replace = T),\n  sex = rep(\"men\", size_per_group)\n)\nyoung_women &lt;- tibble(\n  n_regionalisms = sample(seq(5, 15), size = size_per_group, replace = T),\n  age = sample(seq(18, 34), size = size_per_group, replace = T),\n  sex = rep(\"women\", size_per_group)\n)\n  \nfake_data &lt;- tibble() %&gt;% \n  bind_rows(old_men) %&gt;% \n  bind_rows(old_women) %&gt;% \n  bind_rows(young_men) %&gt;% \n  bind_rows(young_women)\n\nfake_data &lt;- fake_data %&gt;% \n  mutate(age_group = ifelse(age &lt;= 34, \"young\", \"old\"))\n\np4 &lt;- fake_data %&gt;% \n  ggplot(aes(x = sex, y = n_regionalisms))+\n  geom_boxplot(notch = TRUE)+\n  stat_summary(fun = mean)+\n  facet_wrap(~age_group)+\n  theme_bw()\np4\n\nWarning: Removed 2 rows containing missing values (`geom_segment()`).\nRemoved 2 rows containing missing values (`geom_segment()`).\n\n\n\n\n\n\nm3 &lt;- lm(n_regionalisms ~ age_group + sex + age_group:sex, data = fake_data)\nsummary(m3)\n\n\nCall:\nlm(formula = n_regionalisms ~ age_group + sex + age_group:sex, \n    data = fake_data)\n\nResiduals:\n   Min     1Q Median     3Q    Max \n -5.58  -2.58  -0.10   2.54   4.90 \n\nCoefficients:\n                        Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)              25.5800     0.4507  56.752  &lt; 2e-16 ***\nage_groupyoung          -10.4800     0.6374 -16.441  &lt; 2e-16 ***\nsexwomen                 -4.8600     0.6374  -7.624 1.03e-12 ***\nage_groupyoung:sexwomen   0.3400     0.9015   0.377    0.706    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 3.187 on 196 degrees of freedom\nMultiple R-squared:  0.7632,    Adjusted R-squared:  0.7596 \nF-statistic: 210.5 on 3 and 196 DF,  p-value: &lt; 2.2e-16\n\nAIC(m3)\n\n[1] 1037.184\n\n\nThe interaction term was not selected as making a significant contribution to the prediction of the number of regionalisms in this second set of fictitious data."
   },
   {
     "objectID": "lessons/programming_basics.html",
