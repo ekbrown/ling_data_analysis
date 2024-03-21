@@ -49,6 +49,7 @@ website:
           - lessons/chi-square.qmd
           - lessons/linear_regression.qmd
           - lessons/interaction.qmd
+          - lessons/transform.qmd
 format:
   html:
     theme: cosmo

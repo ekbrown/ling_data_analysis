@@ -335,6 +335,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Interaction between explanatory variables</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transform continuous variables</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -600,24 +606,24 @@ lm(formula = n_regionalisms ~ age_group + sex + age_group:sex,
 
 Residuals:
    Min     1Q Median     3Q    Max 
- -5.58  -2.58  -0.10   2.54   4.90 
+ -5.26  -2.74   0.10   2.74   5.26 
 
 Coefficients:
                         Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)              25.5800     0.4507  56.752  &lt; 2e-16 ***
-age_groupyoung          -10.4800     0.6374 -16.441  &lt; 2e-16 ***
-sexwomen                 -4.8600     0.6374  -7.624 1.03e-12 ***
-age_groupyoung:sexwomen   0.3400     0.9015   0.377    0.706    
+(Intercept)              25.0600     0.4388  57.116  &lt; 2e-16 ***
+age_groupyoung          -10.3200     0.6205 -16.632  &lt; 2e-16 ***
+sexwomen                 -5.1600     0.6205  -8.316 1.51e-14 ***
+age_groupyoung:sexwomen   0.6800     0.8775   0.775    0.439    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 3.187 on 196 degrees of freedom
-Multiple R-squared:  0.7632,    Adjusted R-squared:  0.7596 
-F-statistic: 210.5 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 3.102 on 196 degrees of freedom
+Multiple R-squared:  0.7652,    Adjusted R-squared:  0.7616 
+F-statistic: 212.9 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1037.184</code></pre>
+<pre><code>[1] 1026.414</code></pre>
 </div>
 </div>
 <p>The interaction term was <strong>not</strong> selected as making a significant contribution to the prediction of the number of regionalisms in this second set of fictitious data.</p>
