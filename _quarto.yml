@@ -50,6 +50,8 @@ website:
           - lessons/linear_regression.qmd
           - lessons/interaction.qmd
           - lessons/transform.qmd
+          - lessons/multicollinearity.qmd
+          - lessons/logistic_regression.qmd
 format:
   html:
     theme: cosmo

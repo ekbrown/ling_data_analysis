@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - t-test, Wilcoxon test</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Logistic regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/t-test.html">t-test, Wilcoxon test</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/logistic_regression.html">Logistic regression</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -307,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/t-test.html" class="sidebar-item-text sidebar-link active">
+  <a href="../lessons/t-test.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">t-test, Wilcoxon test</span></a>
   </div>
 </li>
@@ -349,7 +349,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/logistic_regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/logistic_regression.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Logistic regression</span></a>
   </div>
 </li>
@@ -366,16 +366,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
-  <li><a href="#formative-quiz" id="toc-formative-quiz" class="nav-link" data-scroll-target="#formative-quiz">Formative quiz</a></li>
-  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test"><em>t</em>-test</a>
-  <ul class="collapse">
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
   <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#one-tailed-or-two-tailed" id="toc-one-tailed-or-two-tailed" class="nav-link" data-scroll-target="#one-tailed-or-two-tailed">One-tailed or two-tailed</a></li>
-  </ul></li>
-  <li><a href="#wilcoxon-test" id="toc-wilcoxon-test" class="nav-link" data-scroll-target="#wilcoxon-test">Wilcoxon test</a></li>
-  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a>
+  <li><a href="#how-many-observations" id="toc-how-many-observations" class="nav-link" data-scroll-target="#how-many-observations">How many observations</a></li>
+  <li><a href="#terms" id="toc-terms" class="nav-link" data-scroll-target="#terms">Terms</a></li>
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
   <ul class="collapse">
-  <li><a href="#how-to-report-in-paper" id="toc-how-to-report-in-paper" class="nav-link" data-scroll-target="#how-to-report-in-paper">How to report in paper</a></li>
+  <li><a href="#glm-in-base-r" id="toc-glm-in-base-r" class="nav-link" data-scroll-target="#glm-in-base-r"><code>glm()</code> in base R</a></li>
+  <li><a href="#lrm-in-rms-package" id="toc-lrm-in-rms-package" class="nav-link" data-scroll-target="#lrm-in-rms-package"><code>lrm()</code> in <code>rms</code> package</a></li>
   </ul></li>
   <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
   </ul>
@@ -386,7 +385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">t-test, Wilcoxon test</h1>
+<h1 class="title">Logistic regression</h1>
 </div>
 
 
@@ -403,145 +402,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="objective" class="level2">
 <h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<p>Students will perform a <em>t</em>-test and a Wilcoxon test</p>
+<p>Students will fit a logistic regression model.</p>
 </section>
-<section id="formative-quiz" class="level2">
-<h2 class="anchored" data-anchor-id="formative-quiz">Formative quiz</h2>
-<p>Match each term with its corresponding definition.</p>
-<table class="table">
-<caption>Good ol’ fashioned matching quiz</caption>
-<colgroup>
-<col style="width: 17%">
-<col style="width: 82%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>sample</td>
-<td>The mean of the sample</td>
-</tr>
-<tr class="even">
-<td>population</td>
-<td>A value that is the result of converting a value into units of standard deviations from the mean</td>
-</tr>
-<tr class="odd">
-<td>point estimate</td>
-<td>A Greek letter that usually stands for the standard deviation of a continuous variable of the population</td>
-</tr>
-<tr class="even">
-<td>confidence interval</td>
-<td>A Romanized letter that usually stands for the explanatory variable</td>
-</tr>
-<tr class="odd">
-<td>standard error</td>
-<td>Something that might affect the thing under study</td>
-</tr>
-<tr class="even">
-<td><em>t</em>-test</td>
-<td>The thing that is being studied (aka. dependent thing of study)</td>
-</tr>
-<tr class="odd">
-<td>Wilcoxon test</td>
-<td>a Greek letter that usually stands for the mean of a continuous variable of a population</td>
-</tr>
-<tr class="even">
-<td>sigma</td>
-<td>An ideal spread of data points around the central tendency; looks like a good ol’ fashioned bell (aka. bell curve)</td>
-</tr>
-<tr class="odd">
-<td>meu</td>
-<td>the number of data points (aka. observations)</td>
-</tr>
-<tr class="even">
-<td><em>n</em></td>
-<td>The standard deviation of the sample</td>
-</tr>
-<tr class="odd">
-<td>x</td>
-<td>The group that the researcher want to know something about</td>
-</tr>
-<tr class="even">
-<td>y</td>
-<td>A non-parametric test</td>
-</tr>
-<tr class="odd">
-<td>response variable</td>
-<td>The group that is used to infer about a larger group</td>
-</tr>
-<tr class="even">
-<td>explanatory variable</td>
-<td>The proposition that is likely an effect of the explanatory variable on the response variable</td>
-</tr>
-<tr class="odd">
-<td><em>z</em>-score</td>
-<td>A Romanized letter that usually stands for the response variable.</td>
-</tr>
-<tr class="even">
-<td>meu hat</td>
-<td>a single number that characterizes an aspect of a dataset</td>
-</tr>
-<tr class="odd">
-<td>sigma hat</td>
-<td>A range of values that is likely to contain the population value</td>
-</tr>
-<tr class="even">
-<td>alpha level</td>
-<td>The threshold below which the null hypothesis can be rejected</td>
-</tr>
-<tr class="odd">
-<td>null hypothesis</td>
-<td>A parametric test with a continuous response variable and a categorical variable with exactly two levels</td>
-</tr>
-<tr class="even">
-<td>alternative hypothesis</td>
-<td>A measure of how much uncertainty there is in the estimate of the sample mean</td>
-</tr>
-<tr class="odd">
-<td>normal distribution</td>
-<td>The proposition that there is no effect of the explanatory variable(s) on the response variable</td>
-</tr>
-</tbody>
-</table>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>When your response variable is categorical with exactly two levels or groups (aka. a binary response variable), logistic regression is your go-to regression analysis.</p>
 </section>
-<section id="t-test" class="level2">
-<h2 class="anchored" data-anchor-id="t-test"><em>t</em>-test</h2>
-<p>The response variable is continuous (aka. quantitative) and the explanatory variable is categorical with exactly two levels (aka. values or groups).</p>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
-<p>The distribution of the response is normal, and/or there are more than 30 data points in each level (aka. group) of the explanatory variable.</p>
-<p>The variances of the response variables in both levels of the explanatory are equal. However, this is often not the case and our new friend Mr.&nbsp;Welch proposed an adjustment that provides a correction for unequal variances. The default behavior of the <code>t.test()</code> in R (i.e., the <code>var.equal</code> argument) is to use Welch’s adjustment.</p>
+<section id="assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="assumptions">Assumptions</h2>
+<ol type="1">
+<li><p>The observations are independent of each other. If not, mixed-effect logistic regression (aka. mixed-effects generalized linear regression) is what you should use with random effects to account for the hierarchical nature of the data.</p></li>
+<li><p>The continuous explanatory variables are (generally) linear.</p></li>
+<li><p>There’s no multicollinearity between the explanatory variables.</p></li>
+</ol>
 </section>
-<section id="one-tailed-or-two-tailed" class="level3">
-<h3 class="anchored" data-anchor-id="one-tailed-or-two-tailed">One-tailed or two-tailed</h3>
-<p>A one-tailed test should be used when the alternative hypothesis is directional, that is, it hypothesizes that the mean of one group is greater than the mean of the other group, or less than the other group. For example, the null and alternative hypotheses would look something like this:</p>
-<p><span class="math display">\[
-H_0:μ_A = μ_B
-\]</span> <span class="math display">\[
-H_a:μ_A&gt;μ_B
-\]</span></p>
-<p>We use a two-tailed t-test when our alternative hypothesis is not directional, that is, it hypothesizes that the mean of one group does not equal the mean of the other group, but it doesn’t say anything about direction. For example:</p>
-<p><span class="math display">\[
-H_0:μ_A = μ_B
-\]</span> <span class="math display">\[
-H_a:μ_A ≠ μ_B
-\]</span></p>
+<section id="how-many-observations" class="level2">
+<h2 class="anchored" data-anchor-id="how-many-observations">How many observations</h2>
+<p>Levshina (2015, p.&nbsp;257) mentions different rules of thumb for a minimum number of observations in order to fit a logistic regression. One is that the number of explanatory variables should not be larger than a tenth of the number of observations. So, we only really need to worry about this when we have few tokens and/or many explanatory variables.</p>
 </section>
+<section id="terms" class="level2">
+<h2 class="anchored" data-anchor-id="terms">Terms</h2>
+<p>Here are some terms about come up a lot in the context of logistic regression (see Levshina 2015, p.&nbsp;261).</p>
+<ul>
+<li><strong>odds</strong>: simple division of one number divided by another number. For example, in the <code>doenLaten</code> dataset in the <code>Rling</code> package, there are 178 tokens (aka. observations) of <code>doen</code> and 277 tokens of <code>laten</code>, so the odds of <code>doen</code> to <code>laten</code> is <span class="math inline">\(178/277≃0.64\)</span>.</li>
+<li><strong>probability</strong>: one number divided by the total N, expressed as a proportion (between 0 and 1) or as a percentage (between 0% and 100%). For example, the probability of <code>doen</code> is <span class="math inline">\(178/455≃0.39\)</span> as a proportion, or <span class="math inline">\(39\%\)</span> as a percentage.</li>
+<li><strong>log odds</strong> (aka. <strong>logit</strong>): this is simply the natural logarithm of <strong>odds</strong> above, which we can calculate with the <code>log()</code> function. The opposite of <code>log()</code> is the exponent, which is calculated with <code>exp()</code>.</li>
+<li><strong>odds ratio</strong>: the simple ratio of two <strong>odds</strong>.</li>
+<li><strong>log odds ratio</strong>: the natural logarithm of <strong>odds ratio</strong>.</li>
+</ul>
 </section>
-<section id="wilcoxon-test" class="level2">
-<h2 class="anchored" data-anchor-id="wilcoxon-test">Wilcoxon test</h2>
-<p>When the data are not normally distributed (and you don’t have &gt;30 observations in each level of the categorical explanatory variable, so that you can use the t-test), the Wilcoxon test is the way to go. This test is also the way to go when you have ordinal data, like responses to a Likert-scale survey.</p>
-<p>The Wilcoxon test is apparently super similar to, or in most cases identifical to, the Mann-Whitney test; see <a href="https://stats.stackexchange.com/a/79849">Q&amp;A thread</a>. Our ol’ friend Jamovi has a check box for the “Mann-Whitney” test, while the function in R run these test is <code>wilcox.test()</code>.</p>
-</section>
-<section id="question" class="level2">
-<h2 class="anchored" data-anchor-id="question">Question</h2>
-<p>Let’s look at the speech rate in syllables per second of 25 Spanish speakers and 25 Italian speakers. First, let’s propose a null hypothesis and an alternative hypothesis. As we don’t have any previous information about the speech rate of Spanish and Italian speakers in comparison to each other, our alternative hypothesis will simply be “not equal to” rather than something directional like “greater than” or “less than”:</p>
-<p><span class="math display">\[
-H_0:μ_S=μ_I
-\]</span> <span class="math display">\[
-H_a:μ_S≠μ_I
-\]</span></p>
-<p>First, a good ol’ fashioned boxplot:</p>
+<section id="dataset" class="level2">
+<h2 class="anchored" data-anchor-id="dataset">Dataset</h2>
+<p>Let’s get the Dutch causative auxiliaries dataset with <em>doen</em> and <em>laten</em> (similar to English <em>make/have/get/cause X (to) do Y</em>), presented in Levshina (2015) chapter 12. First, let’s download two packages, one with the dataset and another with a function for logistic regression.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"Rling"</span>, <span class="at">repos =</span> <span class="st">"http://rstudio.org"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rms"</span>, <span class="at">repos =</span> <span class="st">"http://rstudio.org"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, let’s load in the dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Rling"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"doenLaten"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s look at the documentation for the dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># at the console</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>?doenLaten</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are two (popular) functions to fit logistic regression. Here we go!</p>
+</section>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<section id="glm-in-base-r" class="level3">
+<h3 class="anchored" data-anchor-id="glm-in-base-r"><code>glm()</code> in base R</h3>
+<p>The base R function <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/glm"><code>glm()</code></a> is a Swiss-army knife function which can do logistic regression if you specify <code>family = binomial</code> in the call. (BTW, It can also do linear regression with <code>family = gaussian</code> and other types of regression. See the docs: <code>?glm</code>)</p>
+<p>Let’s fit a logistic regression with the <code>doenLaten</code> dataset, with <code>Aux</code> as the response variable (which has two levels: <code>doen</code> and <code>laten</code>), and three categorical explanatory variables:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.4
@@ -554,129 +470,130 @@ H_a:μ_S≠μ_I
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>esit <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/ekb5/Documents/data_analysis/datasets/span_ital_speaking_rate.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 50 Columns: 3
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (1): language
-dbl (2): participant_ID, syllables
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> language, <span class="at">y =</span> syllables))<span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="t-test_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>The non-overlapping notches on the boxes suggest that the difference in the means of the two groups will likely be statistically significantly different.</p>
-<p>Enter an inferential statistical test.</p>
-<p>First, let’s see if the data points are normally distributed. A simple <a href="https://www.r-bloggers.com/2019/08/shapiro-wilk-test-for-normality-in-r/">Shapiro-Wilk normality test</a>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(language) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shapiro.test</span>(.<span class="sc">$</span>syllables) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-# Groups:   language [2]
-  language statistic p.value method                     
-  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                      
-1 Italian      0.971  0.663  Shapiro-Wilk normality test
-2 Spanish      0.926  0.0710 Shapiro-Wilk normality test</code></pre>
-</div>
-</div>
-<p>Both <em>p</em>-values are above 0.05, so that’s good.</p>
-<p>Now, let’s also plot the distribution in a density plot:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(syllables, <span class="at">color =</span> language))<span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="t-test_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Not the prettiest (normal) density plots.</p>
-<p>And for good measure, let’s calculate the <a href="https://www.r-bloggers.com/2013/06/measures-of-skewness-and-kurtosis/">skewness</a> of each group:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"moments"</span>, <span class="at">repos =</span> <span class="st">"http://rstudio.org"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: unable to access index for repository http://rstudio.org/src/contrib:
-  cannot open URL 'http://rstudio.org/src/contrib/PACKAGES'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'moments' is not available for this version of R
-
-A version of this package for your version of R might be available elsewhere,
-see the ideas at
-https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: unable to access index for repository http://rstudio.org/bin/macosx/big-sur-arm64/contrib/4.3:
-  cannot open URL 'http://rstudio.org/bin/macosx/big-sur-arm64/contrib/4.3/PACKAGES'</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(language) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>(</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    moments<span class="sc">::</span><span class="fu">skewness</span>(.<span class="sc">$</span>syllables) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>      broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: 'tidy.numeric' is deprecated.
-See help("Deprecated")
-
-Warning: 'tidy.numeric' is deprecated.
-See help("Deprecated")</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-# Groups:   language [2]
-  language      x
-  &lt;chr&gt;     &lt;dbl&gt;
-1 Italian  -0.216
-2 Spanish  -0.923</code></pre>
-</div>
-</div>
-<p>A good rule of thumb is that if the skewness score is between -0.5 and 0.5, the data is normal enough to continue with a parametric test.</p>
-<p>Because the Shapiro-Wilk gave us the green light to continue with a t-test, let’s go!</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(syllables<span class="sc">~</span>language, <span class="at">data =</span> ., <span class="at">alternative =</span> <span class="st">"two.sided"</span>) <span class="ot">-&gt;</span> result</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Aux <span class="sc">~</span> Causation <span class="sc">+</span> EPTrans <span class="sc">+</span> Country, <span class="at">data =</span> doenLaten, <span class="at">family =</span> binomial)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-    Welch Two Sample t-test
+Call:
+glm(formula = Aux ~ Causation + EPTrans + Country, family = binomial, 
+    data = doenLaten)
 
-data:  syllables by language
-t = -6.34, df = 47.793, p-value = 7.695e-08
-alternative hypothesis: true difference in means between group Italian and group Spanish is not equal to 0
-95 percent confidence interval:
- -1.1748003 -0.6090245
-sample estimates:
-mean in group Italian mean in group Spanish 
-             7.013432              7.905345 </code></pre>
+Coefficients:
+                    Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)           1.8631     0.3771   4.941 7.79e-07 ***
+CausationInducive    -3.3725     0.3741  -9.015  &lt; 2e-16 ***
+CausationPhysical     0.4661     0.6275   0.743 0.457575    
+CausationVolitional  -3.7373     0.4278  -8.735  &lt; 2e-16 ***
+EPTransTr            -1.2952     0.3394  -3.816 0.000136 ***
+CountryBE             0.7085     0.2841   2.494 0.012633 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 609.05  on 454  degrees of freedom
+Residual deviance: 337.70  on 449  degrees of freedom
+AIC: 349.7
+
+Number of Fisher Scoring iterations: 5</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result<span class="sc">$</span>stderr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>First, the intercept estimate, which is given as the log odds of the second level of the response variable (i.e., <code>doen</code>) in comparison to the reference level (i.e., <code>laten</code>), when the categorical explanatory variables have their reference level and when continuous explanatory variables are zero. So, in this case, the log odds that <code>doen</code> is used is <span class="math inline">\(1.8631\)</span> when the <code>Causation</code> is <code>Affective</code>, the <code>EPTrans</code> (i.e., effected predicate) is <code>Intr</code> (i.e., intransitive), and <code>Country</code> is <code>NL</code> (i.e., Netherlands).</p>
+<p>If we remember that the opposite of the natural logarithm is the exponent, we can get the odds with <code>exp(1.8631)</code>, which gives us <span class="math inline">\(≃6.44\)</span>. So, <code>doen</code> is 6.44 times more likely than <code>laten</code> with affective causation and intransitive effected predicates in the Netherlands.</p>
+<p>If we’re not sure which is the second level and which is the reference level (first listed), we can use:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(doenLaten<span class="sc">$</span>Aux)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1406801</code></pre>
+<pre><code>[1] "laten" "doen" </code></pre>
 </div>
 </div>
-<p>The <em>p</em>-value suggests that the mean speech rate of Spanish speakers is different from the mean speech rate of Italian speakers.</p>
-<section id="how-to-report-in-paper" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-report-in-paper">How to report in paper</h3>
-<p>“An independent two-tailed t-test compared the speech rate of Spanish speakers (n = 25) and Italian speakers (n = 25). We reject the null hypothesis and conclude that there is a signficant difference in speech rate between these two groups: t<sub>(47.793)</sub> = -6.34, p ≤ 0.001.”</p>
+<p>Let’s turn to the coefficients for the three categorical explanatory variables. The reference level of each isn’t listed, and the other levels that are listed are compared to that unlisted reference level. This is called treatments contrasts (like with linear regression). The coefficients below the Estimate column are log odds ratio. So, for example, the log odds ratio for <code>doen</code> in comparison to <code>laten</code> in Belgium is <span class="math inline">\(0.7085\)</span>. If we take the exponent of this number:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fl">0.7085</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.030943</code></pre>
+</div>
+</div>
+<p>we end up with <span class="math inline">\(2.030943\)</span>. So, the likelihood of <code>doen</code> instead of <code>laten</code> in Belguim is more than 2 times higher than in the Netherlands when all other variables are held constant.</p>
+<p>Looking at <em>p</em>-values as well as the polarity (i.e., positive or negative signs) of the <code>Causation</code> coefficients, there is <strong>no</strong> significant difference (<em>p</em>-value = 0.457575) between the effect of <code>Physical</code> and <code>Affective</code> on <code>doen</code> and <code>laten</code> usage. Differently, <code>Inducive</code> and <code>Volitional</code> cause for less <code>doen</code> than <code>Affective</code>, given their negative coefficients and <em>p</em>-values below 0.05.</p>
+</section>
+<section id="lrm-in-rms-package" class="level3">
+<h3 class="anchored" data-anchor-id="lrm-in-rms-package"><code>lrm()</code> in <code>rms</code> package</h3>
+<p>Another function to perform logistic regression is the <code>lrm()</code> in the <code>rms</code> package. It gives more results than the <code>glm()</code> function in base R. Let’s go!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(rms))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lrm</span>(Aux <span class="sc">~</span> Causation <span class="sc">+</span> EPTrans <span class="sc">+</span> Country, <span class="at">data =</span> doenLaten)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>m2 <span class="co"># no need to call summary()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Logistic Regression Model
+
+lrm(formula = Aux ~ Causation + EPTrans + Country, data = doenLaten)
+
+                       Model Likelihood      Discrimination    Rank Discrim.    
+                             Ratio Test             Indexes          Indexes    
+Obs           455    LR chi2     271.35      R2       0.609    C       0.894    
+ laten        277    d.f.             5      R2(5,455)0.443    Dxy     0.787    
+ doen         178    Pr(&gt; chi2) &lt;0.0001    R2(5,325.1)0.559    gamma   0.817    
+max |deriv| 1e-07                            Brier    0.112    tau-a   0.376    
+
+                     Coef    S.E.   Wald Z Pr(&gt;|Z|)
+Intercept             1.8631 0.3771  4.94  &lt;0.0001 
+Causation=Inducive   -3.3725 0.3741 -9.01  &lt;0.0001 
+Causation=Physical    0.4661 0.6275  0.74  0.4576  
+Causation=Volitional -3.7373 0.4278 -8.74  &lt;0.0001 
+EPTrans=Tr           -1.2952 0.3394 -3.82  0.0001  
+Country=BE            0.7085 0.2841  2.49  0.0126  </code></pre>
+</div>
+</div>
+<p>The only thing Dr.&nbsp;Brown wants to point out is a goodness-of-fit statistic under Rank Discrimination Index: the concordance index <em>C</em>. In this case, we get a <em>C</em> value of <span class="math inline">\(0.894\)</span>. Levshina (2015, p.&nbsp;259) gives the following table to know how to interpret <em>C</em> values:</p>
+<table class="table">
+<caption>concordance index</caption>
+<thead>
+<tr class="header">
+<th>Concordance index</th>
+<th>Descriptor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>C</em> = 0.5</td>
+<td>no discrimination</td>
+</tr>
+<tr class="even">
+<td>0.7 ≤ <em>C</em> &lt; 0.8</td>
+<td>acceptable discrimination</td>
+</tr>
+<tr class="odd">
+<td>0.8 ≤ <em>C</em> &lt; 0.9</td>
+<td>excellent discrimination</td>
+</tr>
+<tr class="even">
+<td><em>C</em> ≥ 0.9</td>
+<td>outstanding discrimination</td>
+</tr>
+</tbody>
+</table>
+<p>So, this logistic regression model has “excellent discrimination” (see <a href="https://stats.stackexchange.com/a/215627">this Q&amp;A thread</a> about goodness-of-fit metrics).</p>
 </section>
 </section>
 <section id="activity" class="level2">
 <h2 class="anchored" data-anchor-id="activity">Activity</h2>
-<p>Your turn! Use a dataset of your choice and see if there is a statistical difference between the means of a continuous variable based on two categories in a categorical variable.</p>
+<p>Load up the <code>regularity</code> dataset in the <code>languageR</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"languageR"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"regularity"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>?regularity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The dataset has 13 columns, including <code>Regularity</code>, which indicates whether the verb is <code>regular</code> or <code>irregular</code>. Using that column as the response variable, fit a logistic regression model with the explanatory variables that you feel might affect whether a verb is regular or irregular.</p>
+<p>After a good-faith effort, if you need some help, take a look at Dr.&nbsp;Brown’s code below:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rms"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lrm</span>(Regularity <span class="sc">~</span> WrittenFrequency <span class="sc">+</span> Auxiliary <span class="sc">+</span> LengthInLetters <span class="sc">+</span> FamilySize, <span class="at">data =</span> regularity)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>m3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 
 
 </section>

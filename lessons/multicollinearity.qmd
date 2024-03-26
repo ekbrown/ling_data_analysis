@@ -1,0 +1,79 @@
+---
+title: "Multicollinearity"
+---
+
+## ELC L2 English Written Corpus
+
+Lexical diversity has been shown to positively correlate with L2 proficiency. That is, as L2 learners become more proficient, they use more unique words. Put the other way around, they repeat the same words less often. The *lex_div_ELC.csv* file in the CMS contains 4k+ observations of texts written by L2 English writers in BYU's English Language Center (ELC). At the end of each semester, ELC students write a response to a 10-minute prompt and another response to a 30-minute prompt, and those two responses are rated by human readers. After Rasch Analysis, the *FairAverage* score is created. That *FairAverage* score is a measure of the students' proficiency.<br><br> Kelly Woods (while an MA Linguistics student here), Brett Hashimoto, and I (or is it: "me, Kelly and Brett"?) used this corpus to study the effect of lexical diversity on the FairAverage scores as well as to study the multicollinearity of the many lexical diversity measures that have been created since the early 20th century. We used Variance Inflation Factors and Principal Component Analysis during the process of analyzing the multicollinearity of the lexical diversity measures. So, we know that there is lots of multicollinearity between these measures, and so it's a great dataset to explore the negative effects of multicollinearity on regression results.
+
+## Prep the data
+
+Download the CSV file from the CMS and update the working directory for your computer.
+
+```{r}
+library("tidyverse")
+ld <- read_csv("/Users/ekb5/Documents/data_analysis/datasets/lex_div_ELC.csv")
+head(ld)
+```
+
+## Draw some scatterplots
+
+Draw scatterplots of *FairAverage* by the predictor variables that are selected as significant in the linear regression below. The lexical diversity measurements were obtained with the [lexical_diversity](https://pypi.org/project/lexical-diversity/) Python module.
+
+```{r}
+predictors <- c("n_wds", "hdd", "mattr", "mtld_ma_bid", "log_ttr", "maas_ttr", "msttr")
+for (predictor in predictors) {
+  p1 <- ld %>% 
+    ggplot(aes(.data[[predictor]], FairAverage))+
+    geom_point(alpha = 0.5)+
+    geom_smooth(formula = y ~ x, method = lm)+
+    ggtitle(predictor)+
+    theme_minimal()
+  print(p1)
+}
+```
+
+## Linear regression
+
+FairAverage is the response (aka. dependent or outcome) variable, and a bunch of lexical diversity measures (as well as text length as number of words) are explanatory (aka. independent or predictor) variables.
+
+**Question: How do the signs (i.e., positive or negative) of the coefficient estimates compare with the sign of the slopes of the regression lines in the scatterplots above?**
+
+```{r}
+m1 <- lm(FairAverage ~ n_wds + ttr + hdd + mtld + mattr + mtld_ma_w + mtld_ma_bid + root_ttr + log_ttr + maas_ttr + msttr, data = ld)
+summary(m1)
+AIC(m1)  # the lower the AIC, the better
+```
+
+## Correlation matrix
+
+We can see the Pearson's r correlation scores for all pairwise comparisons of the continuous variables.
+
+```{r}
+correlations <- ld %>% 
+  select(n_wds, ttr, hdd, mtld, mattr, mtld_ma_w, mtld_ma_bid, root_ttr, log_ttr, maas_ttr, msttr) %>% 
+  cor()
+print(correlations)
+```
+
+## Correlation plot
+
+Visualizing a correlation matrix can be helpful.
+
+```{r}
+corrplot::corrplot(correlations, type = "lower", diag = FALSE)
+```
+
+## Enter VIFs
+
+Variance Inflation Factors (VIFs) report how much multicollinearity there is associated with each explanatory variable in a regression model. In other words, "these measure the degree to which one predictor can be accounted for by the other predictors" (Winter 2020, p. 114). There are different rules of thumbs about the threshold above which a VIF should not exceed. See p. 160 of Levshina (2015) [here](https://lib.byu.edu/search/byu/record/cat.6905833.item.6905833-2001?holding=wiaijfm75jgyaw81) and p. 114 of Winter (2020) [here](https://lib.byu.edu/search/byu/record/cat.7111770.item.7111770-1001?holding=2q5ym7r6fjay3ym1). The *car* R package has a [*vif()*](https://www.rdocumentation.org/packages/car/versions/3.1-1/topics/vif) function to get VIFs. (There are other packages that have functions to get VIFs, for example, [regclass::VIF()](https://www.rdocumentation.org/packages/regclass/versions/1.6/topics/VIF) and [olsrr::ols_vif_tol()](https://olsrr.rsquaredacademy.com/reference/ols_coll_diag.html).)
+
+**Question: How do the VIF scores in our linear regression compare to the proposed thresholds mentioned by Levshina and Winter?**
+
+```{r}
+car::vif(m1)
+```
+
+## Activity
+
+Through trial and error, choose predictor variables to remove in order to reduce the VIFs. Refit a linear regression each time you remove a predictor and compare the (adjusted) R^2^ values of new models with the original model (the bigger, the better) and AIC scores (the lower, the better), and also get new VIF scores.

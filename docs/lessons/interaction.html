@@ -341,6 +341,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Transform continuous variables</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/multicollinearity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multicollinearity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/logistic_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Logistic regression</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -606,24 +618,24 @@ lm(formula = n_regionalisms ~ age_group + sex + age_group:sex,
 
 Residuals:
    Min     1Q Median     3Q    Max 
- -5.26  -2.74   0.10   2.74   5.26 
+ -5.82  -2.76   0.24   2.58   5.42 
 
 Coefficients:
                         Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)              25.0600     0.4388  57.116  &lt; 2e-16 ***
-age_groupyoung          -10.3200     0.6205 -16.632  &lt; 2e-16 ***
-sexwomen                 -5.1600     0.6205  -8.316 1.51e-14 ***
-age_groupyoung:sexwomen   0.6800     0.8775   0.775    0.439    
+(Intercept)              24.7600     0.4581  54.046  &lt; 2e-16 ***
+age_groupyoung           -8.9400     0.6479 -13.799  &lt; 2e-16 ***
+sexwomen                 -5.1800     0.6479  -7.995  1.1e-13 ***
+age_groupyoung:sexwomen  -0.2200     0.9163  -0.240     0.81    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 3.102 on 196 degrees of freedom
-Multiple R-squared:  0.7652,    Adjusted R-squared:  0.7616 
-F-statistic: 212.9 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 3.239 on 196 degrees of freedom
+Multiple R-squared:  0.7276,    Adjusted R-squared:  0.7235 
+F-statistic: 174.5 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1026.414</code></pre>
+<pre><code>[1] 1043.699</code></pre>
 </div>
 </div>
 <p>The interaction term was <strong>not</strong> selected as making a significant contribution to the prediction of the number of regionalisms in this second set of fictitious data.</p>

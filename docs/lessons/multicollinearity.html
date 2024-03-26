@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - t-test, Wilcoxon test</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - Multicollinearity</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -95,8 +95,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -110,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/t-test.html">t-test, Wilcoxon test</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/multicollinearity.html">Multicollinearity</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -307,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/t-test.html" class="sidebar-item-text sidebar-link active">
+  <a href="../lessons/t-test.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">t-test, Wilcoxon test</span></a>
   </div>
 </li>
@@ -343,7 +341,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/multicollinearity.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/multicollinearity.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Multicollinearity</span></a>
   </div>
 </li>
@@ -365,18 +363,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
-  <li><a href="#formative-quiz" id="toc-formative-quiz" class="nav-link" data-scroll-target="#formative-quiz">Formative quiz</a></li>
-  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test"><em>t</em>-test</a>
-  <ul class="collapse">
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#one-tailed-or-two-tailed" id="toc-one-tailed-or-two-tailed" class="nav-link" data-scroll-target="#one-tailed-or-two-tailed">One-tailed or two-tailed</a></li>
-  </ul></li>
-  <li><a href="#wilcoxon-test" id="toc-wilcoxon-test" class="nav-link" data-scroll-target="#wilcoxon-test">Wilcoxon test</a></li>
-  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a>
-  <ul class="collapse">
-  <li><a href="#how-to-report-in-paper" id="toc-how-to-report-in-paper" class="nav-link" data-scroll-target="#how-to-report-in-paper">How to report in paper</a></li>
-  </ul></li>
+  <li><a href="#elc-l2-english-written-corpus" id="toc-elc-l2-english-written-corpus" class="nav-link active" data-scroll-target="#elc-l2-english-written-corpus">ELC L2 English Written Corpus</a></li>
+  <li><a href="#prep-the-data" id="toc-prep-the-data" class="nav-link" data-scroll-target="#prep-the-data">Prep the data</a></li>
+  <li><a href="#draw-some-scatterplots" id="toc-draw-some-scatterplots" class="nav-link" data-scroll-target="#draw-some-scatterplots">Draw some scatterplots</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression">Linear regression</a></li>
+  <li><a href="#correlation-matrix" id="toc-correlation-matrix" class="nav-link" data-scroll-target="#correlation-matrix">Correlation matrix</a></li>
+  <li><a href="#correlation-plot" id="toc-correlation-plot" class="nav-link" data-scroll-target="#correlation-plot">Correlation plot</a></li>
+  <li><a href="#enter-vifs" id="toc-enter-vifs" class="nav-link" data-scroll-target="#enter-vifs">Enter VIFs</a></li>
   <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
   </ul>
 </nav>
@@ -386,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">t-test, Wilcoxon test</h1>
+<h1 class="title">Multicollinearity</h1>
 </div>
 
 
@@ -401,145 +394,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="objective" class="level2">
-<h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<p>Students will perform a <em>t</em>-test and a Wilcoxon test</p>
+<section id="elc-l2-english-written-corpus" class="level2">
+<h2 class="anchored" data-anchor-id="elc-l2-english-written-corpus">ELC L2 English Written Corpus</h2>
+<p>Lexical diversity has been shown to positively correlate with L2 proficiency. That is, as L2 learners become more proficient, they use more unique words. Put the other way around, they repeat the same words less often. The <em>lex_div_ELC.csv</em> file in the CMS contains 4k+ observations of texts written by L2 English writers in BYU’s English Language Center (ELC). At the end of each semester, ELC students write a response to a 10-minute prompt and another response to a 30-minute prompt, and those two responses are rated by human readers. After Rasch Analysis, the <em>FairAverage</em> score is created. That <em>FairAverage</em> score is a measure of the students’ proficiency.<br><br> Kelly Woods (while an MA Linguistics student here), Brett Hashimoto, and I (or is it: “me, Kelly and Brett”?) used this corpus to study the effect of lexical diversity on the FairAverage scores as well as to study the multicollinearity of the many lexical diversity measures that have been created since the early 20th century. We used Variance Inflation Factors and Principal Component Analysis during the process of analyzing the multicollinearity of the lexical diversity measures. So, we know that there is lots of multicollinearity between these measures, and so it’s a great dataset to explore the negative effects of multicollinearity on regression results.</p>
 </section>
-<section id="formative-quiz" class="level2">
-<h2 class="anchored" data-anchor-id="formative-quiz">Formative quiz</h2>
-<p>Match each term with its corresponding definition.</p>
-<table class="table">
-<caption>Good ol’ fashioned matching quiz</caption>
-<colgroup>
-<col style="width: 17%">
-<col style="width: 82%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>sample</td>
-<td>The mean of the sample</td>
-</tr>
-<tr class="even">
-<td>population</td>
-<td>A value that is the result of converting a value into units of standard deviations from the mean</td>
-</tr>
-<tr class="odd">
-<td>point estimate</td>
-<td>A Greek letter that usually stands for the standard deviation of a continuous variable of the population</td>
-</tr>
-<tr class="even">
-<td>confidence interval</td>
-<td>A Romanized letter that usually stands for the explanatory variable</td>
-</tr>
-<tr class="odd">
-<td>standard error</td>
-<td>Something that might affect the thing under study</td>
-</tr>
-<tr class="even">
-<td><em>t</em>-test</td>
-<td>The thing that is being studied (aka. dependent thing of study)</td>
-</tr>
-<tr class="odd">
-<td>Wilcoxon test</td>
-<td>a Greek letter that usually stands for the mean of a continuous variable of a population</td>
-</tr>
-<tr class="even">
-<td>sigma</td>
-<td>An ideal spread of data points around the central tendency; looks like a good ol’ fashioned bell (aka. bell curve)</td>
-</tr>
-<tr class="odd">
-<td>meu</td>
-<td>the number of data points (aka. observations)</td>
-</tr>
-<tr class="even">
-<td><em>n</em></td>
-<td>The standard deviation of the sample</td>
-</tr>
-<tr class="odd">
-<td>x</td>
-<td>The group that the researcher want to know something about</td>
-</tr>
-<tr class="even">
-<td>y</td>
-<td>A non-parametric test</td>
-</tr>
-<tr class="odd">
-<td>response variable</td>
-<td>The group that is used to infer about a larger group</td>
-</tr>
-<tr class="even">
-<td>explanatory variable</td>
-<td>The proposition that is likely an effect of the explanatory variable on the response variable</td>
-</tr>
-<tr class="odd">
-<td><em>z</em>-score</td>
-<td>A Romanized letter that usually stands for the response variable.</td>
-</tr>
-<tr class="even">
-<td>meu hat</td>
-<td>a single number that characterizes an aspect of a dataset</td>
-</tr>
-<tr class="odd">
-<td>sigma hat</td>
-<td>A range of values that is likely to contain the population value</td>
-</tr>
-<tr class="even">
-<td>alpha level</td>
-<td>The threshold below which the null hypothesis can be rejected</td>
-</tr>
-<tr class="odd">
-<td>null hypothesis</td>
-<td>A parametric test with a continuous response variable and a categorical variable with exactly two levels</td>
-</tr>
-<tr class="even">
-<td>alternative hypothesis</td>
-<td>A measure of how much uncertainty there is in the estimate of the sample mean</td>
-</tr>
-<tr class="odd">
-<td>normal distribution</td>
-<td>The proposition that there is no effect of the explanatory variable(s) on the response variable</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="t-test" class="level2">
-<h2 class="anchored" data-anchor-id="t-test"><em>t</em>-test</h2>
-<p>The response variable is continuous (aka. quantitative) and the explanatory variable is categorical with exactly two levels (aka. values or groups).</p>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
-<p>The distribution of the response is normal, and/or there are more than 30 data points in each level (aka. group) of the explanatory variable.</p>
-<p>The variances of the response variables in both levels of the explanatory are equal. However, this is often not the case and our new friend Mr.&nbsp;Welch proposed an adjustment that provides a correction for unequal variances. The default behavior of the <code>t.test()</code> in R (i.e., the <code>var.equal</code> argument) is to use Welch’s adjustment.</p>
-</section>
-<section id="one-tailed-or-two-tailed" class="level3">
-<h3 class="anchored" data-anchor-id="one-tailed-or-two-tailed">One-tailed or two-tailed</h3>
-<p>A one-tailed test should be used when the alternative hypothesis is directional, that is, it hypothesizes that the mean of one group is greater than the mean of the other group, or less than the other group. For example, the null and alternative hypotheses would look something like this:</p>
-<p><span class="math display">\[
-H_0:μ_A = μ_B
-\]</span> <span class="math display">\[
-H_a:μ_A&gt;μ_B
-\]</span></p>
-<p>We use a two-tailed t-test when our alternative hypothesis is not directional, that is, it hypothesizes that the mean of one group does not equal the mean of the other group, but it doesn’t say anything about direction. For example:</p>
-<p><span class="math display">\[
-H_0:μ_A = μ_B
-\]</span> <span class="math display">\[
-H_a:μ_A ≠ μ_B
-\]</span></p>
-</section>
-</section>
-<section id="wilcoxon-test" class="level2">
-<h2 class="anchored" data-anchor-id="wilcoxon-test">Wilcoxon test</h2>
-<p>When the data are not normally distributed (and you don’t have &gt;30 observations in each level of the categorical explanatory variable, so that you can use the t-test), the Wilcoxon test is the way to go. This test is also the way to go when you have ordinal data, like responses to a Likert-scale survey.</p>
-<p>The Wilcoxon test is apparently super similar to, or in most cases identifical to, the Mann-Whitney test; see <a href="https://stats.stackexchange.com/a/79849">Q&amp;A thread</a>. Our ol’ friend Jamovi has a check box for the “Mann-Whitney” test, while the function in R run these test is <code>wilcox.test()</code>.</p>
-</section>
-<section id="question" class="level2">
-<h2 class="anchored" data-anchor-id="question">Question</h2>
-<p>Let’s look at the speech rate in syllables per second of 25 Spanish speakers and 25 Italian speakers. First, let’s propose a null hypothesis and an alternative hypothesis. As we don’t have any previous information about the speech rate of Spanish and Italian speakers in comparison to each other, our alternative hypothesis will simply be “not equal to” rather than something directional like “greater than” or “less than”:</p>
-<p><span class="math display">\[
-H_0:μ_S=μ_I
-\]</span> <span class="math display">\[
-H_a:μ_S≠μ_I
-\]</span></p>
-<p>First, a good ol’ fashioned boxplot:</p>
+<section id="prep-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="prep-the-data">Prep the data</h2>
+<p>Download the CSV file from the CMS and update the working directory for your computer.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -554,129 +415,180 @@ H_a:μ_S≠μ_I
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>esit <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/ekb5/Documents/data_analysis/datasets/span_ital_speaking_rate.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ld <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/ekb5/Documents/data_analysis/datasets/lex_div_ELC.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Rows: 50 Columns: 3
+<pre><code>Rows: 4207 Columns: 25
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
-chr (1): language
-dbl (2): participant_ID, syllables
+chr (10): id, sem, test_type, timing, sem_yr, Sex, L1, country, L1_clean, L1...
+dbl (15): yr, n_wds, ttr, hdd, mtld, mattr, mtld_ma_w, mtld_ma_bid, root_ttr...
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> language, <span class="at">y =</span> syllables))<span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="t-test_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>The non-overlapping notches on the boxes suggest that the difference in the means of the two groups will likely be statistically significantly different.</p>
-<p>Enter an inferential statistical test.</p>
-<p>First, let’s see if the data points are normally distributed. A simple <a href="https://www.r-bloggers.com/2019/08/shapiro-wilk-test-for-normality-in-r/">Shapiro-Wilk normality test</a>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(language) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shapiro.test</span>(.<span class="sc">$</span>syllables) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ld)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-# Groups:   language [2]
-  language statistic p.value method                     
-  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                      
-1 Italian      0.971  0.663  Shapiro-Wilk normality test
-2 Spanish      0.926  0.0710 Shapiro-Wilk normality test</code></pre>
+<pre><code># A tibble: 6 × 25
+  id           yr sem   test_type timing n_wds   ttr   hdd  mtld mattr mtld_ma_w
+  &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+1 000305437  2020 Fall  LAT       10 mi…   130 0.5   0.723  43.3 0.717      40.5
+2 000305437  2020 Fall  LAT       30 mi…   384 0.353 0.773  51.4 0.722      51.0
+3 000305437  2020 Fall  Placement 10 mi…   147 0.707 0.864 108.  0.817     120. 
+4 000305437  2020 Fall  Placement 30 mi…   362 0.426 0.775  57.7 0.766      62.0
+5 000346838  2018 Fall  LAT       10 mi…   141 0.507 0.708  40.8 0.656      38.8
+6 000346838  2018 Fall  LAT       30 mi…   443 0.256 0.685  41.4 0.672      39.1
+# ℹ 14 more variables: mtld_ma_bid &lt;dbl&gt;, root_ttr &lt;dbl&gt;, log_ttr &lt;dbl&gt;,
+#   maas_ttr &lt;dbl&gt;, msttr &lt;dbl&gt;, sem_yr &lt;chr&gt;, Age &lt;dbl&gt;, Sex &lt;chr&gt;, L1 &lt;chr&gt;,
+#   FairAverage &lt;dbl&gt;, FitStat &lt;dbl&gt;, country &lt;chr&gt;, L1_clean &lt;chr&gt;,
+#   L1_final &lt;chr&gt;</code></pre>
 </div>
 </div>
-<p>Both <em>p</em>-values are above 0.05, so that’s good.</p>
-<p>Now, let’s also plot the distribution in a density plot:</p>
+</section>
+<section id="draw-some-scatterplots" class="level2">
+<h2 class="anchored" data-anchor-id="draw-some-scatterplots">Draw some scatterplots</h2>
+<p>Draw scatterplots of <em>FairAverage</em> by the predictor variables that are selected as significant in the linear regression below. The lexical diversity measurements were obtained with the <a href="https://pypi.org/project/lexical-diversity/">lexical_diversity</a> Python module.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(syllables, <span class="at">color =</span> language))<span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>predictors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"n_wds"</span>, <span class="st">"hdd"</span>, <span class="st">"mattr"</span>, <span class="st">"mtld_ma_bid"</span>, <span class="st">"log_ttr"</span>, <span class="st">"maas_ttr"</span>, <span class="st">"msttr"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (predictor <span class="cf">in</span> predictors) {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  p1 <span class="ot">&lt;-</span> ld <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(.data[[predictor]], FairAverage))<span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> lm)<span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(predictor)<span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p1)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="t-test_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="multicollinearity_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="multicollinearity_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="multicollinearity_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="multicollinearity_files/figure-html/unnamed-chunk-2-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="multicollinearity_files/figure-html/unnamed-chunk-2-5.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="multicollinearity_files/figure-html/unnamed-chunk-2-6.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="multicollinearity_files/figure-html/unnamed-chunk-2-7.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Not the prettiest (normal) density plots.</p>
-<p>And for good measure, let’s calculate the <a href="https://www.r-bloggers.com/2013/06/measures-of-skewness-and-kurtosis/">skewness</a> of each group:</p>
+</section>
+<section id="linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression">Linear regression</h2>
+<p>FairAverage is the response (aka. dependent or outcome) variable, and a bunch of lexical diversity measures (as well as text length as number of words) are explanatory (aka. independent or predictor) variables.</p>
+<p><strong>Question: How do the signs (i.e., positive or negative) of the coefficient estimates compare with the sign of the slopes of the regression lines in the scatterplots above?</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"moments"</span>, <span class="at">repos =</span> <span class="st">"http://rstudio.org"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: unable to access index for repository http://rstudio.org/src/contrib:
-  cannot open URL 'http://rstudio.org/src/contrib/PACKAGES'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'moments' is not available for this version of R
-
-A version of this package for your version of R might be available elsewhere,
-see the ideas at
-https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: unable to access index for repository http://rstudio.org/bin/macosx/big-sur-arm64/contrib/4.3:
-  cannot open URL 'http://rstudio.org/bin/macosx/big-sur-arm64/contrib/4.3/PACKAGES'</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(language) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>(</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    moments<span class="sc">::</span><span class="fu">skewness</span>(.<span class="sc">$</span>syllables) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>      broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: 'tidy.numeric' is deprecated.
-See help("Deprecated")
-
-Warning: 'tidy.numeric' is deprecated.
-See help("Deprecated")</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-# Groups:   language [2]
-  language      x
-  &lt;chr&gt;     &lt;dbl&gt;
-1 Italian  -0.216
-2 Spanish  -0.923</code></pre>
-</div>
-</div>
-<p>A good rule of thumb is that if the skewness score is between -0.5 and 0.5, the data is normal enough to continue with a parametric test.</p>
-<p>Because the Shapiro-Wilk gave us the green light to continue with a t-test, let’s go!</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>esit <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(syllables<span class="sc">~</span>language, <span class="at">data =</span> ., <span class="at">alternative =</span> <span class="st">"two.sided"</span>) <span class="ot">-&gt;</span> result</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(FairAverage <span class="sc">~</span> n_wds <span class="sc">+</span> ttr <span class="sc">+</span> hdd <span class="sc">+</span> mtld <span class="sc">+</span> mattr <span class="sc">+</span> mtld_ma_w <span class="sc">+</span> mtld_ma_bid <span class="sc">+</span> root_ttr <span class="sc">+</span> log_ttr <span class="sc">+</span> maas_ttr <span class="sc">+</span> msttr, <span class="at">data =</span> ld)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-    Welch Two Sample t-test
+Call:
+lm(formula = FairAverage ~ n_wds + ttr + hdd + mtld + mattr + 
+    mtld_ma_w + mtld_ma_bid + root_ttr + log_ttr + maas_ttr + 
+    msttr, data = ld)
 
-data:  syllables by language
-t = -6.34, df = 47.793, p-value = 7.695e-08
-alternative hypothesis: true difference in means between group Italian and group Spanish is not equal to 0
-95 percent confidence interval:
- -1.1748003 -0.6090245
-sample estimates:
-mean in group Italian mean in group Spanish 
-             7.013432              7.905345 </code></pre>
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.7226 -0.6490 -0.0980  0.5721  3.0593 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  4.580e+01  7.775e+00   5.891 4.14e-09 ***
+n_wds       -1.336e-03  4.044e-04  -3.304 0.000962 ***
+ttr         -1.953e+00  2.758e+00  -0.708 0.478987    
+hdd         -6.921e+00  1.135e+00  -6.096 1.19e-09 ***
+mtld        -4.367e-03  3.226e-03  -1.354 0.175841    
+mattr        3.260e+00  1.042e+00   3.129 0.001765 ** 
+mtld_ma_w   -1.060e-03  4.679e-03  -0.227 0.820737    
+mtld_ma_bid  1.078e-02  2.956e-03   3.646 0.000270 ***
+root_ttr     1.592e-01  9.488e-02   1.678 0.093359 .  
+log_ttr     -3.671e+01  1.061e+01  -3.459 0.000548 ***
+maas_ttr    -1.069e+02  1.093e+01  -9.778  &lt; 2e-16 ***
+msttr       -1.577e+00  7.211e-01  -2.187 0.028766 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9048 on 4195 degrees of freedom
+Multiple R-squared:  0.3051,    Adjusted R-squared:  0.3033 
+F-statistic: 167.4 on 11 and 4195 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result<span class="sc">$</span>stderr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m1)  <span class="co"># the lower the AIC, the better</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1406801</code></pre>
+<pre><code>[1] 11110.72</code></pre>
 </div>
 </div>
-<p>The <em>p</em>-value suggests that the mean speech rate of Spanish speakers is different from the mean speech rate of Italian speakers.</p>
-<section id="how-to-report-in-paper" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-report-in-paper">How to report in paper</h3>
-<p>“An independent two-tailed t-test compared the speech rate of Spanish speakers (n = 25) and Italian speakers (n = 25). We reject the null hypothesis and conclude that there is a signficant difference in speech rate between these two groups: t<sub>(47.793)</sub> = -6.34, p ≤ 0.001.”</p>
 </section>
+<section id="correlation-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="correlation-matrix">Correlation matrix</h2>
+<p>We can see the Pearson’s r correlation scores for all pairwise comparisons of the continuous variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>correlations <span class="ot">&lt;-</span> ld <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(n_wds, ttr, hdd, mtld, mattr, mtld_ma_w, mtld_ma_bid, root_ttr, log_ttr, maas_ttr, msttr) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(correlations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 n_wds         ttr        hdd       mtld      mattr  mtld_ma_w
+n_wds        1.0000000 -0.82953071  0.2298356  0.1372262  0.1450162  0.1982883
+ttr         -0.8295307  1.00000000  0.1977583  0.2465650  0.2462666  0.1992991
+hdd          0.2298356  0.19775826  1.0000000  0.8417526  0.8911481  0.8809807
+mtld         0.1372262  0.24656498  0.8417526  1.0000000  0.8699218  0.9324991
+mattr        0.1450162  0.24626656  0.8911481  0.8699218  1.0000000  0.8967546
+mtld_ma_w    0.1982883  0.19929915  0.8809807  0.9324991  0.8967546  1.0000000
+mtld_ma_bid  0.2616791  0.05079727  0.7622931  0.8237424  0.8495410  0.8884906
+root_ttr     0.5437391 -0.13775588  0.7889107  0.6664880  0.6906216  0.7342239
+log_ttr     -0.6879840  0.96178988  0.4145887  0.4171176  0.4351096  0.3874840
+maas_ttr     0.2622747 -0.70642548 -0.7608001 -0.6803896 -0.7259851 -0.6864229
+msttr        0.1849228  0.19003573  0.8642273  0.8439068  0.9006630  0.8589579
+            mtld_ma_bid   root_ttr    log_ttr   maas_ttr      msttr
+n_wds        0.26167910  0.5437391 -0.6879840  0.2622747  0.1849228
+ttr          0.05079727 -0.1377559  0.9617899 -0.7064255  0.1900357
+hdd          0.76229310  0.7889107  0.4145887 -0.7608001  0.8642273
+mtld         0.82374243  0.6664880  0.4171176 -0.6803896  0.8439068
+mattr        0.84954103  0.6906216  0.4351096 -0.7259851  0.9006630
+mtld_ma_w    0.88849056  0.7342239  0.3874840 -0.6864229  0.8589579
+mtld_ma_bid  1.00000000  0.7101344  0.2357790 -0.5257504  0.7830501
+root_ttr     0.71013441  1.0000000  0.1318997 -0.5725447  0.6848563
+log_ttr      0.23577898  0.1318997  1.0000000 -0.8644347  0.3775065
+maas_ttr    -0.52575043 -0.5725447 -0.8644347  1.0000000 -0.6747840
+msttr        0.78305011  0.6848563  0.3775065 -0.6747840  1.0000000</code></pre>
+</div>
+</div>
+</section>
+<section id="correlation-plot" class="level2">
+<h2 class="anchored" data-anchor-id="correlation-plot">Correlation plot</h2>
+<p>Visualizing a correlation matrix can be helpful.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>corrplot<span class="sc">::</span><span class="fu">corrplot</span>(correlations, <span class="at">type =</span> <span class="st">"lower"</span>, <span class="at">diag =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multicollinearity_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="enter-vifs" class="level2">
+<h2 class="anchored" data-anchor-id="enter-vifs">Enter VIFs</h2>
+<p>Variance Inflation Factors (VIFs) report how much multicollinearity there is associated with each explanatory variable in a regression model. In other words, “these measure the degree to which one predictor can be accounted for by the other predictors” (Winter 2020, p.&nbsp;114). There are different rules of thumbs about the threshold above which a VIF should not exceed. See p.&nbsp;160 of Levshina (2015) <a href="https://lib.byu.edu/search/byu/record/cat.6905833.item.6905833-2001?holding=wiaijfm75jgyaw81">here</a> and p.&nbsp;114 of Winter (2020) <a href="https://lib.byu.edu/search/byu/record/cat.7111770.item.7111770-1001?holding=2q5ym7r6fjay3ym1">here</a>. The <em>car</em> R package has a <a href="https://www.rdocumentation.org/packages/car/versions/3.1-1/topics/vif"><em>vif()</em></a> function to get VIFs. (There are other packages that have functions to get VIFs, for example, <a href="https://www.rdocumentation.org/packages/regclass/versions/1.6/topics/VIF">regclass::VIF()</a> and <a href="https://olsrr.rsquaredacademy.com/reference/ols_coll_diag.html">olsrr::ols_vif_tol()</a>.)</p>
+<p><strong>Question: How do the VIF scores in our linear regression compare to the proposed thresholds mentioned by Levshina and Winter?</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">vif</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      n_wds         ttr         hdd        mtld       mattr   mtld_ma_w 
+  13.268787  411.109798   10.953516    8.572724   11.686276   16.902308 
+mtld_ma_bid    root_ttr     log_ttr    maas_ttr       msttr 
+   7.463975   42.139729  520.055206   60.315979    6.278952 </code></pre>
+</div>
+</div>
 </section>
 <section id="activity" class="level2">
 <h2 class="anchored" data-anchor-id="activity">Activity</h2>
-<p>Your turn! Use a dataset of your choice and see if there is a statistical difference between the means of a continuous variable based on two categories in a categorical variable.</p>
+<p>Through trial and error, choose predictor variables to remove in order to reduce the VIFs. Refit a linear regression each time you remove a predictor and compare the (adjusted) R<sup>2</sup> values of new models with the original model (the bigger, the better) and AIC scores (the lower, the better), and also get new VIF scores.</p>
 
 
 </section>

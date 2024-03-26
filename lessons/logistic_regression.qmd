@@ -1,0 +1,138 @@
+---
+title: "Logistic regression"
+---
+
+## Objective
+
+Students will fit a logistic regression model.
+
+## Background
+
+When your response variable is categorical with exactly two levels or groups (aka. a binary response variable), logistic regression is your go-to regression analysis.
+
+## Assumptions
+
+1.  The observations are independent of each other. If not, mixed-effect logistic regression (aka. mixed-effects generalized linear regression) is what you should use with random effects to account for the hierarchical nature of the data.
+
+2.  The continuous explanatory variables are (generally) linear.
+
+3.  There's no multicollinearity between the explanatory variables.
+
+## How many observations
+
+Levshina (2015, p. 257) mentions different rules of thumb for a minimum number of observations in order to fit a logistic regression. One is that the number of explanatory variables should not be larger than a tenth of the number of observations. So, we only really need to worry about this when we have few tokens and/or many explanatory variables.
+
+## Terms
+
+Here are some terms about come up a lot in the context of logistic regression (see Levshina 2015, p. 261).
+
+-   **odds**: simple division of one number divided by another number. For example, in the `doenLaten` dataset in the `Rling` package, there are 178 tokens (aka. observations) of `doen` and 277 tokens of `laten`, so the odds of `doen` to `laten` is $178/277≃0.64$.
+-   **probability**: one number divided by the total N, expressed as a proportion (between 0 and 1) or as a percentage (between 0% and 100%). For example, the probability of `doen` is $178/455≃0.39$ as a proportion, or $39\%$ as a percentage.
+-   **log odds** (aka. **logit**): this is simply the natural logarithm of **odds** above, which we can calculate with the `log()` function. The opposite of `log()` is the exponent, which is calculated with `exp()`.
+-   **odds ratio**: the simple ratio of two **odds**.
+-   **log odds ratio**: the natural logarithm of **odds ratio**.
+
+## Dataset
+
+Let's get the Dutch causative auxiliaries dataset with *doen* and *laten* (similar to English *make/have/get/cause X (to) do Y*), presented in Levshina (2015) chapter 12. First, let's download two packages, one with the dataset and another with a function for logistic regression.
+
+```{r}
+#| eval: false
+install.packages("Rling", repos = "http://rstudio.org")
+install.packages("rms", repos = "http://rstudio.org")
+```
+
+Now, let's load in the dataset:
+
+```{r}
+library("Rling")
+data("doenLaten")
+```
+
+Let's look at the documentation for the dataset:
+
+```{r}
+# at the console
+?doenLaten
+```
+
+There are two (popular) functions to fit logistic regression. Here we go!
+
+## Functions
+
+### `glm()` in base R
+
+The base R function [`glm()`](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/glm) is a Swiss-army knife function which can do logistic regression if you specify `family = binomial` in the call. (BTW, It can also do linear regression with `family = gaussian` and other types of regression. See the docs: `?glm`)
+
+Let's fit a logistic regression with the `doenLaten` dataset, with `Aux` as the response variable (which has two levels: `doen` and `laten`), and three categorical explanatory variables:
+
+```{r}
+library(tidyverse)
+m1 <- glm(Aux ~ Causation + EPTrans + Country, data = doenLaten, family = binomial)
+summary(m1)
+```
+
+First, the intercept estimate, which is given as the log odds of the second level of the response variable (i.e., `doen`) in comparison to the reference level (i.e., `laten`), when the categorical explanatory variables have their reference level and when continuous explanatory variables are zero. So, in this case, the log odds that `doen` is used is $1.8631$ when the `Causation` is `Affective`, the `EPTrans` (i.e., effected predicate) is `Intr` (i.e., intransitive), and `Country` is `NL` (i.e., Netherlands).
+
+If we remember that the opposite of the natural logarithm is the exponent, we can get the odds with `exp(1.8631)`, which gives us $≃6.44$. So, `doen` is 6.44 times more likely than `laten` with affective causation and intransitive effected predicates in the Netherlands.
+
+If we're not sure which is the second level and which is the reference level (first listed), we can use:
+
+```{r}
+levels(doenLaten$Aux)
+```
+
+Let's turn to the coefficients for the three categorical explanatory variables. The reference level of each isn't listed, and the other levels that are listed are compared to that unlisted reference level. This is called treatments contrasts (like with linear regression). The coefficients below the Estimate column are log odds ratio. So, for example, the log odds ratio for `doen` in comparison to `laten` in Belgium is $0.7085$. If we take the exponent of this number:
+
+```{r}
+exp(0.7085)
+```
+
+we end up with $2.030943$. So, the likelihood of `doen` instead of `laten` in Belguim is more than 2 times higher than in the Netherlands when all other variables are held constant.
+
+Looking at *p*-values as well as the polarity (i.e., positive or negative signs) of the `Causation` coefficients, there is **no** significant difference (*p*-value = 0.457575) between the effect of `Physical` and `Affective` on `doen` and `laten` usage. Differently, `Inducive` and `Volitional` cause for less `doen` than `Affective`, given their negative coefficients and *p*-values below 0.05.
+
+### `lrm()` in `rms` package
+
+Another function to perform logistic regression is the `lrm()` in the `rms` package. It gives more results than the `glm()` function in base R. Let's go!
+
+```{r}
+suppressPackageStartupMessages(library(rms))
+m2 <- lrm(Aux ~ Causation + EPTrans + Country, data = doenLaten)
+m2 # no need to call summary()
+```
+
+The only thing Dr. Brown wants to point out is a goodness-of-fit statistic under Rank Discrimination Index: the concordance index *C*. In this case, we get a *C* value of $0.894$. Levshina (2015, p. 259) gives the following table to know how to interpret *C* values:
+
+| Concordance index | Descriptor                 |
+|-------------------|----------------------------|
+| *C* = 0.5         | no discrimination          |
+| 0.7 ≤ *C* \< 0.8  | acceptable discrimination  |
+| 0.8 ≤ *C* \< 0.9  | excellent discrimination   |
+| *C* ≥ 0.9         | outstanding discrimination |
+
+: concordance index
+
+So, this logistic regression model has "excellent discrimination" (see [this Q&A thread](https://stats.stackexchange.com/a/215627) about goodness-of-fit metrics).
+
+## Activity
+
+Load up the `regularity` dataset in the `languageR` package:
+
+```{r}
+library("languageR")
+data("regularity")
+?regularity
+```
+
+The dataset has 13 columns, including `Regularity`, which indicates whether the verb is `regular` or `irregular`. Using that column as the response variable, fit a logistic regression model with the explanatory variables that you feel might affect whether a verb is regular or irregular.
+
+After a good-faith effort, if you need some help, take a look at Dr. Brown's code below:
+
+```{r}
+#| eval: false
+#| code-fold: true
+library("rms")
+m3 <- lrm(Regularity ~ WrittenFrequency + Auxiliary + LengthInLetters + FamilySize, data = regularity)
+m3
+```
