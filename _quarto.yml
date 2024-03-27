@@ -52,6 +52,7 @@ website:
           - lessons/transform.qmd
           - lessons/multicollinearity.qmd
           - lessons/logistic_regression.qmd
+          - lessons/mixed-effects-linear.qmd
 format:
   html:
     theme: cosmo

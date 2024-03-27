@@ -1,0 +1,103 @@
+---
+title: "Mixed-effects linear regression"
+---
+
+# Random effects
+
+Random effects in a linear regression model control for the variability attributable to the specific members of a population that happened to be selected for our random sample. To take an example, let's say we have a dataset of 2,500 tokens of word durations that were extracted from the speech of six speakers. Each speaker contributed several hundreds tokens of word durations. A handful of predictor variables have been shown in the literature to affect word durations:
+
+-   word length: longer words take longer to articulate
+-   frequency: more frequent words are generally spoken quicker
+-   speech rate: when a speaker is speaking quickly at a given point in a conversation, their words will have shorter durations
+-   position near the end of the utterance: speech rate at the end of utterances usually slows down
+-   previous mention: words previously spoken in a conversation are usually spoken quicker than first mentions<br>
+
+In addition to those predictor variables, we should also control for that fact that not all speakers talk at the same speed. Some speakers talk faster than others, and some speakers are painfully slow with their speech. It could be the case that Bobby is simply a slow speaker, while Luisa is a fast talker, and as such, Bobby's word durations are longer overall while Luisa's are shorter when compared to the other speakers in the dataset.
+
+To summarize, random effects help us control for the variability in the response variable that is attributable to the individuals sampled from the population, before measuring the effect, if any, from the explanatory variables in the model.
+
+The non-random effect explanatory variables are called fixed effects.
+
+# Word durations
+
+Let's look at a sample of word durations from the [Buckeye Corpus of English](https://buckeyecorpus.osu.edu/). The "Word_dur_Buckeye.csv" file in the CMS has all word durations of content words spoken by six speakers (from among the total 40 speakers in the corpus). The dataset has the following columns:
+
+-   file: the filename that acts as an ID of the speaker
+-   wd: orthographic representation of the word
+-   wd_dur: duration of the word in seconds
+-   segments: the sound segments actually pronounced (phonetic representation, not phonemic)
+-   n_segments: word length as the number of segments pronounced
+-   n_syl: word length as the number of syllables
+-   pos: part-of-speech tag
+-   spch_rate: speech rate in segments per second of the part of the utterance from after the word to the end of the utterance
+-   wd_freq: word frequency from the [OpenSubtitles](https://opus.nlpl.eu/OpenSubtitles-v2018.php) English data dump (only 1991-2000) as a Laplace smoothed numbers (see [here](https://link.springer.com/article/10.3758/s13428-012-0270-5))
+-   dist_end_iu: the distance in number of words that the word falls from the end of the utterance
+-   pre_mention: whether the word was previously mentioned in the conversation ("yes" or "no")
+
+# Load dataset
+Let's load the dataset and print the first six rows (the default quantity of [head()](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/head)).
+```{r}
+library("tidyverse")
+buck <- read_csv("/Users/ekb5/Documents/data_analysis/datasets/Word_dur_Buckeye.csv")
+head(buck)
+```
+
+Let control for capitalization of words by uppercasing (v.) the words, and then printing the first six rows.
+```{r}
+buck <- buck %>% 
+  mutate(wd = str_to_upper(wd))
+head(buck)
+```
+
+# With random intercepts
+Let's fit a linear regression with random intercepts for speaker and for word, that is, a unique intercept for each speaker and a unique intercept for each word.
+```{r}
+m1 <- lmerTest::lmer(wd_dur ~ n_segments + spch_rate + wd_freq + dist_end_iu + pre_mention + (1 | file) + (1 | wd), data = buck)
+summary(m1)
+```
+
+We get a warning message stating that the scales of some of the continuous predictor variables are on very different scales and that we should consider rescaling. Let's take a look at summary information about all columns.
+```{r}
+buck %>% 
+  purrr::map(summary)
+```
+
+
+In general, it's a good idea to use z-scores of continuous variables by using [scale()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scale). It comes at the cost of losing some of the interpretability, as all we can really say is whether there is a significant effect, and if so, in what direction.<br><br>
+Let's scale all the continuous variables and rerun the regression.
+```{r}
+m2 <- lmerTest::lmer(scale(wd_dur) ~ scale(n_segments) + scale(spch_rate) + scale(wd_freq) + scale(dist_end_iu) + pre_mention + (1 | file) + (1 | wd), data = buck)
+summary(m2)
+```
+
+Let's look at how much variability in the response variable (i.e., wd_dur) is accounted for by both the random effects and the fixed effects (i.e., conditional $R^{2}$) and how much is accounted for by only the fixed effects (i.e., mariginal $R^{2}$) with [performance::r2_nakagawa()](https://www.rdocumentation.org/packages/performance/versions/0.5.0/topics/r2_nakagawa).
+```{r}
+# install.packages("performance")  # if needed, run this line first
+performance::r2_nakagawa(m2)
+```
+
+# Without random intercepts
+For comparison purposes, let's fit a linear regression model without any random effects. Compare the $R^{2}$ in this model with the marginal $R^{2}$ in the mixed-effects model above.
+```{r}
+m3 <- lm(scale(wd_dur) ~ scale(n_segments) + scale(spch_rate) + scale(wd_freq) + scale(dist_end_iu) + pre_mention, data = buck)
+summary(m3)
+```
+
+# Random slopes and intercepts
+In addition to allowing for different intercepts for the specific individuals selected from the population (e.g., speakers, word), you can also allow a linear model to fit different slopes for the individuals. Let's rerun our mixed-effects model from above (i.e., 'm2'), but this time with random slopes on a fixed effect variable of our interest.
+```{r}
+m4 <- lmerTest::lmer(scale(wd_dur) ~ scale(n_segments) + scale(spch_rate) + scale(wd_freq) + scale(dist_end_iu) + pre_mention + (1 + n_segments | file) + (1 + n_segments | wd), data = buck)
+summary(m4)
+performance::r2_nakagawa(m4)
+```
+
+We get a warning message stating that our model suffers from singularity. This is often the case when one of our random effects has at least one level that only has only one token. Let's see if we can resolve this warning by removing the random slope on word, but keeping in the random intercept.
+```{r}
+m4 <- lmerTest::lmer(scale(wd_dur) ~ scale(n_segments) + scale(spch_rate) + scale(wd_freq) + scale(dist_end_iu) + pre_mention + (1 + n_segments | file) + (1 | wd), data = buck)
+summary(m4)
+performance::r2_nakagawa(m4)
+```
+Sure enough, that resolved the singularity warning message.<br><br>
+As you can now see, by adding random slopes to the speakers, our marginal $R^{2}$ value increases, indicating that allowing the slopes to vary by speaker allows the fixed effect n_segment to better fit the data point.<br><br>
+[Here](https://stats.stackexchange.com/a/31634)'s a good explanation of how to understand random slopes.
+**Takehome message**: It's best to specify both random intercepts and slopes as they allow the model to better fit the data. However, it can often happen that you get a singularity warning with a random slope that has few tokens, and in that case, keeping only the random intercept is necessary.
