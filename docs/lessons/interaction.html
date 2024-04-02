@@ -636,24 +636,24 @@ lm(formula = n_regionalisms ~ age_group + sex + age_group:sex,
 
 Residuals:
    Min     1Q Median     3Q    Max 
- -5.46  -3.16  -0.17   2.82   5.68 
+ -5.78  -2.40  -0.40   2.90   5.60 
 
 Coefficients:
                         Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)              24.3200     0.4575  53.156  &lt; 2e-16 ***
-age_groupyoung           -8.8600     0.6470 -13.693  &lt; 2e-16 ***
-sexwomen                 -4.1600     0.6470  -6.429 9.56e-10 ***
-age_groupyoung:sexwomen  -1.1200     0.9150  -1.224    0.222    
+(Intercept)              24.4000     0.4323  56.448  &lt; 2e-16 ***
+age_groupyoung           -9.6000     0.6113 -15.704  &lt; 2e-16 ***
+sexwomen                 -4.3000     0.6113  -7.034 3.27e-11 ***
+age_groupyoung:sexwomen   0.2800     0.8645   0.324    0.746    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 3.235 on 196 degrees of freedom
-Multiple R-squared:  0.7307,    Adjusted R-squared:  0.7266 
-F-statistic: 177.3 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 3.057 on 196 degrees of freedom
+Multiple R-squared:  0.7447,    Adjusted R-squared:  0.7408 
+F-statistic: 190.6 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1043.167</code></pre>
+<pre><code>[1] 1020.444</code></pre>
 </div>
 </div>
 <p>The interaction term was <strong>not</strong> selected as making a significant contribution to the prediction of the number of regionalisms in this second set of fictitious data.</p>

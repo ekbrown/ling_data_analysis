@@ -209,4 +209,4 @@ temp_df %>%
 
 Uh-oh! We have a stubby American-football-shaped cluster of dots. This suggest heteroscedasticity.
 
-As a redemy, we would need to use a bootstrapping approach, which is a topic for another day. See Dr. Brown article in [*Language Variation and Change*](https://doi.org/10.1017/S0954394523000157).
+As a remedy, we would need to use a bootstrapping approach, which is a topic for another day. See Dr. Brown's article in [*Language Variation and Change*](https://doi.org/10.1017/S0954394523000157).
