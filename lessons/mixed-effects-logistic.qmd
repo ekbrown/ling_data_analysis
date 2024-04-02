@@ -1,5 +1,5 @@
 ---
-title: "mixed-effects-logistic"
+title: "Mixed-effects logistic regression"
 ---
 
 ## Objective
