@@ -53,6 +53,8 @@ website:
           - lessons/multicollinearity.qmd
           - lessons/logistic_regression.qmd
           - lessons/mixed-effects-linear.qmd
+          - lessons/regression_assumptions.qmd
+          - lessons/mixed-effects-logistic.qmd
 format:
   html:
     theme: cosmo

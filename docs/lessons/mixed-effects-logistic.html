@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - ANOVA</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - mixed-effects-logistic</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -95,8 +95,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -110,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/anova.html">ANOVA</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/mixed-effects-logistic.html">mixed-effects-logistic</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -313,7 +311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/anova.html" class="sidebar-item-text sidebar-link active">
+  <a href="../lessons/anova.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ANOVA</span></a>
   </div>
 </li>
@@ -367,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/mixed-effects-logistic.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/mixed-effects-logistic.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">mixed-effects-logistic</span></a>
   </div>
 </li>
@@ -384,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
-  <li><a href="#whats-in-a-name" id="toc-whats-in-a-name" class="nav-link" data-scroll-target="#whats-in-a-name">What’s in a name?</a></li>
+  <li><a href="#logistic-regression-with-random-effects" id="toc-logistic-regression-with-random-effects" class="nav-link" data-scroll-target="#logistic-regression-with-random-effects">Logistic regression with random effects</a></li>
   <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
   </ul>
 </nav>
@@ -394,7 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ANOVA</h1>
+<h1 class="title">mixed-effects-logistic</h1>
 </div>
 
 
@@ -409,120 +407,116 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="objective" class="level3">
-<h3 class="anchored" data-anchor-id="objective">Objective</h3>
-<p>Students perform an ANOVA analysis and interpret the results.</p>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">Objective</h2>
+<p>Students fit a mixed-effects logistic regression model.</p>
 </section>
-<section id="whats-in-a-name" class="level2">
-<h2 class="anchored" data-anchor-id="whats-in-a-name">What’s in a name?</h2>
-<p><a href="http://www.sthda.com/english/wiki/one-way-anova-test-in-r">ANOVA</a> stands for <u><strong>An</strong></u>alysis <u><strong>o</strong></u>f <u><strong>Va</strong></u>riance. It’s very much like the <em>t</em>-test and Wilcoxon test, but with three or more levels (aka. groups) in the categorical variable.</p>
-<table class="table">
-<colgroup>
-<col style="width: 37%">
-<col style="width: 62%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><strong><em>t</em>-test or Wilcoxon test</strong></td>
-<td><strong>ANOVA</strong></td>
-</tr>
-<tr class="even">
-<td>old v. young</td>
-<td>old v. middle age v. young</td>
-</tr>
-<tr class="odd">
-<td>women v. men</td>
-<td>women v. men. v. kids</td>
-</tr>
-<tr class="even">
-<td>Mandarin v. Cantonese</td>
-<td>Mandarin v. Cantonese v. Wu v. Hokkien v. Gan v. Hunanese</td>
-</tr>
-</tbody>
-</table>
-<p>An ANOVA calculates an <em>F</em> statistic which, at a high level is calculated with the following formula:</p>
-<p><span class="math display">\[
-\frac{variation\ between\ groups}{variation\ within\ groups}
-\]</span></p>
-<p>The hypotheses are:</p>
-<p><span class="math display">\[
-H_0:μ_1=μ_2=μ_3...=μ_n
-\]</span></p>
-<p><span class="math display">\[
-H_a:At\ least\ one\ of\ the\ groups\ is\ different\ from\ the\ others.
-\]</span></p>
+<section id="logistic-regression-with-random-effects" class="level2">
+<h2 class="anchored" data-anchor-id="logistic-regression-with-random-effects">Logistic regression with random effects</h2>
+<p>As we saw in a <a href="https://ekbrown.github.io/ling_data_analysis/lessons/mixed-effects-linear.html">previous lesson</a>, random effects control for the variability in the response variable that comes from the individual members of a population that we happen to get into our sample. The <code>lme4</code> R package has a <a href="https://www.rdocumentation.org/packages/lme4/versions/1.1-35.1/topics/glmer"><code>glmer()</code></a> function that can be used to fit a mixed-effects logistic regression when you specify `family = “binomial”`.</p>
+<p>Let’s take a look at a dataset used to write <a href="https://doi.org/10.1515/cllt-2020-0016">an article</a> about the effect of fast speech on word durations and the durations of the /s/ segment in a sample of Colombian Spanish. It’s named “Dataset_fast_spch_Colombia.xlsx” and is in the LMS.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(<span class="st">"tidyverse"</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(<span class="st">"lme4"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>colombia <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/ekb5/Documents/LING_440/datasets/Dataset_fast_spch_Colombia.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"dataset"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># make the response variable a factor</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>colombia <span class="ot">&lt;-</span> colombia <span class="sc">%&gt;%</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pronunciation =</span> <span class="fu">as.factor</span>(pronunciation))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"joeysvowels"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>front_vowels <span class="ot">&lt;-</span> joeysvowels<span class="sc">::</span>midpoints <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(vowel <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TRAP"</span>, <span class="st">"FACE"</span>, <span class="st">"DRESS"</span>, <span class="st">"FLEECE"</span>, <span class="st">"KIT"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dur =</span> end <span class="sc">-</span> start)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>front_vowels <span class="sc">%&gt;%</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> vowel, <span class="at">y =</span> dur))<span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Notch went outside hinges
-ℹ Do you want `notch = FALSE`?</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="anova_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Those notches are trying to tell a story, amirite?!</p>
-<p>Let’s see what an ANOVA says:</p>
+<p>In order to make sure we understand what the coefficients in the Estimate column mean in the regression results below, let’s print out the levels of the response variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>front_vowels <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aov</span>(dur<span class="sc">~</span>vowel, <span class="at">data =</span> .) <span class="ot">-&gt;</span> result</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(colombia<span class="sc">$</span>pronunciation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)    
-vowel         4 0.2875 0.07188   31.23 &lt;2e-16 ***
-Residuals   211 0.4856 0.00230                   
+<pre><code>[1] "deleted"    "maintained"</code></pre>
+</div>
+</div>
+<p>So, because the second level (i.e., <code>maintained</code>) is compared to the first (i.e., <code>deleted</code>), positive coefficients in the Estimate column mean that <code>maintained</code> is favored, while negative coefficients in that column mean that <code>deleted</code> is favored.</p>
+<p>Let’s fit a mixed-effects logistic regression model!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### generalized linear regression (aka. logistic regression)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>in_formula <span class="ot">&lt;-</span> <span class="fu">formula</span>(pronunciation <span class="sc">~</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            (<span class="dv">1</span> <span class="sc">|</span> file) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> wd) <span class="sc">+</span> <span class="co"># random effects (intercepts only)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            frc <span class="sc">+</span> <span class="co"># fixed effects</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            spch_rate <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            wd_freq <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            pre_sound <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            wd_len <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            position)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> lme4<span class="sc">::</span><span class="fu">glmer</span>(<span class="at">formula =</span> in_formula, <span class="at">data =</span> colombia, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">control=</span><span class="fu">glmerControl</span>(<span class="at">optimizer=</span><span class="st">"bobyqa"</span>, <span class="at">optCtrl=</span><span class="fu">list</span>(<span class="at">maxfun=</span><span class="fl">2e4</span>)))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: pronunciation ~ (1 | file) + (1 | wd) + frc + spch_rate + wd_freq +  
+    pre_sound + wd_len + position
+   Data: colombia
+Control: glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 20000))
+
+     AIC      BIC   logLik deviance df.resid 
+  1090.6   1147.5   -534.3   1068.6     1293 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-5.0170  0.0796  0.2026  0.5487  2.9414 
+
+Random effects:
+ Groups Name        Variance Std.Dev.
+ wd     (Intercept) 0.78330  0.8850  
+ file   (Intercept) 0.05723  0.2392  
+Number of obs: 1304, groups:  wd, 159; file, 8
+
+Fixed effects:
+                       Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)            -1.15826    0.61119  -1.895  0.05808 .  
+frc                     0.99993    0.33039   3.027  0.00247 ** 
+spch_rate              -0.02254    0.08113  -0.278  0.78116    
+wd_freq                 0.10580    0.05335   1.983  0.04735 *  
+pre_soundpause          0.67143    1.07899   0.622  0.53376    
+wd_len                 -0.09870    0.08373  -1.179  0.23848    
+positionwd_ini          2.57585    0.46539   5.535 3.11e-08 ***
+positionwd_med_syl_fin  1.93652    0.44308   4.371 1.24e-05 ***
+positionwd_med_syl_ini  2.47641    0.35902   6.898 5.29e-12 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+                (Intr) frc    spch_r wd_frq pr_snd wd_len pstnw_
+frc             -0.388                                          
+spch_rate       -0.045  0.044                                   
+wd_freq         -0.580 -0.167  0.039                            
+pre_soundps      0.002  0.015 -0.007 -0.014                     
+wd_len          -0.135  0.103 -0.057 -0.572  0.005              
+positinwd_n     -0.284 -0.022 -0.011  0.123 -0.184  0.109       
+pstnwd_md_syl_f -0.105 -0.067  0.017  0.152 -0.005 -0.167  0.144
+pstnwd_md_syl_n -0.069 -0.093 -0.012  0.035 -0.006 -0.028  0.181
+                pstnwd_md_syl_f
+frc                            
+spch_rate                      
+wd_freq                        
+pre_soundps                    
+wd_len                         
+positinwd_n                    
+pstnwd_md_syl_f                
+pstnwd_md_syl_n  0.179         </code></pre>
 </div>
-</div>
-<p>Okay, the ANOVA feels that there is something goin’ on here. Just look at that <em>p</em>-value well below 0.05. But, the immediate follow-up question is which groups are significantly different from other groups.</p>
-<p>Enter the post-hoc test. Actually, there are quite a few post-hoc test, but we’ll use the Tukey Honest Significant Difference post-hoc test (because that’s what Dr.&nbsp;Brown sees a lot in publications):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2_nakagawa</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  Tukey multiple comparisons of means
-    95% family-wise confidence level
+<pre><code># R2 for Mixed Models
 
-Fit: aov(formula = dur ~ vowel, data = .)
-
-$vowel
-                     diff         lwr          upr     p adj
-FACE-TRAP    -0.016746918 -0.04303958  0.009545744 0.4042499
-DRESS-TRAP   -0.076731562 -0.10441226 -0.049050863 0.0000000
-FLEECE-TRAP  -0.022437110 -0.05725583  0.012381610 0.3920587
-KIT-TRAP     -0.084665180 -0.10918029 -0.060150069 0.0000000
-DRESS-FACE   -0.059984644 -0.08942775 -0.030541539 0.0000006
-FLEECE-FACE  -0.005690191 -0.04192579  0.030545407 0.9927010
-KIT-FACE     -0.067918262 -0.09440724 -0.041429282 0.0000000
-FLEECE-DRESS  0.054294452  0.01703945  0.091549460 0.0007958
-KIT-DRESS    -0.007933618 -0.03580086  0.019933621 0.9352192
-KIT-FLEECE   -0.062228070 -0.09719527 -0.027260869 0.0000190</code></pre>
+  Conditional R2: 0.491
+     Marginal R2: 0.361</code></pre>
 </div>
 </div>
-<p>Simple enough. The <em>p</em>-value tell of which pairwise comparisons are statistically significantly different from each other.</p>
 </section>
 <section id="activity" class="level2">
 <h2 class="anchored" data-anchor-id="activity">Activity</h2>
-<p>Your turn! Find a dataset of your choice and load it up, and find a continuous variable and a categorical variable with at least three levels, and … you guessed, run an ANOVA.</p>
+<p>Run the above code to fit a mixed-effects logistic regression.</p>
 
 
 </section>

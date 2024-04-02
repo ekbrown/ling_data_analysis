@@ -1,0 +1,212 @@
+---
+title: "Regression assumptions"
+---
+
+## Objective
+
+Students will check three assumptions of regression analysis.
+
+## Assumptions
+
+As mentioned in our lesson on [linear regression](https://ekbrown.github.io/ling_data_analysis/lessons/linear_regression.html#assumptions-of-linear-regression), Levshina (2015, ch. 7) presents seven assumptions of linear regression. In this lesson, we'll look at three assumptions in detail:
+
+1.  There shouldn't be any multicollinearity of explanatory variables.
+
+2.  The residuals should be normally distributed, with a mean of zero.
+
+3.  The residuals of the model should vary constantly.
+
+## No multicollinearity of explanatory variables
+
+Multicollinearity refers to when two or more explanatory variables are correlated with each other. What that means is whether one explanatory variable can be predicted by one or more other variables. Multicollinearity is a problem for regression analysis and should be addressed. Fixing that problem may include removing one or more correlated variables, or using a multidimensional reduction algorithm like Principal Components Analysis. That's a topic for another lesson.
+
+Getting back to simply detecting the level of multicollinearity, if any, that is present among explanatory variables, as presented in the [previous lesson](https://ekbrown.github.io/ling_data_analysis/lessons/multicollinearity.html#enter-vifs), we can use Variance Inflation Factors (VIF). Different rules of thumb exist about the threshold below which VIFs should be in order to trust the results of a regression model. Levshina (2015, p. 160) mentions that some researchers propose 10 as the threshold, while other researchers propose a stricter threshold of 5. Winter (2019, p. 114) mentions that he has used 3 or 4 in previous studies as the threshold.
+
+Let's load up the dataset created by Dr. Brown to write [this article](https://doi.org/10.1017/S0954394523000157) about the effect of cumulative exposure to fast speech on the duration of words in English, as seen in the [Buckeye Corpus](https://buckeyecorpus.osu.edu/). First, let's make sure we have the third-party R packages that we'll need:
+
+```{r}
+#| eval: false
+install.packages(c("readxl", "car", "lme4", "lmerTest", "performance", "Matrix", "moments", "MASS"), repos = "http://cran.rstudio.com/")
+```
+
+Now, download the "dataset_FRC_Buckeye.xlsx" from the LMS and load it up into our R session:
+
+```{r}
+library("readxl")
+buck <- read_excel("/Users/ekb5/Documents/LING_440/datasets/dataset_FRC_Buckeye.xlsx", sheet = "dataset")
+```
+
+Now, let's fit a mixed-effects linear regression:
+
+```{r}
+#| eval: true
+library("lmerTest")
+m1 <- lmerTest::lmer(
+    scale(wd_dur) ~  # use the raw word durations
+      scale(n_phon)+
+      scale(log(wd_freq))+
+      scale(spch_rate)+  
+      scale(frc)+
+      scale(frc):scale(log(wd_freq))+  # interaction term
+      scale(forw_predict)+
+      pre_mention+
+      scale(dist_end_iu)+
+      scale(iu_len_wds)+
+      scale(back_predict)+
+      scale(frc):scale(wd_freq)+  # interaction term
+      (1 + frc | file) +  
+      (1 | wd_upper),
+    control = lmerControl(optimizer ="optimx", calc.derivs = F, optCtrl = list(method = "nlminb", starttests = F, kkt = F)),
+    data = buck)
+```
+
+Now, let's check the level of multicollinearity of the explanatory variables. First, we'll need to remove the interaction terms in the model and then ask for the VIFs:
+
+```{r}
+library("tidyverse")
+m1 %>% 
+  # remove interaction terms before getting VIFs
+  update(~. - scale(log(wd_freq)):scale(frc)) %>%
+  update(~. - scale(frc):scale(wd_freq)) %>% 
+  # calculate VIFs
+  car::vif() 
+```
+
+Marvelous! All the VIFs are below the thresholds mentioned above. If this were not the case, we'd need to inspect the explanatory variables in details to figure out if we would be justified in removing the variable with the highest VIF, or somehow combining it with another variable. If that's not possible, we might look into Principal Components Analysis.
+
+## Residuals should be normally distributed
+
+The next assumption of regression analysis that we'll check here is whether the residuals are normally distributed. Let's try three different things to determine this.
+
+First, a histogram of the residuals:
+
+```{r}
+library("tidyverse")
+tibble(our_residuals = residuals(m1)) %>% 
+  ggplot(aes(our_residuals))+
+  geom_histogram()
+```
+
+Talk about right skew, amirite?! Yeah, from just the histogram we can safely say that the residuals are **not** normally distributed. But for good measure, let's calculate the skewness score for the residuals. Skewness is a measure of how symmetrical a distribution is, not necessary a measure of normality (e.g., a perfectly symmetrical bimodal distribution would have a skewness score of 0):
+
+```{r}
+m1 %>% 
+  residuals() %>% 
+  moments::skewness()
+```
+
+The rule of thumb that was taught to Dr. Brown is that a skewness score between -0.5 and 0.5 is good enough to call a set of number symetrical distributed. However, that is not the case here as our skewness score is \~1.26.
+
+A third way to determine normality of numbers is with the Shapiro-Wilk test. A drawback of that test is that, the larger the number of data points, the more likely the test is to detect a non-normal distribution. It is because of this fact that the test simply refuses to run if there are more than 5,000 observations, which is the case here. However, for good measure, here's the code:
+
+```{r}
+#| eval: false
+m1 %>% 
+  residuals() %>% 
+  shapiro.test()
+```
+
+While we're here, let's calculate the AIC score for this model with raw word duration so that we can compare it to the AIC for the model with Box-Cox transformed response variable below. Also, let's get the conditional $R^2$ and the marginal $R^2$. The conditional $R^2$ tells us how much of the variance in the response variable is explained by both the random effects and the fixed effects, while the marginal $R^2$ tells us how much of the variance in the response variable is explained by only the fixed effects.
+
+```{r}
+AIC(m1)
+performance::r2_nakagawa(m1)
+```
+
+Because the residuals are not normally distributed, let's do a Box-Cox transformation of the response variable:
+
+```{r}
+# define a function to do the Box-Cox transformation
+boxcox_transform <- function(input_vector) {
+  # param input_vector: a vector of numeric values
+  # return: a list of two elements:
+    # lambda: the lambda chosen by the Box-Cox algorithm
+    # output_vector: a vector of Box-Cox transformed values
+  
+  bc <- MASS::boxcox(input_vector ~ 1, lambda = seq(-3, 3, 1/100), plotit=FALSE)
+  lambda <- bc$x[which.max(bc$y)]
+  output_vector <- (input_vector ^ lambda - 1) / lambda
+  output <- list(lambda = lambda, output_vector = output_vector)
+  return(output)
+}
+
+# Get Box-Cox transformed word durations and the corresponding lambda
+bc_list <- buck %>% 
+  pull(wd_dur) %>% 
+  boxcox_transform()
+cat("The lambda is:", bc_list$lambda)
+
+# Make a new column with the Box-Cox transformed word durations
+buck <- buck %>% 
+  mutate(wd_dur_bc = bc_list$output_vector)
+```
+
+Now, let's fit another regression model with the Box-Cox transformed response variable (`wd_dur_bc`):
+
+```{r}
+# linear regression with Box-Cox transformed word durations
+f2 <- scale(wd_dur_bc) ~  # use the Box-Cox transformed word durations
+      scale(n_phon)+
+      scale(log(wd_freq))+
+      scale(spch_rate)+  
+      scale(frc)+
+      scale(frc):scale(log(wd_freq))+  # interaction term
+      scale(forw_predict)+
+      pre_mention+
+      scale(dist_end_iu)+
+      scale(iu_len_wds)+
+      scale(back_predict)+
+      scale(frc):scale(wd_freq)+  # interaction term
+      (1 + frc | file) +  
+      (1 | wd_upper)
+m2 <- lmerTest::lmer(formula = f2, control = lmerControl(optimizer ="optimx", calc.derivs = F, optCtrl = list(method = "nlminb", starttests = F, kkt = F)),
+    data = buck)
+```
+
+Now, let's look at the residuals of this second Box-Cox-transformed model:
+
+```{r}
+tibble(our_residuals = residuals(m2)) %>% 
+  ggplot(aes(our_residuals))+
+  geom_histogram()
+```
+
+That's more like it! Yeah, that looks like a nice bell curve. Let's calculate the skewness score too:
+
+```{r}
+m2 %>% 
+  residuals() %>% 
+  moments::skewness()
+```
+
+The skewness score (i.e., \~0.479) falls within the rule of thumb. Cool! Let's keep going.
+
+And let's calculate the AIC and the $R^2$ scores of this second Box-Cox transformed model:
+
+```{r}
+AIC(m2)
+performance::r2_nakagawa(m2)
+```
+
+Wouldn't you know it! The AIC has gone down, which is a good thing, as the lower the AIC, the better. The $R^2$ scores have not changed much.
+
+## Residuals vary constantly
+
+Another assumption of regression analysis is that the residuals vary constantly, called homoscedasticity. The opposite is called heteroscedasticity is the condition when the residuals do **not** vary constantly.
+
+A good way to determine whether a model has homoscedasticity or heteroscedasticity is by creating a scatterplot of the residuals of the model on one axis with the fitted (aka. predicted) values of the response variable of the model on the other axis. If the cluster of dots looks like a funnel or a megaphone (i.e., little spread to large spread when moving from left to right, or vice versa) or an American football (i.e., little to large to little spread when moving from left to right), you have heteroscedasticity, which is a problem that needs to be fixed. (Here's a good [blog post](https://www.r-bloggers.com/2016/01/how-to-detect-heteroscedasticity-and-rectify-it/) on R-bloggers about detecting heteroscedasticity and how to fix it.)
+
+Let's use our Box-Cox transformed model from above to see create a scatterplot with the residuals and the predicted (aka. fitted) values:
+
+```{r}
+temp_df <- tibble(
+  our_residuals = residuals(m2), 
+  our_fitted = fitted(m2))
+temp_df %>% 
+  ggplot(aes(our_residuals, our_fitted))+
+  geom_point()
+```
+
+Uh-oh! We have a stubby American-football-shaped cluster of dots. This suggest heteroscedasticity.
+
+As a redemy, we would need to use a bootstrapping approach, which is a topic for another day. See Dr. Brown article in [*Language Variation and Change*](https://doi.org/10.1017/S0954394523000157).
