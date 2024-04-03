@@ -26,7 +26,7 @@ install.packages(c("Rling", "psych", "FactoMineR", "factoextra", "corrplot"), re
 Now, let's load in the `reg_bnc` dataset from the `Rling` package, which has relative frequencies of different word classes in 69 subregisters of the British National Corpus, organized by six metaregisters: Academic, Fiction, News, Non-academic prose, Spoken, and Miscellaneous.
 
 ```{r}
-library("tidyverse")
+suppressPackageStartupMessages(library("tidyverse"))
 library("Rling")
 data(reg_bnc)
 ```
@@ -75,7 +75,7 @@ The eigenvalues indicate how much of the variance is explained by each principal
 pca1$eig
 ```
 
-Levsina (2015, p. 355) mentions two rules of thumb about how many PCs to keep. The Kaiser Criterion proposes that PCs whose eigenvalue is greater than 1 be kept, while another rule of thumb is less strict, with a threshold of 0.7. Others take a percentage approach and propose that the first N number of PCs that explain M% of the variance be kept, for example, 80% or 90% of the variance.
+Levsina (2015, p. 355) mentions two rules of thumb about how many PCs to keep. The Kaiser Criterion proposes that PCs whose eigenvalue are greater than 1 be kept, while another rule of thumb is less strict, with a threshold of 0.7. Others take a percentage approach and propose that the first N number of PCs that explain M% of the variance be kept, for example, 80% or 90% of the variance.
 
 A scree plot is simply a barplot with the amount of variance explained by each PC. Here's a base R way to draw one:
 
@@ -90,10 +90,10 @@ library("factoextra")
 fviz_screeplot(pca1, addlabels = T)
 ```
 
-Now, let's get the contribution of each variable to the PCs:
+Now, let's get the contribution of each variable to the first five PCs:
 
 ```{r}
-library("corrplot")
+suppressPackageStartupMessages(library("corrplot"))
 var <- get_pca_var(pca1)
 corrplot(var$cos2)
 ```
