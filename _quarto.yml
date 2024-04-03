@@ -55,6 +55,7 @@ website:
           - lessons/mixed-effects-linear.qmd
           - lessons/regression_assumptions.qmd
           - lessons/mixed-effects-logistic.qmd
+          - lessons/PCA.qmd
 format:
   html:
     theme: cosmo

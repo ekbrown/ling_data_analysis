@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson Plans for Linguistic Data Analysis with R - R and RStudio</title>
+<title>Lesson Plans for Linguistic Data Analysis with R - PCA</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -74,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">Basics</a></li><li class="breadcrumb-item"><a href="../lessons/r_rstudio.html">R and RStudio</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/t-test.html">Inferential stats</a></li><li class="breadcrumb-item"><a href="../lessons/PCA.html">PCA</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -116,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link active">
+  <a href="../lessons/r_rstudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">R and RStudio</span></a>
   </div>
 </li>
@@ -337,7 +371,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/PCA.html" class="sidebar-item-text sidebar-link">
+  <a href="../lessons/PCA.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">PCA</span></a>
   </div>
 </li>
@@ -354,10 +388,8 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
-  <li><a href="#the-r-programming-language" id="toc-the-r-programming-language" class="nav-link" data-scroll-target="#the-r-programming-language">The R programming language</a></li>
-  <li><a href="#rstudio-ide" id="toc-rstudio-ide" class="nav-link" data-scroll-target="#rstudio-ide">RStudio IDE</a></li>
-  <li><a href="#r-projects" id="toc-r-projects" class="nav-link" data-scroll-target="#r-projects">R projects</a></li>
-  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  <li><a href="#acknowledgment" id="toc-acknowledgment" class="nav-link" data-scroll-target="#acknowledgment">Acknowledgment</a></li>
+  <li><a href="#many-dimensions" id="toc-many-dimensions" class="nav-link" data-scroll-target="#many-dimensions">Many dimensions</a></li>
   </ul>
 </nav>
     </div>
@@ -366,7 +398,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">R and RStudio</h1>
+<h1 class="title">PCA</h1>
 </div>
 
 
@@ -383,55 +415,182 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="objective" class="level2">
 <h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<ul>
-<li>Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)</li>
-</ul>
+<p>Students perform Principal Components Analysis (PCA)</p>
 </section>
-<section id="the-r-programming-language" class="level2">
-<h2 class="anchored" data-anchor-id="the-r-programming-language">The R programming language</h2>
-<ul>
-<li><p>R (<a href="https://www.r-project.org/">here</a>) is a programming language specifically designed for statistical analysis and visualization.</p></li>
-<li><p>As an open-source language, there are many third-party add-on packages (<a href="https://cran.r-project.org/web/packages/index.html">here</a>) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN <a href="https://cran.r-project.org/index.html">here</a>).</p></li>
-<li><p>So called “Task Views” (<a href="https://cran.r-project.org/web/views/">here</a>) collect and briefly describe packages related to specific fields, including one for Natural Language Processing (<a href="https://cran.r-project.org/view=NaturalLanguageProcessing">here</a>).</p></li>
-</ul>
+<section id="acknowledgment" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgment">Acknowledgment</h2>
+<p>Most of the following material comes from Levshina (2015), chapter 18 “Multidimensional analysis of register variation: Principal Components Analysis and Factor Analysis”.</p>
+<p>Levshina, Natalia. 2015. <em>How to do Linguistics with R: Data Exploration and Statistical Analysis</em>. Amsterdam / Philadelphia: John Benjamins.</p>
 </section>
-<section id="rstudio-ide" class="level2">
-<h2 class="anchored" data-anchor-id="rstudio-ide">RStudio IDE</h2>
-<ul>
-<li><p>Integrated Development Environments (IDEs) facilitate writing computer code.</p></li>
-<li><p>RStudio (<a href="https://posit.co/downloads/">here</a>) from the company Posit (<a href="https://posit.co/">here</a>) is the go-to IDE for R.</p>
-<ul>
-<li><p>Has many useful keyboard shortcuts, cf.&nbsp;<code>Help &gt; Keyboard Shortcuts Help</code></p>
-<ul>
-<li><p>Earl’s favorites are:</p>
-<ul>
-<li><p>Assignment operator: <code>ALT + -</code></p></li>
-<li><p>Pipe operator in tidyverse: <code>CTRL/CMD + SHIFT + m</code></p></li>
-</ul></li>
-</ul></li>
-<li><p>Has many cheat sheets for various tools within R and RStudio, cf.&nbsp;<code>Help &gt; Cheat Sheets</code></p></li>
-</ul></li>
-</ul>
-</section>
-<section id="r-projects" class="level2">
-<h2 class="anchored" data-anchor-id="r-projects">R projects</h2>
-<ul>
-<li><p>R projects help keep things organized:</p>
-<ul>
-<li><p>Data files, like CSV (.csv) and/or Excel (.xlsx) files</p></li>
-<li><p>Source code files, like R scripts (.r or .R files)</p></li>
-</ul></li>
-<li><p>To create an R project:</p>
-<ul>
-<li><code>File &gt; New Project...</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="activity" class="level2">
-<h2 class="anchored" data-anchor-id="activity">Activity</h2>
-<ul>
-<li>Students explore R and RStudio IDE, perhaps using the RStudio cheat sheet (<code>Help &gt; Cheat Sheets &gt; RStudio IDE Cheat Sheet</code>)</li>
-</ul>
+<section id="many-dimensions" class="level2">
+<h2 class="anchored" data-anchor-id="many-dimensions">Many dimensions</h2>
+<p>The purpose of PCA is to reduce the number of dimensions (aka. variables) in a dataset. This is especially useful when you have many variables that are correlated to each other.</p>
+<p>Let’s install the packages we’ll need:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"Rling"</span>, <span class="st">"psych"</span>, <span class="st">"FactoMineR"</span>, <span class="st">"factoextra"</span>, <span class="st">"corrplot"</span>), <span class="at">repos =</span> <span class="st">"http://cran.rstudio.com"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, let’s load in the <code>reg_bnc</code> dataset from the <code>Rling</code> package, which has relative frequencies of different word classes in 69 subregisters of the British National Corpus, organized by six metaregisters: Academic, Fiction, News, Non-academic prose, Spoken, and Miscellaneous.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Rling"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reg_bnc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In order to run PCA, there needs to be some multicollinearity, otherwise there’s no need to try to reduce the number of dimensions (aka. variables) in order to try to find underlying components.</p>
+<p>We can look at the correlations (Pearson’s <em>r</em>, to be exact) between all pairwise comparisons of variables. A general rule of thumb mentioned by Levshina is that the Pearson’s <em>r</em> correlations should have an absolute value of at least 0.3. Let’s take a look:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>reg_bnc <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Reg) <span class="sc">%&gt;%</span> <span class="co"># keep only continuous data types</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Ncomm Nprop Vpres Vpast    P1    P2   Adj ConjCoord ConjSub Interject
+Ncomm      1.00  0.23 -0.41 -0.21 -0.83 -0.75  0.86     -0.13   -0.52     -0.67
+Nprop      0.23  1.00 -0.34  0.36 -0.37 -0.50  0.13     -0.45   -0.68     -0.39
+Vpres     -0.41 -0.34  1.00 -0.46  0.42  0.50 -0.35      0.21    0.48      0.41
+Vpast     -0.21  0.36 -0.46  1.00  0.03 -0.11 -0.16      0.07   -0.22      0.02
+P1        -0.83 -0.37  0.42  0.03  1.00  0.80 -0.79      0.23    0.57      0.70
+P2        -0.75 -0.50  0.50 -0.11  0.80  1.00 -0.70      0.31    0.57      0.79
+Adj        0.86  0.13 -0.35 -0.16 -0.79 -0.70  1.00      0.04   -0.39     -0.62
+ConjCoord -0.13 -0.45  0.21  0.07  0.23  0.31  0.04      1.00    0.26      0.18
+ConjSub   -0.52 -0.68  0.48 -0.22  0.57  0.57 -0.39      0.26    1.00      0.36
+Interject -0.67 -0.39  0.41  0.02  0.70  0.79 -0.62      0.18    0.36      1.00
+Num        0.21  0.28 -0.28 -0.13 -0.25 -0.16  0.03     -0.41   -0.28     -0.09
+            Num
+Ncomm      0.21
+Nprop      0.28
+Vpres     -0.28
+Vpast     -0.13
+P1        -0.25
+P2        -0.16
+Adj        0.03
+ConjCoord -0.41
+ConjSub   -0.28
+Interject -0.09
+Num        1.00</code></pre>
+</div>
+</div>
+<p>While not every correlation coefficient is above 0.3, a good number of them are. We could remove variables that have correlation coefficients below 0.3, but let’s keep going with all variables.</p>
+<p>Another way to test for multicollinearity is with a Barlett test, available in the <code>psych</code> R package. The null hypothesis is that the variables are not correlated, so a <em>p</em>-value below 0.05 would indicate that we can reject the null hypothesis of no correlation between the variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>reg_bnc <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Reg) <span class="sc">%&gt;%</span> <span class="co"># keep only continuous data types</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">cortest.bartlett</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>R was not square, finding R from data</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$chisq
+[1] 536.3401
+
+$p.value
+[1] 4.109611e-80
+
+$df
+[1] 55</code></pre>
+</div>
+</div>
+<p>Because the <em>p</em>-value is below the alpha level of 0.05, we reject the null hypothesis that there is no correlation between the variables. Let’s keep going!</p>
+<p>Now, let’s run a Principal Components Analysis with the <code>PCA</code> function in the <a href="https://cran.r-project.org/web/packages/FactoMineR/index.html"><code>FactoMineR</code></a> package. We give the <code>PCA</code> function the <code>quali.sup = 1</code> argument to tell it that the first column (i.e., <code>1</code>) is a qualitative (aka. categorical) variable with info about each observation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"FactoMineR"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pca1 <span class="ot">&lt;-</span> <span class="fu">PCA</span>(reg_bnc, <span class="at">quali.sup =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>By default, the PCA function draws some plots for us. The “PCA graph of individuals” plots the 69 observations in a two-dimensional space with the first principal component (aka. dimension) on the x-axis labeled with “Dim 1”, and the second principal component on the y-axis. And the “PCA graph of variables” plots the 11 variables on the same two-dimensional space. However, this second plot also has a circle and arrows (aka. vectors). The angles between the arrows and the dashed axes indicate how strongly the variable is correlated with each of the first two principal components, such that, the smaller the angle, the stronger the correlation. For example, “P2” (i.e., second person pronouns) is strongly correlated with the first principal component (aka. loads onto the first principal component), while “past” is not closely correlated with the first principal component. Differently, “past” is strongly correlated with the second principal component (aka. second dimension) because its vector is very close to the dashed line representing that component, while “P2” is not correlated with that component. Two vectors that are close to each are strongly correlated, and may represent the same underlying theoretical construct (whatever that might be). The length of a vector represents how much variation in the variable is accounted for by these two principal components, with a max of 1 (i.e., the circle).</p>
+<p>Let’s draw a better plot of the individuals:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pca1, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">col.ind=</span><span class="st">"gray"</span>, <span class="at">col.quali=</span><span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The eigenvalues indicate how much of the variance is explained by each principal component. (BTW, there are as many principal components as there are variable that go into the PCA.) Let’s look at the eigenvalues and the percentage of variance explained by each PC:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pca1<span class="sc">$</span>eig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        eigenvalue percentage of variance cumulative percentage of variance
+comp 1  5.06829360             46.0753964                          46.07540
+comp 2  1.87221031             17.0200937                          63.09549
+comp 3  1.37584355             12.5076686                          75.60316
+comp 4  0.79007568              7.1825062                          82.78566
+comp 5  0.64512706              5.8647914                          88.65046
+comp 6  0.42171443              3.8337675                          92.48422
+comp 7  0.30027045              2.7297314                          95.21396
+comp 8  0.18666203              1.6969276                          96.91088
+comp 9  0.14370361              1.3063965                          98.21728
+comp 10 0.10877509              0.9888644                          99.20614
+comp 11 0.08732419              0.7938563                         100.00000</code></pre>
+</div>
+</div>
+<p>Levsina (2015, p.&nbsp;355) mentions two rules of thumb about how many PCs to keep. The Kaiser Criterion proposes that PCs whose eigenvalue is greater than 1 be kept, while another rule of thumb is less strict, with a threshold of 0.7. Others take a percentage approach and propose that the first N number of PCs that explain M% of the variance be kept, for example, 80% or 90% of the variance.</p>
+<p>A scree plot is simply a barplot with the amount of variance explained by each PC. Here’s a base R way to draw one:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(pca1<span class="sc">$</span>eig[,<span class="dv">2</span>], <span class="at">names =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(pca1<span class="sc">$</span>eig), <span class="at">xlab =</span> <span class="st">"Components"</span>, <span class="at">ylab =</span> <span class="st">"Percentage of variance explained"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>And here’s a way with the <code>factoextra</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"factoextra"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_screeplot</span>(pca1, <span class="at">addlabels =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Now, let’s get the contribution of each variable to the PCs:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"corrplot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>corrplot 0.92 loaded</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">get_pca_var</span>(pca1)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(var<span class="sc">$</span>cos2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Here’s another view of each PC:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">fviz_contrib</span>(pca1, <span class="at">choice =</span> <span class="st">"var"</span>, <span class="at">axes =</span> i))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-11-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-11-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="PCA_files/figure-html/unnamed-chunk-11-5.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
 </section>
