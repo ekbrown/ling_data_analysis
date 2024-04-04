@@ -1,0 +1,25 @@
+---
+title: "Bootstrapping"
+---
+
+## Objective
+
+Students will perform bootstrapping of a statistical test. (They might even strap their own boots, to boot!)
+
+## Assumptions
+
+Those rascally assumptions of statistical tests sometimes/ofttimes are not met. First, try some transformations of the continuous and/or recoding and combining levels in categorical variables. If that doesn't do the trick, what do you do?
+
+Enter bootstrapping.
+
+## Bootstrapping
+
+Levshina (2015, p. 167) wrote:
+
+"When one or more assumptions of linear regression have been violated, one can use regression based on bootstrapping, which was introduced in the previous subsection. Its advantage is that it does not require all those assumptions to be met in order to return results that can be trusted."
+
+Egbert & Plonsky (2020, p. 938) mention that bootstrapping is "recommended for small samples and samples with unknown or non-normal distributions." They describe the technique as: "Bootstrapping is a statistical technique that relies on randomly resampling with replacement from a set of observed values in order to estimate the accuracy of statistical parameters" (p. 942).
+
+[Brown (2023)](https://doi.org/10.1017/S0954394523000157) used a 10,000-iteration bootstrapping procedure in his study of the duration of words in the Buckeye Corpus of English.
+
+MORE ABOUT BOOTSTRAPPING TO COME IN THE FUTURE
