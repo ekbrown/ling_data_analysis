@@ -10,29 +10,29 @@ Students will perform a *t*-test and a Wilcoxon test
 
 Match each term with its corresponding definition.
 
-|                        |                                                                                                                    |
-|------------------------|--------------------------------------------------------------------------------------------------------------------|
-| sample                 | The mean of the sample                                                                                             |
-| population             | A value that is the result of converting a value into units of standard deviations from the mean                   |
-| point estimate         | A Greek letter that usually stands for the standard deviation of a continuous variable of the population           |
-| confidence interval    | A Romanized letter that usually stands for the explanatory variable                                                |
-| standard error         | Something that might affect the thing under study                                                                  |
-| *t*-test               | The thing that is being studied (aka. dependent thing of study)                                                    |
-| Wilcoxon test          | a Greek letter that usually stands for the mean of a continuous variable of a population                           |
-| sigma                  | An ideal spread of data points around the central tendency; looks like a good ol' fashioned bell (aka. bell curve) |
-| meu                    | the number of data points (aka. observations)                                                                      |
-| *n*                    | The standard deviation of the sample                                                                               |
-| x                      | The group that the researcher want to know something about                                                         |
-| y                      | A non-parametric test                                                                                              |
-| response variable      | The group that is used to infer about a larger group                                                               |
-| explanatory variable   | The proposition that is likely an effect of the explanatory variable on the response variable                      |
-| *z*-score              | A Romanized letter that usually stands for the response variable.                                                  |
-| meu hat                | a single number that characterizes an aspect of a dataset                                                          |
-| sigma hat              | A range of values that is likely to contain the population value                                                   |
-| alpha level            | The threshold below which the null hypothesis can be rejected                                                      |
-| null hypothesis        | A parametric test with a continuous response variable and a categorical variable with exactly two levels           |
-| alternative hypothesis | A measure of how much uncertainty there is in the estimate of the sample mean                                      |
-| normal distribution    | The proposition that there is no effect of the explanatory variable(s) on the response variable                    |
+|  |  |
+|----------------|--------------------------------------------------------|
+| sample | The mean of the sample |
+| population | A value that is the result of converting a value into units of standard deviations from the mean |
+| point estimate | A Greek letter that usually stands for the standard deviation of a continuous variable of the population |
+| confidence interval | A Romanized letter that usually stands for the explanatory variable |
+| standard error | Something that might affect the thing under study |
+| *t*-test | The thing that is being studied (aka. dependent thing of study) |
+| Wilcoxon test | a Greek letter that usually stands for the mean of a continuous variable of a population |
+| sigma | An ideal spread of data points around the central tendency; looks like a good ol' fashioned bell (aka. bell curve) |
+| meu | the number of data points (aka. observations) |
+| *n* | The standard deviation of the sample |
+| x | The group that the researcher want to know something about |
+| y | A non-parametric test |
+| response variable | The group that is used to infer about a larger group |
+| explanatory variable | The proposition that there is likely an effect of the explanatory variable on the response variable |
+| *z*-score | A Romanized letter that usually stands for the response variable. |
+| meu hat | a single number that characterizes an aspect of a dataset |
+| sigma hat | A range of values that is likely to contain the population value |
+| alpha level | The threshold below which the null hypothesis can be rejected |
+| null hypothesis | A parametric test with a continuous response variable and a categorical variable with exactly two levels |
+| alternative hypothesis | A measure of how much uncertainty there is in the estimate of the sample mean |
+| normal distribution | The proposition that there is no effect of the explanatory variable(s) on the response variable |
 
 : Good ol' fashioned matching quiz
 
