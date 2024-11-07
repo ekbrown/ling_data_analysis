@@ -19,16 +19,16 @@ Match each term with its corresponding definition.
 | standard error | Something that might affect the thing under study |
 | *t*-test | The thing that is being studied (aka. dependent thing of study) |
 | Wilcoxon test | a Greek letter that usually stands for the mean of a continuous variable of a population |
-| sigma | An ideal spread of data points around the central tendency; looks like a good ol' fashioned bell (aka. bell curve) |
-| meu | the number of data points (aka. observations) |
-| *n* | The standard deviation of the sample |
+| σ (sigma) | An ideal spread of data points around the central tendency; looks like a good ol' fashioned bell (aka. bell curve) |
+| μ (meu) | the number of data points (aka. observations) |
+| n | The standard deviation of the sample |
 | x | The group that the researcher want to know something about |
 | y | A non-parametric test |
 | response variable | The group that is used to infer about a larger group |
 | explanatory variable | The proposition that there is likely an effect of the explanatory variable on the response variable |
 | *z*-score | A Romanized letter that usually stands for the response variable. |
-| meu hat | a single number that characterizes an aspect of a dataset |
-| sigma hat | A range of values that is likely to contain the population value |
+| μ̂ (meu hat) | a single number that characterizes an aspect of a dataset |
+| σ̂ (sigma hat) | A range of values that is likely to contain the population value |
 | alpha level | The threshold below which the null hypothesis can be rejected |
 | null hypothesis | A parametric test with a continuous response variable and a categorical variable with exactly two levels |
 | alternative hypothesis | A measure of how much uncertainty there is in the estimate of the sample mean |
@@ -38,16 +38,16 @@ Match each term with its corresponding definition.
 
 |  |  |
 |----|----|
-| meu hat | The mean of the sample |
+| μ̂ (meu hat) | The mean of the sample |
 | z-score | A value that is the result of converting a value into units of standard deviations from the mean |
-| sigma | A Greek letter that usually stands for the standard deviation of a continuous variable of the population |
+| σ (sigma) | A Greek letter that usually stands for the standard deviation of a continuous variable of the population |
 | x | A Romanized letter that usually stands for the explanatory variable |
 | explanatory variable | Something that might affect the thing under study |
 | response variable | The thing that is being studied (aka. dependent thing of study) |
-| meu | a Greek letter that usually stands for the mean of a continuous variable of a population |
+| μ (meu) | a Greek letter that usually stands for the mean of a continuous variable of a population |
 | normal distribution | An ideal spread of data points around the central tendency; looks like a good ol’ fashioned bell (aka. bell curve) |
 | n | the number of data points (aka. observations) |
-| sigma hat | The standard deviation of the sample |
+| σ̂ (sigma hat) | The standard deviation of the sample |
 | population | The group that the researcher want to know something about |
 | Wilcoxon test | A non-parametric test |
 | sample | The group that is used to infer about a larger group |
