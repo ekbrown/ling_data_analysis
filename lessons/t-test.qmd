@@ -11,7 +11,7 @@ Students will perform a *t*-test and a Wilcoxon test
 Match each term with its corresponding definition.
 
 |  |  |
-|----------------|--------------------------------------------------------|
+|----|----|
 | sample | The mean of the sample |
 | population | A value that is the result of converting a value into units of standard deviations from the mean |
 | point estimate | A Greek letter that usually stands for the standard deviation of a continuous variable of the population |
