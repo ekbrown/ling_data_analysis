@@ -4,21 +4,21 @@ title: "R and RStudio"
 
 ## Objective
 
--   Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)
+-   Students will start to become familiar with the R programming language and the RStudio Integrated Development Environment (IDE)
 
 ## The R programming language
 
--   R ([here](https://www.r-project.org/)) is a programming language specifically designed for statistical analysis and visualization.
+-   [R](https://www.r-project.org/) is a programming language specifically designed for statistical analysis and visualization.
 
--   As an open-source language, there are many third-party add-on packages ([here](https://cran.r-project.org/web/packages/index.html)) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN [here](https://cran.r-project.org/index.html)).
+-   As an open-source language, there are many third-party add-on [packages](https://cran.r-project.org/web/packages/index.html) that extend the use of R that are available on the Comprehensive R Archive Network (aka. [CRAN](https://cran.r-project.org/index.html)).
 
--   So called "Task Views" ([here](https://cran.r-project.org/web/views/)) collect and briefly describe packages related to specific fields, including one for Natural Language Processing ([here](https://cran.r-project.org/view=NaturalLanguageProcessing)).
+-   So called ["Task Views"](https://cran.r-project.org/web/views/) collect and briefly describe packages related to specific fields, including one for [Natural Language Processing](https://cran.r-project.org/view=NaturalLanguageProcessing).
 
 ## RStudio IDE
 
 -   Integrated Development Environments (IDEs) facilitate writing computer code.
 
--   RStudio ([here](https://posit.co/downloads/)) from the company Posit ([here](https://posit.co/)) is the go-to IDE for R.
+-   [RStudio](https://posit.co/downloads/) from the company [Posit](https://posit.co/) is the go-to IDE for R.
 
     -   Has many useful keyboard shortcuts, cf. `Help > Keyboard Shortcuts Help`
 

@@ -179,28 +179,28 @@
     "href": "lessons/r_rstudio.html",
     "title": "R and RStudio",
     "section": "",
-    "text": "Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)"
+    "text": "Students will start to become familiar with the R programming language and the RStudio Integrated Development Environment (IDE)"
   },
   {
     "objectID": "lessons/r_rstudio.html#objective",
     "href": "lessons/r_rstudio.html#objective",
     "title": "R and RStudio",
     "section": "",
-    "text": "Students will become familiar with the R programming language a bit and the RStudio Integrated Development Environment (IDE)"
+    "text": "Students will start to become familiar with the R programming language and the RStudio Integrated Development Environment (IDE)"
   },
   {
     "objectID": "lessons/r_rstudio.html#the-r-programming-language",
     "href": "lessons/r_rstudio.html#the-r-programming-language",
     "title": "R and RStudio",
     "section": "The R programming language",
-    "text": "The R programming language\n\nR (here) is a programming language specifically designed for statistical analysis and visualization.\nAs an open-source language, there are many third-party add-on packages (here) that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN here).\nSo called “Task Views” (here) collect and briefly describe packages related to specific fields, including one for Natural Language Processing (here)."
+    "text": "The R programming language\n\nR is a programming language specifically designed for statistical analysis and visualization.\nAs an open-source language, there are many third-party add-on packages that extend the use of R that are available on the Comprehensive R Archive Network (aka. CRAN).\nSo called “Task Views” collect and briefly describe packages related to specific fields, including one for Natural Language Processing."
   },
   {
     "objectID": "lessons/r_rstudio.html#rstudio-ide",
     "href": "lessons/r_rstudio.html#rstudio-ide",
     "title": "R and RStudio",
     "section": "RStudio IDE",
-    "text": "RStudio IDE\n\nIntegrated Development Environments (IDEs) facilitate writing computer code.\nRStudio (here) from the company Posit (here) is the go-to IDE for R.\n\nHas many useful keyboard shortcuts, cf. Help &gt; Keyboard Shortcuts Help\n\nEarl’s favorites are:\n\nAssignment operator: ALT + -\nPipe operator in tidyverse: CTRL/CMD + SHIFT + m\n\n\nHas many cheat sheets for various tools within R and RStudio, cf. Help &gt; Cheat Sheets"
+    "text": "RStudio IDE\n\nIntegrated Development Environments (IDEs) facilitate writing computer code.\nRStudio from the company Posit is the go-to IDE for R.\n\nHas many useful keyboard shortcuts, cf. Help &gt; Keyboard Shortcuts Help\n\nEarl’s favorites are:\n\nAssignment operator: ALT + -\nPipe operator in tidyverse: CTRL/CMD + SHIFT + m\n\n\nHas many cheat sheets for various tools within R and RStudio, cf. Help &gt; Cheat Sheets"
   },
   {
     "objectID": "lessons/r_rstudio.html#r-projects",
