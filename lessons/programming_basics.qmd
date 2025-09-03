@@ -110,13 +110,13 @@ kids <- c("Bobby", "Luisa", "José")
 
 -   Two approaches to `if else` in R:
 
-    -   The most common approach is to use a code block. See an example in the Stack Overflow answer [here](https://stackoverflow.com/a/15393990/2884875).
+    -   The most common approach is to use a code block. See an example in [this Stack Overflow answer](https://stackoverflow.com/a/15393990/2884875).
 
     -   A less common approach, but super useful for simple `if else` cases, is to use a function:
 
-        -   base R `ifelse()` function [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/ifelse);
+        -   base R `ifelse()` [function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/ifelse);
 
-        -   `dpylr` (part of the `tidyverse` ecosystem) `if_else()` function [here](https://dplyr.tidyverse.org/reference/if_else.html).
+        -   `dpylr` (part of the `tidyverse` ecosystem) `if_else()` [function](https://dplyr.tidyverse.org/reference/if_else.html).
 
 **Activity**
 
@@ -130,7 +130,7 @@ kids <- c("Bobby", "Luisa", "José")
 
 ## Loops in R
 
--   The mighty and super useful `for` loop iterates over all elements of a collection (e.g., a vector), for example see below (and see another example [here](https://www.datamentor.io/r-programming/for-loop)):
+-   The mighty and super useful `for` loop iterates over all elements of a collection (e.g., a vector), for example see below (and see [another example](https://www.datamentor.io/r-programming/for-loop)):
 
 ```{r}
 #| output: false
@@ -143,7 +143,7 @@ for (fruit in fruits) {
 }
 ```
 
--   The less-common-but-still-useful `while` loop tests the conditional statement at the beginning of each iteration and runs the body of the loop if the statement evaluates to `TRUE`. See an example [here](https://www.datamentor.io/r-programming/while-loop).
+-   The less-common-but-still-useful `while` loop tests the conditional statement at the beginning of each iteration and runs the body of the loop if the statement evaluates to `TRUE`. See an [example](https://www.datamentor.io/r-programming/while-loop).
 
 -   Useful keywords for both `for` loops and `while` loops:
 
@@ -155,7 +155,7 @@ for (fruit in fruits) {
 
 -   Students create a `for` loop to iterate from 1 to 10, skipping even numbers and printing out odd numbers.
 
-    -   Hint: The modulus operator `%%` will be helpful (see [here](https://www.geeksforgeeks.org/check-if-a-number-is-odd-or-even-in-r-programming/)).
+    -   Hint: The [modulus operator](https://www.geeksforgeeks.org/check-if-a-number-is-odd-or-even-in-r-programming/) `%%` will be helpful.
 
 ## Defining functions in R
 
@@ -163,7 +163,7 @@ for (fruit in fruits) {
 
 -   The `function()` function does the trick.
 
-    -   See a tutorial [here](https://swcarpentry.github.io/r-novice-inflammation/02-func-R.html).
+    -   See a [tutorial](https://swcarpentry.github.io/r-novice-inflammation/02-func-R.html).
 
 **Activity**
 
@@ -171,7 +171,7 @@ for (fruit in fruits) {
 
     -   Hint: The [%in%](https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html) keyword will be helpful here.
 
--   Now for a little fun and to put these basic programming skills together: Students define a function (likely with smaller helper functions) that translates a sentence from English into Pig Latin. A little refresher on Pig Latin: If a word begins with a vowel, the word yay is added to the end of it; if a word begins with a consonant or consonant cluster (e.g., ch, gr), that consonant or consonant cluster is moved to the end of the word followed by ay.
+-   Now for a little fun and to put these basic programming skills together: Students define a function (likely with smaller helper functions) that translates a sentence from English into Pig Latin. A little refresher on Pig Latin: If a word begins with a vowel, the word *yay* is added to the end of it; if a word begins with a consonant or consonant cluster (e.g., ch, gr), that consonant or consonant cluster is moved to the end of the word followed by *ay*. For example *How are you? \>* *Owhay areyay ouyay?*
 
     -   Hint: the [stringr](https://stringr.tidyverse.org/) package (part of the [tidyverse](https://www.tidyverse.org/)) will be useful here, especially the [str_c()](https://stringr.tidyverse.org/reference/str_c.html), [str_sub()](https://stringr.tidyverse.org/reference/str_sub.html), [str_split()](https://stringr.tidyverse.org/reference/str_split.html) (and [unlist()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/unlist)) functions, as will the [letters](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html) and [LETTERS](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html) built-in constants.
 

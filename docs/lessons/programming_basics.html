@@ -375,6 +375,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">PCA</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/bootstrapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bootstrapping</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -527,11 +533,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p>Two approaches to <code>if else</code> in R:</p>
 <ul>
-<li><p>The most common approach is to use a code block. See an example in the Stack Overflow answer <a href="https://stackoverflow.com/a/15393990/2884875">here</a>.</p></li>
+<li><p>The most common approach is to use a code block. See an example in <a href="https://stackoverflow.com/a/15393990/2884875">this Stack Overflow answer</a>.</p></li>
 <li><p>A less common approach, but super useful for simple <code>if else</code> cases, is to use a function:</p>
 <ul>
-<li><p>base R <code>ifelse()</code> function <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/ifelse">here</a>;</p></li>
-<li><p><code>dpylr</code> (part of the <code>tidyverse</code> ecosystem) <code>if_else()</code> function <a href="https://dplyr.tidyverse.org/reference/if_else.html">here</a>.</p></li>
+<li><p>base R <code>ifelse()</code> <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/ifelse">function</a>;</p></li>
+<li><p><code>dpylr</code> (part of the <code>tidyverse</code> ecosystem) <code>if_else()</code> <a href="https://dplyr.tidyverse.org/reference/if_else.html">function</a>.</p></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -548,7 +554,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="loops-in-r" class="level2">
 <h2 class="anchored" data-anchor-id="loops-in-r">Loops in R</h2>
 <ul>
-<li>The mighty and super useful <code>for</code> loop iterates over all elements of a collection (e.g., a vector), for example see below (and see another example <a href="https://www.datamentor.io/r-programming/for-loop">here</a>):</li>
+<li>The mighty and super useful <code>for</code> loop iterates over all elements of a collection (e.g., a vector), for example see below (and see <a href="https://www.datamentor.io/r-programming/for-loop">another example</a>):</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a vector</span></span>
@@ -560,7 +566,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li><p>The less-common-but-still-useful <code>while</code> loop tests the conditional statement at the beginning of each iteration and runs the body of the loop if the statement evaluates to <code>TRUE</code>. See an example <a href="https://www.datamentor.io/r-programming/while-loop">here</a>.</p></li>
+<li><p>The less-common-but-still-useful <code>while</code> loop tests the conditional statement at the beginning of each iteration and runs the body of the loop if the statement evaluates to <code>TRUE</code>. See an <a href="https://www.datamentor.io/r-programming/while-loop">example</a>.</p></li>
 <li><p>Useful keywords for both <code>for</code> loops and <code>while</code> loops:</p>
 <ul>
 <li><p>The <code>next</code> keyword skips the rest of the current iteration and continues to the next iteration. This is very much like <code>continue</code> in Python and Julia.</p></li>
@@ -571,7 +577,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p>Students create a <code>for</code> loop to iterate from 1 to 10, skipping even numbers and printing out odd numbers.</p>
 <ul>
-<li>Hint: The modulus operator <code>%%</code> will be helpful (see <a href="https://www.geeksforgeeks.org/check-if-a-number-is-odd-or-even-in-r-programming/">here</a>).</li>
+<li>Hint: The <a href="https://www.geeksforgeeks.org/check-if-a-number-is-odd-or-even-in-r-programming/">modulus operator</a> <code>%%</code> will be helpful.</li>
 </ul></li>
 </ul>
 </section>
@@ -581,7 +587,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>A very useful ability in R (and all programming languages) is for a user to define their own custom function.</p></li>
 <li><p>The <code>function()</code> function does the trick.</p>
 <ul>
-<li>See a tutorial <a href="https://swcarpentry.github.io/r-novice-inflammation/02-func-R.html">here</a>.</li>
+<li>See a <a href="https://swcarpentry.github.io/r-novice-inflammation/02-func-R.html">tutorial</a>.</li>
 </ul></li>
 </ul>
 <p><strong>Activity</strong></p>
@@ -590,7 +596,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Hint: The <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html">%in%</a> keyword will be helpful here.</li>
 </ul></li>
-<li><p>Now for a little fun and to put these basic programming skills together: Students define a function (likely with smaller helper functions) that translates a sentence from English into Pig Latin. A little refresher on Pig Latin: If a word begins with a vowel, the word yay is added to the end of it; if a word begins with a consonant or consonant cluster (e.g., ch, gr), that consonant or consonant cluster is moved to the end of the word followed by ay.</p>
+<li><p>Now for a little fun and to put these basic programming skills together: Students define a function (likely with smaller helper functions) that translates a sentence from English into Pig Latin. A little refresher on Pig Latin: If a word begins with a vowel, the word <em>yay</em> is added to the end of it; if a word begins with a consonant or consonant cluster (e.g., ch, gr), that consonant or consonant cluster is moved to the end of the word followed by <em>ay</em>. For example <em>How are you? &gt;</em> <em>Owhay areyay ouyay?</em></p>
 <ul>
 <li><p>Hint: the <a href="https://stringr.tidyverse.org/">stringr</a> package (part of the <a href="https://www.tidyverse.org/">tidyverse</a>) will be useful here, especially the <a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a>, <a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub()</a>, <a href="https://stringr.tidyverse.org/reference/str_split.html">str_split()</a> (and <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/unlist">unlist()</a>) functions, as will the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html">letters</a> and <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Constants.html">LETTERS</a> built-in constants.</p></li>
 <li><p>Hint: After a good-faith effort, if you need help, see the script written by Dr.&nbsp;Brown by clicking on “▶ Code” below.</p></li>
