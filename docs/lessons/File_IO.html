@@ -370,11 +370,15 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#activity-1" id="toc-activity-1" class="nav-link" data-scroll-target="#activity-1">Activity</a></li>
   </ul></li>
+  <li><a href="#arrow-aka.-feather-files" id="toc-arrow-aka.-feather-files" class="nav-link" data-scroll-target="#arrow-aka.-feather-files">Arrow (aka. feather) files</a>
+  <ul class="collapse">
+  <li><a href="#activity-2" id="toc-activity-2" class="nav-link" data-scroll-target="#activity-2">Activity</a></li>
+  </ul></li>
   <li><a href="#spss-.sav-stata-.dta-and-sas-.sas-files" id="toc-spss-.sav-stata-.dta-and-sas-.sas-files" class="nav-link" data-scroll-target="#spss-.sav-stata-.dta-and-sas-.sas-files">SPSS (.sav), Stata (.dta), and SAS (.sas) files</a>
   <ul class="collapse">
-  <li><a href="#activity-2" id="toc-activity-2" class="nav-link" data-scroll-target="#activity-2"><strong>Activity</strong></a></li>
+  <li><a href="#activity-3" id="toc-activity-3" class="nav-link" data-scroll-target="#activity-3"><strong>Activity</strong></a></li>
   </ul></li>
-  <li><a href="#feather-.feather-files" id="toc-feather-.feather-files" class="nav-link" data-scroll-target="#feather-.feather-files">Feather (.feather) files</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul>
 </nav>
     </div>
@@ -503,6 +507,26 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 </section>
 </section>
+<section id="arrow-aka.-feather-files" class="level2">
+<h2 class="anchored" data-anchor-id="arrow-aka.-feather-files">Arrow (aka. feather) files</h2>
+<ol type="1">
+<li><p>Note: The Arrow ICP file format was formerly known as Feather file format.</p></li>
+<li><p>This file format is quickly read and written, which are good for big data files.</p></li>
+<li><p>Reading in (input)</p>
+<ol type="1">
+<li>The <a href="https://arrow.apache.org/docs/dev/r/articles/read_write.html">arrow::read_feather()</a> function does it.</li>
+</ol></li>
+<li><p>Writing out (output)</p></li>
+</ol>
+<p>The <a href="https://arrow.apache.org/docs/dev/r/articles/read_write.html">arrow::write_feather()</a> function does it.</p>
+<section id="activity-2" class="level3">
+<h3 class="anchored" data-anchor-id="activity-2">Activity</h3>
+<ul>
+<li><p>Download the “freqs_Saints.arrow” file from the Dataset module in Canvas.</p></li>
+<li><p>Read it into R and display it with the <a href="https://tibble.tidyverse.org/reference/view.html"><code>view()</code></a> function.</p></li>
+</ul>
+</section>
+</section>
 <section id="spss-.sav-stata-.dta-and-sas-.sas-files" class="level2">
 <h2 class="anchored" data-anchor-id="spss-.sav-stata-.dta-and-sas-.sas-files">SPSS (.sav), Stata (.dta), and SAS (.sas) files</h2>
 <ol type="1">
@@ -512,28 +536,19 @@ ul.task-list li input[type="checkbox"] {
 </ol></li>
 <li><p>Writing out (output)</p>
 <ol type="1">
-<li>Who cares? You should output it as something more cross-platform-friendly like CSV.</li>
+<li>Who cares? You should output it as something more cross-platform-friendly like CSV or parquet.</li>
 </ol></li>
 </ol>
-<section id="activity-2" class="level3">
-<h3 class="anchored" data-anchor-id="activity-2"><strong>Activity</strong></h3>
+<section id="activity-3" class="level3">
+<h3 class="anchored" data-anchor-id="activity-3"><strong>Activity</strong></h3>
 <ol type="1">
 <li><p>Download the SPSS (.sav) file in the CMS.</p></li>
 <li><p>Read in the SPSS file and display it with <a href="https://tibble.tidyverse.org/reference/view.html">view()</a>.</p></li>
 </ol>
 </section>
 </section>
-<section id="feather-.feather-files" class="level2">
-<h2 class="anchored" data-anchor-id="feather-.feather-files">Feather (.feather) files</h2>
-<ol type="1">
-<li><p>This file format is quickly read and written, which are good for big data files.</p></li>
-<li><p>Reading in (input)</p>
-<ol type="1">
-<li>The <a href="https://www.rdocumentation.org/packages/feather/versions/0.3.5">feather::read_feather()</a> function does it.</li>
-</ol></li>
-<li><p>Writing out (output)</p></li>
-</ol>
-<p>The <a href="https://www.rdocumentation.org/packages/feather/versions/0.3.5">feather::write_feather()</a> function does it.</p>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
 
 
 </section>

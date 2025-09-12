@@ -108,6 +108,26 @@ title: "File I/O in R"
 
 3.  Read in the appropriate worksheet and display it within RStudio with the [`view()`](https://tibble.tidyverse.org/reference/view.html) function.
 
+## Arrow (aka. feather) files
+
+1.  Note: The Arrow ICP file format was formerly known as Feather file format.
+
+2.  This file format is quickly read and written, which are good for big data files.
+
+3.  Reading in (input)
+
+    1.  The [arrow::read_feather()](https://arrow.apache.org/docs/dev/r/articles/read_write.html) function does it.
+
+4.  Writing out (output)
+
+The [arrow::write_feather()](https://arrow.apache.org/docs/dev/r/articles/read_write.html) function does it.
+
+### Activity
+
+-   Download the "freqs_Saints.arrow" file from the Dataset module in Canvas.
+
+-   Read it into R and display it with the [`view()`](https://tibble.tidyverse.org/reference/view.html) function.
+
 ## SPSS (.sav), Stata (.dta), and SAS (.sas) files
 
 1.  Reading in (input)
@@ -116,7 +136,7 @@ title: "File I/O in R"
 
 2.  Writing out (output)
 
-    1.  Who cares? You should output it as something more cross-platform-friendly like CSV.
+    1.  Who cares? You should output it as something more cross-platform-friendly like CSV or parquet.
 
 ### **Activity**
 
@@ -124,14 +144,4 @@ title: "File I/O in R"
 
 2.  Read in the SPSS file and display it with [view()](https://tibble.tidyverse.org/reference/view.html).
 
-## Feather (.feather) files
-
-1.  This file format is quickly read and written, which are good for big data files.
-
-2.  Reading in (input)
-
-    1.  The [feather::read_feather()](https://www.rdocumentation.org/packages/feather/versions/0.3.5) function does it.
-
-3.  Writing out (output)
-
-The [feather::write_feather()](https://www.rdocumentation.org/packages/feather/versions/0.3.5) function does it.
+## 

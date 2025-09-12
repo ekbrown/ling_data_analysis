@@ -46,7 +46,7 @@
     "href": "lessons/File_IO.html#spss-.sav-stata-.dta-and-sas-.sas-files",
     "title": "File I/O in R",
     "section": "SPSS (.sav), Stata (.dta), and SAS (.sas) files",
-    "text": "SPSS (.sav), Stata (.dta), and SAS (.sas) files\n\nReading in (input)\n\nThe haven R package does the trick.\n\nWriting out (output)\n\nWho cares? You should output it as something more cross-platform-friendly like CSV.\n\n\n\nActivity\n\nDownload the SPSS (.sav) file in the CMS.\nRead in the SPSS file and display it with view()."
+    "text": "SPSS (.sav), Stata (.dta), and SAS (.sas) files\n\nReading in (input)\n\nThe haven R package does the trick.\n\nWriting out (output)\n\nWho cares? You should output it as something more cross-platform-friendly like CSV or parquet.\n\n\n\nActivity\n\nDownload the SPSS (.sav) file in the CMS.\nRead in the SPSS file and display it with view()."
   },
   {
     "objectID": "lessons/File_IO.html#feather-.feather-files",
@@ -1342,5 +1342,12 @@
     "title": "Multicollinearity",
     "section": "",
     "text": "Students measure the amount of multicollinearity among explanatory variables."
+  },
+  {
+    "objectID": "lessons/File_IO.html#arrow-aka.-feather-files",
+    "href": "lessons/File_IO.html#arrow-aka.-feather-files",
+    "title": "File I/O in R",
+    "section": "Arrow (aka. feather) files",
+    "text": "Arrow (aka. feather) files\n\nNote: The Arrow ICP file format was formerly known as Feather file format.\nThis file format is quickly read and written, which are good for big data files.\nReading in (input)\n\nThe arrow::read_feather() function does it.\n\nWriting out (output)\n\nThe arrow::write_feather() function does it.\n\nActivity\n\nDownload the “freqs_Saints.arrow” file from the Dataset module in Canvas.\nRead it into R and display it with the view() function."
   }
 ]
