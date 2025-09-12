@@ -78,7 +78,7 @@ title: "Regular expressions"
 
 3.  You can encapsulate a pattern in parentheses to capture, and then refer to that same sequence of characters with `\\1` for the first capture group, or `\\2` for the second capture group (if you have more than one capture group in the same regex), etc.
 
-4.  Example: `"\\w+(\\w) \\1\\w+"` returns a bigram whose first word ends with the same letter that the second word begins with, e.g., *walke**dd**own*
+4.  Example: `"\\w+(\\w) \\1\\w+"` returns a bigram whose first word ends with the same letter that the second word begins with, e.g., *walke**d d**own*
 
 ### Activity
 
