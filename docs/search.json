@@ -18,7 +18,7 @@
     "href": "lessons/File_IO.html#directory-operations",
     "title": "File I/O in R",
     "section": "Directory operations",
-    "text": "Directory operations\n\nComputers are structured in a hierarchal filesystem (e.g., “/Users/Fernando/Documents/my_novel.docx”).\nOften, R scripts need to change directories (aka. folders) in order to access specific files.\nR has several functions to move around a filesystem. Here are a few of them:\n\ngetwd() (here) prints to the console the current working directory (i.e., the directory at the script currently has access to).\nsetwd() (here) sets a directory so that the script has access to it.\ndir() (here, an alias for list.files()) lists the contents of a directory, either only in the one directory or also in all sub-directories (with the recursive argument)."
+    "text": "Directory operations\n\nComputers are structured in a hierarchal filesystem (e.g., “/Users/Fernando/Documents/my_novel.docx”).\nOften, R scripts need to change directories (aka. folders) in order to access specific files.\nR has several functions to move around a filesystem. Here are a few of them:\n\ngetwd() (here) prints to the console the current working directory (i.e., the directory that the script currently has access to).\nsetwd() (here) sets a directory so that the script has access to it.\ndir() (here, an alias for list.files()) lists the contents of a directory, either only in the one directory or also in all sub-directories (with the recursive argument)."
   },
   {
     "objectID": "lessons/File_IO.html#text-files-.txt",

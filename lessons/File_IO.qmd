@@ -14,7 +14,7 @@ title: "File I/O in R"
 
 -   R has several functions to move around a filesystem. Here are a few of them:
 
-    -   `getwd()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd)) prints to the console the current working directory (i.e., the directory at the script currently has access to).
+    -   `getwd()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd)) prints to the console the current working directory (i.e., the directory that the script currently has access to).
 
     -   `setwd()` ([here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd)) sets a directory so that the script has access to it.
 
