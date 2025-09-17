@@ -46,7 +46,7 @@
     "href": "lessons/File_IO.html#spss-.sav-stata-.dta-and-sas-.sas-files",
     "title": "File I/O in R",
     "section": "SPSS (.sav), Stata (.dta), and SAS (.sas) files",
-    "text": "SPSS (.sav), Stata (.dta), and SAS (.sas) files\n\nReading in (input)\n\nThe haven R package does the trick.\n\nWriting out (output)\n\nWho cares? You should output it as something more cross-platform-friendly like CSV or parquet.\n\n\n\nActivity\n\nDownload the SPSS (.sav) file in the CMS.\nRead in the SPSS file and display it with view()."
+    "text": "SPSS (.sav), Stata (.dta), and SAS (.sas) files\n\nReading in (input)\n\nThe haven R package does the trick.\n\nWriting out (output)\n\nWho cares? You should output it as something more cross-platform-friendly like CSV or feather (aka. arrow) or parquet.\n\n\n\nActivity\n\nDownload the SPSS (.sav) file in the CMS.\nRead in the SPSS file and display it with view()."
   },
   {
     "objectID": "lessons/File_IO.html#feather-.feather-files",

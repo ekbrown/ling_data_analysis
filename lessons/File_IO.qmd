@@ -136,7 +136,7 @@ The [arrow::write_feather()](https://arrow.apache.org/docs/dev/r/articles/read_w
 
 2.  Writing out (output)
 
-    1.  Who cares? You should output it as something more cross-platform-friendly like CSV or parquet.
+    1.  Who cares? You should output it as something more cross-platform-friendly like CSV or feather (aka. arrow) or parquet.
 
 ### **Activity**
 
