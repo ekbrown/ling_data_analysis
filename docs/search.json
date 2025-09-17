@@ -1173,7 +1173,7 @@
     "href": "lessons/create_freq.html#getting-frequencies-of-words-in-files",
     "title": "Creating frequency lists",
     "section": "Getting frequencies of words in files",
-    "text": "Getting frequencies of words in files\nThe logic to calculate frequencies of files on a harddrive in R is simple (when holding all words in RAM; see an alternative below):\n\nParse the files so that all words in all files are in a single vector with N elements (N being the total number of words across all files);\nAsk R to count up the number of word tokens per word type in the vector.\n\nThere are two ways (Dr. Brown will show) to count up word tokens per word type:\n\nWith the base R table() function;\nConvert the vector into a one-column data frame and then use count() in tidyverse."
+    "text": "Getting frequencies of words in files\nThe logic to calculate frequencies of files on a harddrive in R is simple (when holding all words in RAM; see an alternative below):\n\nParse the files so that all words in all files are in a single vector with N elements (N being the total number of words [specifically, word tokens] across all files);\nAsk R to count up the number of word tokens per word type in the vector.\n\nThere are three ways (Dr. Brown will show) to count up word tokens per word type:\n\nWith the base R table() function;\nConvert the vector into a one-column data frame and then use count() in tidyverse.\nUsing a list data structure, count of frequencies of words in one file at a time."
   },
   {
     "objectID": "lessons/create_freq.html#the-table-function",

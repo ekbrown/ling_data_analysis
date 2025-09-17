@@ -375,6 +375,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">PCA</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/bootstrapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bootstrapping</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -435,13 +441,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="getting-frequencies-of-words-in-files">Getting frequencies of words in files</h2>
 <p>The logic to calculate frequencies of files on a harddrive in R is simple (when holding all words in RAM; see an alternative below):</p>
 <ol type="1">
-<li><p>Parse the files so that all words in all files are in a single vector with N elements (N being the total number of words across all files);</p></li>
+<li><p>Parse the files so that all words in all files are in a single vector with N elements (N being the total number of words [specifically, word tokens] across all files);</p></li>
 <li><p>Ask R to count up the number of word tokens per word type in the vector.</p>
 <ol type="1">
-<li><p>There are two ways (Dr.&nbsp;Brown will show) to count up word tokens per word type:</p>
+<li><p>There are three ways (Dr.&nbsp;Brown will show) to count up word tokens per word type:</p>
 <ol type="1">
 <li>With the base R <code>table()</code> function;</li>
 <li>Convert the vector into a one-column data frame and then use <code>count()</code> in <code>tidyverse</code>.</li>
+<li>Using a <code>list</code> data structure, count of frequencies of words in one file at a time.</li>
 </ol></li>
 </ol></li>
 </ol>

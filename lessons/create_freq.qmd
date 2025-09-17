@@ -16,14 +16,15 @@ In summary, frequency is super important, and being able to calculate frequencie
 
 The logic to calculate frequencies of files on a harddrive in R is simple (when holding all words in RAM; see an alternative below):
 
-1.  Parse the files so that all words in all files are in a single vector with N elements (N being the total number of words across all files);
+1.  Parse the files so that all words in all files are in a single vector with N elements (N being the total number of words \[specifically, word tokens\] across all files);
 
 2.  Ask R to count up the number of word tokens per word type in the vector.
 
-    1.  There are two ways (Dr. Brown will show) to count up word tokens per word type:
+    1.  There are three ways (Dr. Brown will show) to count up word tokens per word type:
 
         1.  With the base R `table()` function;
         2.  Convert the vector into a one-column data frame and then use `count()` in `tidyverse`.
+        3.  Using a `list` data structure, count of frequencies of words in one file at a time.
 
 ## The `table()` function
 
