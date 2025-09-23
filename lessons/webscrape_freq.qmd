@@ -98,7 +98,7 @@ library("rvest")
 "https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Hindi_1900" %>%  # put URL in a string
   read_html() %>%  # request page
   html_element("table") %>%  # find first "table" HTML element
-  html_table() %>%  # convert HTML table to data frame (i.e., tibble)
+  html_table(header = TRUE) %>%  # convert HTML table to data frame (i.e., tibble)
   print()  # print data frame to console
 ```
 
@@ -114,7 +114,7 @@ library("rvest")
 "https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Serbian_wordlist" %>% 
   read_html() %>% 
   html_element("table") %>% 
-  html_table() %>% 
+  html_table(header = TRUE) %>% 
   print()
 ```
 
