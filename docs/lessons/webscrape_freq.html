@@ -406,6 +406,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#activity-1" id="toc-activity-1" class="nav-link" data-scroll-target="#activity-1">Activity</a></li>
   </ul></li>
   <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#multiple-html-tables" id="toc-multiple-html-tables" class="nav-link" data-scroll-target="#multiple-html-tables">Multiple HTML Tables</a>
+  <ul class="collapse">
+  <li><a href="#activity-2" id="toc-activity-2" class="nav-link" data-scroll-target="#activity-2">Activity</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -603,8 +607,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="question" class="level2">
 <h2 class="anchored" data-anchor-id="question">Question</h2>
 <p>In most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?</p>
+</section>
+<section id="multiple-html-tables" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-html-tables">Multiple HTML Tables</h2>
+<p>If the webpage that you want to harvest an HTML Table from has multiple tables, you can use an index to get the particular table that you need. Let’s take an example from the chess world. The Wikipedia article <a href="https://en.wikipedia.org/wiki/World_Chess_Championship">World Chess Championship</a> has several HTML Tables, one of which is titled “FIDE (reunified) world champions (2006–present)”. We’ll need to use the <code>html_elements()</code> function (mind the plural marker on the function name) rather than <code>html_element()</code> that we used above, and then use an integer index to get the table we want. We can figure out what the integer index is for the table we need by trial and error.</p>
+<p>Here’s some code to get that particular HTML Table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rvest"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">"https://en.wikipedia.org/wiki/World_Chess_Championship"</span> <span class="sc">%&gt;%</span>  <span class="co"># put URL in a string</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">%&gt;%</span>  <span class="co"># request page</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">"table"</span>) <span class="sc">%&gt;%</span>  <span class="co"># find all "table" HTML elements; mind the plural "html_elements"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  .[<span class="dv">6</span>] <span class="sc">%&gt;%</span> <span class="co"># get the sixth HTML Table on the webpage</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>(<span class="at">header =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span>  <span class="co"># convert HTML table to data frame (i.e., tibble)</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="activity-2" class="level3">
+<h3 class="anchored" data-anchor-id="activity-2">Activity</h3>
+<p><strong>Instructions</strong>: Find a webpage of your choice with two or more HTML Tables. If you’re struggling to find such a webpage, you can use the Wikipedia article about <a href="https://en.wikipedia.org/wiki/Denmark">Denmark</a>. You should inspect the HTML code behind the webpage in order to ensure that the tables are HTML Tables, that is, that they have <code>&lt;table&gt;</code> HTML tags. Pull out the table of your choice by modifying the code given above.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -202,3 +202,26 @@ library("rvest")
 ## Question
 
 In most of the code in this lesson, the frequency or rank lists were simply printed to the console. How could we modify the code so that instead of printing to the console, we write the lists out to CSV files, one list per CSV file?
+
+## Multiple HTML Tables
+
+If the webpage that you want to harvest an HTML Table from has multiple tables, you can use an index to get the particular table that you need. Let's take an example from the chess world. The Wikipedia article [World Chess Championship](https://en.wikipedia.org/wiki/World_Chess_Championship) has several HTML Tables, one of which is titled "FIDE (reunified) world champions (2006–present)". We'll need to use the `html_elements()` function (mind the plural marker on the function name) rather than `html_element()` that we used above, and then use an integer index to get the table we want. We can figure out what the integer index is for the table we need by trial and error.
+
+Here's some code to get that particular HTML Table:
+
+```{r}
+#| eval: false
+library("tidyverse")
+library("rvest")
+
+"https://en.wikipedia.org/wiki/World_Chess_Championship" %>%  # put URL in a string
+  read_html() %>%  # request page
+  html_elements("table") %>%  # find all "table" HTML elements; mind the plural "html_elements"
+  .[6] %>% # get the sixth HTML Table on the webpage
+  html_table(header = TRUE) %>%  # convert HTML table to data frame (i.e., tibble)
+  print()
+```
+
+### Activity
+
+**Instructions**: Find a webpage of your choice with two or more HTML Tables. If you're struggling to find such a webpage, you can use the Wikipedia article about [Denmark](https://en.wikipedia.org/wiki/Denmark). You should inspect the HTML code behind the webpage in order to ensure that the tables are HTML Tables, that is, that they have `<table>` HTML tags. Pull out the table of your choice by modifying the code given above.
