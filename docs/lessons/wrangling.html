@@ -375,6 +375,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">PCA</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/bootstrapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bootstrapping</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -459,8 +465,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Instructions: Match each function with its corresponding purpose.</p>
 <table class="table">
 <colgroup>
-<col style="width: 13%">
-<col style="width: 86%">
+<col style="width: 20%">
+<col style="width: 79%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -617,8 +623,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Instructions: Match each function (i.e., verb) with its corresponding purpose.</p>
 <table class="table">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 83%">
+<col style="width: 22%">
+<col style="width: 77%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -888,7 +894,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Review: Create a data frame with at least one column named <code>word</code> (i.e., that has one word per row) using text files of your choice (e.g., <em>Saints</em> or texts from Project Gutenberg). You might like to use a regular expression to find different words (e.g., <code>"\\w+ed\\b"</code> or <code>"\\bre\\w+"</code>), as the next steps will be boring if all rows have the same word.</p></li>
 <li><p>Review: Create a data frame of frequencies of words from text files of your choice or webscrape a frequency list from the internet (e.g., Wikitionary).</p></li>
 <li><p>Note: If after a good-faith effort to complete the previous two steps, you can’t remember how to do these tasks, download and use two files in the LMS labeled <code>Dataset_for_over_dan.csv</code> and <code>freqs_dan.csv</code>. The first file has a keyword-in-context display of words in Danish that start with <em>for</em> or <em>over</em> while the second file has frequencies of words in Danish.</p></li>
-<li><p>Here’s the main exercise of the activity: Join the data frame with words to the data frame with frequencies, so that you have a new column (called <code>freq</code>) with the frequency of the word in the <code>word</code> (or <code>node</code>) column. Again, I can’t stress enough the importance of taking the time to double check that you know what the names are of the columns in the several data frame, so that you can correctly pass thme to the <code>by</code> argument.</p></li>
+<li><p>Here’s the main exercise of the activity: Join the data frame with words to the data frame with frequencies, so that you have a new column (called <code>freq</code>) with the frequency of the word in the <code>word</code> (or <code>node</code>) column. Again, I can’t stress enough the importance of taking the time to double check that you know what the names are of the columns in the several data frames, so that you can correctly pass them to the <code>by</code> argument.</p></li>
 </ol>
 </section>
 </section>
@@ -914,27 +920,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>hungry <span class="sc">|&gt;</span> </span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(<span class="at">cols =</span> conversation, <span class="at">delim =</span> <span class="st">": "</span>, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"person"</span>, <span class="st">"utterance"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The function <code>separate_wider_regex()</code> takes a different approach. Rather than splitting on the given fixed-width delimiter given to the <code>delim</code> argument in the previous function, this function takes regular expressions that are used to extract matches out of the string in the row. Specifically, you give it a named character vector in which the names become column names and the elements of the vector are regular expressions to be matched. If no name is given, then that match doesn’t make it into the resulting data frame. Let’s use this function on the same <code>hungry</code> data frame from above. Notice that the regex <code>":"</code> doesn’t have a name, and therefore isn’t returned in the resulting data frame.</p>
+<p>The function <code>separate_wider_regex()</code> takes a different approach. Rather than splitting on the given fixed-width delimiter given to the <code>delim</code> argument in the previous function, this function takes regular expressions that are used to extract matches out of the string in the row. Specifically, you give it a named character vector in which the names become column names and the elements of the vector are regular expressions to be matched. If no name is given, then that match doesn’t make it into the resulting data frame. Let’s use this function on the same <code>hungry</code> data frame from above. Notice that the regex <code>": "</code> doesn’t have a name, and therefore isn’t returned in the resulting data frame.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>hungry <span class="sc">|&gt;</span> </span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(<span class="at">cols =</span> conversation, <span class="at">patterns =</span> <span class="fu">c</span>(<span class="at">person =</span> <span class="st">"^[^:]+"</span>, <span class="st">":"</span>, <span class="at">utterance =</span> <span class="st">"[^:]+$"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>For good measure, we’d probably want to trim off that extra space at the beginning of each utterance:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>hungry <span class="sc">|&gt;</span> </span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(<span class="at">cols =</span> conversation, <span class="at">patterns =</span> <span class="fu">c</span>(<span class="at">person =</span> <span class="st">"^[^:]+"</span>, <span class="st">":"</span>, <span class="at">utterance =</span> <span class="st">"[^:]+$"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">utterance =</span> <span class="fu">str_trim</span>(utterance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(<span class="at">cols =</span> conversation, <span class="at">patterns =</span> <span class="fu">c</span>(<span class="at">person =</span> <span class="st">"^[^:]+"</span>, <span class="st">": "</span>, <span class="at">utterance =</span> <span class="st">"[^:]+$"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Dr.&nbsp;Brown hasn’t needed <code>separate_wider_position()</code> yet in his life, so let’s move on! If you think you might need it, take a look at the docs <a href="https://tidyr.tidyverse.org/reference/separate_wider_delim.html">here</a>.</p>
 <p>The <code>unite()</code> function is the inverse of the <code>separate_*</code> functions, that is, it merges into one column two or more columns. It takes was input the data frame (probably piped in with the pipe operator), the <code>col</code> argument which specifies the name of the new column, then the names of the two or more columns to be merged, and the <code>sep</code> argument which specifies the character(s) used to join the values in the new column. There are other arguments; take a look at the docs <a href="https://tidyr.tidyverse.org/reference/unite.html?q=unite#null">here</a>.</p>
 <p>Let’s continue with our <code>hungry</code> data frame from above. Let’s put the <code>person</code> and <code>utterance</code> columns back together, but this time with a dash separating the speakers and their corresponding utterances.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df_separated <span class="ot">&lt;-</span> hungry <span class="sc">|&gt;</span> </span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(<span class="at">cols =</span> conversation, <span class="at">delim =</span> <span class="st">": "</span>, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"person"</span>, <span class="st">"utterance"</span>))</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df_separated)</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>df_separated <span class="sc">|&gt;</span> </span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="at">col =</span> <span class="st">"combined"</span>, person<span class="sc">:</span>utterance, <span class="at">sep =</span> <span class="st">" - "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>df_separated <span class="ot">&lt;-</span> hungry <span class="sc">|&gt;</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(<span class="at">cols =</span> conversation, <span class="at">delim =</span> <span class="st">": "</span>, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"person"</span>, <span class="st">"utterance"</span>))</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df_separated)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>df_separated <span class="sc">|&gt;</span> </span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="at">col =</span> <span class="st">"combined"</span>, person<span class="sc">:</span>utterance, <span class="at">sep =</span> <span class="st">" - "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="activity-3" class="level3">
 <h3 class="anchored" data-anchor-id="activity-3">Activity</h3>
@@ -947,27 +947,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The two main functions for changing the shape of a data frame within <code>tidyverse</code> are <a href="https://tidyr.tidyverse.org/reference/pivot_longer.html"><code>pivot_longer()</code></a> and <a href="https://tidyr.tidyverse.org/reference/pivot_wider.html"><code>pivot_wider()</code></a>. The function <code>pivot_longer()</code> increases the number of rows and decreases the number of columns, while <code>pivot_wider()</code> decreases the number of rows and increases the number of columns.</p>
 <p>Let’s take a super simple example. Let’s create a toy data frame with one row and five columns with the ages of people in a sample:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>ages <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Sammy =</span> <span class="dv">20</span>, <span class="at">Edna =</span> <span class="dv">18</span>, <span class="at">Luisa =</span> <span class="dv">16</span>, <span class="at">Heidi =</span> <span class="dv">14</span>, <span class="at">Evelyn =</span> <span class="dv">12</span>)</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>ages <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Sammy =</span> <span class="dv">20</span>, <span class="at">Edna =</span> <span class="dv">18</span>, <span class="at">Luisa =</span> <span class="dv">16</span>, <span class="at">Heidi =</span> <span class="dv">14</span>, <span class="at">Evelyn =</span> <span class="dv">12</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As we see, each column represents one person, with the age in the row. Let’s reshape the data frame so that we end up with five rows and two columns, with each row giving info about one person, and the first column giving the person’s name and the second column giving the person’s age:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>ages <span class="sc">|&gt;</span> </span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Sammy<span class="sc">:</span>Evelyn, <span class="at">names_to =</span> <span class="st">"person"</span>, <span class="at">values_to =</span> <span class="st">"age"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>ages <span class="sc">|&gt;</span> </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Sammy<span class="sc">:</span>Evelyn, <span class="at">names_to =</span> <span class="st">"person"</span>, <span class="at">values_to =</span> <span class="st">"age"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The resulting data frame is a “tidy” data frame because each column has only one variable (e.g., person or age) and the rows represent individual observations. The pre-transformed data frame above was <strong>not</strong> tidy because each column had more than one variable (e.g., person and age). Read <a href="https://doi.org/10.18637/jss.v059.i10">Hadley Wickham’s paper</a> for a full explanation of tidy data.</p>
 <p>The <code>pivot_wider()</code> does the opposite, that is, it make a long(er) data frame wide(r). Let’s create another toy data frame, this time in long format and make it wide:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>heights <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">person =</span> <span class="fu">c</span>(<span class="st">"Sammy"</span>, <span class="st">"Edna"</span>, <span class="st">"Luisa"</span>, <span class="st">"Heidi"</span>, <span class="st">"Evelyn"</span>),</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">height_in =</span> <span class="fu">c</span>(<span class="dv">72</span>, <span class="dv">70</span>, <span class="dv">69</span>, <span class="dv">63</span>, <span class="dv">64</span>))</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(heights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>heights <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">person =</span> <span class="fu">c</span>(<span class="st">"Sammy"</span>, <span class="st">"Edna"</span>, <span class="st">"Luisa"</span>, <span class="st">"Heidi"</span>, <span class="st">"Evelyn"</span>),</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">height_in =</span> <span class="fu">c</span>(<span class="dv">72</span>, <span class="dv">70</span>, <span class="dv">69</span>, <span class="dv">63</span>, <span class="dv">64</span>))</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(heights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s pivot this data frame to a wide format so that there are five columns, with each person’s name was the column name, and the rows are the corresponding heights in inches:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>heights <span class="sc">|&gt;</span> </span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> person, <span class="at">values_from =</span> height_in)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>heights <span class="sc">|&gt;</span> </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> person, <span class="at">values_from =</span> height_in)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="toy-activity-and-review" class="level3">
 <h3 class="anchored" data-anchor-id="toy-activity-and-review">Toy activity and review</h3>
@@ -976,9 +976,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>ages <span class="sc">|&gt;</span> </span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Sammy<span class="sc">:</span>Evelyn, <span class="at">names_to =</span> <span class="st">"person"</span>, <span class="at">values_to =</span> <span class="st">"age"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(heights, <span class="at">by =</span> <span class="fu">join_by</span>(person <span class="sc">==</span> person))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>ages <span class="sc">|&gt;</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Sammy<span class="sc">:</span>Evelyn, <span class="at">names_to =</span> <span class="st">"person"</span>, <span class="at">values_to =</span> <span class="st">"age"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(heights, <span class="at">by =</span> <span class="fu">join_by</span>(person <span class="sc">==</span> person))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -987,71 +987,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Let’s take a look at a linguistic example from Dr.&nbsp;Stanley. Download the <code>sample_vowel_data.csv</code> file from the LMS &gt; Datasets. Currently, each row represents one time point for each vowel. There are 27 rows containing F1, F2, and F3 measurements from three tokens of three vowels each, at three timepoints.</p>
 <p>Let’s load the dataset into our R session as a data frame:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>vowels <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/pathway/to/sample_vowel_data.csv"</span>)</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(vowels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>vowels <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/pathway/to/sample_vowel_data.csv"</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(vowels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s change it into a wider format so that the unit of observation (i.e., row) is one vowel. There are 9 rows. Also, save it to a variable named <code>widest</code> so we can work with it later.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>widest <span class="ot">&lt;-</span> vowels <span class="sc">|&gt;</span> </span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> percent, <span class="at">values_from =</span> <span class="fu">c</span>(F1, F2, F3))</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(widest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>widest <span class="ot">&lt;-</span> vowels <span class="sc">|&gt;</span> </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> percent, <span class="at">values_from =</span> <span class="fu">c</span>(F1, F2, F3))</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(widest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s change it to a longer format. Now the unit of measurement is one format measurement, per time point, per vowel token. There are 81 rows. Note that I’ll need to specify which columns should be affected with the <code>cols</code> argument.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>longest <span class="ot">&lt;-</span> vowels <span class="sc">|&gt;</span> </span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(F1, F2, F3), </span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="st">"formant"</span>, </span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">"hz"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(formant)</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(longest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>longest <span class="ot">&lt;-</span> vowels <span class="sc">|&gt;</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(F1, F2, F3), </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="st">"formant"</span>, </span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">"hz"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(formant)</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(longest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s use our <code>widest</code> data frame and pivot it longer. Also, as a shorthand for specifying the columns I want to pivot, I can use <code>matches()</code> and a regex:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>widest <span class="sc">|&gt;</span> </span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"F</span><span class="sc">\\</span><span class="st">d_</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d"</span>), </span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="st">"formant_percent"</span>, </span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">"hz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>widest <span class="sc">|&gt;</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"F</span><span class="sc">\\</span><span class="st">d_</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d"</span>), </span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="st">"formant_percent"</span>, </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">"hz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here, because each column name contained two pieces of information (<code>F1_25</code>), the resulting data set after pivoting contains a single column with two pieces of information: <code>formant</code> and <code>percent</code>.</p>
 <p>Enter our ol’ friend <code>separate()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>widest <span class="sc">|&gt;</span> </span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"F</span><span class="sc">\\</span><span class="st">d_</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d"</span>), </span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="st">"formant_percent"</span>, </span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">"hz"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">separate</span>(formant_percent, </span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"formant"</span>, <span class="st">"percent"</span>), </span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">sep =</span> <span class="st">"_"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>widest <span class="sc">|&gt;</span> </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"F</span><span class="sc">\\</span><span class="st">d_</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d"</span>), </span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="st">"formant_percent"</span>, </span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">"hz"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">separate</span>(formant_percent, </span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"formant"</span>, <span class="st">"percent"</span>), </span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">sep =</span> <span class="st">"_"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>But the separation above can happen within pivot functions directly. Below, we provide a vector of names as the value of the <code>names_to</code> argument. This then requires the use of the <code>names_sep</code> argument, which is where you specify the character that separates the two names.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>widest <span class="sc">|&gt;</span> </span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"F</span><span class="sc">\\</span><span class="st">d_</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d"</span>), </span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"formant"</span>, <span class="st">"percent"</span>), </span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_sep =</span> <span class="st">"_"</span>, </span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">"hz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>widest <span class="sc">|&gt;</span> </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"F</span><span class="sc">\\</span><span class="st">d_</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d"</span>), </span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"formant"</span>, <span class="st">"percent"</span>), </span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_sep =</span> <span class="st">"_"</span>, </span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">"hz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="ramping-it-up" class="level3">
 <h3 class="anchored" data-anchor-id="ramping-it-up">Ramping it up</h3>
 <p>Let’s say we start off with what we see as the widest version of the data in the <code>widest</code> data frame. This is not a hypothetical: this is how a lot of sociophonetics software returns the data to the user! We want to pivot it so that it looks like our original version in the <code>vowels</code> data frame. One way is to make it longer and then wider again.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>widest <span class="sc">|&gt;</span> </span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"F</span><span class="sc">\\</span><span class="st">d_</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d"</span>), </span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"formant"</span>, <span class="st">"percent"</span>),</span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">"hz"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> formant,</span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> hz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>widest <span class="sc">|&gt;</span> </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"F</span><span class="sc">\\</span><span class="st">d_</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d"</span>), </span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"formant"</span>, <span class="st">"percent"</span>),</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">"hz"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> formant,</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> hz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This produces the correct output, but it’s a little clunky to do two pivots.</p>
 <p>Enter the <strong>black magic</strong> that is <code>.value</code>. So instead, we replace the <code>formant</code> column name (in the <code>names_to</code> argument) with <code>.value</code> (mind the period). This then, somehow, takes what would have been the <code>formant</code> column and pivots it wider. Note that when we do this, we don’t need the <code>values_from</code> argument anymore.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>widest <span class="sc">|&gt;</span> </span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"F</span><span class="sc">\\</span><span class="st">d_</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d"</span>), </span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"percent"</span>),</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_sep =</span> <span class="st">"_"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>widest <span class="sc">|&gt;</span> </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"F</span><span class="sc">\\</span><span class="st">d_</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d"</span>), </span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"percent"</span>),</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_sep =</span> <span class="st">"_"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="big-badboy-activity" class="level3">
@@ -1076,13 +1076,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>)</span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="st">"/pathway/to/RPM_2019_for_Reliability.xlsx"</span> <span class="sc">|&gt;</span> </span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_excel</span>(<span class="at">range =</span> <span class="st">"For Earl!A1:E3745"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">104</span>, <span class="at">each =</span> <span class="dv">36</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Page/Item"</span>, <span class="at">values_from =</span> <span class="st">"Correct/incorrect"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(id, <span class="at">.before =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="st">"/pathway/to/RPM_2019_for_Reliability.xlsx"</span> <span class="sc">|&gt;</span> </span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_excel</span>(<span class="at">range =</span> <span class="st">"For Earl!A1:E3745"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">104</span>, <span class="at">each =</span> <span class="dv">36</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Page/Item"</span>, <span class="at">values_from =</span> <span class="st">"Correct/incorrect"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(id, <span class="at">.before =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -1092,70 +1092,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>There are a few handy functions in the <code>forcats</code> package within <code>tidyverse</code> for working with categorical variables (aka. factors).</p>
 <p>The <a href="https://forcats.tidyverse.org/reference/fct_recode.html"><code>fct_recode()</code></a> function allows the user to manually change or combine levels (aka. values) of a categorical variable. Let’s create a toy data frame with words and vowels:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>words <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">word =</span> <span class="fu">c</span>(<span class="st">"wasp"</span>, <span class="st">"fleece"</span>, <span class="st">"beat"</span>, <span class="st">"bit"</span>, <span class="st">"pat"</span>, <span class="st">"bus"</span>, <span class="st">"hot"</span>, <span class="st">"cool"</span>, <span class="st">"firm"</span>, <span class="st">"father"</span>),</span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vowel =</span> <span class="fu">c</span>(<span class="st">"[ɑ]"</span>, <span class="st">"[i]"</span>, <span class="st">"[i]"</span>, <span class="st">"[ɪ]"</span>, <span class="st">"[æ]"</span>, <span class="st">"[ʌ]"</span>, <span class="st">"[ɔ]"</span>, <span class="st">"[u]"</span>, <span class="st">"[ɚ]"</span>, <span class="st">"[ɑ]"</span>)</span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(words)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>words <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">word =</span> <span class="fu">c</span>(<span class="st">"wasp"</span>, <span class="st">"fleece"</span>, <span class="st">"beat"</span>, <span class="st">"bit"</span>, <span class="st">"pat"</span>, <span class="st">"bus"</span>, <span class="st">"hot"</span>, <span class="st">"cool"</span>, <span class="st">"firm"</span>, <span class="st">"father"</span>),</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vowel =</span> <span class="fu">c</span>(<span class="st">"[ɑ]"</span>, <span class="st">"[i]"</span>, <span class="st">"[i]"</span>, <span class="st">"[ɪ]"</span>, <span class="st">"[æ]"</span>, <span class="st">"[ʌ]"</span>, <span class="st">"[ɔ]"</span>, <span class="st">"[u]"</span>, <span class="st">"[ɚ]"</span>, <span class="st">"[ɑ]"</span>)</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(words)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, let’s create a new column in which we describe (some of) the vowels:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>words <span class="sc">|&gt;</span> </span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">description =</span> <span class="fu">fct_recode</span>(vowel, <span class="st">"high front closed"</span> <span class="ot">=</span> <span class="st">"[i]"</span>, <span class="st">"r colored schwa"</span> <span class="ot">=</span> <span class="st">"[ɚ]"</span>, <span class="st">"stressed schwa (wedge)"</span> <span class="ot">=</span> <span class="st">"[ʌ]"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>words <span class="sc">|&gt;</span> </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">description =</span> <span class="fu">fct_recode</span>(vowel, <span class="st">"high front closed"</span> <span class="ot">=</span> <span class="st">"[i]"</span>, <span class="st">"r colored schwa"</span> <span class="ot">=</span> <span class="st">"[ɚ]"</span>, <span class="st">"stressed schwa (wedge)"</span> <span class="ot">=</span> <span class="st">"[ʌ]"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The <a href="https://forcats.tidyverse.org/reference/fct_collapse.html"><code>fct_collapse()</code></a> function allows the user to put levels into groups:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>words <span class="sc">|&gt;</span> </span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">height =</span> <span class="fu">fct_collapse</span>(vowel, </span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">hi_V =</span> <span class="fu">c</span>(<span class="st">"[i]"</span>, <span class="st">"[ɪ]"</span>, <span class="st">"[u]"</span>), </span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lo_V =</span> <span class="fu">c</span>(<span class="st">"[ɑ]"</span>, <span class="st">"[æ]"</span>),</span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">other_level =</span> <span class="st">"mid_V"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>words <span class="sc">|&gt;</span> </span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">height =</span> <span class="fu">fct_collapse</span>(vowel, </span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">hi_V =</span> <span class="fu">c</span>(<span class="st">"[i]"</span>, <span class="st">"[ɪ]"</span>, <span class="st">"[u]"</span>), </span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lo_V =</span> <span class="fu">c</span>(<span class="st">"[ɑ]"</span>, <span class="st">"[æ]"</span>),</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">other_level =</span> <span class="st">"mid_V"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Question: What does the <code>other_level</code> argument do in the function call above?</p>
 <p>The <a href="https://forcats.tidyverse.org/reference/fct_relevel.html"><code>fct_relevel()</code></a> function allows the user to reorder the levels of a categorical variable. This is often useful when plotting data and the user wants an order of levels different from alphabetical order (the default).</p>
 <p>Let’s create a toy data frame of voiceless plosives and their voice onset times (VOT):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>voiceless_plosives <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plosive =</span> <span class="fu">c</span>(<span class="st">"t"</span>, <span class="st">"k"</span>, <span class="st">"p"</span>, <span class="st">"p"</span>, <span class="st">"k"</span>, <span class="st">"t"</span>, <span class="st">"p"</span>, <span class="st">"k"</span>, <span class="st">"t"</span>),</span>
-<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vot =</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">34</span>, <span class="dv">45</span>, <span class="dv">56</span>, <span class="dv">67</span>, <span class="dv">78</span>, <span class="dv">89</span>, <span class="dv">91</span>, <span class="dv">21</span>)</span>
-<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(voiceless_plosives)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>voiceless_plosives <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plosive =</span> <span class="fu">c</span>(<span class="st">"t"</span>, <span class="st">"k"</span>, <span class="st">"p"</span>, <span class="st">"p"</span>, <span class="st">"k"</span>, <span class="st">"t"</span>, <span class="st">"p"</span>, <span class="st">"k"</span>, <span class="st">"t"</span>),</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vot =</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">34</span>, <span class="dv">45</span>, <span class="dv">56</span>, <span class="dv">67</span>, <span class="dv">78</span>, <span class="dv">89</span>, <span class="dv">91</span>, <span class="dv">21</span>)</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(voiceless_plosives)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If we create a boxplot (preview of what’s coming soon!), we see that “k” is on the left, followed by “p” and “t”, because the default way to sort levels is by alphabetical order:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>voiceless_plosives <span class="sc">|&gt;</span> </span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> plosive, <span class="at">y =</span> vot)) <span class="sc">+</span></span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>voiceless_plosives <span class="sc">|&gt;</span> </span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> plosive, <span class="at">y =</span> vot)) <span class="sc">+</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We probably want “p” followed by “t” and then “k”, as that’s how they are presented in linguistic literature, based on the place of articulation. Let’s use <code>fct_relevel()</code> to change the internal order of the levels, and then replot their VOTs:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>voiceless_plosives <span class="sc">|&gt;</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plosive =</span> <span class="fu">fct_relevel</span>(plosive, <span class="st">"p"</span>, <span class="st">"t"</span>, <span class="st">"k"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> plosive, <span class="at">y =</span> vot)) <span class="sc">+</span></span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>voiceless_plosives <span class="sc">|&gt;</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plosive =</span> <span class="fu">fct_relevel</span>(plosive, <span class="st">"p"</span>, <span class="st">"t"</span>, <span class="st">"k"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> plosive, <span class="at">y =</span> vot)) <span class="sc">+</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="activity-4" class="level3">
 <h3 class="anchored" data-anchor-id="activity-4">Activity</h3>
 <p>Let’s create a toy data frame with Spanish words with a dental or alveolar word-final sibilant:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>sibilants <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">person =</span> <span class="fu">c</span>(<span class="st">"Raúl"</span>, <span class="st">"Raúl"</span>, <span class="st">"José"</span>, <span class="st">"José"</span>, <span class="st">"María"</span>),</span>
-<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_wd =</span> <span class="fu">c</span>(<span class="st">"árboles"</span>, <span class="st">"mesas"</span>, <span class="st">"lápiz"</span>, <span class="st">"es"</span>, <span class="st">"pues"</span>),</span>
-<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">next_wd =</span> <span class="fu">c</span>(<span class="st">"de"</span>, <span class="st">"en"</span>, <span class="st">"y"</span>, <span class="st">"que"</span>, <span class="st">"."</span>),</span>
-<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">next_segment =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"i"</span>, <span class="st">"k"</span>, <span class="st">"#"</span>)</span>
-<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sibilants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>sibilants <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">person =</span> <span class="fu">c</span>(<span class="st">"Raúl"</span>, <span class="st">"Raúl"</span>, <span class="st">"José"</span>, <span class="st">"José"</span>, <span class="st">"María"</span>),</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_wd =</span> <span class="fu">c</span>(<span class="st">"árboles"</span>, <span class="st">"mesas"</span>, <span class="st">"lápiz"</span>, <span class="st">"es"</span>, <span class="st">"pues"</span>),</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">next_wd =</span> <span class="fu">c</span>(<span class="st">"de"</span>, <span class="st">"en"</span>, <span class="st">"y"</span>, <span class="st">"que"</span>, <span class="st">"."</span>),</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">next_segment =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"i"</span>, <span class="st">"k"</span>, <span class="st">"#"</span>)</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sibilants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Your task is to create a new column that groups the vowels into one level, the consonants into their own group, and then all other following segments should be placed into an <code>other</code> level.</p>
 <p>After a good-faith effort, if you need help, take a look at Dr.&nbsp;Brown’s code below:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>sibilants <span class="sc">|&gt;</span>  </span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">next_sound_type =</span> <span class="fu">fct_collapse</span>(next_segment, <span class="at">vowel =</span> <span class="fu">c</span>(<span class="st">"i"</span>,<span class="st">"e"</span>), <span class="at">consonant =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"k"</span>), <span class="at">other_level =</span> <span class="st">"other"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>sibilants <span class="sc">|&gt;</span>  </span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">next_sound_type =</span> <span class="fu">fct_collapse</span>(next_segment, <span class="at">vowel =</span> <span class="fu">c</span>(<span class="st">"i"</span>,<span class="st">"e"</span>), <span class="at">consonant =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"k"</span>), <span class="at">other_level =</span> <span class="st">"other"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 
