@@ -18,11 +18,11 @@ Pop (formative) quiz!
 
 Instructions: Match each function with its corresponding purpose.
 
-|              |                                                                                             |
-|--------------|---------------------------------------------------------------------------------------------|
-| `filter()`   | A. orders the rows based on values in one or more columns                                   |
-| `arrange()`  | B. inverts the order so that the rows are in big-to-small order                             |
-| `desc()`     | C. keeps only unique rows                                                                   |
+|  |  |
+|---------------|---------------------------------------------------------|
+| `filter()` | A. orders the rows based on values in one or more columns |
+| `arrange()` | B. inverts the order so that the rows are in big-to-small order |
+| `desc()` | C. keeps only unique rows |
 | `distinct()` | D. keeps rows that evaluate to TRUE in a conditional statement based on one or more columns |
 
 ### Activity
@@ -183,12 +183,12 @@ Pop quiz time!
 
 Instructions: Match each function (i.e., verb) with its corresponding purpose.
 
-|              |                                                                      |
-|--------------|----------------------------------------------------------------------|
-| `mutate()`   | A. change the name of the specified column                           |
-| `select()`   | B. creates new columns based on one or more already existing columns |
-| `rename()`   | C. moves the position of the specified columns                       |
-| `relocate()` | D. keeps only the specified columns                                  |
+|  |  |
+|----------------|--------------------------------------------------------|
+| `mutate()` | A. change the name of the specified column |
+| `select()` | B. creates new columns based on one or more already existing columns |
+| `rename()` | C. moves the position of the specified columns |
+| `relocate()` | D. keeps only the specified columns |
 
 Let's try out the exercises provided in 3.3.5 of Chapter 3 "Data transformation" [here](https://r4ds.hadley.nz/data-transform.html#exercises-1). After a good-faith effort, if you need take a look at Dr. Brown's code below each exercise.
 
@@ -500,7 +500,7 @@ Let's ramp it up to a real activity. Try the following:
 
 3.  Note: If after a good-faith effort to complete the previous two steps, you can't remember how to do these tasks, download and use two files in the LMS labeled `Dataset_for_over_dan.csv` and `freqs_dan.csv`. The first file has a keyword-in-context display of words in Danish that start with *for* or *over* while the second file has frequencies of words in Danish.
 
-4.  Here's the main exercise of the activity: Join the data frame with words to the data frame with frequencies, so that you have a new column (called `freq`) with the frequency of the word in the `word` (or `node`) column. Again, I can't stress enough the importance of taking the time to double check that you know what the names are of the columns in the several data frame, so that you can correctly pass thme to the `by` argument.
+4.  Here's the main exercise of the activity: Join the data frame with words to the data frame with frequencies, so that you have a new column (called `freq`) with the frequency of the word in the `word` (or `node`) column. Again, I can't stress enough the importance of taking the time to double check that you know what the names are of the columns in the several data frames, so that you can correctly pass them to the `by` argument.
 
 ## Separate and unite columns
 
@@ -533,21 +533,12 @@ hungry |>
   separate_wider_delim(cols = conversation, delim = ": ", names = c("person", "utterance"))
 ```
 
-The function `separate_wider_regex()` takes a different approach. Rather than splitting on the given fixed-width delimiter given to the `delim` argument in the previous function, this function takes regular expressions that are used to extract matches out of the string in the row. Specifically, you give it a named character vector in which the names become column names and the elements of the vector are regular expressions to be matched. If no name is given, then that match doesn't make it into the resulting data frame. Let's use this function on the same `hungry` data frame from above. Notice that the regex `":"` doesn't have a name, and therefore isn't returned in the resulting data frame.
+The function `separate_wider_regex()` takes a different approach. Rather than splitting on the given fixed-width delimiter given to the `delim` argument in the previous function, this function takes regular expressions that are used to extract matches out of the string in the row. Specifically, you give it a named character vector in which the names become column names and the elements of the vector are regular expressions to be matched. If no name is given, then that match doesn't make it into the resulting data frame. Let's use this function on the same `hungry` data frame from above. Notice that the regex `": "` doesn't have a name, and therefore isn't returned in the resulting data frame.
 
 ```{r}
 #| eval: false
 hungry |> 
-  separate_wider_regex(cols = conversation, patterns = c(person = "^[^:]+", ":", utterance = "[^:]+$"))
-```
-
-For good measure, we'd probably want to trim off that extra space at the beginning of each utterance:
-
-```{r}
-#| eval: false
-hungry |> 
-  separate_wider_regex(cols = conversation, patterns = c(person = "^[^:]+", ":", utterance = "[^:]+$")) |> 
-  mutate(utterance = str_trim(utterance))
+  separate_wider_regex(cols = conversation, patterns = c(person = "^[^:]+", ": ", utterance = "[^:]+$"))
 ```
 
 Dr. Brown hasn't needed `separate_wider_position()` yet in his life, so let's move on! If you think you might need it, take a look at the docs [here](https://tidyr.tidyverse.org/reference/separate_wider_delim.html).
