@@ -245,8 +245,8 @@ First, let's download a package to allow us to download R packages from github, 
 
 ```{r}
 #| eval: false
-install.packages("devtools")
-devtools::install_github("joeystanley/joeysvowels")
+install.packages("remotes")
+remotes::install_github("joeystanley/joeysvowels")
 ```
 
 Let's load a dataset called `coronals` and and inspect it to see what data are included and how they are organized:

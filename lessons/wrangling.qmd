@@ -19,7 +19,7 @@ Pop (formative) quiz!
 Instructions: Match each function with its corresponding purpose.
 
 |  |  |
-|---------------|---------------------------------------------------------|
+|----|----|
 | `filter()` | A. orders the rows based on values in one or more columns |
 | `arrange()` | B. inverts the order so that the rows are in big-to-small order |
 | `desc()` | C. keeps only unique rows |
@@ -184,7 +184,7 @@ Pop quiz time!
 Instructions: Match each function (i.e., verb) with its corresponding purpose.
 
 |  |  |
-|----------------|--------------------------------------------------------|
+|----|----|
 | `mutate()` | A. change the name of the specified column |
 | `select()` | B. creates new columns based on one or more already existing columns |
 | `rename()` | C. moves the position of the specified columns |
