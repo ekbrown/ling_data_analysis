@@ -740,7 +740,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The above plot is nice, but the overplotting (i.e., dots on top of each other) makes it a bit hard to tell where there are many dots.</p>
-<p>Another way to put a fourth variable in the plot is with the level of transparency fo the dots so that cluster of dots that are on top of each other are easier to see. Rather than the <code>size</code> argument, let’s use the <code>alpha</code> argument:</p>
+<p>Another way to put a fourth variable in the plot is with the level of transparency of the dots so that the clusters of dots that are on top of each other are easier to see. Rather than the <code>size</code> argument, let’s use the <code>alpha</code> argument:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>midpoints <span class="sc">|&gt;</span> </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">duration =</span> end <span class="sc">-</span> start) <span class="sc">|&gt;</span> </span>

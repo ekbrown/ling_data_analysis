@@ -354,7 +354,7 @@ midpoints |>
 
 The above plot is nice, but the overplotting (i.e., dots on top of each other) makes it a bit hard to tell where there are many dots.
 
-Another way to put a fourth variable in the plot is with the level of transparency fo the dots so that cluster of dots that are on top of each other are easier to see. Rather than the `size` argument, let's use the `alpha` argument:
+Another way to put a fourth variable in the plot is with the level of transparency of the dots so that the clusters of dots that are on top of each other are easier to see. Rather than the `size` argument, let's use the `alpha` argument:
 
 ```{r}
 #| eval: false
