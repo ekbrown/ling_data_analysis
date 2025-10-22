@@ -1,5 +1,7 @@
 ---
 title: "Other languages"
+engine: julia
+
 ---
 
 ## Objective
@@ -8,7 +10,7 @@ Students will write R code that calls other languages.
 
 ## Multilingual programming world
 
-Just like human languages and all their variety and beauty, the variety of programming languages gives beauty to the computer world. More specifically, some programming languages are better suited than others for specific tasks. So, rather than having to be monolingual within only one programming language, we can use several languages as needed.
+Just like human languages and all their variety and beauty, the variety of programming languages gives beauty to the computer world. More to the point, some programming languages are better suited than others for specific tasks. So, rather than having to be monolingual with only one programming language, we can use several languages as needed.
 
 ## Python
 
@@ -19,18 +21,24 @@ It is Dr. Brown's opinion that Python is the best language for text processing (
 The [`reticulate`](https://rstudio.github.io/reticulate/) R package allows R users to call Python from within R. Here's a simple example:
 
 ```{r}
-#| eval: false
+#| eval: true
 # R code here
 library("reticulate")
 use_python("/usr/local/bin/python3")
+```
 
+```{r}
 txt <- "The quick brown fox jumped over the lazy dog."
 
 nltk <- import("nltk")
+nltk$download("punkt")
+nltk$download("averaged_perceptron_tagger")
+
 tokens <- nltk$word_tokenize(txt)
 print(tokens)
 tagged <- nltk$pos_tag(tokens)
 print(tagged)
+
 ```
 
 If you know Python (and NLTK), you might remember that the output of this call in Python is a Python `list` of two-item `tuple`s. Differently, here we get an R `list` (which is different from a Python `list`). We could continue to process this R `list` as needed, for example, looping over it in a `for` loop to find particular part-of-speech tags:
@@ -63,12 +71,21 @@ A more meaningful example might be to use the Natural Language Toolkit (NLTK) to
 #| eval: true
 # more Python code here
 import nltk
+nltk.download("punkt")
+nltk.download("averaged_perceptron_tagger")
 txt = "The quick brown fox jumped over the lazy dog."
 tokens = nltk.word_tokenize(txt)
 print(tokens)
 ```
 
-The above code tokenizes the famous sentence in linguistics into a Python `list` of words. Now, let's ask NLTK to tag for part-of-speech:
+The above code tokenizes the famous sentence in linguistics into a Python `list` of words. Now, let's ask NLTK to
+
+```{python}
+import sys
+print(sys.version)
+```
+
+tag for part-of-speech:
 
 ```{python}
 #| eval: true
@@ -113,7 +130,7 @@ In addition to defining C++ function within an R script (i.e., an R file) with `
 
 ### Julia
 
-The [Julia](https://julialang.org/) programming language is a relatively new language oriented towards data science and statistics (very much like R). When you're writing a Quarto document, you can insert a Julia code block by typing a forward slash "/" and selecting the Julia code block option. First, we need to install the `JuliaCall` R package:
+The [Julia](https://julialang.org/) programming language is a language oriented towards data science and statistics (very much like R). When you're writing a Quarto document, you can insert a Julia code block by typing a forward slash "/" and selecting the Julia code block option. First, we need to install the `JuliaCall` R package:
 
 ```{r}
 #| eval: false
@@ -121,9 +138,8 @@ install.packages("JuliaCall", repos = "http://cran.rstudio.com/")
 ```
 
 ```{julia}
-#| eval: true
-# Julia code here
 #| eval: false
+# Julia code here
 println("hello Julia!")
 ```
 
