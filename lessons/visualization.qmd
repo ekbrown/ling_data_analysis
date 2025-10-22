@@ -598,7 +598,7 @@ front_durs |>
   ggplot(aes(x = vowel, y = duration))+
   geom_boxplot()+
   geom_violin(alpha = 0.3)+
-  stat_summary(fun.y=mean, shape=4)+
+  stat_summary(fun=mean, shape=4)+
   theme_bw()
 ```
 
@@ -655,14 +655,14 @@ front_durs |>
   ggplot(aes(x = pre, y = duration))+
   geom_boxplot(notch = TRUE)+
   geom_violin(alpha = 0.5)+
-  stat_summary(fun.y=mean, shape=4)+
+  stat_summary(fun=mean, shape=4)+
   theme_bw()
 
 front_durs |> 
   ggplot(aes(x = fol, y = duration))+
   geom_boxplot(notch = TRUE)+
   geom_violin(alpha = 0.5)+
-  stat_summary(fun.y=mean, shape=4)+
+  stat_summary(fun=mean, shape=4)+
   theme_bw()
 ```
 
