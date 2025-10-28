@@ -44,6 +44,18 @@ for (tag in tagged) {
 }
 ```
 
+Here's another example. Dr. Brown likes the [`num2words`](https://github.com/savoirfairelinux/num2words) Python package because it transcribes Arabic numerals to Romanized characters, for example, `4` to `four` (or `fourth` if you want the ordinal number). Let's call this Python package from within R:
+```{r num2words}
+#| eval: false
+library("reticulate")
+py_require("num2words")
+num2words <- import("num2words")
+num_as_word <- num2words$num2words(4)
+print(num_as_word)
+
+```
+
+
 ### Within Quarto documents
 
 We can also write Python code within code blocks in a Quarto document. When working in a Quarto document, you can type a forward slash and get a drop-down menu of possible things to insert into your document, one of which is a Python code block.
