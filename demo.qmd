@@ -17,3 +17,17 @@ print("hola mundo")
 ```
 
 I just said "hello" in Spanish, with the code `print("hola mundo")`
+
+```{r}
+#| echo: true
+#| eval: false
+print(2+3)
+```
+
+## Visualization
+
+Below is a visualization of a random set of floats:
+
+```{r}
+plot(runif(100))
+```

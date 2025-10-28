@@ -1,7 +1,6 @@
 ---
 title: "Other languages"
 engine: julia
-
 ---
 
 ## Objective
@@ -20,30 +19,22 @@ It is Dr. Brown's opinion that Python is the best language for text processing (
 
 The [`reticulate`](https://rstudio.github.io/reticulate/) R package allows R users to call Python from within R. Here's a simple example:
 
-```{r}
-#| eval: true
+```{r reticulate}
+#| eval: false
 # R code here
 library("reticulate")
-use_python("/usr/local/bin/python3")
-```
 
-```{r}
 txt <- "The quick brown fox jumped over the lazy dog."
 
+py_require("nltk")
 nltk <- import("nltk")
-nltk$download("punkt")
-nltk$download("averaged_perceptron_tagger")
-
-tokens <- nltk$word_tokenize(txt)
-print(tokens)
-tagged <- nltk$pos_tag(tokens)
-print(tagged)
-
+tokens <- nltk$word_tokenize(txt); print(tokens)
+tagged <- nltk$pos_tag(tokens); print(tagged)
 ```
 
 If you know Python (and NLTK), you might remember that the output of this call in Python is a Python `list` of two-item `tuple`s. Differently, here we get an R `list` (which is different from a Python `list`). We could continue to process this R `list` as needed, for example, looping over it in a `for` loop to find particular part-of-speech tags:
 
-```{r}
+```{r process R list}
 #| eval: false
 # R code here
 for (tag in tagged) {
@@ -59,15 +50,15 @@ We can also write Python code within code blocks in a Quarto document. When work
 
 The following code blocks are written in a Quarto document (as Dr. Brown uses Quarto document for his lesson plans). The code is pure Python, as if he were writing Python code in a `.py` file. Here's a first simple example:
 
-```{python}
-#| eval: true
+```{python hello py}
+#| eval: false
 # Python code here
 print("hello Python!")
 ```
 
 A more meaningful example might be to use the Natural Language Toolkit (NLTK) to tokenize word and perform part-of-speech tagging, like with did above within R using `reticulate`:. Differently, here, we don't need `reticulate` because we calling Python directly on the computer, rather than through R.
 
-```{python}
+```{python tag pos py}
 #| eval: true
 # more Python code here
 import nltk
@@ -76,20 +67,25 @@ nltk.download("averaged_perceptron_tagger")
 txt = "The quick brown fox jumped over the lazy dog."
 tokens = nltk.word_tokenize(txt)
 print(tokens)
+tagged = nltk.pos_tag(tokens)
+print(tagged)
+
 ```
 
 The above code tokenizes the famous sentence in linguistics into a Python `list` of words. Now, let's ask NLTK to
 
 ```{python}
+#| eval: true
 import sys
 print(sys.version)
 ```
 
 tag for part-of-speech:
 
-```{python}
+```{python tag pos Python}
 #| eval: true
 # Python code here
+import nltk
 tagged = nltk.pos_tag(tokens)
 print(tagged)
 ```
@@ -109,14 +105,14 @@ Many other languages can be called from within R. Some of the most likely to be 
 The [`Rcpp`](https://cran.r-project.org/web/packages/Rcpp/index.html) R package is an awesome way to have R call C++. This is especially useful for bottlenecks that can be sped up with C++ (which runs much, much faster than R). First, let's install `Rcpp`:
 
 ```{r}
-#| eval: false
+#| eval: true
 install.packages("Rcpp", repos = "http://cran.rstudio.com/")
 ```
 
 Next, let's
 
 ```{r}
-#| eval: false
+#| eval: true
 library("Rcpp")
 cppFunction('int add(int x, int y, int z) {
   int sum = x + y + z;
