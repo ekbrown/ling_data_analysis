@@ -377,6 +377,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">PCA</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/bootstrapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bootstrapping</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -427,8 +433,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The chi-square test is the go-to test for counts of levels in two categorical variables. For example:</p>
 <ul>
 <li><p><em>bathroom</em> v. <em>washroom</em> in American English v. Canadian English</p></li>
-<li><p><em>give it to me</em> v. <em>give me it</em> in academic v. spoken English</p></li>
-<li><p>Latin v. Greek borrowing in legal v. medical jargon</p></li>
+<li><p><em>give it to me</em> v. <em>give me it</em> in fiction v. spoken English</p></li>
+<li><p>Latin v. Greek borrowings in legal v. medical jargon</p></li>
 </ul>
 </section>
 <section id="contingency-tables" class="level2">
@@ -488,7 +494,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="observed-v.-expected" class="level2">
 <h2 class="anchored" data-anchor-id="observed-v.-expected">Observed v. expected</h2>
-<p>Another super important step in performing the chi-square test is calculating the expected values. Let’s take bathroom in American English for a moment. We see that our (fictitious) count is 23, which is our <strong>observed</strong> value. For each cell in the contingency table, we need to calculate the expected value, and that is accomplished by taking the row total and multiplying it by the column total and then dividing that product by the total N: <span class="math inline">\(33\ *\ 57\ /\ 112\ =\ 16.79464\)</span></p>
+<p>Another super important step in performing the chi-square test is calculating the expected values. Let’s take <em>bathroom</em> in American English for a moment. We see that our (fictitious) count is 23, which is our <strong>observed</strong> value. For each cell in the contingency table, we need to calculate the expected value, and that is accomplished by taking the row total and multiplying it by the column total and then dividing that product by the total N: <span class="math inline">\(23\ *\ 57\ /\ 112\ =\ 16.79464\)</span></p>
 <p>When we calculate the expected values for each cell in the contingency table, we end up with the following expected values:</p>
 <table class="table">
 <tbody>
@@ -550,7 +556,7 @@ X-squared = 5.5955, df = 1, p-value = 0.01801</code></pre>
 <p>Canadians say <em>bathroom</em> too infrequently.</p>
 <section id="assumption" class="level4">
 <h4 class="anchored" data-anchor-id="assumption">Assumption</h4>
-<p>If any of the expected values is 5 or smaller, we can’t use the chi-square. Instead, we’d have to use a Fisher Exact test (this isn’t the case with our fictitious dataset, but let’s run a Fisher Exact test for fun):</p>
+<p>If any of the expected values is 5 or smaller, we can’t use the chi-square. Instead, we should use a Fisher Exact test (this isn’t the case with our fictitious dataset, but let’s run a Fisher Exact test for fun):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(potty)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

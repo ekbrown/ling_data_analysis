@@ -12,9 +12,9 @@ The chi-square test is the go-to test for counts of levels in two categorical va
 
 -   *bathroom* v. *washroom* in American English v. Canadian English
 
--   *give it to me* v. *give me it* in academic v. spoken English
+-   *give it to me* v. *give me it* in fiction v. spoken English
 
--   Latin v. Greek borrowing in legal v. medical jargon
+-   Latin v. Greek borrowings in legal v. medical jargon
 
 ## Contingency tables
 
@@ -39,7 +39,7 @@ The margins in the context of contingency tables are the row and columns totals:
 
 ## Observed v. expected
 
-Another super important step in performing the chi-square test is calculating the expected values. Let's take bathroom in American English for a moment. We see that our (fictitious) count is 23, which is our **observed** value. For each cell in the contingency table, we need to calculate the expected value, and that is accomplished by taking the row total and multiplying it by the column total and then dividing that product by the total N: $33\ *\ 57\ /\ 112\ =\ 16.79464$
+Another super important step in performing the chi-square test is calculating the expected values. Let's take *bathroom* in American English for a moment. We see that our (fictitious) count is 23, which is our **observed** value. For each cell in the contingency table, we need to calculate the expected value, and that is accomplished by taking the row total and multiplying it by the column total and then dividing that product by the total N: $23\ *\ 57\ /\ 112\ =\ 16.79464$
 
 When we calculate the expected values for each cell in the contingency table, we end up with the following expected values:
 
@@ -77,7 +77,7 @@ Canadians say *bathroom* too infrequently.
 
 #### Assumption
 
-If any of the expected values is 5 or smaller, we can't use the chi-square. Instead, we'd have to use a Fisher Exact test (this isn't the case with our fictitious dataset, but let's run a Fisher Exact test for fun):
+If any of the expected values is 5 or smaller, we can't use the chi-square. Instead, we should use a Fisher Exact test (this isn't the case with our fictitious dataset, but let's run a Fisher Exact test for fun):
 
 ```{r}
 fisher.test(potty)
