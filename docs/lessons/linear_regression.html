@@ -377,6 +377,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">PCA</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/bootstrapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bootstrapping</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -580,7 +586,7 @@ We already calculated above all the numbers in this formula, so let’s get crac
 </section>
 <section id="fit-a-linear-regression" class="level2">
 <h2 class="anchored" data-anchor-id="fit-a-linear-regression">Fit a linear regression</h2>
-<p>As I’m sure you have likely guessed, there’s a function to do all the math we just did by hand: <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm"><code>lm()</code></a>. Because the dependent variable (aka. response variable) is continuous, we will fit a linear regression (rather than a logistic regression). When we have only one explanatory variable, the term “simple linear regression” is often used. Differently, when we have two or more explanatory variables, the term “multiple linear regression” is used. We see multiple linear regression below.</p>
+<p>As I’m sure you have likely guessed, there’s a function to do all the math we just did by hand: <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm"><code>lm()</code></a>. Because the dependent variable (aka. response variable) is continuous, we will fit a linear regression (rather than a logistic regression). When we have only one explanatory variable, the term “simple linear regression” is often used. Differently, when we have two or more explanatory variables, the term “multiple linear regression” is used. We’ll see multiple linear regression below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fitted_model <span class="ot">&lt;-</span> morenos <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(height <span class="sc">~</span> age, <span class="at">data =</span> .)</span>
@@ -782,66 +788,16 @@ F-statistic:  1065 on 1 and 4566 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Rling"</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ELP)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ELP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 880
-Columns: 5
-$ Word    &lt;fct&gt; rackets, stepmother, delineated, swimmers, umpire, cobra, vexe…
-$ Length  &lt;int&gt; 7, 10, 10, 8, 6, 5, 5, 8, 8, 6, 8, 12, 8, 6, 7, 3, 3, 10, 9, 4…
-$ SUBTLWF &lt;dbl&gt; 0.96, 4.24, 0.04, 1.49, 1.06, 3.33, 0.10, 0.06, 0.43, 5.41, 0.…
-$ POS     &lt;fct&gt; NN, NN, VB, NN, NN, NN, VB, NN, NN, NN, VB, NN, JJ, NN, NN, VB…
-$ Mean_RT &lt;dbl&gt; 790.87, 692.55, 960.45, 771.13, 882.50, 645.85, 760.29, 682.26…</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ELP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>           Word         Length         SUBTLWF         POS     
- abbreviation:  1   Min.   : 3.00   Min.   :   0.020   JJ:159  
- abortions   :  1   1st Qu.: 7.00   1st Qu.:   0.180   NN:532  
- abrupt      :  1   Median : 8.00   Median :   0.570   VB:189  
- absentee    :  1   Mean   : 8.22   Mean   :   8.603           
- abutment    :  1   3rd Qu.:10.00   3rd Qu.:   2.105           
- accomplice  :  1   Max.   :20.00   Max.   :2556.730           
- (Other)     :874                                              
-    Mean_RT      
- Min.   : 517.5  
- 1st Qu.: 695.7  
- Median : 764.5  
- Mean   : 786.8  
- 3rd Qu.: 853.0  
- Max.   :1324.6  
-                 </code></pre>
-</div>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ELP)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ELP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The <code>Word</code> column is transparently named. The <code>Length</code> column is the length of the word in number of letters (as an integer). The <code>SUBTLWF</code> column gives the frequency (i.e., float or double or numeric) of the word normalized to per million words, as attested in a corpus of movie subtitles. The <code>POS</code> is transparently named (for a linguist, at least) and has three levels: <code>JJ</code> for adjective, <code>NN</code> for noun, and <code>VB</code> for verb. The <code>Mean_RT</code> column gives the mean reaction time in milliseconds (i.e., a float), and will the response variable in our regression.</p>
 <p>Let’s go with the linear regression!</p>
 <p>The response variable (i.e., <code>Mean_RT</code> here) goes to the left of the formula operator (i.e., a tilde <code>~</code>), and the explanatory variables to the right of that operator, separated by a plus sign <code>+</code>. The data frame with the dataset goes with the <code>data</code> argument. As is (very) common practice, we’ll take the log of frequency to put it on a more linear scale (from it’s original zipfian scale; see Vsauce’s <a href="https://youtu.be/fCn8zs912OE?si=HrO8L9uNa5l1KKBm">video about lexical frequency</a>).</p>
 <p>Behold, a linear regression and its results:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Mean_RT <span class="sc">~</span> Length <span class="sc">+</span> <span class="fu">log</span>(SUBTLWF) <span class="sc">+</span> POS, <span class="at">data =</span> ELP)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Mean_RT ~ Length + log(SUBTLWF) + POS, data = ELP)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--213.70  -62.55   -9.71   53.87  389.00 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   622.466     14.191  43.864  &lt; 2e-16 ***
-Length         19.555      1.433  13.645  &lt; 2e-16 ***
-log(SUBTLWF)  -29.288      1.784 -16.420  &lt; 2e-16 ***
-POSNN          -6.115      8.506  -0.719  0.47238    
-POSVB         -29.184     10.154  -2.874  0.00415 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 93.29 on 875 degrees of freedom
-Multiple R-squared:  0.4565,    Adjusted R-squared:  0.454 
-F-statistic: 183.7 on 4 and 875 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Mean_RT <span class="sc">~</span> Length <span class="sc">+</span> <span class="fu">log</span>(SUBTLWF) <span class="sc">+</span> POS, <span class="at">data =</span> ELP)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="interpretation" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>

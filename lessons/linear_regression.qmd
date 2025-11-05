@@ -140,7 +140,7 @@ plot_dots_and_line(morenos, 1.427711, 46.35542)
 
 ## Fit a linear regression
 
-As I’m sure you have likely guessed, there’s a function to do all the math we just did by hand: [`lm()`](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm). Because the dependent variable (aka. response variable) is continuous, we will fit a linear regression (rather than a logistic regression). When we have only one explanatory variable, the term "simple linear regression" is often used. Differently, when we have two or more explanatory variables, the term "multiple linear regression" is used. We see multiple linear regression below.
+As I’m sure you have likely guessed, there’s a function to do all the math we just did by hand: [`lm()`](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm). Because the dependent variable (aka. response variable) is continuous, we will fit a linear regression (rather than a logistic regression). When we have only one explanatory variable, the term "simple linear regression" is often used. Differently, when we have two or more explanatory variables, the term "multiple linear regression" is used. We'll see multiple linear regression below.
 
 ```{r}
 fitted_model <- morenos %>% 
@@ -265,6 +265,7 @@ install.packages("/pathway/to/Rling_1.0.tar.gz", repos = NULL, type = "source")
 And then load up the dataset and inspect it a bit:
 
 ```{r}
+#| eval: false
 library("tidyverse")
 library("Rling")
 data(ELP)
@@ -281,6 +282,7 @@ The response variable (i.e., `Mean_RT` here) goes to the left of the formula ope
 Behold, a linear regression and its results:
 
 ```{r}
+#| eval: false
 m1 <- lm(Mean_RT ~ Length + log(SUBTLWF) + POS, data = ELP)
 summary(m1)
 ```
