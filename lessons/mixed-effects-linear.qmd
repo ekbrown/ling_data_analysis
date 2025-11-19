@@ -4,7 +4,7 @@ title: "Mixed-effects linear regression"
 
 # Random effects
 
-"Random effects" in a linear regression model control for the variability attributable to the specific members of a population that happened to be selected for our random sample. To take an example, let's say we have a dataset of 2,500 tokens of word durations that were extracted from the speech of six speakers. Each speaker contributed several hundreds tokens of word durations. A handful of predictor variables have been shown in the literature to affect word durations:
+"Random effects" in a linear regression model control for the variability attributable to the specific members of a population that happened to be selected for our random sample. To take an example, let's say we have a dataset of 2,500 tokens of word durations that were extracted from the speech of six speakers. Each speaker contributed several hundred tokens of word durations. A handful of predictor variables have been shown in the literature to affect word duration:
 
 -   word length: longer words take longer to articulate
 -   frequency: more frequent words are generally spoken quicker
@@ -44,7 +44,7 @@ buck <- read_csv("/Users/ekb5/Documents/data_analysis/datasets/Word_dur_Buckeye.
 head(buck)
 ```
 
-Let control for capitalization of words by uppercasing (v.) the words, and then printing the first six rows.
+Let's control for capitalization of words by uppercasing (v.) the words, and then printing the first six rows.
 
 ```{r}
 buck <- buck %>% 
@@ -54,7 +54,13 @@ head(buck)
 
 # With random intercepts
 
-Let's fit a linear regression with random intercepts for speaker and for word, that is, a unique intercept for each speaker and a unique intercept for each word.
+There are several R packages that can fit mixed-effect linear regression models. We'll use [`lmerTest`](https://cran.r-project.org/web/packages/lmerTest/index.html), which is a wrapper for `lme4`. First, let's download the package to our harddrive:
+
+```{r get lmerTest package}
+install.packages("lmerTest", repos = "https://cran.rstudio.com")
+```
+
+Now, let's fit a linear regression with random intercepts for speaker and for word, that is, a unique intercept for each speaker and a unique intercept for each word.
 
 ```{r}
 m1 <- lmerTest::lmer(wd_dur ~ n_segments + spch_rate + wd_freq + dist_end_iu + pre_mention + (1 | file) + (1 | wd), data = buck)
@@ -68,7 +74,7 @@ buck %>%
   purrr::map(summary)
 ```
 
-In general, it's a good idea to use z-scores of continuous variables by using [scale()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scale). It comes at the cost of losing some of the interpretability, as all we can really say is whether there is a significant effect, and if so, in what direction.<br><br> Let's scale all the continuous variables and rerun the regression.
+In general, it's a good idea to use z-scores of continuous variables by using [`scale()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scale). It comes at the cost of losing some of the interpretability, as all we can really say is whether there is a significant effect, and if so, in what direction.<br><br> Let's scale all the continuous variables and rerun the regression.
 
 ```{r}
 m2 <- lmerTest::lmer(scale(wd_dur) ~ scale(n_segments) + scale(spch_rate) + scale(wd_freq) + scale(dist_end_iu) + pre_mention + (1 | file) + (1 | wd), data = buck)
@@ -77,8 +83,8 @@ summary(m2)
 
 Let's look at how much variability in the response variable (i.e., wd_dur) is accounted for by both the random effects and the fixed effects (i.e., conditional $R^{2}$) and how much is accounted for by only the fixed effects (i.e., mariginal $R^{2}$) with [performance::r2_nakagawa()](https://www.rdocumentation.org/packages/performance/versions/0.5.0/topics/r2_nakagawa).
 
-```{r}
-# install.packages("performance")  # if needed, run this line first
+```{r get performance package}
+install.packages("performance", repos = "https://cran.rstudio.com")  # if needed, run this line first
 performance::r2_nakagawa(m2)
 ```
 
@@ -101,15 +107,15 @@ summary(m4)
 performance::r2_nakagawa(m4)
 ```
 
-We get a warning message stating that our model suffers from singularity. This is often the case when one of our random effects has at least one level that only has only one token. Let's see if we can resolve this warning by removing the random slope on word, but keeping in the random intercept.
+We get a warning message stating that our model suffers from singularity. This is often the case when one of our random effects has a level that has only one token. Let's see if we can resolve this warning by removing the random slope on word, but keeping in the random intercept.
 
 ```{r}
-m4 <- lmerTest::lmer(scale(wd_dur) ~ scale(n_segments) + scale(spch_rate) + scale(wd_freq) + scale(dist_end_iu) + pre_mention + (1 + n_segments | file) + (1 | wd), data = buck)
-summary(m4)
-performance::r2_nakagawa(m4)
+m5 <- lmerTest::lmer(scale(wd_dur) ~ scale(n_segments) + scale(spch_rate) + scale(wd_freq) + scale(dist_end_iu) + pre_mention + (1 + n_segments | file) + (1 | wd), data = buck)
+summary(m5)
+performance::r2_nakagawa(m5)
 ```
 
-Sure enough, that resolved the singularity warning message.<br><br> As you can now see, by adding random slopes to the speakers, our marginal $R^{2}$ value increases, indicating that allowing the slopes to vary by speaker allows the fixed effect n_segment to better fit the data point.<br><br> [Here](https://stats.stackexchange.com/a/31634)'s a good explanation of how to understand random slopes. **Takehome message**: It's best to specify both random intercepts and slopes as they allow the model to better fit the data. However, it can often happen that you get a singularity warning with a random slope that has few tokens, and in that case, keeping only the random intercept is necessary.
+Sure enough, that resolved the singularity warning message.<br><br> As you can now see, by adding random slopes to the speakers, our marginal $R^{2}$ value increases, indicating that allowing the slopes to vary by speaker allows the fixed effect `n_segment` to better fit the data point.<br><br> [Here](https://stats.stackexchange.com/a/31634)'s a good explanation of how to understand random slopes. **Takehome message**: It's best to specify both random intercepts and slopes as they allow the model to better fit the data. However, it can often happen that you get a singularity warning with a random slope that has few tokens, and in that case, specify only a random intercept.
 
 # Activity
 
