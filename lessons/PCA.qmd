@@ -69,7 +69,7 @@ Let's draw a better plot of the individuals:
 plot(pca1, cex = 0.8, col.ind="gray", col.quali="black")
 ```
 
-The eigenvalues indicate how much of the variance is explained by each principal component. (BTW, there are as many principal components as there are variable that go into the PCA.) Let's look at the eigenvalues and the percentage of variance explained by each PC:
+The eigenvalues indicate how much of the variance is explained by each principal component. (BTW, there are as many principal components as there are variables that go into the PCA.) Let's look at the eigenvalues and the percentage of variance explained by each PC:
 
 ```{r}
 pca1$eig
