@@ -8,9 +8,9 @@ Students fit a mixed-effects logistic regression model.
 
 ## Logistic regression with random effects
 
-As we saw in a [previous lesson](https://ekbrown.github.io/ling_data_analysis/lessons/mixed-effects-linear.html), random effects control for the variability in the response variable that comes from the individual members of a population that we happen to get into our sample. The `lme4` R package has a [`glmer()`](https://www.rdocumentation.org/packages/lme4/versions/1.1-35.1/topics/glmer) function that can be used to fit a mixed-effects logistic regression when you specify \`family = "binomial"\`.
+As we saw in a [previous lesson](https://ekbrown.github.io/ling_data_analysis/lessons/mixed-effects-linear.html), random effects control for the variability in the response variable that comes from the individual members of a population that we happen to get into our sample. The `lme4` R package has a [`glmer()`](https://www.rdocumentation.org/packages/lme4/versions/1.1-35.1/topics/glmer) function that can be used to fit a mixed-effects logistic regression when you specify `family = "binomial"`.
 
-Let's take a look at a dataset used to write [an article](https://doi.org/10.1515/cllt-2020-0016) about the effect of fast speech on word durations and the durations of the /s/ segment in a sample of Colombian Spanish. It's named "Dataset_fast_spch_Colombia.xlsx" and is in the LMS.
+Let's take a look at a dataset used to write [an article](https://doi.org/10.1515/cllt-2020-0016) about the effect of fast speech on word durations and the durations of the /s/ segment in a sample of Colombian Spanish. It's named "Dataset_fast_spch_Colombia.xlsx" in the LMS.
 
 ```{r}
 suppressPackageStartupMessages(library("tidyverse"))

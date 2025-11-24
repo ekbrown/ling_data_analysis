@@ -375,6 +375,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">PCA</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/bootstrapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bootstrapping</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -419,8 +425,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="logistic-regression-with-random-effects" class="level2">
 <h2 class="anchored" data-anchor-id="logistic-regression-with-random-effects">Logistic regression with random effects</h2>
-<p>As we saw in a <a href="https://ekbrown.github.io/ling_data_analysis/lessons/mixed-effects-linear.html">previous lesson</a>, random effects control for the variability in the response variable that comes from the individual members of a population that we happen to get into our sample. The <code>lme4</code> R package has a <a href="https://www.rdocumentation.org/packages/lme4/versions/1.1-35.1/topics/glmer"><code>glmer()</code></a> function that can be used to fit a mixed-effects logistic regression when you specify `family = “binomial”`.</p>
-<p>Let’s take a look at a dataset used to write <a href="https://doi.org/10.1515/cllt-2020-0016">an article</a> about the effect of fast speech on word durations and the durations of the /s/ segment in a sample of Colombian Spanish. It’s named “Dataset_fast_spch_Colombia.xlsx” and is in the LMS.</p>
+<p>As we saw in a <a href="https://ekbrown.github.io/ling_data_analysis/lessons/mixed-effects-linear.html">previous lesson</a>, random effects control for the variability in the response variable that comes from the individual members of a population that we happen to get into our sample. The <code>lme4</code> R package has a <a href="https://www.rdocumentation.org/packages/lme4/versions/1.1-35.1/topics/glmer"><code>glmer()</code></a> function that can be used to fit a mixed-effects logistic regression when you specify <code>family = "binomial"</code>.</p>
+<p>Let’s take a look at a dataset used to write <a href="https://doi.org/10.1515/cllt-2020-0016">an article</a> about the effect of fast speech on word durations and the durations of the /s/ segment in a sample of Colombian Spanish. It’s named “Dataset_fast_spch_Colombia.xlsx” in the LMS.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(<span class="st">"tidyverse"</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(<span class="st">"lme4"</span>))</span>
@@ -452,9 +458,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            wd_len <span class="sc">+</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            position)</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> lme4<span class="sc">::</span><span class="fu">glmer</span>(<span class="at">formula =</span> in_formula, <span class="at">data =</span> colombia, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">control=</span><span class="fu">glmerControl</span>(<span class="at">optimizer=</span><span class="st">"bobyqa"</span>, <span class="at">optCtrl=</span><span class="fu">list</span>(<span class="at">maxfun=</span><span class="fl">2e4</span>)))</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> lme4<span class="sc">::</span><span class="fu">glmer</span>(<span class="at">formula =</span> in_formula, <span class="at">data =</span> colombia, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">control=</span><span class="fu">glmerControl</span>(<span class="at">optimizer=</span><span class="st">"bobyqa"</span>, <span class="at">optCtrl=</span><span class="fu">list</span>(<span class="at">maxfun=</span><span class="fl">2e4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
+unable to evaluate scaled gradient</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
+Model failed to converge: degenerate Hessian with 1 negative eigenvalues</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in vcov.merMod(object, use.hessian = use.hessian): variance-covariance matrix computed from finite-difference Hessian is
+not positive definite or contains NA values: falling back to var-cov estimated from RX</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in vcov.merMod(object, correlation = correlation, sigm = sig): variance-covariance matrix computed from finite-difference Hessian is
+not positive definite or contains NA values: falling back to var-cov estimated from RX</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
   Approximation) [glmerMod]
@@ -464,43 +485,43 @@ Formula: pronunciation ~ (1 | file) + (1 | wd) + frc + spch_rate + wd_freq +
    Data: colombia
 Control: glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 20000))
 
-     AIC      BIC   logLik deviance df.resid 
-  1090.6   1147.5   -534.3   1068.6     1293 
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   1090.9    1147.8    -534.4    1068.9      1293 
 
 Scaled residuals: 
     Min      1Q  Median      3Q     Max 
--5.0170  0.0796  0.2026  0.5487  2.9414 
+-4.8599  0.0838  0.2133  0.5534  2.7456 
 
 Random effects:
  Groups Name        Variance Std.Dev.
- wd     (Intercept) 0.78330  0.8850  
- file   (Intercept) 0.05723  0.2392  
+ wd     (Intercept) 0.69535  0.8339  
+ file   (Intercept) 0.05468  0.2338  
 Number of obs: 1304, groups:  wd, 159; file, 8
 
 Fixed effects:
                        Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)            -1.15826    0.61119  -1.895  0.05808 .  
-frc                     0.99993    0.33039   3.027  0.00247 ** 
-spch_rate              -0.02254    0.08113  -0.278  0.78116    
-wd_freq                 0.10580    0.05335   1.983  0.04735 *  
-pre_soundpause          0.67143    1.07899   0.622  0.53376    
-wd_len                 -0.09870    0.08373  -1.179  0.23848    
-positionwd_ini          2.57585    0.46539   5.535 3.11e-08 ***
-positionwd_med_syl_fin  1.93652    0.44308   4.371 1.24e-05 ***
-positionwd_med_syl_ini  2.47641    0.35902   6.898 5.29e-12 ***
+(Intercept)            -1.06274    0.58841  -1.806  0.07090 .  
+frc                     0.95191    0.31974   2.977  0.00291 ** 
+spch_rate              -0.02347    0.07970  -0.294  0.76841    
+wd_freq                 0.10617    0.05236   2.028  0.04261 *  
+pre_soundpause          0.67310    1.09684   0.614  0.53943    
+wd_len                 -0.10194    0.08048  -1.267  0.20530    
+positionwd_ini          2.40636    0.44509   5.406 6.43e-08 ***
+positionwd_med_syl_fin  1.81630    0.42956   4.228 2.36e-05 ***
+positionwd_med_syl_ini  2.35256    0.34545   6.810 9.75e-12 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
                 (Intr) frc    spch_r wd_frq pr_snd wd_len pstnw_
-frc             -0.388                                          
-spch_rate       -0.045  0.044                                   
-wd_freq         -0.580 -0.167  0.039                            
+frc             -0.385                                          
+spch_rate       -0.044  0.045                                   
+wd_freq         -0.588 -0.168  0.038                            
 pre_soundps      0.002  0.015 -0.007 -0.014                     
-wd_len          -0.135  0.103 -0.057 -0.572  0.005              
-positinwd_n     -0.284 -0.022 -0.011  0.123 -0.184  0.109       
-pstnwd_md_syl_f -0.105 -0.067  0.017  0.152 -0.005 -0.167  0.144
-pstnwd_md_syl_n -0.069 -0.093 -0.012  0.035 -0.006 -0.028  0.181
+wd_len          -0.113  0.099 -0.058 -0.583  0.008              
+positinwd_n     -0.272 -0.030 -0.010  0.125 -0.184  0.086       
+pstnwd_md_syl_f -0.094 -0.075  0.016  0.154 -0.003 -0.184  0.115
+pstnwd_md_syl_n -0.043 -0.107 -0.015  0.028 -0.001 -0.051  0.128
                 pstnwd_md_syl_f
 frc                            
 spch_rate                      
@@ -509,14 +530,17 @@ pre_soundps
 wd_len                         
 positinwd_n                    
 pstnwd_md_syl_f                
-pstnwd_md_syl_n  0.179         </code></pre>
+pstnwd_md_syl_n  0.144         
+optimizer (bobyqa) convergence code: 0 (OK)
+unable to evaluate scaled gradient
+Model failed to converge: degenerate  Hessian with 1 negative eigenvalues</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2_nakagawa</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2_nakagawa</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># R2 for Mixed Models
 
-  Conditional R2: 0.491
-     Marginal R2: 0.361</code></pre>
+  Conditional R2: 0.466
+     Marginal R2: 0.345</code></pre>
 </div>
 </div>
 </section>
